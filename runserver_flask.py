@@ -1,18 +1,18 @@
-from wof import app as flask_app
-from wof.soap import *
-
-
 import wof.config
-
 import soaplib #soaplib 2.0.0-beta
 
+from wof import WofPyApplication
+from wof.soap import *
 from werkzeug.wsgi import DispatcherMiddleware
 
 if __name__ == '__main__':
+	
+	wofpy_app = WofPyApplication()
+	
 	soap_application = soaplib.core.Application([WOFService], 'http://www.cuahsi.org/his/1.0/ws/')
 	soap_wsgi_application = wsgi.Application(soap_application)
 	
-	flask_app.wsgi_app = DispatcherMiddleware(flask_app.wsgi_app, {
+	wofpy_app.app.wsgi_app = DispatcherMiddleware(wofpy_app.app.wsgi_app, {
 		'/soap': soap_wsgi_application
 		})
 
@@ -24,6 +24,6 @@ if __name__ == '__main__':
 	config_obj.SQLALCHEMY_DATABASE_URI = private_config.database_connection_string
 	
 	
-	flask_app.config.from_object(config_obj)	
+	wofpy_app.app.config.from_object(config_obj)	
 
-	flask_app.run(host='0.0.0.0', port=8080)
+	wofpy_app.app.run(host='0.0.0.0', port=8080)
