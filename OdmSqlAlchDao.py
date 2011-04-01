@@ -60,19 +60,19 @@ class Dao(object):
         return Method.query.filter(Method.MethodID == methodID).first()
         
     def Get_Methods_By_IDs(self, methodIdArr):
-        pass
+        return Method.query.filter(Method.MethodID.in_(methodIdArr)).all()
         
     def Get_Source_By_ID(self, sourceID):
         return Source.query.filter(Source.SourceID == sourceID).first()
         
     def Get_Sources_By_IDs(self, sourceIdArr):
-        pass
+        return Source.query.filter(Source.SourceID.in_(sourceIdArr)).all()
     
     def Get_Qualifier_By_ID(self, qualID):
         return Qualifier.query.filter(Qualifier.QualifierID == qualID).first()
     
     def Get_Qualifiers_By_IDs(self, qualIdArr):
-        pass
+        return Qualifier.query.filter(Qualifier.QualifierID.in_(qualIdArr)).all()
     
     def Get_QualControlLvl_By_ID(self, qualControlLvlID):
         return QualityControlLevel.query.filter(
@@ -80,11 +80,12 @@ class Dao(object):
                 qualControlLvlID).first()
     
     def Get_QualControlLvls_By_IDs(self, qualControlLvlIdArr):
-        pass
+        return QualityControlLevel.query.filter(
+                QualityControlLevel.QualityControlLevelID.in_(qualControlLvlIdArr)).all()
     
     def Get_OffsetType_By_ID(self, offsetTypeID):
         return OffsetType.query.filter(OffsetType.OffsetTypeID ==
                                        offsetTypeID).first()
     
     def Get_OffsetTypes_By_IDs(self, offsetTypeIdArr):
-        pass
+        return OffsetType.query.filter(OffsetType.OffsetTypeID.in_(offsetTypeIdArr)).all()
