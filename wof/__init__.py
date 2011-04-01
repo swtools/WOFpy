@@ -1,12 +1,15 @@
 import ConfigParser
 import wof
 
-wof._network = 'NETWORK'
-wof._vocabulary = 'VOCABULARY'
-wof._menu_group_name = 'MENU_GROUP_NAME'
-wof._service_wsdl = 'SERVICE_WSDL'
+_network = 'NETWORK'
+_vocabulary = 'VOCABULARY'
+_menu_group_name = 'MENU_GROUP_NAME'
+_service_wsdl = 'SERVICE_WSDL'
 
-wof._mappings = None
+_dao = None
+
+_mappings = None
+
 
 
 def config_from_file(file_name):

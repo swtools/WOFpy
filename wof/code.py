@@ -1,27 +1,15 @@
-import wof
+from wof import *
 import WaterML
-import inspect
-
-from sqlalchemy.sql import and_
-
-#TODO: Well this is obviously terrible
-_temp = __import__(wof._mappings, globals(), locals(), ['*'])
-#Site = _temp.Site
-
-for name, obj in inspect.getmembers(_temp):
-    if inspect.isclass(obj):
-        exec "%s = _temp.%s" % (name, name)
-###############################################
 
 
 def create_get_site_response(siteArg):
     
     if siteArg == None or siteArg == '':
-        siteResultArr = Site.query.all()
+        siteResultArr = wof._dao.Get_All_Sites()
     else:
-        sitesArr = siteArg.split(',')
-        sitesArr = [s.replace(wof._network+':','') for s in sitesArr]
-        siteResultArr = Site.query.filter(Site.SiteCode.in_(sitesArr)).all()
+        siteCodesArr = siteArg.split(',')
+        siteCodesArr = [s.replace(wof._network+':','') for s in siteCodesArr]
+        siteResultArr = wof._dao.Get_Sites_By_Codes(siteCodesArr)
 
     siteInfoResponse = WaterML.SiteInfoResponseType()
 
@@ -41,15 +29,15 @@ def create_get_site_response(siteArg):
 
 def create_get_site_info_response(siteArg, varArg=None):
     
-    siteCode = siteArg.replace(wof._network+':','')
-    siteResult = Site.query.filter(Site.SiteCode == siteCode).one()
+    siteCode = siteArg.replace(wof._network+':','')    
+    siteResult = wof._dao.Get_Site_By_Code(siteCode)
     
     if (varArg == None or varArg == ''):
-        seriesResultArr = SeriesCatalog.query.filter(SeriesCatalog.SiteCode == siteCode).all()
+        seriesResultArr = wof._dao.Get_Series_By_SiteCode(siteCode)
     else:
         varCode = varArg.replace(wof._network+':','')
-        seriesResultArr = SeriesCatalog.query.filter(and_(SeriesCatalog.SiteCode == siteCode,
-                                                          SeriesCatalog.VariableCode == varCode)).all()
+        seriesResultArr = \
+            wof._dao.Get_Series_By_SiteCode_And_VarCode(siteCode, varCode)
     
     siteInfoResponse = WaterML.SiteInfoResponseType()
     
@@ -70,11 +58,11 @@ def create_get_site_info_response(siteArg, varArg=None):
 def create_variable_info_response(varArg):
     
     if (varArg == None or varArg == ''):
-        variableResultArr = Variable.query.all()
+        variableResultArr = wof._dao.Get_All_Variables()
     else:
-        varCodeArr = varArg.split(',')
-        varCodeArr = [v.replace(wof._network+':','') for v in varCodeArr]
-        variableResultArr = Variable.query.filter(Variable.VariableCode.in_(varCodeArr)).all()
+        varCodesArr = varArg.split(',')
+        varCodesArr = [v.replace(wof._network+':','') for v in varCodesArr]
+        variableResultArr = wof._dao.Get_Variables_By_Codes(varCodesArr)
     
     variableInfoResponse = WaterML.VariablesResponseType()
     
@@ -102,21 +90,8 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
     siteCode = siteArg.replace(wof._network+':','')
     varCode = varArg.replace(wof._network+':','')
     
-    #first find the site and variable
-    siteResult = Site.query.filter(Site.SiteCode == siteCode).one()
-    varResult = Variable.query.filter(Variable.VariableCode == varCode).one()
-    
-    if (startDateTime == None or endDateTime == None):
-        valueResultArr = DataValue.query.filter(and_(DataValue.SiteID == siteResult.SiteID,
-                                                DataValue.VariableID == varResult.VariableID))\
-                                                .order_by(DataValue.LocalDateTime).all()
-    else:
-        valueResultArr = DataValue.query.filter(and_(DataValue.SiteID == siteResult.SiteID,
-                                                DataValue.VariableID == varResult.VariableID,
-                                                DataValue.LocalDateTime >= startDateTime,
-                                                DataValue.LocalDateTime <= endDateTime))\
-                                                .order_by(DataValue.LocalDateTime).all()
-    
+    valueResultArr = wof._dao.Get_DataValues(siteCode, varCode,
+                                             startDateTime, endDateTime)
     
     timeSeriesResponse = WaterML.TimeSeriesResponseType()
     
@@ -162,23 +137,26 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
         offsetTypeIDSet.add(valueResult.OffsetTypeID)
 
     #Add method elements for each unique methodID
+    #TODO: Query all at once instead of one-by-one
     for methodID in methodIDSet:
         if methodID:
-            methodResult = Method.query.filter(Method.MethodID == methodID).one()
+            methodResult = wof._dao.Get_Method_By_ID(methodID)
             method = create_method_element(methodResult)
             values.add_method(method)
     
     #Add source elements for each unique sourceID
+    #TODO: Query all at once instead of one-by-one
     for sourceID in sourceIDSet:
         if sourceID:
-            sourceResult = Source.query.filter(Source.SourceID == sourceID).one()
+            sourceResult = wof._dao.Get_Source_By_ID(sourceID)
             source = create_source_element(sourceResult)
             values.add_source(source)
     
     #Add qualifier elements
+    #TODO: Query all at once instead of one-by-one
     for qualID in qualifierIDSet:
         if qualID:
-           qualifierResult = Qualifier.query.filter(Qualifier.QualifierID == qualID).one()
+           qualifierResult = wof._dao.Get_Qualifier_By_ID(qualID)
            q = WaterML.qualifier(qualifierID=qualifierResult.QualifierID,
                                  default=None,
                                  network=wof._network,
@@ -186,22 +164,21 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
                                  qualifierCode=qualifierResult.QualifierCode)
         
     #Add qualityControlLevel elements
+    #TODO: Query all at once instead of one-by-one
     for qualControlLvlID in qualControlLevelIDSet:
         if qualControlLvlID:
-            qualControlLevelResult = QualityControlLevel.query.filter(
-                QualityControlLevel.QualityControlLevelID == qualControlLvlID).one()
+            qualControlLevelResult = wof._dao.Get_QualControlLvl_By_ID(qualControlLvlID)
             qualControlLevel = create_qualityControlLevel_element(qualControlLevelResult)
             values.add_qualityControlLevel(qualControlLevel)
     
     #Add offset elements
+    #TODO: Query all at once instead of one-by-one
     for offsetTypeID in offsetTypeIDSet:
         if offsetTypeID:
-            offsetTypeResult = OffsetType.query.filter(OffsetType.OffsetTypeID == offsetTypeID).one()
+            offsetTypeResult = wof._dao.Get_OffsetType_By_ID(offsetTypeID)
             offset = create_offset_element(offsetTypeResult)
             values.add_offset(offset)
         
-   
-    
     timeSeries.values = values
     
     timeSeriesResponse.set_timeSeries(timeSeries)
