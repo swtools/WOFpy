@@ -138,11 +138,17 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
 
     #Add method elements for each unique methodID
     #TODO: Query all at once instead of one-by-one
-    for methodID in methodIDSet:
-        if methodID:
-            methodResult = wof._dao.Get_Method_By_ID(methodID)
-            method = create_method_element(methodResult)
-            values.add_method(method)
+    methodIdArr = list(methodIdSet)
+    methodResultArr = wof._dao.Get_Methods_By_IDs(methodIdArr)
+    for methodResult in methodResultArr:
+        method = create_method_element(methodResult)
+        values.add_method(method)
+    
+    #for methodID in methodIDSet:
+    #    if methodID:
+    #        methodResult = wof._dao.Get_Method_By_ID(methodID)
+    #        method = create_method_element(methodResult)
+    #        values.add_method(method)
     
     #Add source elements for each unique sourceID
     #TODO: Query all at once instead of one-by-one
