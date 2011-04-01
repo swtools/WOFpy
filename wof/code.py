@@ -1,9 +1,18 @@
-from wof.mappings import *
+import wof
+import WaterML
+import inspect
+
 from sqlalchemy.sql import and_
 
-from wof import app as flask_app
+#TODO: Well this is obviously terrible
+_temp = __import__(wof._mappings, globals(), locals(), ['*'])
+#Site = _temp.Site
 
-import WaterML
+for name, obj in inspect.getmembers(_temp):
+    if inspect.isclass(obj):
+        exec "%s = _temp.%s" % (name, name)
+###############################################
+
 
 def create_get_site_response(siteArg):
     
@@ -11,7 +20,7 @@ def create_get_site_response(siteArg):
         siteResultArr = Site.query.all()
     else:
         sitesArr = siteArg.split(',')
-        sitesArr = [s.replace(flask_app.config['NETWORK']+':','') for s in sitesArr]
+        sitesArr = [s.replace(wof._network+':','') for s in sitesArr]
         siteResultArr = Site.query.filter(Site.SiteCode.in_(sitesArr)).all()
 
     siteInfoResponse = WaterML.SiteInfoResponseType()
@@ -32,13 +41,13 @@ def create_get_site_response(siteArg):
 
 def create_get_site_info_response(siteArg, varArg=None):
     
-    siteCode = siteArg.replace(flask_app.config['NETWORK']+':','')
+    siteCode = siteArg.replace(wof._network+':','')
     siteResult = Site.query.filter(Site.SiteCode == siteCode).one()
     
     if (varArg == None or varArg == ''):
         seriesResultArr = SeriesCatalog.query.filter(SeriesCatalog.SiteCode == siteCode).all()
     else:
-        varCode = varArg.replace(flask_app.config['NETWORK']+':','')
+        varCode = varArg.replace(wof._network+':','')
         seriesResultArr = SeriesCatalog.query.filter(and_(SeriesCatalog.SiteCode == siteCode,
                                                           SeriesCatalog.VariableCode == varCode)).all()
     
@@ -64,7 +73,7 @@ def create_variable_info_response(varArg):
         variableResultArr = Variable.query.all()
     else:
         varCodeArr = varArg.split(',')
-        varCodeArr = [v.replace(flask_app.config['NETWORK']+':','') for v in varCodeArr]
+        varCodeArr = [v.replace(wof._network+':','') for v in varCodeArr]
         variableResultArr = Variable.query.filter(Variable.VariableCode.in_(varCodeArr)).all()
     
     variableInfoResponse = WaterML.VariablesResponseType()
@@ -90,8 +99,8 @@ def create_variable_info_response(varArg):
 
 def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=None):
     
-    siteCode = siteArg.replace(flask_app.config['NETWORK']+':','')
-    varCode = varArg.replace(flask_app.config['NETWORK']+':','')
+    siteCode = siteArg.replace(wof._network+':','')
+    varCode = varArg.replace(wof._network+':','')
     
     #first find the site and variable
     siteResult = Site.query.filter(Site.SiteCode == siteCode).one()
@@ -172,8 +181,8 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
            qualifierResult = Qualifier.query.filter(Qualifier.QualifierID == qualID).one()
            q = WaterML.qualifier(qualifierID=qualifierResult.QualifierID,
                                  default=None,
-                                 network=flask_app.config['NETWORK'],
-                                 vocabulary=flask_app.config['VOCABULARY'],
+                                 network=wof._network,
+                                 vocabulary=wof._vocabulary,
                                  qualifierCode=qualifierResult.QualifierCode)
         
     #Add qualityControlLevel elements
@@ -318,8 +327,8 @@ def create_site_element(siteResult, seriesResultArr = None):
     seriesCatalog = WaterML.seriesCatalogType()
         
     if (seriesResultArr != None):
-        seriesCatalog.menuGroupName = flask_app.config['MENU_GROUP_NAME']
-        seriesCatalog.serviceWsdl = flask_app.config['SERVICE_WSDL']
+        seriesCatalog.menuGroupName = wof._menu_group_name
+        seriesCatalog.serviceWsdl = wof._service_wsdl
         
         for seriesResult in seriesResultArr:
             series = create_series_element(seriesResult)
@@ -339,7 +348,7 @@ def create_site_info_element(siteResult):
     siteInfo.set_siteName(siteResult.SiteName)
     
     #TODO: agencyIName
-    siteCode = WaterML.siteCode(network=flask_app.config['NETWORK'],
+    siteCode = WaterML.siteCode(network=wof._network,
                                 siteID=siteResult.SiteID,
                                 valueOf_=siteResult.SiteCode,
                                 agencyName=None,
@@ -420,7 +429,7 @@ def create_variable_element(variableResult):
                                         NoDataValue=variableResult.NoDataValue)
     
     variableCode = WaterML.variableCode()
-    variableCode.vocabulary = flask_app.config['VOCABULARY']
+    variableCode.vocabulary = wof._vocabulary
     variableCode.default = "true" #TODO
     variableCode.variableID = variableResult.VariableID
     variableCode.valueOf_ = variableResult.VariableCode
