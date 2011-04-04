@@ -5,6 +5,8 @@ from sqlalchemy import Boolean
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
+
+#TODO: How can this be put in init method of the DAO?
 import private_config
 engine = create_engine(private_config.database_connection_string,
                        convert_unicode=True)
@@ -32,11 +34,11 @@ class Variable(Base):
     GeneralCategory = Column(String)
     NoDataValue = Column(Float)
     
-    VariableUnits = relationship("Units", \
-                                    primaryjoin='Variable.VariableUnitsID==Units.UnitsID')
+    VariableUnits = relationship("Units",
+                                 primaryjoin='Variable.VariableUnitsID==Units.UnitsID')
     
-    TimeUnits = relationship("Units", \
-                                primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
+    TimeUnits = relationship("Units",
+                             primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
 
     def __repr__(self):
         return "<Variable('%s','%s')>" % (self.VariableCode, self.VariableName)
@@ -60,10 +62,10 @@ class Site(Base):
     County = Column(String)
     Comments = Column(String)
     
-    LatLongDatum = relationship("SpatialReference", \
+    LatLongDatum = relationship("SpatialReference",
                                         primaryjoin='Site.LatLongDatumID==SpatialReference.SpatialReferenceId')
     
-    LocalProjection = relationship("SpatialReference", \
+    LocalProjection = relationship("SpatialReference",
                                         primaryjoin='Site.LocalProjectionID==SpatialReference.SpatialReferenceId')
       
     def __repr__(self):

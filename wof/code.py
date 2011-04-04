@@ -5,11 +5,11 @@ import WaterML
 def create_get_site_response(siteArg):
     
     if siteArg == None or siteArg == '':
-        siteResultArr = wof._dao.Get_All_Sites()
+        siteResultArr = wof.dao.get_all_sites()
     else:
         siteCodesArr = siteArg.split(',')
-        siteCodesArr = [s.replace(wof._network+':','') for s in siteCodesArr]
-        siteResultArr = wof._dao.Get_Sites_By_Codes(siteCodesArr)
+        siteCodesArr = [s.replace(wof.network+':','') for s in siteCodesArr]
+        siteResultArr = wof.dao.get_sites_by_codes(siteCodesArr)
 
     siteInfoResponse = WaterML.SiteInfoResponseType()
 
@@ -29,15 +29,15 @@ def create_get_site_response(siteArg):
 
 def create_get_site_info_response(siteArg, varArg=None):
     
-    siteCode = siteArg.replace(wof._network+':','')    
-    siteResult = wof._dao.Get_Site_By_Code(siteCode)
+    siteCode = siteArg.replace(wof.network+':','')    
+    siteResult = wof.dao.get_site_by_code(siteCode)
     
     if (varArg == None or varArg == ''):
-        seriesResultArr = wof._dao.Get_Series_By_SiteCode(siteCode)
+        seriesResultArr = wof.dao.get_series_by_sitecode(siteCode)
     else:
-        varCode = varArg.replace(wof._network+':','')
+        varCode = varArg.replace(wof.network+':','')
         seriesResultArr = \
-            wof._dao.Get_Series_By_SiteCode_And_VarCode(siteCode, varCode)
+            wof.dao.get_series_by_sitecode_and_varcode(siteCode, varCode)
     
     siteInfoResponse = WaterML.SiteInfoResponseType()
     
@@ -58,11 +58,11 @@ def create_get_site_info_response(siteArg, varArg=None):
 def create_variable_info_response(varArg):
     
     if (varArg == None or varArg == ''):
-        variableResultArr = wof._dao.Get_All_Variables()
+        variableResultArr = wof.dao.get_all_variables()
     else:
         varCodesArr = varArg.split(',')
-        varCodesArr = [v.replace(wof._network+':','') for v in varCodesArr]
-        variableResultArr = wof._dao.Get_Variables_By_Codes(varCodesArr)
+        varCodesArr = [v.replace(wof.network+':','') for v in varCodesArr]
+        variableResultArr = wof.dao.get_variables_by_codes(varCodesArr)
     
     variableInfoResponse = WaterML.VariablesResponseType()
     
@@ -87,10 +87,10 @@ def create_variable_info_response(varArg):
 
 def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=None):
     
-    siteCode = siteArg.replace(wof._network+':','')
-    varCode = varArg.replace(wof._network+':','')
+    siteCode = siteArg.replace(wof.network+':','')
+    varCode = varArg.replace(wof.network+':','')
     
-    valueResultArr = wof._dao.Get_DataValues(siteCode, varCode,
+    valueResultArr = wof.dao.get_datavalues(siteCode, varCode,
                                              startDateTime, endDateTime)
     
     timeSeriesResponse = WaterML.TimeSeriesResponseType()
@@ -138,39 +138,39 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
 
     #Add method elements for each unique methodID
     methodIdArr = list(methodIdSet)
-    methodResultArr = wof._dao.Get_Methods_By_IDs(methodIdArr)
+    methodResultArr = wof.dao.get_methods_by_ids(methodIdArr)
     for methodResult in methodResultArr:
         method = create_method_element(methodResult)
         values.add_method(method)
 
     #Add source elements for each unique sourceID
     sourceIdArr = list(sourceIDSet)
-    sourceResultArr = wof._dao.Get_Sources_By_IDs(sourceIdArr)
+    sourceResultArr = wof.dao.get_sources_by_ids(sourceIdArr)
     for sourceResult in sourceResultArr:
         source = create_source_element(sourceResult)
         values.add_source(source)
     
     #Add qualifier elements
     qualIdArr = list(qualifierIDSet)
-    qualResultArr - wof._dao.Get_Qualifiers_By_IDs(qualIdArr)
+    qualResultArr - wof.dao.get_qualifiers_by_ids(qualIdArr)
     for qualifierResult in qualResultArr:
         q = WaterML.qualifier(qualifierID=qualifierResult.QualifierID,
                                  default=None,
-                                 network=wof._network,
-                                 vocabulary=wof._vocabulary,
+                                 network=wof.network,
+                                 vocabulary=wof.vocabulary,
                                  qualifierCode=qualifierResult.QualifierCode)
         #TODO: values.add_qualifier(q)       
         
     #Add qualityControlLevel elements
     qualControlLvlIdArr = list(qualControlLevelIDSet)
-    qualControlLevelResultArr = wof._dao.Get_QualControlLvls_By_IDs(qualControlLvlIdArr)
+    qualControlLevelResultArr = wof.dao.get_qualcontrollvls_by_ids(qualControlLvlIdArr)
     for qualControlLvlResult in qualControlLevelResultArr:
         qualControlLevel = create_qualityControlLevel_element(qualControlLevelResult)
         values.add_qualityControlLevel(qualControlLevel)
     
     #Add offset elements
     offsetTypeIdArr = list(offsetTypeIDSet)
-    offsetTypeResultArr = wof._dao.Get_OffsetTypes_By_IDs(offsetTypeIdArr)
+    offsetTypeResultArr = wof.dao.get_offsettypes_by_ids(offsetTypeIdArr)
     for offsetTypeResult in offsetTypeResultArr:
         offset = create_offset_element(offsetTypeResult)
         values.add_offset(offset)
@@ -300,8 +300,8 @@ def create_site_element(siteResult, seriesResultArr = None):
     seriesCatalog = WaterML.seriesCatalogType()
         
     if (seriesResultArr != None):
-        seriesCatalog.menuGroupName = wof._menu_group_name
-        seriesCatalog.serviceWsdl = wof._service_wsdl
+        seriesCatalog.menuGroupName = wof.menu_group_name
+        seriesCatalog.serviceWsdl = wof.service_wsdl
         
         for seriesResult in seriesResultArr:
             series = create_series_element(seriesResult)
@@ -321,7 +321,7 @@ def create_site_info_element(siteResult):
     siteInfo.set_siteName(siteResult.SiteName)
     
     #TODO: agencyIName
-    siteCode = WaterML.siteCode(network=wof._network,
+    siteCode = WaterML.siteCode(network=wof.network,
                                 siteID=siteResult.SiteID,
                                 valueOf_=siteResult.SiteCode,
                                 agencyName=None,
@@ -402,7 +402,7 @@ def create_variable_element(variableResult):
                                         NoDataValue=variableResult.NoDataValue)
     
     variableCode = WaterML.variableCode()
-    variableCode.vocabulary = wof._vocabulary
+    variableCode.vocabulary = wof.vocabulary
     variableCode.default = "true" #TODO
     variableCode.variableID = variableResult.VariableID
     variableCode.valueOf_ = variableResult.VariableCode
