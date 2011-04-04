@@ -4,7 +4,7 @@ from flask import Flask, request, g, Markup, Response, render_template
 
 from wof.code import *
 
-from wofpy_flask import app
+from frontends.wofpy_flask import app
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
 	 xmlns:xlink="http://www.w3.org/1999/xlink" \

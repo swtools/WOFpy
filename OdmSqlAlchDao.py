@@ -1,5 +1,7 @@
+from sqlalchemy.sql import and_
 
 from sqlalch_odm_mappings import *
+
 
 class OdmSqlAlchDao(object):
 
@@ -37,24 +39,26 @@ class OdmSqlAlchDao(object):
         
     def get_datavalues(self, siteCode, varCode, startDateTime=None,
                        endDateTime=None):
+        
         #first find the site and variable
-        siteResult = Get_Site_By_Code(siteCode)
-        varResult = Get_Variable_By_Code(varCode)
+        siteResult = self.get_site_by_code(siteCode)
+        varResult = self.get_variable_by_code(varCode)
         
         valueResultArr = None
         
+        #TODO: Something Wrong Here
         if (startDateTime == None or endDateTime == None):
             valueResultArr = DataValue.query.filter(
                 and_(DataValue.SiteID == siteResult.SiteID,
-                     DataValue.VariableID == varResult.VariableID))\
-                .order_by(DataValue.LocalDateTime).all()
+                     DataValue.VariableID == varResult.VariableID)
+                ).order_by(DataValue.LocalDateTime).all()
         else:
             valueResultArr = DataValue.query.filter(
                 and_(DataValue.SiteID == siteResult.SiteID,
                      DataValue.VariableID == varResult.VariableID,
                      DataValue.LocalDateTime >= startDateTime,
-                     DataValue.LocalDateTime <= endDateTime))\
-                .order_by(DataValue.LocalDateTime).all()
+                     DataValue.LocalDateTime <= endDateTime)
+                ).order_by(DataValue.LocalDateTime).all()
             
         return valueResultArr
     

@@ -89,7 +89,7 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
     
     siteCode = siteArg.replace(wof.network+':','')
     varCode = varArg.replace(wof.network+':','')
-    
+
     valueResultArr = wof.dao.get_datavalues(siteCode, varCode,
                                              startDateTime, endDateTime)
     
@@ -107,10 +107,12 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
     timeSeries = WaterML.TimeSeriesType()
     
     #sourceInfo (which is a siteInfo) element
+    siteResult = wof.dao.get_site_by_code(siteCode)
     sourceInfo = create_site_info_element(siteResult)
     timeSeries.sourceInfo = sourceInfo
     
     #variable element
+    varResult = wof.dao.get_variable_by_code(varCode)
     variable = create_variable_element(varResult)
     timeSeries.variable = variable
     
@@ -120,21 +122,21 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
     values.count = len(valueResultArr)
     
     #Need to keep track of unique methodIDs and sourceIDs
-    methodIDSet = set()
-    sourceIDSet = set()
-    qualifierIDSet = set()
-    qualControlLevelIDSet = set()
-    offsetTypeIDSet = set()
+    methodIdSet = set()
+    sourceIdSet = set()
+    qualifierIdSet = set()
+    qualControlLevelIdSet = set()
+    offsetTypeIdSet = set()
     
     for valueResult in valueResultArr:
         v = create_value_element(valueResult)
         values.add_value(v)
         
-        methodIDSet.add(valueResult.MethodID)
-        sourceIDSet.add(valueResult.SourceID)
-        qualifierIDSet.add(valueResult.QualifierID)
-        qualControlLevelIDSet.add(valueResult.QualityControlLevelID)
-        offsetTypeIDSet.add(valueResult.OffsetTypeID)
+        methodIdSet.add(valueResult.MethodID)
+        sourceIdSet.add(valueResult.SourceID)
+        qualifierIdSet.add(valueResult.QualifierID)
+        qualControlLevelIdSet.add(valueResult.QualityControlLevelID)
+        offsetTypeIdSet.add(valueResult.OffsetTypeID)
 
     #Add method elements for each unique methodID
     methodIdArr = list(methodIdSet)
@@ -144,14 +146,14 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
         values.add_method(method)
 
     #Add source elements for each unique sourceID
-    sourceIdArr = list(sourceIDSet)
+    sourceIdArr = list(sourceIdSet)
     sourceResultArr = wof.dao.get_sources_by_ids(sourceIdArr)
     for sourceResult in sourceResultArr:
         source = create_source_element(sourceResult)
         values.add_source(source)
     
     #Add qualifier elements
-    qualIdArr = list(qualifierIDSet)
+    qualIdArr = list(qualifierIdSet)
     qualResultArr = wof.dao.get_qualifiers_by_ids(qualIdArr)
     for qualifierResult in qualResultArr:
         q = WaterML.qualifier(qualifierID=qualifierResult.QualifierID,
@@ -162,14 +164,14 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
         #TODO: values.add_qualifier(q)       
         
     #Add qualityControlLevel elements
-    qualControlLvlIdArr = list(qualControlLevelIDSet)
+    qualControlLvlIdArr = list(qualControlLevelIdSet)
     qualControlLevelResultArr = wof.dao.get_qualcontrollvls_by_ids(qualControlLvlIdArr)
     for qualControlLvlResult in qualControlLevelResultArr:
-        qualControlLevel = create_qualityControlLevel_element(qualControlLevelResult)
+        qualControlLevel = create_qualityControlLevel_element(qualControlLvlResult)
         values.add_qualityControlLevel(qualControlLevel)
     
     #Add offset elements
-    offsetTypeIdArr = list(offsetTypeIDSet)
+    offsetTypeIdArr = list(offsetTypeIdSet)
     offsetTypeResultArr = wof.dao.get_offsettypes_by_ids(offsetTypeIdArr)
     for offsetTypeResult in offsetTypeResultArr:
         offset = create_offset_element(offsetTypeResult)
