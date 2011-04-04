@@ -1,10 +1,10 @@
 
 from sqlalch_odm_mappings import *
 
-class Dao(object):
+class OdmSqlAlchDao(object):
 
     def __init__(self):
-        #TODO: Somehow use the SQLAlchemy mappings here
+        #TODO: anything?
         pass
     
     def Get_All_Sites(self):
