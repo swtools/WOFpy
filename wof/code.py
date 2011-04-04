@@ -152,7 +152,7 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
     
     #Add qualifier elements
     qualIdArr = list(qualifierIDSet)
-    qualResultArr - wof.dao.get_qualifiers_by_ids(qualIdArr)
+    qualResultArr = wof.dao.get_qualifiers_by_ids(qualIdArr)
     for qualifierResult in qualResultArr:
         q = WaterML.qualifier(qualifierID=qualifierResult.QualifierID,
                                  default=None,

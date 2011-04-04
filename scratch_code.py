@@ -2,7 +2,7 @@ from wof import *
 from wof.code import *
 import OdmSqlAlchDao
 
-wof.config_from_file('lbr_config.cfg')
+wof.config_from_file('config/lbr_config.cfg')
 wof.dao = OdmSqlAlchDao.OdmSqlAlchDao()
 
 print wof.network
