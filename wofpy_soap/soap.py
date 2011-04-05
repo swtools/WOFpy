@@ -23,9 +23,9 @@ class WOFService(DefinitionBase):
     @soap(Array(String), String, _returns=Any)
     def GetSites(self, site, authToken):
         
-        siteArg = ','.join(str(s) for s in sites)
+        siteArg = ','.join(str(s) for s in site)
         
-        logging.debug(sites)
+        logging.debug(site)
         logging.debug(siteArg)
         
         
