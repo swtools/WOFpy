@@ -1,11 +1,15 @@
 import StringIO
-
+import logging
 import soaplib #soaplib 2.0.0-beta
+
+
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import *
 from soaplib.core.model.clazz import *
     
 from wof.code import *
+
+logger = logging.getLogger(__name__)
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
 	 xmlns:xlink="http://www.w3.org/1999/xlink" \
@@ -19,10 +23,13 @@ class WOFService(DefinitionBase):
     @soap(Array(String), String, _returns=Any)
     def GetSites(self, site, authToken):
         
-        siteArg = ','.join(str(s) for s in site)
-            
+        siteArg = ','.join(str(s) for s in sites)
+        
+        logging.debug(sites)
+        logging.debug(siteArg)
+        
+        
         siteResponse = create_get_site_response(siteArg)
-   
         outStream = StringIO.StringIO()
         siteResponse.export(outStream, 0, name_="sitesResponse", namespacedef_= NSDEF)
         
