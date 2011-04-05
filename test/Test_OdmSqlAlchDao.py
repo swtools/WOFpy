@@ -102,3 +102,4 @@ class Test_OdmSqlAlchDao(unittest.TestCase):
         resultVarCodes = [v.VariableCode for v in varResultList]
         for known_code in self.known_var_codes:
             self.assertTrue(known_code in resultVarCodes)
+    
