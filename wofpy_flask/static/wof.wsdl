@@ -937,88 +937,10 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:binding name="WaterOneFlow1" type="tns:WaterOneFlow">
-    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetSitesXml">
-      <soap12:operation soapAction="http://www.cuahsi.org/his/1.0/ws/GetSitesXml" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSiteInfo">
-      <soap12:operation soapAction="http://www.cuahsi.org/his/1.0/ws/GetSiteInfo" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetVariableInfo">
-      <soap12:operation soapAction="http://www.cuahsi.org/his/1.0/ws/GetVariableInfo" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSites">
-      <soap12:operation soapAction="http://www.cuahsi.org/his/1.0/ws/GetSites" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetSiteInfoObject">
-      <soap12:operation soapAction="http://www.cuahsi.org/his/1.0/ws/GetSiteInfoObject" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetVariableInfoObject">
-      <soap12:operation soapAction="http://www.cuahsi.org/his/1.0/ws/GetVariableInfoObject" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetValues">
-      <soap12:operation soapAction="http://www.cuahsi.org/his/1.0/ws/GetValues" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetValuesObject">
-      <soap12:operation soapAction="http://www.cuahsi.org/his/1.0/ws/GetValuesObject" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
   <wsdl:service name="WaterOneFlow">
     <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">&lt;div&gt;&lt;strong&gt;Developmental service. This service is internal CUAHSI use, and evaluation.&lt;/strong&gt;&lt;/div&gt;</wsdl:documentation>
     <wsdl:port name="WaterOneFlow" binding="tns:WaterOneFlow">
       <soap:address location="http://127.0.0.1:8080/soap/WOFService" />
-    </wsdl:port>
-    <wsdl:port name="WaterOneFlow1" binding="tns:WaterOneFlow1">
-      <soap12:address location="http://127.0.0.1:8080/soap/WOFService" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
