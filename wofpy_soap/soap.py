@@ -2,7 +2,7 @@ import StringIO
 import logging
 import soaplib #soaplib 2.0.0-beta
 
-
+from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import *
 from soaplib.core.model.clazz import *
@@ -18,10 +18,22 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
+
+class MySerializer(Base):
+    @classmethod
+    def to_parent_element(self, value, name='retval'):
+        pass
+    
+    @classmethod
+    def from_xml(self, element):
+        pass
+    
+    @classmethod
+    def add_to_schema(self, added_params):
+        pass
+
 class WOFService(DefinitionBase):
     
-    
-
     @soap(Array(String), String, _returns=Any)
     def GetSites(self, site, authToken):
         
