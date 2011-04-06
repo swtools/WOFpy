@@ -6,20 +6,22 @@ import soaplib #soaplib 2.0.0-beta
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import *
 from soaplib.core.model.clazz import *
-    
+
 from wof.code import *
 
 logger = logging.getLogger(__name__)
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
-	 xmlns:xlink="http://www.w3.org/1999/xlink" \
-	 xmlns:xsd="http://www.w3.org/2001/XMLSchema" \
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \
-	 xmlns:wtr="http://www.cuahsi.org/waterML/" \
-	 xmlns="http://www.cuahsi.org/waterML/1.0/"'
+    xmlns:xlink="http://www.w3.org/1999/xlink" \
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" \
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \
+    xmlns:wtr="http://www.cuahsi.org/waterML/" \
+    xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
 class WOFService(DefinitionBase):
-        
+    
+    
+
     @soap(Array(String), String, _returns=Any)
     def GetSites(self, site, authToken):
         

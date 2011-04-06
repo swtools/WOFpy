@@ -19,9 +19,10 @@ if __name__ == '__main__':
     wof.config_from_file('config/lbr_config.cfg')
     wof.dao = OdmSqlAlchDao.OdmSqlAlchDao()
     
-    soap_app = soaplib.core.Application([WOFService],
-        'http://www.cuahsi.org/his/1.0/ws/')
-    
+    soap_app = soaplib.core.Application(services=[WOFService],
+        tns='http://www.cuahsi.org/his/1.0/ws/',
+        name='WaterOneFlow')
+
     soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
     
     flask_app.wsgi_app = DispatcherMiddleware(flask_app.wsgi_app, {
