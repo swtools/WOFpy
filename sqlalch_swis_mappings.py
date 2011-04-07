@@ -16,6 +16,30 @@ db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
+class Variable(Base):
+    __tablename__ = 'parameter'
+
+    VariableID = Column('id', Integer, primary_key=True)
+    VariableCode = Column('parameter_code', String)
+    VariableName = Column('parameter_description', String)
+    #Speciation = Column(String)
+    #VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
+    #SampleMedium = Column(String)
+    #ValueType = Column(String)
+    #IsRegular = Column(Boolean)
+    #TimeSupport = Column(Float)
+    #TimeUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
+    #DataType = Column(String)
+    #GeneralCategory = Column(String)
+    #NoDataValue = Column(Float)
+    
+    #TODO: Might be good to have a Units table in the SWIS schema
+    #VariableUnits = relationship("Units",
+    #                            primaryjoin='Variable.VariableUnitsID==Units.UnitsID')
+    
+    #TimeUnits = relationship("Units",
+    #                         primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
+
 class Site(Base):
     __tablename__ = 'site'
     

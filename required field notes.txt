@@ -1,0 +1,7 @@
+SITE:
+
+--Required--
+    SiteName
+    SiteCode
+    LatLongDatum.SRSID
+    
