@@ -46,8 +46,8 @@ class Site(Base):
     SiteID = Column('id', Integer, primary_key=True)
     SiteCode = Column('site_code', String)
     SiteName = Column('name', String)
-    #Latitude
-    #Longitude
+    #TODO: Latitude
+    #TODO: Longitude
     #Elevation_m
     #VerticalDatum
     #LocalX
@@ -80,10 +80,27 @@ class Site(Base):
     #                                    primaryjoin='Site.LocalProjectionID==SpatialReference.SpatialReferenceId')
     
     
+class DataValue(Base):
+    __tablename__ = 'raw_data_value'
     
-    
-    
-    
+    ValueID = Column('id', Integer, primary_key = True)
+    DataValue = Column('data_value', Float)
+    #ValueAccuracy = Column(Float)
+    #LocalDateTime = Column(DateTime)
+    UTCOffset = Column('origin_utc_offset', Integer)
+    DateTimeUTC = Column('datetime_utc', DateTime)
+    SiteID = Column('site_id', Integer)
+    VariableID = Column('parameter_id', Integer) 
+    OffsetValue = Column('vertical_offset', Float)
+    #OffsetTypeID = Column(Integer)
+    #CensorCode = Column(String)
+    #QualifierID = Column(Integer)
+    #MethodID = Column(Integer)
+    #SourceID = Column(Integer)
+    #SampleID = Column(Integer)
+    #DerivedFromID = Column(Integer)
+    #QualityControlLevelID = Column(Integer)
+       
     
     
     
