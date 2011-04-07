@@ -1,6 +1,8 @@
 from wof import *
 import WaterML
 
+from xml.sax.saxutils import escape
+
 
 def create_get_site_response(siteArg):
     
@@ -287,15 +289,18 @@ def create_site_element(siteResult, seriesResultArr = None):
         siteInfo.add_note(WaterML.NoteType())
     else:
         if siteResult.County:
-            countyNote = WaterML.NoteType(title="County", valueOf_=siteResult.County)
+            countyNote = WaterML.NoteType(title="County",
+                                          valueOf_=siteResult.County)
             siteInfo.add_note(countyNote)
             
         if siteResult.State:    
-            stateNote = WaterML.NoteType(title="State", valueOf_=siteResult.State)
+            stateNote = WaterML.NoteType(title="State",
+                                         valueOf_=siteResult.State)
             siteInfo.add_note(stateNote)
         
         if siteResult.Comments:
-            commentsNote = WaterML.NoteType(title="Site Comments", valueOf_=siteResult.Comments)
+            commentsNote = WaterML.NoteType(title="Site Comments",
+                                        valueOf_=escape(siteResult.Comments))
             siteInfo.add_note(commentsNote)
 
         
@@ -334,13 +339,14 @@ def create_site_info_element(siteResult):
     
     geoLocation = WaterML.geoLocation()
     
-    geogLocation = WaterML.LatLonPointType(srs="EPSG:{0}".format(siteResult.LatLongDatum.SRSID),
+    if siteResult.LatLongDatum:
+        geogLocation = WaterML.LatLonPointType(srs="EPSG:{0}".format(siteResult.LatLongDatum.SRSID),
                                            latitude=siteResult.Latitude,
                                            longitude=siteResult.Longitude)
     
-    geoLocation.set_geogLocation(geogLocation)
+        geoLocation.set_geogLocation(geogLocation)
     
-    if (siteResult.LocalX != None and siteResult.LocalY != None):
+    if (siteResult.LocalX and siteResult.LocalY):
         localSiteXY = WaterML.localSiteXY()
         localSiteXY.projectionInformation = siteResult.LocalProjection.SRSName
         localSiteXY.X = siteResult.LocalX

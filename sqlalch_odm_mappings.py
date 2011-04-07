@@ -5,8 +5,6 @@ from sqlalchemy import Boolean
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-
-#TODO: How can this be put in init method of the DAO?
 import private_config
 engine = create_engine(private_config.database_connection_string,
                        convert_unicode=True)
