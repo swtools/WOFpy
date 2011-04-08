@@ -9,7 +9,7 @@ import OdmSqlAlchDao
 
 from wofpy_soap.soap import *
 from wofpy_flask import config
-from wofpy_flask import app as flask_app
+from wofpy_flask import create_app
 
 class Test_wofpy_soap(unittest.TestCase):
     
