@@ -3,7 +3,7 @@ import StringIO
 
 import wof.code
 
-from flask import Flask, request, Markup, Response, render_template
+from flask import Flask, request, Markup, Response, render_template, make_response
 from flask import Module
 
 
@@ -15,6 +15,22 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
 	 xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
 rest = Module(__name__)
+
+@rest.route('/wsdl/<network>.wsdl')
+def get_wsdl(network):
+    
+    if network == 'lbr' or network == 'swis':
+        #TODO: should have different serv_loc based on network
+        serv_loc = 'http://crwr-little.austin.utexas.edu:8080/soap/WOFService'
+        response = make_response(render_template('wsdl_temp.wsdl',
+                                                 serv_loc=serv_loc,
+                                                 network=network))
+        
+        response.headers['Content-Type'] = 'text/xml'
+        
+        return response
+    else:
+        return "Network '"+network+"' not registered."
 
 @rest.route('/')
 def index():

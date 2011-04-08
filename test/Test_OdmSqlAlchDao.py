@@ -16,7 +16,8 @@ class Test_OdmSqlAlchDao(unittest.TestCase):
             'USU-LBR-ParadiseRepeater',
             'USU-LBR-EFRepeater',
             'USU-LBR-Wellsville',
-            'USU-LBR-Confluence'
+            'USU-LBR-Confluence',
+            '10105900'
         )
         
         self.fake_codes = (
