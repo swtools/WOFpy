@@ -1,3 +1,5 @@
+import wof.base_mappings as wof_base
+
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime
 from sqlalchemy import Boolean
@@ -5,7 +7,6 @@ from sqlalchemy import Boolean
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-from wof.base_mappings import *
 
 import private_config
 engine = create_engine(private_config.database_connection_string,
@@ -17,7 +18,7 @@ db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
-class Variable(Base, BaseVariable):
+class Variable(Base, wof_base.BaseVariable):
     __tablename__ = 'Variables'
 
     VariableID = Column(Integer, primary_key=True)
@@ -43,7 +44,7 @@ class Variable(Base, BaseVariable):
     def __repr__(self):
         return "<Variable('%s','%s')>" % (self.VariableCode, self.VariableName)
 
-class Site(Base, BaseSite):
+class Site(Base, wof_base.BaseSite):
     __tablename__ = 'Sites'
     
     SiteID = Column(Integer, primary_key = True)
@@ -72,7 +73,7 @@ class Site(Base, BaseSite):
         return "<Site('%s','%s', ['%s' '%s'])>" % (self.SiteCode, self.SiteName, str(self.Latitude), str(self.Longitude))
 
 #TODO: Setup foreignkey relationships
-class DataValue(Base, BaseDataValue):
+class DataValue(Base, wof_base.BaseDataValue):
     __tablename__ = 'DataValues'
     
     ValueID = Column(Integer, primary_key = True)
@@ -94,14 +95,14 @@ class DataValue(Base, BaseDataValue):
     QualityControlLevelID = Column(Integer)
     
 
-class Qualifier(Base, BaseQualifier):
+class Qualifier(Base, wof_base.BaseQualifier):
     __tablename__ = 'Qualifiers'
     
     QualifierID = Column(Integer, primary_key=True)
     QualifierCode = Column(String)
     QualifierDescription = Column(String)
 
-class OffsetType(Base, BaseOffsetType):
+class OffsetType(Base, wof_base.BaseOffsetType):
     __tablename__ = 'OffsetTypes'
     
     OffsetTypeID = Column(Integer, primary_key = True)
@@ -112,14 +113,14 @@ class OffsetType(Base, BaseOffsetType):
                 primaryjoin='OffsetType.OffsetUnitsID==Units.UnitsID')
 
 
-class Method(Base, BaseMethod):
+class Method(Base, wof_base.BaseMethod):
     __tablename__ ='Methods'
     
     MethodID = Column(Integer, primary_key=True)
     MethodDescription = Column(String)
     MethodLink = Column(String)
     
-class Source(Base, BaseSource):
+class Source(Base, wof_base.BaseSource):
     __tablename__='Sources'
     
     SourceID = Column(Integer, primary_key=True)
@@ -139,7 +140,7 @@ class Source(Base, BaseSource):
     Metadata = relationship("Metadata",
                     primaryjoin='Source.MetadataID==Metadata.MetadataID')
     
-class Metadata(Base, BaseMetadata):
+class Metadata(Base, wof_base.BaseMetadata):
     __tablename__='ISOMetadata'
     
     MetadataID = Column(Integer, primary_key=True)
@@ -149,7 +150,7 @@ class Metadata(Base, BaseMetadata):
     ProfileVersion = Column(String)
     MetadataLink = Column(String)    
 
-class QualityControlLevel(Base, BaseQualityControlLevel):
+class QualityControlLevel(Base, wof_base.BaseQualityControlLevel):
     __tablename__='QualityControlLevels'
     
     QualityControlLevelID = Column(Integer, primary_key=True)
@@ -157,7 +158,7 @@ class QualityControlLevel(Base, BaseQualityControlLevel):
     Definition = Column(String)
     Explanation = Column(String)
 
-class SeriesCatalog(Base, BaseSeriesCatalog):
+class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     __tablename__ = 'SeriesCatalog'
     
     SeriesID = Column(Integer, primary_key = True)
@@ -202,7 +203,7 @@ class SeriesCatalog(Base, BaseSeriesCatalog):
     #                            primaryjoin='SeriesCatalog.TimeUnitsID==Units.UnitsID')
 
 
-class Units(Base, BaseUnits):
+class Units(Base, wof_base.BaseUnits):
     __tablename__ = 'Units'
     
     UnitsID = Column(Integer, primary_key=True)
@@ -210,7 +211,7 @@ class Units(Base, BaseUnits):
     UnitsType = Column(String)
     UnitsAbbreviation = Column(String)
     
-class SpatialReference(Base, BaseSpatialReference):
+class SpatialReference(Base, wof_base.BaseSpatialReference):
     __tablename__ = 'SpatialReferences'
     
     SpatialReferenceId = Column(Integer, primary_key=True)
@@ -219,7 +220,7 @@ class SpatialReference(Base, BaseSpatialReference):
     IsGeographic = Column(Boolean)
     Notes = Column(String)
     
-class VerticalDatum(Base, BaseVerticalDatum):
+class VerticalDatum(Base, wof_base.BaseVerticalDatum):
     __tablename__ = 'VerticalDatumCV'
     Term = Column(String, primary_key=True)
     Definition = Column(String)

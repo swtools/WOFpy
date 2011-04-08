@@ -13,7 +13,7 @@ config_obj.SQLALCHEMY_DATABASE_URI = private_config.database_connection_string
 
 flask_app.config.from_object(config_obj)
 
-from wof.soap import *
+from wofpy_soap.soap import WOFService
 import soaplib #soaplib 2.0.0-beta
 
 soap_application = soaplib.core.Application([WOFService], 'http://www.cuahsi.org/his/1.0/ws/')

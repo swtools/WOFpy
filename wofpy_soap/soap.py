@@ -2,12 +2,13 @@ import StringIO
 import logging
 import soaplib #soaplib 2.0.0-beta
 
+import wof.code
+
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
-from soaplib.core.model.primitive import *
-from soaplib.core.model.clazz import *
+from soaplib.core.model.primitive import String, Any
+from soaplib.core.model.clazz import Array, ClassModel
 
-from wof.code import *
 
 logger = logging.getLogger(__name__)
 
@@ -43,9 +44,10 @@ class WOFService(DefinitionBase):
         logging.debug(siteArg)
         
         
-        siteResponse = create_get_site_response(siteArg)
+        siteResponse = wof.code.create_get_site_response(siteArg)
         outStream = StringIO.StringIO()
-        siteResponse.export(outStream, 0, name_="sitesResponse", namespacedef_= NSDEF)
+        siteResponse.export(outStream, 0, name_="sitesResponse",
+                            namespacedef_= NSDEF)
         
         return outStream.getvalue()
     
@@ -54,76 +56,85 @@ class WOFService(DefinitionBase):
         
         siteArg = ','.join(str(s) for s in site)
         
-        siteResponse = create_get_site_response(siteArg)
+        siteResponse = wof.code.create_get_site_response(siteArg)
    
         outStream = StringIO.StringIO()
-        siteResponse.export(outStream, 0, name_="sitesResponse", namespacedef_= NSDEF)
+        siteResponse.export(outStream, 0, name_="sitesResponse",
+                            namespacedef_= NSDEF)
         
         return str(outStream.getvalue()).replace('\n','')
     
-    ############################################################################
+    ###########################################################################
     
     @soap(String, String, _returns=String)
     def GetSiteInfo(self,site,authToken):
         
-        siteInfoResponse = create_get_site_info_response(site)
+        siteInfoResponse = wof.code.create_get_site_info_response(site)
         
         outStream = StringIO.StringIO()
-        siteInfoResponse.export(outStream, 0, name_="siteInfoResponse", namespacedef_= NSDEF)
+        siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
+                                namespacedef_= NSDEF)
      
         return str(outStream.getvalue()).replace('\n','')
     
     @soap(String, String, _returns=Any)
     def GetSiteInfoObject(self,site,authToken):
         
-        siteInfoResponse = create_get_site_info_response(site)
+        siteInfoResponse = wof.code.create_get_site_info_response(site)
         
         outStream = StringIO.StringIO()
-        siteInfoResponse.export(outStream, 0, name_="siteInfoResponse", namespacedef_= NSDEF)
+        siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
+                                namespacedef_= NSDEF)
      
         return outStream.getvalue()
     
-    ############################################################################
+    ###########################################################################
     
     @soap(String, String, _returns=String)
     def GetVariableInfo(self, variable, authToken):
         
-        variableInfoResponse = create_variable_info_response(variable)
+        variableInfoResponse = wof.code.create_variable_info_response(variable)
         
         outStream = StringIO.StringIO()
-        variableInfoResponse.export(outStream, 0, name_="variablesResponse", namespacedef_= NSDEF)
+        variableInfoResponse.export(outStream, 0, name_="variablesResponse",
+                                    namespacedef_= NSDEF)
         
         return str(outStream.getvalue()).replace('\n','')
     
     @soap(String, String, _returns=Any)
     def GetVariableInfoObject(self, variable, authToken):
         
-        variableInfoResponse = create_variable_info_response(variable)
+        variableInfoResponse = wof.code.create_variable_info_response(variable)
         
         outStream = StringIO.StringIO()
-        variableInfoResponse.export(outStream, 0, name_="variablesResponse", namespacedef_= NSDEF)
+        variableInfoResponse.export(outStream, 0, name_="variablesResponse",
+                                    namespacedef_= NSDEF)
         
         return outStream.getvalue()
     
-    ############################################################################
+    ###########################################################################
 
     @soap(String, String, String, String, _returns=String)
     def GetValues(self, location, variable, startDate, endDate):
         
-        timeSeriesResponse = create_get_values_response(location,variable,startDate,endDate)
+        timeSeriesResponse = wof.code.create_get_values_response(
+            location,variable,startDate,endDate)
            
         outStream = StringIO.StringIO()
-        timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse", namespacedef_= NSDEF)
+        timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
+                                  namespacedef_= NSDEF)
         
         return str(outStream.getvalue()).replace('\n','')
     
     @soap(String, String, String, String, _returns=Any)
     def GetValuesObject(self, location, variable, startDate, endDate):
         
-        timeSeriesResponse = create_get_values_response(location,variable,startDate,endDate)
+        timeSeriesResponse = wof.code.create_get_values_response(
+            location,variable,startDate,endDate)
            
         outStream = StringIO.StringIO()
-        timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse", namespacedef_= NSDEF)
+        timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
+                                  namespacedef_= NSDEF)
         
         return outStream.getvalue()
     

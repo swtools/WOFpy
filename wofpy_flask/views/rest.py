@@ -1,9 +1,11 @@
+
 import StringIO
+
+import wof.code
 
 from flask import Flask, request, Markup, Response, render_template
 from flask import Module
 
-from wof.code import *
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
 	 xmlns:xlink="http://www.w3.org/1999/xlink" \
@@ -31,7 +33,7 @@ def get_sites():
     
     siteArg = request.args.get('site',None)
     
-    siteResponse = create_get_site_response(siteArg)
+    siteResponse = wof.code.create_get_site_response(siteArg)
    
     outStream = StringIO.StringIO()
     siteResponse.export(outStream, 0, name_="sitesResponse",
@@ -51,7 +53,7 @@ def get_site_info():
     if siteArg == None:
         return "Must enter a single site code (site)"
     
-    siteInfoResponse = create_get_site_info_response(siteArg,varArg)
+    siteInfoResponse = wof.code.create_get_site_info_response(siteArg,varArg)
     
     outStream = StringIO.StringIO()
     siteInfoResponse.export(outStream, 0, name_="sitesResponse",
@@ -67,7 +69,7 @@ def get_site_info():
 def get_variable_info():
     varArg = request.args.get('variable',None)
     
-    variableInfoResponse = create_variable_info_response(varArg)
+    variableInfoResponse = wof.code.create_variable_info_response(varArg)
     
     outStream = StringIO.StringIO()
     variableInfoResponse.export(outStream, 0, name_="variablesResponse",
@@ -90,7 +92,8 @@ def get_values():
     if (siteArg == None or varArg == None):
         return "Must enter a site code (location) and a variable code (variable)"
     
-    timeSeriesResponse = create_get_values_response(siteArg,varArg,startDateTime,endDateTime)
+    timeSeriesResponse = wof.code.create_get_values_response(
+        siteArg,varArg,startDateTime,endDateTime)
        
     outStream = StringIO.StringIO()
     timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",

@@ -1,4 +1,5 @@
-from wof import *
+
+import wof
 import WaterML
 
 from xml.sax.saxutils import escape

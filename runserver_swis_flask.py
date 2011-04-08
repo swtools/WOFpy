@@ -8,7 +8,7 @@ from soaplib.core.server import wsgi
 import wof
 import SwisSqlAlchDao
 
-from wofpy_soap.soap import *
+from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
 
