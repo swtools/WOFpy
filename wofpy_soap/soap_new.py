@@ -6,7 +6,7 @@ import wof.code
 
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
-from soaplib.core.model.primitive import String, Any, Integer, Float
+from soaplib.core.model.primitive import String, Any, Integer, Float, DateTime
 from soaplib.core.model.clazz import Array, ClassModel
 
 
@@ -18,6 +18,98 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
+
+
+class SiteInfoResponseType(ClassModel):
+    queryInfo = QueryInfoType
+    #site = 
+
+class QueryInfoType(ClassModel):
+    creationTime = DateTime
+    queryURL = String
+    querySQL = String
+    #criteria
+    #note
+    #extension
+
+class SiteInfoType(SourceInfoType):
+    pass
+
+class SourceInfoType(ClassModel):
+    pass
+
+class DataSetInfoType(ClassModel):
+    pass
+
+class GeogLocationType(ClassModel):
+    pass
+
+class LatLonBoxType(ClassModel):
+    pass
+
+class LatLonPointType(ClassModel):
+    pass
+
+class seriesCatalogType(ClassModel):
+    pass
+
+class VariableInfoType(ClassModel):
+    pass
+
+class ArrayOfOption(ClassModel):
+    pass
+
+class UnitsType(ClassModel):
+    pass
+
+class TimePeriodType(ClassModel):
+    pass
+
+class TimeIntervalType(ClassModel):
+    pass
+
+class TimeSingleType(ClassModel):
+    pass
+
+class TimePeriodRealTimeType(ClassModel):
+    pass
+
+class MethodType(ClassModel):
+    pass
+
+class SourceType(ClassModel):
+    pass
+
+class MetaDataType(ClassModel):
+    pass
+
+class ContactInformationType(ClassModel):
+    pass
+
+class QualityControlLevelType(ClassModel):
+    pass
+
+class VariablesResponseType(ClassModel):
+    pass
+
+class ArrayOfVariableInfoType(ClassModel):
+    pass
+
+class TimeSeriesResponseType(ClassModel):
+    pass
+
+class TimeSeriesType(ClassModel):
+    pass
+
+class TsValuesSingleVariableType(ClassModel):
+    pass
+
+class ValueSingleVariable(ClassModel):
+    pass
+
+class OffsetType(ClassModel):
+    pass
+
 
 class WOFService(DefinitionBase):
         
