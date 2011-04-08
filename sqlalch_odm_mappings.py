@@ -108,8 +108,8 @@ class OffsetType(Base, BaseOffsetType):
     OffsetUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
     OffsetDescription = Column(String)
     
-    OffsetUnits = relationship("Units", \
-                                primaryjoin='OffsetType.OffsetUnitsID==Units.UnitsID')
+    OffsetUnits = relationship("Units",
+                primaryjoin='OffsetType.OffsetUnitsID==Units.UnitsID')
 
 
 class Method(Base, BaseMethod):
@@ -134,7 +134,20 @@ class Source(Base, BaseSource):
     State = Column(String)
     ZipCode = Column(String)
     Citation = Column(String)
+    MetadataID = Column(Integer, ForeignKey('ISOMetadata.MetadataID'))
     
+    Metadata = relationship("Metadata",
+                    primaryjoin='Source.MetadataID==Metadata.MetadataID')
+    
+class Metadata(Base, BaseMetadata):
+    __tablename__='ISOMetadata'
+    
+    MetadataID = Column(Integer, primary_key=True)
+    TopicCategory = Column(String)
+    Title = Column(String)
+    Abstract = Column(String)
+    ProfileVersion = Column(String)
+    MetadataLink = Column(String)    
 
 class QualityControlLevel(Base, BaseQualityControlLevel):
     __tablename__='QualityControlLevels'

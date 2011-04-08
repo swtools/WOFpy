@@ -22,8 +22,16 @@ def after_request(response):
     return response
 
 @app.route('/')
-def hello():
-    return render_template('index.html')
+def index():
+    return render_template('index.html', p='LBR',s='USU-LBR-Paradise',
+                           v='USU36',sd='2007-08-17T12:00:00',
+                           ed='2007-08-18T12:00:00')
+
+@app.route('/swis')
+def swis_index():
+    return render_template('index.html', p='SWIS',s='BAYT',
+                           v='seawater_salinity',sd='2007-03-23T12:00:00',
+                           ed='2007-03-24T12:00:00')
 
 @app.route('/GetSites', methods=['GET'])
 def get_sites():

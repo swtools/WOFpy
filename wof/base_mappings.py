@@ -96,6 +96,15 @@ class BaseMethod(object):
     MethodID = None
     MethodDescription = None
     MethodLink = None
+  
+class BaseMetadata(object):
+    
+    MetadataID = None
+    TopicCategory = None
+    Title = None
+    Abstract = None
+    ProfileVersion = None
+    MetadataLink = None
     
 class BaseSource(object):
     
@@ -111,6 +120,9 @@ class BaseSource(object):
     State = None
     ZipCode = None
     Citation = None
+    MetadataID = None
+    
+    Metadata = BaseMetadata()
     
 class BaseQualityControlLevel(object):
     

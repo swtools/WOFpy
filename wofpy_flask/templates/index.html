@@ -3,18 +3,42 @@
 	<title>WaterOneFlow in Python</title>
 </head>
 <body>
-	<p>Visit one of these pages to obtain Little Bear River observations data and metadata from the REST API for WOF written in Python:</p>
+	<p>Visit one of these pages to obtain {{p}} observations data and metadata from the REST API for WOF written in Python:</p>
 	
 	<ul>
-		<li><a href="{{request.script_root|safe}}/GetSites">GetSites</a></li>
-		<li><a href="{{request.script_root|safe}}/GetSites?site=LBR:USU-LBR-Paradise">GetSites?site=LBR:USU-LBR-Paradise</a></li>
-		<li><a href="{{request.script_root|safe}}/GetSiteInfo?site=LBR:USU-LBR-Paradise">GetSiteInfo?site=LBR:USU-LBR-Paradise</a></li>
-		<li><a href="{{request.script_root|safe}}/GetVariableInfo">GetVariableInfo</a></li>
-		<li><a href="{{request.script_root|safe}}/GetVariableInfo?variable=LBR:USU36">GetVariableInfo?variable=LBR:USU36</a></li>
-		<li><a href="{{request.script_root|safe}}/GetValues?location=LBR:USU-LBR-Paradise&variable=LBR:USU36">GetValues?location=LBR:USU-LBR-Paradise&variable=LBR:USU36</a></li>
 		<li>
-			<a href="{{request.script_root|safe}}/GetValues?location=LBR:USU-LBR-Paradise&variable=LBR:USU36&startDate=2007-08-17T12:00:00&endDate=2007-08-18T12:00:00">
-				GetValues?location=LBR:USU-LBR-Paradise&variable=LBR:USU36&startDate=2007-08-17T12:00:00&endDate=2007-08-18T12:00:00
+                    <a href="{{request.script_root|safe}}/GetSites">
+                        GetSites
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/GetSites?site={{p}}:{{s}}">
+                        GetSites?site={{p}}:{{s}}
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/GetSiteInfo?site={{p}}:{{s}}">
+                        GetSiteInfo?site={{p}}:{{s}}
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/GetVariableInfo">
+                        GetVariableInfo
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/GetVariableInfo?variable={{p}}:{{v}}">
+                        GetVariableInfo?variable={{p}}:{{v}}
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}">
+                        GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}
+                    </a>
+                </li>
+		<li>
+			<a href="{{request.script_root|safe}}/GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}">
+				GetValues?location={{p}}:{{s}}&{{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}
 			</a>
 		</li>
 	</ul>
