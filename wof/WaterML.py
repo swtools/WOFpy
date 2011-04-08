@@ -52,14 +52,6 @@ except ImportError:
                 except ImportError:
                     raise ImportError("Failed to import ElementTree from any known place")
 
-def parsexml_(*args, **kwargs):
-    if (XMLParser_import_library == XMLParser_import_lxml and
-        'parser' not in kwargs):
-        # Use the lxml ElementTree compatible parser so that, e.g.,
-        #   we ignore comments.
-        kwargs['parser'] = etree_.ETCompatXMLParser()
-    doc = etree_.parse(*args, **kwargs)
-    return doc
 
 #
 # User methods
@@ -6882,86 +6874,12 @@ class SiteInfoType(SourceInfoType):
 # end class SiteInfoType
 
 
-USAGE_TEXT = """
-Usage: python <Parser>.py [ -s ] <in_xml_file>
-"""
-
-def usage():
-    print USAGE_TEXT
-    sys.exit(1)
 
 
 def get_root_tag(node):
     tag = Tag_pattern_.match(node.tag).groups()[-1]
     rootClass = globals().get(tag)
     return tag, rootClass
-
-
-def parse(inFileName):
-    doc = parsexml_(inFileName)
-    rootNode = doc.getroot()
-    rootTag, rootClass = get_root_tag(rootNode)
-    if rootClass is None:
-        rootTag = 'sitesResponse'
-        rootClass = SiteInfoResponseType
-    rootObj = rootClass.factory()
-    rootObj.build(rootNode)
-    # Enable Python to collect the space used by the DOM.
-    doc = None
-    sys.stdout.write('<?xml version="1.0" ?>\n')
-    rootObj.export(sys.stdout, 0, name_=rootTag, 
-        namespacedef_='')
-    return rootObj
-
-
-def parseString(inString):
-    from StringIO import StringIO
-    doc = parsexml_(StringIO(inString))
-    rootNode = doc.getroot()
-    rootTag, rootClass = get_root_tag(rootNode)
-    if rootClass is None:
-        rootTag = 'sitesResponse'
-        rootClass = SiteInfoResponseType
-    rootObj = rootClass.factory()
-    rootObj.build(rootNode)
-    # Enable Python to collect the space used by the DOM.
-    doc = None
-    sys.stdout.write('<?xml version="1.0" ?>\n')
-    rootObj.export(sys.stdout, 0, name_="sitesResponse",
-        namespacedef_='')
-    return rootObj
-
-
-def parseLiteral(inFileName):
-    doc = parsexml_(inFileName)
-    rootNode = doc.getroot()
-    rootTag, rootClass = get_root_tag(rootNode)
-    if rootClass is None:
-        rootTag = 'sitesResponse'
-        rootClass = SiteInfoResponseType
-    rootObj = rootClass.factory()
-    rootObj.build(rootNode)
-    # Enable Python to collect the space used by the DOM.
-    doc = None
-    sys.stdout.write('#from SiteInfoResponseType import *\n\n')
-    sys.stdout.write('import SiteInfoResponseType as model_\n\n')
-    sys.stdout.write('rootObj = model_.rootTag(\n')
-    rootObj.exportLiteral(sys.stdout, 0, name_=rootTag)
-    sys.stdout.write(')\n')
-    return rootObj
-
-
-def main():
-    args = sys.argv[1:]
-    if len(args) == 1:
-        parse(args[0])
-    else:
-        usage()
-
-
-if __name__ == '__main__':
-    #import pdb; pdb.set_trace()
-    main()
 
 
 __all__ = [
