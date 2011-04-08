@@ -1,0 +1,176 @@
+
+
+class Variable(object):
+    
+    VariableID = None
+    VariableCode = None
+    VariableName = None
+    Speciation = None
+    VariableUnitsID = None
+    SampleMedium = None
+    ValueType = None
+    IsRegular = None
+    TimeSupport = None
+    TimeUnitsID = None
+    DataType = None
+    GeneralCategory = None
+    NoDataValue = None
+    
+    VariableUnits = Units()
+    TimeUnits = Units()
+
+class Site(object):
+      
+    SiteID = None
+    SiteCode = None
+    SiteName = None
+    Latitude = None
+    Longitude = None
+    LatLongDatumID = None #FK to SpatialReferences
+    Elevation_m = None
+    VerticalDatum = None
+    LocalX = None
+    LocalY = None
+    LocalProjectionID = None #FK to SpatialReferences
+    PosAccuracy_m = None
+    State = None
+    County = None
+    Comments = None
+    
+    LatLongDatum = SpatialReference()
+    LocalProjection = SpatialReference()
+    
+
+class DataValue(object):
+    
+    
+    ValueID = None
+    DataValue = None
+    ValueAccuracy = None
+    LocalDateTime = None
+    UTCOffset = None
+    DateTimeUTC = None
+    SiteID = None
+    VariableID = None 
+    OffsetValue = None
+    OffsetTypeID = None
+    CensorCode = None
+    QualifierID = None
+    MethodID = None
+    SourceID = None
+    SampleID = None
+    DerivedFromID = None
+    QualityControlLevelID = None
+    
+
+class Qualifier(object):
+    
+    QualifierID = None
+    QualifierCode = None
+    QualifierDescription = None
+
+class OffsetType(object):
+    
+    OffsetTypeID = None
+    OffsetUnitsID = None
+    OffsetDescription = None
+    
+    OffsetUnits = Units()
+
+
+class Method(object):
+     
+    MethodID = None
+    MethodDescription = None
+    MethodLink = None
+    
+class Source(object):
+    
+    SourceID = None
+    Organization = None
+    SourceDescription = None
+    SourceLink = None
+    ContactName = None
+    Phone = None
+    Email = None
+    Address = None
+    City = None
+    State = None
+    ZipCode = None
+    Citation = None
+    MetadataID = None
+    
+    Metadata = ISOMetadata()
+    
+class ISOMetadata(object):
+    
+    MetadataID = None
+    TopicCategory = None #TODO: FK to TopicCategoryCV
+    Title = None
+    Abstract = None
+    ProfileVersion = None
+    MetadataLink = None
+    
+class QualityControlLevel(object):
+    
+    QualityControlLevelID = None
+    QualityControlLevelCode = None
+    Definition = None
+    Explanation = None
+
+class SeriesCatalog(object):
+    
+    SeriesID = None
+    SiteID = None
+    SiteCode = None
+    SiteName = None
+    VariableID = None
+    VariableCode = None
+    VariableName = None
+    Speciation = None
+    VariableUnitsID = None 
+    VariableUnitsName = None
+    SampleMedium = None
+    ValueType = None
+    TimeSupport = None
+    TimeUnitsID = None
+    TimeUnitsName = None
+    DataType = None
+    GeneralCategory = None
+    MethodID = None
+    MethodDescription = None
+    SourceID = None #TODO
+    Organization = None
+    SourceDescription = None
+    Citation = None
+    QualityControlLevelID = None #TODO
+    QualityControlLevelCode = None
+    BeginDateTime = None
+    EndDateTime = None
+    BeginDateTimeUTC = None
+    EndDateTimeUTC = None
+    ValueCount = None
+    
+    Site = Site()
+    Variable = Variable()
+    Method = Method()
+    
+class Units(object):
+    
+    UnitsID = None
+    UnitsName = None
+    UnitsType = None
+    UnitsAbbreviation = None
+    
+class SpatialReference(object):
+    
+    SpatialReferenceId = None
+    SRSID = None
+    SRSName = None
+    IsGeographic = None
+    Notes = None
+    
+class VerticalDatum(object):
+    
+    Term = None
+    Definition = None
