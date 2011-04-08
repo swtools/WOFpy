@@ -1,6 +1,19 @@
+class BaseUnits(object):
+    
+    UnitsID = None
+    UnitsName = None
+    UnitsType = None
+    UnitsAbbreviation = None
+    
+class BaseSpatialReference(object):
+    
+    SpatialReferenceId = None
+    SRSID = None
+    SRSName = None
+    IsGeographic = None
+    Notes = None
 
-
-class Variable(object):
+class BaseVariable(object):
     
     VariableID = None
     VariableCode = None
@@ -16,10 +29,10 @@ class Variable(object):
     GeneralCategory = None
     NoDataValue = None
     
-    VariableUnits = Units()
-    TimeUnits = Units()
+    VariableUnits = BaseUnits()
+    TimeUnits = BaseUnits()
 
-class Site(object):
+class BaseSite(object):
       
     SiteID = None
     SiteCode = None
@@ -37,11 +50,11 @@ class Site(object):
     County = None
     Comments = None
     
-    LatLongDatum = SpatialReference()
-    LocalProjection = SpatialReference()
+    LatLongDatum = BaseSpatialReference()
+    LocalProjection = BaseSpatialReference()
     
 
-class DataValue(object):
+class BaseDataValue(object):
     
     
     ValueID = None
@@ -63,28 +76,28 @@ class DataValue(object):
     QualityControlLevelID = None
     
 
-class Qualifier(object):
+class BaseQualifier(object):
     
     QualifierID = None
     QualifierCode = None
     QualifierDescription = None
 
-class OffsetType(object):
+class BaseOffsetType(object):
     
     OffsetTypeID = None
     OffsetUnitsID = None
     OffsetDescription = None
     
-    OffsetUnits = Units()
+    OffsetUnits = BaseUnits()
 
 
-class Method(object):
+class BaseMethod(object):
      
     MethodID = None
     MethodDescription = None
     MethodLink = None
     
-class Source(object):
+class BaseSource(object):
     
     SourceID = None
     Organization = None
@@ -98,27 +111,15 @@ class Source(object):
     State = None
     ZipCode = None
     Citation = None
-    MetadataID = None
     
-    Metadata = ISOMetadata()
-    
-class ISOMetadata(object):
-    
-    MetadataID = None
-    TopicCategory = None #TODO: FK to TopicCategoryCV
-    Title = None
-    Abstract = None
-    ProfileVersion = None
-    MetadataLink = None
-    
-class QualityControlLevel(object):
+class BaseQualityControlLevel(object):
     
     QualityControlLevelID = None
     QualityControlLevelCode = None
     Definition = None
     Explanation = None
 
-class SeriesCatalog(object):
+class BaseSeriesCatalog(object):
     
     SeriesID = None
     SiteID = None
@@ -151,26 +152,12 @@ class SeriesCatalog(object):
     EndDateTimeUTC = None
     ValueCount = None
     
-    Site = Site()
-    Variable = Variable()
-    Method = Method()
+    Site = BaseSite()
+    Variable = BaseVariable()
+    Method = BaseMethod()
     
-class Units(object):
     
-    UnitsID = None
-    UnitsName = None
-    UnitsType = None
-    UnitsAbbreviation = None
-    
-class SpatialReference(object):
-    
-    SpatialReferenceId = None
-    SRSID = None
-    SRSName = None
-    IsGeographic = None
-    Notes = None
-    
-class VerticalDatum(object):
+class BaseVerticalDatum(object):
     
     Term = None
     Definition = None

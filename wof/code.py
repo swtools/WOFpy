@@ -339,12 +339,11 @@ def create_site_info_element(siteResult):
     
     geoLocation = WaterML.geoLocation()
     
-    if siteResult.LatLongDatum:
-        geogLocation = WaterML.LatLonPointType(srs="EPSG:{0}".format(siteResult.LatLongDatum.SRSID),
-                                           latitude=siteResult.Latitude,
-                                           longitude=siteResult.Longitude)
-    
-        geoLocation.set_geogLocation(geogLocation)
+    geogLocation = WaterML.LatLonPointType(srs="EPSG:{0}".format(siteResult.LatLongDatum.SRSID),
+                                       latitude=siteResult.Latitude,
+                                       longitude=siteResult.Longitude)
+
+    geoLocation.set_geogLocation(geogLocation)
     
     if (siteResult.LocalX and siteResult.LocalY):
         localSiteXY = WaterML.localSiteXY()
@@ -436,7 +435,8 @@ def create_variable_element(variableResult):
     timeSupport.set_unit(timeUnits)
     
     #TODO: time interval is not the same as time support.  Time interval refers to a spacing between values for regular data, which isn't stored in ODM.
-    timeSupport.timeInterval = str(int(variableResult.TimeSupport)) #integer in WaterML 1.0
+    if variableResult.TimeSupport:
+        timeSupport.timeInterval = str(int(variableResult.TimeSupport)) #integer in WaterML 1.0
     variable.set_timeSupport(timeSupport)
     
     return variable

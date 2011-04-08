@@ -5,6 +5,8 @@ from sqlalchemy import Boolean
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
+from wof.base_mappings import *
+
 import private_config
 engine = create_engine(private_config.swis_connection_string,
                        convert_unicode=True)
@@ -15,7 +17,7 @@ db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
-class Variable(Base):
+class Variable(Base, BaseVariable):
     __tablename__ = 'parameter'
 
     VariableID = Column('id', Integer, primary_key=True)
@@ -39,24 +41,13 @@ class Variable(Base):
     #TimeUnits = relationship("Units",
     #                         primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
 
-class Site(Base):
+class Site(Base, BaseSite):
     __tablename__ = 'site'
     
     SiteID = Column('id', Integer, primary_key=True)
     SiteCode = Column('site_code', String)
     SiteName = Column('name', String)
-    Latitude = 1.0 #TODO
-    Longitude = 1.0 #TODO
-    Elevation_m = None #TODO
-    VerticalDatum = None #TODO
-    LocalX = None #TODO
-    LocalY = None #TODO
-    PosAccuracy_m = None #TODO
-    State = None #TODO
-    County = None #TODO
-    Comments = Column('description', String)
-    LatLongDatum = None #TODO
-    LocalProjection = None #TODO
+    
     
     #SiteID = Column(Integer, primary_key = True)
     #SiteCode = Column(String)
@@ -81,7 +72,7 @@ class Site(Base):
     #                                    primaryjoin='Site.LocalProjectionID==SpatialReference.SpatialReferenceId')
     
     
-class DataValue(Base):
+class DataValue(Base, BaseDataValue):
     __tablename__ = 'raw_data_value'
     
     ValueID = Column('id', Integer, primary_key = True)

@@ -5,6 +5,8 @@ from sqlalchemy import Boolean
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
+from wof.base_mappings import *
+
 import private_config
 engine = create_engine(private_config.database_connection_string,
                        convert_unicode=True)
@@ -15,7 +17,7 @@ db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
-class Variable(Base):
+class Variable(Base, BaseVariable):
     __tablename__ = 'Variables'
 
     VariableID = Column(Integer, primary_key=True)
@@ -41,7 +43,7 @@ class Variable(Base):
     def __repr__(self):
         return "<Variable('%s','%s')>" % (self.VariableCode, self.VariableName)
 
-class Site(Base):
+class Site(Base, BaseSite):
     __tablename__ = 'Sites'
     
     SiteID = Column(Integer, primary_key = True)
@@ -70,7 +72,7 @@ class Site(Base):
         return "<Site('%s','%s', ['%s' '%s'])>" % (self.SiteCode, self.SiteName, str(self.Latitude), str(self.Longitude))
 
 #TODO: Setup foreignkey relationships
-class DataValue(Base):
+class DataValue(Base, BaseDataValue):
     __tablename__ = 'DataValues'
     
     ValueID = Column(Integer, primary_key = True)
@@ -92,14 +94,14 @@ class DataValue(Base):
     QualityControlLevelID = Column(Integer)
     
 
-class Qualifier(Base):
+class Qualifier(Base, BaseQualifier):
     __tablename__ = 'Qualifiers'
     
     QualifierID = Column(Integer, primary_key=True)
     QualifierCode = Column(String)
     QualifierDescription = Column(String)
 
-class OffsetType(Base):
+class OffsetType(Base, BaseOffsetType):
     __tablename__ = 'OffsetTypes'
     
     OffsetTypeID = Column(Integer, primary_key = True)
@@ -110,14 +112,14 @@ class OffsetType(Base):
                                 primaryjoin='OffsetType.OffsetUnitsID==Units.UnitsID')
 
 
-class Method(Base):
+class Method(Base, BaseMethod):
     __tablename__ ='Methods'
     
     MethodID = Column(Integer, primary_key=True)
     MethodDescription = Column(String)
     MethodLink = Column(String)
     
-class Source(Base):
+class Source(Base, BaseSource):
     __tablename__='Sources'
     
     SourceID = Column(Integer, primary_key=True)
@@ -132,22 +134,9 @@ class Source(Base):
     State = Column(String)
     ZipCode = Column(String)
     Citation = Column(String)
-    MetadataID = Column(Integer, ForeignKey('ISOMetadata.MetadataID'))
-    
-    Metadata = relationship("ISOMetadata", backref="Source")
-    
-class ISOMetadata(Base):
-    __tablename__ = 'ISOMetadata'
-    
-    MetadataID = Column(Integer, primary_key=True)
-    TopicCategory = Column(String) #TODO: FK to TopicCategoryCV
-    Title = Column(String)
-    Abstract = Column(String)
-    ProfileVersion = Column(String)
-    MetadataLink = Column(String)
     
 
-class QualityControlLevel(Base):
+class QualityControlLevel(Base, BaseQualityControlLevel):
     __tablename__='QualityControlLevels'
     
     QualityControlLevelID = Column(Integer, primary_key=True)
@@ -155,7 +144,7 @@ class QualityControlLevel(Base):
     Definition = Column(String)
     Explanation = Column(String)
 
-class SeriesCatalog(Base):
+class SeriesCatalog(Base, BaseSeriesCatalog):
     __tablename__ = 'SeriesCatalog'
     
     SeriesID = Column(Integer, primary_key = True)
@@ -199,11 +188,8 @@ class SeriesCatalog(Base):
     #TimeUnits = relationship("Units", \
     #                            primaryjoin='SeriesCatalog.TimeUnitsID==Units.UnitsID')
 
-    def __repr__(self):
-        return "<Series(SeriesID: '%s',Site: '%s', VarID: '%s', Beg: '%s', End: '%s')>" % (self.SeriesID, self.SiteID, self.VariableID, str(self.BeginDateTimeUTC), str(self.EndDateTimeUTC))
 
-
-class Units(Base):
+class Units(Base, BaseUnits):
     __tablename__ = 'Units'
     
     UnitsID = Column(Integer, primary_key=True)
@@ -211,7 +197,7 @@ class Units(Base):
     UnitsType = Column(String)
     UnitsAbbreviation = Column(String)
     
-class SpatialReference(Base):
+class SpatialReference(Base, BaseSpatialReference):
     __tablename__ = 'SpatialReferences'
     
     SpatialReferenceId = Column(Integer, primary_key=True)
@@ -220,7 +206,7 @@ class SpatialReference(Base):
     IsGeographic = Column(Boolean)
     Notes = Column(String)
     
-class VerticalDatum(Base):
+class VerticalDatum(Base, BaseVerticalDatum):
     __tablename__ = 'VerticalDatumCV'
     Term = Column(String, primary_key=True)
     Definition = Column(String)
