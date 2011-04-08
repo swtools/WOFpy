@@ -56,7 +56,6 @@ class BaseSite(object):
 
 class BaseDataValue(object):
     
-    
     ValueID = None
     DataValue = None
     ValueAccuracy = None

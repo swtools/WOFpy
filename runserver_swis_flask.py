@@ -5,17 +5,20 @@ import logging
 from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
+import wof
 import SwisSqlAlchDao
 
 from wofpy_soap.soap import *
 from wofpy_flask import config
-from wofpy_flask import app as flask_app
+from wofpy_flask import create_app
 
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
     
+    flask_app = create_app()
     flask_app.config.from_object(config.DevConfig)
+    
     wof.config_from_file('config/swis_config.cfg')
     wof.dao = SwisSqlAlchDao.SwisSqlAlchDao()
     

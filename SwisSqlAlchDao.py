@@ -43,7 +43,7 @@ class SwisSqlAlchDao(object):
         valueResultArr = None
         
         #TODO: Something Wrong Here
-        if (startDateTime == None or endDateTime == None):
+        if (not startDateTime or not endDateTime):
             valueResultArr = DataValue.query.filter(
                 and_(DataValue.SiteID == siteResult.SiteID,
                      DataValue.VariableID == varResult.VariableID)
@@ -52,8 +52,8 @@ class SwisSqlAlchDao(object):
             valueResultArr = DataValue.query.filter(
                 and_(DataValue.SiteID == siteResult.SiteID,
                      DataValue.VariableID == varResult.VariableID,
-                     DataValue.LocalDateTime >= startDateTime,
-                     DataValue.LocalDateTime <= endDateTime)
+                     DataValue.LocalDateTime >= startDateTime, #TODO: SWIS doesn't have localdatetime
+                     DataValue.LocalDateTime <= endDateTime) #TODO: SWIS doesn't have localdatetime
                 ).order_by(DataValue.LocalDateTime).all()
             
         return valueResultArr

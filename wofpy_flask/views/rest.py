@@ -1,10 +1,9 @@
 import StringIO
 
-from flask import Flask, request, g, Markup, Response, render_template
+from flask import Flask, request, Markup, Response, render_template
+from flask import Module
 
 from wof.code import *
-
-from wofpy_flask import app
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
 	 xmlns:xlink="http://www.w3.org/1999/xlink" \
@@ -13,27 +12,21 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
 	 xmlns:wtr="http://www.cuahsi.org/waterML/" \
 	 xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
-@app.before_request
-def before_request():
-    pass
+rest = Module(__name__)
 
-@app.after_request
-def after_request(response):
-    return response
-
-@app.route('/')
+@rest.route('/')
 def index():
     return render_template('index.html', p='LBR',s='USU-LBR-Paradise',
                            v='USU36',sd='2007-08-17T12:00:00',
                            ed='2007-08-18T12:00:00')
 
-@app.route('/swis')
+@rest.route('/swis')
 def swis_index():
     return render_template('index.html', p='SWIS',s='BAYT',
                            v='seawater_salinity',sd='2007-03-23T12:00:00',
                            ed='2007-03-24T12:00:00')
 
-@app.route('/GetSites', methods=['GET'])
+@rest.route('/GetSites', methods=['GET'])
 def get_sites():
     
     siteArg = request.args.get('site',None)
@@ -50,7 +43,7 @@ def get_sites():
     return response
 
 
-@app.route('/GetSiteInfo', methods=['Get'])
+@rest.route('/GetSiteInfo', methods=['Get'])
 def get_site_info():
     siteArg = request.args.get('site',None)
     varArg = request.args.get('variable',None)
@@ -70,7 +63,7 @@ def get_site_info():
     return response
 
 
-@app.route('/GetVariableInfo', methods=['GET'])
+@rest.route('/GetVariableInfo', methods=['GET'])
 def get_variable_info():
     varArg = request.args.get('variable',None)
     
@@ -86,7 +79,7 @@ def get_variable_info():
     return response
     
 
-@app.route('/GetValues', methods=['GET'])
+@rest.route('/GetValues', methods=['GET'])
 def get_values():
     
     siteArg = request.args.get('location',None)

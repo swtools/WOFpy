@@ -1,6 +1,7 @@
 import ConfigParser
 import wof
 
+
 network = 'NETWORK'
 vocabulary = 'VOCABULARY'
 menu_group_name = 'MENU_GROUP_NAME'

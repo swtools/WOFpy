@@ -75,7 +75,7 @@ class Site(Base, BaseSite):
 class DataValue(Base, BaseDataValue):
     __tablename__ = 'raw_data_value'
     
-    ValueID = Column('id', Integer, primary_key = True)
+    ValueID = Column('id', Integer, primary_key=True)
     DataValue = Column('data_value', Float)
     #ValueAccuracy = Column(Float)
     #LocalDateTime = Column(DateTime)
