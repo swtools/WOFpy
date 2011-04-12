@@ -10,6 +10,7 @@ from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import String, Any, Integer, Float, DateTime
 from soaplib.core.model.primitive import Boolean, Double
 from soaplib.core.model.clazz import Array, ClassModel, XMLAttribute
+from soaplib.core.model.enum import Enum, EnumBase
 
 
 logger = logging.getLogger(__name__)
@@ -21,18 +22,35 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
+
+        
 class WaterMLTypeBase(ClassModel):
     __namespace__ = "http://www.cuahsi.org/waterML/1.0/"
 
+
+
+class Criteria(WaterMLTypeBase):
+    locationParam = String
+    variableParam = String
+    timeParam = Any #type is not defined in WML1
+  
+class Note(WaterMLTypeBase):
+    type = XMLAttribute('xs:string')
+    href = XMLAttribute('xs:string')
+    title = XMLAttribute('xs:string')
+    show = XMLAttribute('xs:string')
+    
+    #What about the value of the element?
+    
 class QueryInfoType(WaterMLTypeBase):
-   
-    #aaa = XMLAttribute(String)
     
     creationTime = DateTime
     queryURL = String
     querySQL = String
-    #criteria
-    #note
+    
+    criteria = Criteria
+    
+    note = Array(Note)
     #extension
     
     
@@ -45,32 +63,77 @@ class LatLonBoxType(GeogLocationType):
 class LatLonPointType(GeogLocationType):
     latitude = Double
     longitude = Double
-    
-class SiteInfoResponseType(WaterMLTypeBase):
-    #__namespace__ = 'abc'
-    #__type_name__ = 'def'
-    queryInfo = QueryInfoType
-    #site = site is an Array of elements with siteInfo, 0..* seriesCatalog and, extension
+
+class SiteCode(String):
+    defaultId = XMLAttribute('xs:boolean')
+    #network = XMLAttribute('xs:normalizedString')
+    #siteID = XMLAttribute('xs:normalizedString')
+    #agencyCode = XMLAttribute('xs:normalizedString')
+    #agencyName = XMLAttribute('xs:normalizedString')
 
 class SourceInfoType(WaterMLTypeBase):
-    pass
+    siteName = String
+    siteCode = SiteCode
+    
 
 class SiteInfoType(SourceInfoType):
     siteName = String
     sitecode = String
     defaultId = Boolean
     geoLocation = GeogLocationType
+    
+class SiteInfoResponseType(WaterMLTypeBase):
+
+    queryInfo = QueryInfoType
+    site = Array(SiteInfoType) #site is an Array of elements with siteInfo, 0..* seriesCatalog and, extension
+
+
+
+
 
 
 class DataSetInfoType(WaterMLTypeBase):
     pass
 
 
-class seriesCatalogType(WaterMLTypeBase):
-    pass
-
 class VariableInfoType(WaterMLTypeBase):
     pass
+
+dataTypeEnum = Enum(
+
+    'Continuous',
+    'Instantaneous',
+    'Cumulative',
+    'Incremental',
+    'Average',
+    'Maximum',
+    'Minimum',
+    'Constant Over Interval',
+    'Categorical',
+    'Best Easy Systematic Estimator',
+    'Unknown',
+    'Variance',
+    type_name = 'dataTypeEnum'
+)
+
+class series(WaterMLTypeBase):
+    dataType = dataTypeEnum #? is this how to do it?
+    variable = VariableInfoType
+    valueCount = Integer #this has a 'countIsEstimated' boolean attribute
+    variableTimeInterval = TimePeriodType
+    valueType = valueTypeEnum
+    generalCategory = generalCategoryEnum
+    sampleMedium = SampleMediumEnum
+    Method = MthodType
+    Source = SourceType
+    QualityControlLevel = QualityControlLevelType
+    menuGroupName = XMLAttribute('xs:string')
+    serviceWsdl = XMLAttribute('xs:anyURI')
+
+class seriesCatalogType(WaterMLTypeBase):
+    note = Array(Note)
+    
+
 
 class ArrayOfOption(WaterMLTypeBase):
     pass
@@ -134,10 +197,15 @@ class WOFService(DefinitionBase):
         s = SiteInfoResponseType()
         s.queryInfo = QueryInfoType()
         
-        s.queryInfo.aaa = "hi james"
-        s.queryInfo.creationTime = datetime.datetime(1984, 2, 11)
-        s.queryInfo.queryURL = "www.james.com"
-        s.queryInfo.querySQL = ''
+        s.queryInfo.creationTime = datetime.datetime(1984,2,11)
+        s.queryInfo.querySQL = 'www.url.com'
+        s.querySQL = 'query sql'
+        
+        s.criteria = Criteria()
+        s.criteria.locationParam = "here"
+        s.criteria.variableParam = "variable"
+        
+        
         
         return s
         

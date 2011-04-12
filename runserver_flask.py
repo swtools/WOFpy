@@ -9,8 +9,8 @@ import wof
 import OdmSqlAlchDao
 
 
-from wofpy_soap.soap_new import WOFService
-#from wofpy_soap.soap import WOFService
+#from wofpy_soap.soap_new import WOFService
+from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
 
