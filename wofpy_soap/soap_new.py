@@ -1,13 +1,15 @@
 import StringIO
 import logging
 import soaplib #soaplib 2.0.0-beta
+import datetime
 
 import wof.code
 
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import String, Any, Integer, Float, DateTime
-from soaplib.core.model.clazz import Array, ClassModel
+from soaplib.core.model.primitive import Boolean, Double
+from soaplib.core.model.clazz import Array, ClassModel, XMLAttribute
 
 
 logger = logging.getLogger(__name__)
@@ -19,99 +21,125 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
+class WaterMLTypeBase(ClassModel):
+    __namespace__ = "http://www.cuahsi.org/waterML/1.0/"
 
-class SiteInfoResponseType(ClassModel):
-    queryInfo = QueryInfoType
-    #site = 
-
-class QueryInfoType(ClassModel):
+class QueryInfoType(WaterMLTypeBase):
+   
+    #aaa = XMLAttribute(String)
+    
     creationTime = DateTime
     queryURL = String
     querySQL = String
     #criteria
     #note
     #extension
+    
+    
+class GeogLocationType(WaterMLTypeBase):
+    srs = XMLAttribute
+
+class LatLonBoxType(GeogLocationType):
+    pass
+
+class LatLonPointType(GeogLocationType):
+    latitude = Double
+    longitude = Double
+    
+class SiteInfoResponseType(WaterMLTypeBase):
+    #__namespace__ = 'abc'
+    #__type_name__ = 'def'
+    queryInfo = QueryInfoType
+    #site = site is an Array of elements with siteInfo, 0..* seriesCatalog and, extension
+
+class SourceInfoType(WaterMLTypeBase):
+    pass
 
 class SiteInfoType(SourceInfoType):
+    siteName = String
+    sitecode = String
+    defaultId = Boolean
+    geoLocation = GeogLocationType
+
+
+class DataSetInfoType(WaterMLTypeBase):
     pass
 
-class SourceInfoType(ClassModel):
+
+class seriesCatalogType(WaterMLTypeBase):
     pass
 
-class DataSetInfoType(ClassModel):
+class VariableInfoType(WaterMLTypeBase):
     pass
 
-class GeogLocationType(ClassModel):
+class ArrayOfOption(WaterMLTypeBase):
     pass
 
-class LatLonBoxType(ClassModel):
+class UnitsType(WaterMLTypeBase):
     pass
 
-class LatLonPointType(ClassModel):
+class TimePeriodType(WaterMLTypeBase):
     pass
 
-class seriesCatalogType(ClassModel):
+class TimeIntervalType(WaterMLTypeBase):
     pass
 
-class VariableInfoType(ClassModel):
+class TimeSingleType(WaterMLTypeBase):
     pass
 
-class ArrayOfOption(ClassModel):
+class TimePeriodRealTimeType(WaterMLTypeBase):
     pass
 
-class UnitsType(ClassModel):
+class MethodType(WaterMLTypeBase):
     pass
 
-class TimePeriodType(ClassModel):
+class SourceType(WaterMLTypeBase):
     pass
 
-class TimeIntervalType(ClassModel):
+class MetaDataType(WaterMLTypeBase):
     pass
 
-class TimeSingleType(ClassModel):
+class ContactInformationType(WaterMLTypeBase):
     pass
 
-class TimePeriodRealTimeType(ClassModel):
+class QualityControlLevelType(WaterMLTypeBase):
     pass
 
-class MethodType(ClassModel):
+class VariablesResponseType(WaterMLTypeBase):
     pass
 
-class SourceType(ClassModel):
+class ArrayOfVariableInfoType(WaterMLTypeBase):
     pass
 
-class MetaDataType(ClassModel):
+class TimeSeriesResponseType(WaterMLTypeBase):
     pass
 
-class ContactInformationType(ClassModel):
+class TimeSeriesType(WaterMLTypeBase):
     pass
 
-class QualityControlLevelType(ClassModel):
+class TsValuesSingleVariableType(WaterMLTypeBase):
     pass
 
-class VariablesResponseType(ClassModel):
+class ValueSingleVariable(WaterMLTypeBase):
     pass
 
-class ArrayOfVariableInfoType(ClassModel):
-    pass
-
-class TimeSeriesResponseType(ClassModel):
-    pass
-
-class TimeSeriesType(ClassModel):
-    pass
-
-class TsValuesSingleVariableType(ClassModel):
-    pass
-
-class ValueSingleVariable(ClassModel):
-    pass
-
-class OffsetType(ClassModel):
+class OffsetType(WaterMLTypeBase):
     pass
 
 
 class WOFService(DefinitionBase):
+        
+    @soap(_returns=SiteInfoResponseType)
+    def TestMethod(self):
+        s = SiteInfoResponseType()
+        s.queryInfo = QueryInfoType()
+        
+        s.queryInfo.aaa = "hi james"
+        s.queryInfo.creationTime = datetime.datetime(1984, 2, 11)
+        s.queryInfo.queryURL = "www.james.com"
+        s.queryInfo.querySQL = ''
+        
+        return s
         
     @soap(Array(String), String, _returns=Any)
     def GetSites(self, site, authToken):

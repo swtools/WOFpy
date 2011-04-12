@@ -30,6 +30,7 @@ class SwisSqlAlchDao(object):
             map.SeriesCatalog.SiteCode == siteCode).all()
     
     def get_series_by_sitecode_and_varcode(self, siteCode, varCode):
+                
         return map.SeriesCatalog.query.filter(and_(
             map.SeriesCatalog.SiteCode == siteCode,
             map.SeriesCatalog.VariableCode == varCode)).all()

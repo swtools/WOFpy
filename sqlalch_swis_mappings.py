@@ -1,12 +1,13 @@
-import wof.base_mappings as wof_base
 
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime
 from sqlalchemy import Boolean
 
+from sqlalchemy.sql import join
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
+import wof.base_mappings as wof_base
 
 import private_config
 engine = create_engine(private_config.swis_connection_string,
@@ -49,10 +50,6 @@ class Site(Base, wof_base.BaseSite):
     SiteCode = Column('site_code', String)
     SiteName = Column('name', String)
     
-    
-    #SiteID = Column(Integer, primary_key = True)
-    #SiteCode = Column(String)
-    #SiteName = Column(String)
     #Latitude = Column(Float)
     #Longitude = Column(Float)
     #LatLongDatumID = Column(Integer, ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
@@ -95,6 +92,41 @@ class DataValue(Base, wof_base.BaseDataValue):
     #QualityControlLevelID = Column(Integer)
        
     
+#class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
+    #SeriesID = None
+    #SiteID = None
+    #SiteCode = Column(String, primary_key=True)
+    #SiteName = None
+    #VariableID = None
+    #VariableCode = Column(String, primary_key=True)
+    #VariableName = None
+    #Speciation = None
+    #VariableUnitsID = None 
+    #VariableUnitsName = None
+    #SampleMedium = None
+    #ValueType = None
+    #TimeSupport = None
+    #TimeUnitsID = None
+    #TimeUnitsName = None
+    #DataType = None
+    #GeneralCategory = None
+    #MethodID = None
+    #MethodDescription = None
+    #SourceID = None #TODO
+    #Organization = None
+    #SourceDescription = None
+    #Citation = None
+    #QualityControlLevelID = None #TODO
+    #QualityControlLevelCode = None
+    #BeginDateTime = None
+    #EndDateTime = None
+    #BeginDateTimeUTC = None
+    #EndDateTimeUTC = None
+    #ValueCount = None
     
+    #Site = BaseSite()
+    #Variable = BaseVariable()
+    #Method = BaseMethod()
+#    pass
     
     
