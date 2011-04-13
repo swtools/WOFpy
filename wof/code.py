@@ -168,9 +168,11 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
         
     #Add qualityControlLevel elements
     qualControlLvlIdArr = list(qualControlLevelIdSet)
-    qualControlLevelResultArr = wof.dao.get_qualcontrollvls_by_ids(qualControlLvlIdArr)
+    qualControlLevelResultArr = wof.dao.get_qualcontrollvls_by_ids(
+        qualControlLvlIdArr)
     for qualControlLvlResult in qualControlLevelResultArr:
-        qualControlLevel = create_qualityControlLevel_element(qualControlLvlResult)
+        qualControlLevel = create_qualityControlLevel_element(
+            qualControlLvlResult)
         values.add_qualityControlLevel(qualControlLevel)
     
     #Add offset elements
@@ -232,18 +234,22 @@ def create_source_element(sourceResult):
     addressString = ", ".join([sourceResult.Address,
                                sourceResult.City, sourceResult.State, sourceResult.ZipCode])
         
-    contactInfo = WaterML.ContactInformationType(ContactName=sourceResult.ContactName,
-                                                 Phone=sourceResult.Phone,
-                                                 Email=sourceResult.Email,
-                                                 Address=addressString)
+    contactInfo = WaterML.ContactInformationType(Email=sourceResult.Email,
+                                    ContactName=sourceResult.ContactName,
+                                    Phone=sourceResult.Phone,
+                                    Address=addressString)
+    
     source.ContactInformation=contactInfo
 
-    metadata = WaterML.MetaDataType(TopicCategory=sourceResult.Metadata.TopicCategory,
-                                        Title=sourceResult.Metadata.Title,
-                                        Abstract=sourceResult.Metadata.Abstract,
-                                        ProfileVersion=sourceResult.Metadata.ProfileVersion,
-                                        MetadataLink=sourceResult.Metadata.MetadataLink)
-    source.Metadata = metadata
+    if sourceResult.Metadata:
+        metadata = WaterML.MetaDataType(
+            TopicCategory=sourceResult.Metadata.TopicCategory,
+            Title=sourceResult.Metadata.Title,
+            Abstract=sourceResult.Metadata.Abstract,
+            ProfileVersion=sourceResult.Metadata.ProfileVersion,
+            MetadataLink=sourceResult.Metadata.MetadataLink)
+        
+        source.Metadata = metadata
     
     return source
 
@@ -252,21 +258,22 @@ def create_value_element(valueResult):
     
     isoDateTime = str(valueResult.LocalDateTime).replace(' ','T')
     
-    value = WaterML.ValueSingleVariable(codedVocabularyTerm=None,
-                                        metadataDateTime=None,
-                                        qualityControlLevel=valueResult.QualityControlLevelID,
-                                        methodID=valueResult.MethodID,
-                                        codedVocabulary=None,
-                                        sourceID=valueResult.SourceID,
-                                        oid=None,
-                                        censorCode=valueResult.CensorCode,
-                                        sampleID=valueResult.SampleID,
-                                        offsetTypeID=valueResult.OffsetTypeID,
-                                        accuracyStdDev=valueResult.ValueAccuracy,
-                                        offsetValue=valueResult.OffsetValue,
-                                        dateTime=isoDateTime,
-                                        qualifiers=valueResult.QualifierID,
-                                        valueOf_=valueResult.DataValue)
+    value = WaterML.ValueSingleVariable(
+                    codedVocabularyTerm=None,
+                    metadataDateTime=None,
+                    qualityControlLevel=valueResult.QualityControlLevelID,
+                    methodID=valueResult.MethodID,
+                    codedVocabulary=None,
+                    sourceID=valueResult.SourceID,
+                    oid=None,
+                    censorCode=valueResult.CensorCode,
+                    sampleID=valueResult.SampleID,
+                    offsetTypeID=valueResult.OffsetTypeID,
+                    accuracyStdDev=valueResult.ValueAccuracy,
+                    offsetValue=valueResult.OffsetValue,
+                    dateTime=isoDateTime,
+                    qualifiers=valueResult.QualifierID,
+                    valueOf_=valueResult.DataValue)
     
     
     #TODO: value.offset stuff?  Why does value element have all this offset stuff
@@ -373,8 +380,15 @@ def create_series_element(seriesResult):
     
     series.valueCount = WaterML.valueCount(valueOf_=seriesResult.ValueCount)
     
-    isoBeginDateTime=str(seriesResult.BeginDateTime).replace(' ','T')
-    isoEndDateTime=str(seriesResult.EndDateTime).replace(' ','T')
+    #TODO: should we use BeginDateTime or BeginDateTimeUTC?
+    # Most services use the non-UTC one
+    if seriesResult.BeginDateTime and seriesResult.EndDateTime:
+        isoBeginDateTime = str(seriesResult.BeginDateTime).replace(' ','T')
+        isoEndDateTime = str(seriesResult.EndDateTime).replace(' ','T')
+    else:
+        isoBeginDateTime = str(seriesResult.BeginDateTimeUTC).replace(' ','T')
+        isoEndDateTime = str(seriesResult.EndDateTimeUTC).replace(' ','T')
+    
     variableTimeInt = WaterML.TimeIntervalType(beginDateTime=isoBeginDateTime,
                                               endDateTime=isoEndDateTime)
     
@@ -387,9 +401,9 @@ def create_series_element(seriesResult):
     source = WaterML.SourceType(sourceID=seriesResult.SourceID,
                                 Organization=seriesResult.Organization,
                                 SourceDescription=seriesResult.SourceDescription,
-                                Metadata=None,
-                                ContactInformation=None,
-                                SourceLink=None)
+                                Metadata=None, #TODO: Source Metadata
+                                ContactInformation=None, #TODO: Source ContactInformation
+                                SourceLink=None) #TODO: Source Link
     
     series.Source = source
     

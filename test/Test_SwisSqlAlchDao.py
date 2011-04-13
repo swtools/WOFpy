@@ -71,3 +71,15 @@ class Test_SwisSqlAlchDao(unittest.TestCase):
         resultVarCodes = [v.VariableCode for v in varResultList]
         for known_code in self.known_var_codes:
             self.assertTrue(known_code in resultVarCodes)
+            
+    def test_method_desc(self):        
+        methodResult = self.dao.get_method_by_id(1)
+        self.assertNotEqual(methodResult, None) #TODO
+                
+    def test_series(self):
+        seriesResult = self.dao.get_series_by_sitecode('BAYT')
+        #print len(seriesResult)
+        
+        
+        
+        

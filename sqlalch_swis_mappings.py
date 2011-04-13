@@ -1,10 +1,10 @@
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime
 from sqlalchemy import Boolean
 
-from sqlalchemy.sql import join
-from sqlalchemy.orm import scoped_session, sessionmaker, relationship
+from sqlalchemy.sql import join, select, func, label
+from sqlalchemy.orm import mapper, scoped_session, sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 import wof.base_mappings as wof_base
@@ -53,6 +53,9 @@ class Site(Base, wof_base.BaseSite):
     #Latitude = Column(Float)
     #Longitude = Column(Float)
     #LatLongDatumID = Column(Integer, ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
+    
+    
+    
     #Elevation_m = Column(Float)
     #VerticalDatum = Column(String)
     #LocalX = Column(Float)
@@ -85,14 +88,109 @@ class DataValue(Base, wof_base.BaseDataValue):
     #OffsetTypeID = Column(Integer)
     #CensorCode = Column(String)
     #QualifierID = Column(Integer)
-    #MethodID = Column(Integer)
+    
+    #Using Instrument information for the Method
+    MethodID = Column('instrument_id', Integer, ForeignKey('Units.UnitsID'))
     #SourceID = Column(Integer)
     #SampleID = Column(Integer)
     #DerivedFromID = Column(Integer)
-    #QualityControlLevelID = Column(Integer)
-       
+    QualityControlLevelID = 1 #All of SWIS data values are "raw data"
+
+#Using instrument information for Method of WaterML
+class Method(Base, wof_base.BaseMethod):
+    __tablename__ = 'instrument'
     
-#class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
+    MethodID = Column('id', Integer, primary_key=True)
+    #MethodLink = None
+    
+    InstrumentModelID = Column('instrument_model_id', Integer,
+                               ForeignKey('instrument_model.id'))
+    
+    InstrumentModel = relationship('InstrumentModel',
+                            primaryjoin='Method.InstrumentModelID==\
+                                        InstrumentModel.ModelID')
+    
+    @property
+    def MethodDescription(self):
+        if (self.InstrumentModel and
+            self.InstrumentModel.InstrumentManufacturer):
+            return "Measured with %s %s." \
+                % (self.InstrumentModel.InstrumentManufacturer.ManufacturerName,
+                   self.InstrumentModel.ModelName)
+        else:
+            return None
+    
+    
+#SWIS-specific table
+class InstrumentModel(Base):
+    __tablename__ = 'instrument_model'
+    
+    ModelID = Column('id', Integer, primary_key=True)
+    ModelName = Column('instrument_model_name', String)
+    ManufacturerID = Column('instrument_manufacturer_id', Integer,
+                            ForeignKey('instrument_manufacturer.id'))
+    
+    InstrumentManufacturer = relationship('InstrumentManufacturer',
+                                primaryjoin='InstrumentModel.ManufacturerID==\
+                                            InstrumentManufacturer.\
+                                            ManufacturerID')
+    
+#SWIS-specific table
+class InstrumentManufacturer(Base):
+    __tablename__ = 'instrument_manufacturer'
+    
+    ManufacturerID = Column('id', Integer, primary_key=True)
+    ManufacturerName = Column('instrument_manufacturer_name', String)   
+
+
+
+#Source is Agency in SWIS.  Each site has an agency associated with it in
+# the agency_site_association table
+agency_site_association_table = Table(
+    'agency_site_association',
+    Base.metadata,
+    Column('agency_id', Integer, ForeignKey('agency.id')),
+    Column('site_id', Integer, ForeignKey('site.id')))
+
+class Source(Base, wof_base.BaseSource):
+    __tablename__ = 'agency'
+    SourceID = Column('id', Integer, primary_key=True)
+    Organization = Column('name', String)
+    
+    #Not a clear mapping in SWIS. It could come from project.description
+    #TODO: SourceDescription
+    
+    
+    Sites = relationship('Site',
+                         secondary=agency_site_association_table,
+                         backref='Sources')
+    
+    #TODO:
+    Metadata = None
+
+
+#TODO: Metadata
+# Not a clear mapping.  project.name could be title, project.description could be abstract
+#class Metadata(wof_base.BaseMetadata):
+#    __tablename__='ISOMetadata'
+#    
+#    MetadataID = Column(Integer, primary_key=True)
+#    TopicCategory = Column(String)
+#    Title = Column(String)
+#    Abstract = Column(String)
+#    ProfileVersion = Column(String)
+#    MetadataLink = Column(String)
+
+
+class QualityControlLevel(wof_base.BaseQualityControlLevel):
+    #All of SWIS data values are "raw data"
+    QualityControlLevelID = 1
+    QualityControlLevelCode = "Raw Data"
+    Definition = "Raw Data"
+    Explanation = "Raw Data"
+  
+
+class SeriesCatalog(wof_base.BaseSeriesCatalog):
     #SeriesID = None
     #SiteID = None
     #SiteCode = Column(String, primary_key=True)
@@ -127,6 +225,5 @@ class DataValue(Base, wof_base.BaseDataValue):
     #Site = BaseSite()
     #Variable = BaseVariable()
     #Method = BaseMethod()
-#    pass
-    
+    pass
     

@@ -1,3 +1,5 @@
+
+from sqlalchemy import distinct, func
 from sqlalchemy.sql import and_
 
 import sqlalch_swis_mappings as map
@@ -26,14 +28,89 @@ class SwisSqlAlchDao(object):
             varCodesArr)).all()
     
     def get_series_by_sitecode(self, siteCode):
-        return map.SeriesCatalog.query.filter(
-            map.SeriesCatalog.SiteCode == siteCode).all()
+        
+        siteResult = map.Site.query.filter(map.Site.SiteCode==siteCode).one()
+        
+        if siteResult:
+            
+            resultList = map.db_session.query(
+                map.DataValue.VariableID.label('VariableID'),
+                func.count(map.DataValue.DataValue).label('ValueCount'),
+                func.min(map.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
+                func.max(map.DataValue.DateTimeUTC).label('EndDateTimeUTC')
+            ).group_by(
+                map.DataValue.VariableID).filter(
+                    map.DataValue.SiteID==siteResult.SiteID
+                ).order_by(map.DataValue.VariableID).all()
+            
+            varIDArr = [r.VariableID for r in resultList]
+
+            varResultArr = map.Variable.query.filter(
+                map.Variable.VariableID.in_(varIDArr)).order_by(
+                    map.Variable.VariableID).all()
+
+            seriesCatArr = []
+            for i in range(len(resultList)):
+                seriesCat = map.SeriesCatalog() #TODO: maybe make constructor so code is not duplicated as in the next method
+                seriesCat.Site = siteResult
+                seriesCat.Variable = varResultArr[i]
+                seriesCat.ValueCount = resultList[i].ValueCount
+               
+                #TODO: Maybe use UTC offset to calculate the non-UTC time
+                #  current swis2.db did not have that field filled in though
+                seriesCat.BeginDateTimeUTC = resultList[i].BeginDateTimeUTC
+                seriesCat.EndDateTimeUTC = resultList[i].EndDateTimeUTC
+               
+                #TODO:
+                #seriesCat.Method
+                #seriesCat.SourceID,
+                #seriesCat.Organization,
+                #seriesCat.SourceDescription,
+                #seriesCat.Source
+                #seriesCat.QualityControlLevelID
+                #seriesCat.QualityControlLevelCode
+               
+                seriesCatArr.append(seriesCat)
+            return seriesCatArr
+            
+        return None
     
     def get_series_by_sitecode_and_varcode(self, siteCode, varCode):
+        siteResult = map.Site.query.filter(map.Site.SiteCode==siteCode).one()
+        varResult = map.Variable.query.filter(
+            map.Variable.VariableCode==varCode).one()
                 
-        return map.SeriesCatalog.query.filter(and_(
-            map.SeriesCatalog.SiteCode == siteCode,
-            map.SeriesCatalog.VariableCode == varCode)).all()
+        res = map.db_session.query(
+            func.count(map.DataValue.DataValue).label('ValueCount'),
+            func.min(map.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
+            func.max(map.DataValue.DateTimeUTC).label('EndDateTimeUTC')
+        ).filter(and_(map.DataValue.SiteID==siteResult.SiteID,
+                      map.DataValue.VariableID==varResult.VariableID)).one()
+        
+        print '---------------------JAMES-----------------'
+        print res
+        
+        seriesCat = map.SeriesCatalog()
+        seriesCat.Site = siteResult
+        seriesCat.Variable = varResult
+        seriesCat.ValueCount = res.ValueCount
+       
+        #TODO: Maybe use UTC offset to calculate the non-UTC time
+        #  current swis2.db did not have that field filled in though
+        seriesCat.BeginDateTimeUTC = res.BeginDateTimeUTC
+        seriesCat.EndDateTimeUTC = res.EndDateTimeUTC
+       
+        #TODO:
+        #seriesCat.Method
+        #seriesCat.SourceID,
+        #seriesCat.Organization,
+        #seriesCat.SourceDescription,
+        #seriesCat.Source
+        #seriesCat.QualityControlLevelID
+        #seriesCat.QualityControlLevelCode
+        
+        return [seriesCat]
+        
         
     def get_datavalues(self, siteCode, varCode, startDateTime=None,
                        endDateTime=None):
@@ -82,9 +159,12 @@ class SwisSqlAlchDao(object):
             map.Qualifier.QualifierID.in_(qualIdArr)).all()
     
     def get_qualcontrollvl_by_id(self, qualControlLvlID):
-        return map.QualityControlLevel.query.filter(
-                map.QualityControlLevel.QualityControlLevelID ==
-                qualControlLvlID).first()
+        
+        #All of SWIS data values are "raw data", which has an ID of 1
+        if qualControlLvlID == 1:
+            return map.QualityControlLevel()
+        else:
+            return None
     
     def get_qualcontrollvls_by_ids(self, qualControlLvlIdArr):
         return map.QualityControlLevel.query.filter(

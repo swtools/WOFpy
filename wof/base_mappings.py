@@ -172,3 +172,5 @@ class BaseVerticalDatum(object):
     
     Term = None
     Definition = None
+    
+    
