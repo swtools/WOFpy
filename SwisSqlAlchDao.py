@@ -51,25 +51,12 @@ class SwisSqlAlchDao(object):
 
             seriesCatArr = []
             for i in range(len(resultList)):
-                seriesCat = map.SeriesCatalog() #TODO: maybe make constructor so code is not duplicated as in the next method
-                seriesCat.Site = siteResult
-                seriesCat.Variable = varResultArr[i]
-                seriesCat.ValueCount = resultList[i].ValueCount
-               
-                #TODO: Maybe use UTC offset to calculate the non-UTC time
-                #  current swis2.db did not have that field filled in though
-                seriesCat.BeginDateTimeUTC = resultList[i].BeginDateTimeUTC
-                seriesCat.EndDateTimeUTC = resultList[i].EndDateTimeUTC
-               
-                #TODO:
-                #seriesCat.Method
-                #seriesCat.SourceID,
-                #seriesCat.Organization,
-                #seriesCat.SourceDescription,
-                #seriesCat.Source
-                #seriesCat.QualityControlLevelID
-                #seriesCat.QualityControlLevelCode
-               
+                seriesCat = map.SeriesCatalog(
+                    siteResult, varResultArr[i],
+                    resultList[i].ValueCount,
+                    resultList[i].BeginDateTimeUTC,
+                    resultList[i].EndDateTimeUTC)
+                               
                 seriesCatArr.append(seriesCat)
             return seriesCatArr
             
@@ -87,28 +74,11 @@ class SwisSqlAlchDao(object):
         ).filter(and_(map.DataValue.SiteID==siteResult.SiteID,
                       map.DataValue.VariableID==varResult.VariableID)).one()
         
-        print '---------------------JAMES-----------------'
-        print res
-        
-        seriesCat = map.SeriesCatalog()
-        seriesCat.Site = siteResult
-        seriesCat.Variable = varResult
-        seriesCat.ValueCount = res.ValueCount
+
+        seriesCat = map.SeriesCatalog(siteResult, varResult, res.ValueCount,
+                                      res.BeginDateTimeUTC, res.EndDateTimeUTC)
        
-        #TODO: Maybe use UTC offset to calculate the non-UTC time
-        #  current swis2.db did not have that field filled in though
-        seriesCat.BeginDateTimeUTC = res.BeginDateTimeUTC
-        seriesCat.EndDateTimeUTC = res.EndDateTimeUTC
-       
-        #TODO:
-        #seriesCat.Method
-        #seriesCat.SourceID,
-        #seriesCat.Organization,
-        #seriesCat.SourceDescription,
-        #seriesCat.Source
-        #seriesCat.QualityControlLevelID
-        #seriesCat.QualityControlLevelCode
-        
+         
         return [seriesCat]
         
         

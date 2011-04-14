@@ -143,7 +143,6 @@ class InstrumentManufacturer(Base):
     ManufacturerName = Column('instrument_manufacturer_name', String)   
 
 
-
 #Source is Agency in SWIS.  Each site has an agency associated with it in
 # the agency_site_association table
 agency_site_association_table = Table(
@@ -191,6 +190,30 @@ class QualityControlLevel(wof_base.BaseQualityControlLevel):
   
 
 class SeriesCatalog(wof_base.BaseSeriesCatalog):
+    
+    
+    
+    def __init__(self, site=None, variable=None, value_count=None,
+                 begin_date_time_utc=None, end_date_time_utc=None):
+        
+        self.Site = site
+        self.Variable = variable
+        self.ValueCount = value_count
+        self.BeginDateTimeUTC = begin_date_time_utc
+        self.EndDateTimeUTC = end_date_time_utc
+    
+        #TODO: Maybe use UTC offset to calculate the non-UTC time
+        #  current swis2.db did not have that field filled in though
+                
+        #TODO:
+        #seriesCat.Method
+        #seriesCat.SourceID,
+        #seriesCat.Organization,
+        #seriesCat.SourceDescription,
+        #seriesCat.Source
+        #seriesCat.QualityControlLevelID
+        #seriesCat.QualityControlLevelCode
+                
     #SeriesID = None
     #SiteID = None
     #SiteCode = Column(String, primary_key=True)
