@@ -14,8 +14,8 @@ class SwisSqlAlchDao(object):
     def get_site_by_code(self, site_code):
         return map.Site.query.filter(map.Site.SiteCode == site_code).first()
     
-    def get_sites_by_codes(self, siteCodesArr):
-        return map.Site.query.filter(map.Site.SiteCode.in_(siteCodesArr)).all()
+    def get_sites_by_codes(self, site_codes_arr):
+        return map.Site.query.filter(map.Site.SiteCode.in_(site_codes_arr)).all()
     
     def get_all_variables(self):
         return map.Variable.query.all()
@@ -24,9 +24,9 @@ class SwisSqlAlchDao(object):
         return map.Variable.query.filter(
             map.Variable.VariableCode == var_code).first()
     
-    def get_variables_by_codes(self, varCodesArr):
+    def get_variables_by_codes(self, var_codes_arr):
         return map.Variable.query.filter(map.Variable.VariableCode.in_(
-            varCodesArr)).all()
+            var_codes_arr)).all()
     
     def get_series_by_sitecode(self, site_code):
         
@@ -132,44 +132,40 @@ class SwisSqlAlchDao(object):
     def get_method_by_id(self, methodID):
         return map.Method.query.filter(map.Method.MethodID == methodID).first()
         
-    def get_methods_by_ids(self, methodIdArr):
+    def get_methods_by_ids(self, method_id_arr):
         return map.Method.query.filter(
-            map.Method.MethodID.in_(methodIdArr)).all()
+            map.Method.MethodID.in_(method_id_arr)).all()
         
-    def get_source_by_id(self, sourceID):
-        return map.Source.query.filter(map.Source.SourceID == sourceID).first()
+    def get_source_by_id(self, source_id):
+        return map.Source.query.filter(map.Source.SourceID == source_id).first()
         
-    def get_sources_by_ids(self, sourceIdArr):
+    def get_sources_by_ids(self, source_id_arr):
         return map.Source.query.filter(
-            map.Source.SourceID.in_(sourceIdArr)).all()
+            map.Source.SourceID.in_(source_id_arr)).all()
     
-    def get_qualifier_by_id(self, qualID):
+    def get_qualifier_by_id(self, qualifier_id):
         return map.Qualifier.query.filter(
-            map.Qualifier.QualifierID == qualID).first()
+            map.Qualifier.QualifierID == qualifier_id).first()
     
-    def get_qualifiers_by_ids(self, qualIdArr):
-        return map.Qualifier.query.filter(
-            map.Qualifier.QualifierID.in_(qualIdArr)).all()
+    def get_qualifiers_by_ids(self, qualifier_id_arr):
+        return map.Qualifier.query.filter(map.Qualifier.QualifierID.in_(
+            qualifier_id_arr)).all()
     
-    def get_qualcontrollvl_by_id(self, qualControlLvlID):
-        
-        #All of SWIS data values are "raw data", which has an ID of 1
-        if qualControlLvlID == 1:
-            return map.QualityControlLevel()
-        else:
-            return None
-    
-    def get_qualcontrollvls_by_ids(self, qualControlLvlIdArr):
+    def get_qualcontrollvl_by_id(self, qual_control_lvl_id):
         return map.QualityControlLevel.query.filter(
-                map.QualityControlLevel.QualityControlLevelID.in_(
-                    qualControlLvlIdArr)).all()
+                map.QualityControlLevel.QualityControlLevelID ==
+                qual_control_lvl_id).first()
     
-    def get_offsettype_by_id(self, offsetTypeID):
+    def get_qualcontrollvls_by_ids(self, qual_control_lvl_id_arr):
+        return map.QualityControlLevel.query.filter(
+               map.QualityControlLevel.QualityControlLevelID.in_(
+                    qual_control_lvl_id_arr)).all()
+    
+    def get_offsettype_by_id(self, offset_type_id):
         return map.OffsetType.query.filter(
-            map.OffsetType.OffsetTypeID == offsetTypeID).first()
+            map.OffsetType.OffsetTypeID == offset_type_id).first()
     
-    def get_offsettypes_by_ids(self, offsetTypeIdArr):
+    def get_offsettypes_by_ids(self, offset_type_id_arr):
         return map.OffsetType.query.filter(map.OffsetType.OffsetTypeID.in_(
-            offsetTypeIdArr)).all()
+            offset_type_id_arr)).all()
         
-
