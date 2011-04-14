@@ -19,6 +19,8 @@ db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False,
 Base = declarative_base()
 Base.query = db_session.query_property()
 
+
+
 class Variable(Base, wof_base.BaseVariable):
     __tablename__ = 'parameter'
 
@@ -194,59 +196,54 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
     
     
     def __init__(self, site=None, variable=None, value_count=None,
-                 begin_date_time_utc=None, end_date_time_utc=None):
+                 begin_date_time_utc=None, end_date_time_utc=None,
+                 begin_date_time=None, end_date_time=None):
         
         self.Site = site
         self.Variable = variable
         self.ValueCount = value_count
         self.BeginDateTimeUTC = begin_date_time_utc
         self.EndDateTimeUTC = end_date_time_utc
+        self.BeginDateTime = begin_date_time
+        self.EndDateTime = end_date_time
     
-        #TODO: Maybe use UTC offset to calculate the non-UTC time
-        #  current swis2.db did not have that field filled in though
+        
                 
         #TODO:
-        #seriesCat.Method
-        #seriesCat.SourceID,
-        #seriesCat.Organization,
-        #seriesCat.SourceDescription,
-        #seriesCat.Source
-        #seriesCat.QualityControlLevelID
-        #seriesCat.QualityControlLevelCode
-                
-    #SeriesID = None
-    #SiteID = None
-    #SiteCode = Column(String, primary_key=True)
-    #SiteName = None
-    #VariableID = None
-    #VariableCode = Column(String, primary_key=True)
-    #VariableName = None
-    #Speciation = None
-    #VariableUnitsID = None 
-    #VariableUnitsName = None
-    #SampleMedium = None
-    #ValueType = None
-    #TimeSupport = None
-    #TimeUnitsID = None
-    #TimeUnitsName = None
-    #DataType = None
-    #GeneralCategory = None
-    #MethodID = None
-    #MethodDescription = None
-    #SourceID = None #TODO
-    #Organization = None
-    #SourceDescription = None
-    #Citation = None
-    #QualityControlLevelID = None #TODO
-    #QualityControlLevelCode = None
-    #BeginDateTime = None
-    #EndDateTime = None
-    #BeginDateTimeUTC = None
-    #EndDateTimeUTC = None
-    #ValueCount = None
-    
-    #Site = BaseSite()
-    #Variable = BaseVariable()
-    #Method = BaseMethod()
+        #self.Method
+        #self.SourceID,
+        #self.Organization,
+        #self.SourceDescription,
+        #self.Source
+        #self.QualityControlLevelID
+        #self.QualityControlLevelCode
+                    
+        #SeriesID = None
+        #SiteID = None
+        #SiteCode = Column(String, primary_key=True)
+        #SiteName = None
+        #VariableID = None
+        #VariableCode = Column(String, primary_key=True)
+        #VariableName = None
+        #Speciation = None
+        #VariableUnitsID = None 
+        #VariableUnitsName = None
+        #SampleMedium = None
+        #ValueType = None
+        #TimeSupport = None
+        #TimeUnitsID = None
+        #TimeUnitsName = None
+        #DataType = None
+        #GeneralCategory = None
+        #MethodID = None
+        #MethodDescription = None
+        #SourceID = None #TODO
+        #Organization = None
+        #SourceDescription = None
+        #Citation = None
+        #QualityControlLevelID = None #TODO
+        #QualityControlLevelCode = None
+
+        #Method = BaseMethod()
     pass
     
