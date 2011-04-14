@@ -93,14 +93,14 @@ class SwisSqlAlchDao(object):
         end_date = None
                 
         if res.UTCOffset:
-            offset_delta = datetime.timedelta(hours = res.UTCOffset)
+            offset_delta = datetime.timedelta(hours=res.UTCOffset)
             
             begin_date = res.BeginDateTimeUTC + offset_delta
             end_date = res.EndDateTimeUTC + offset_delta
 
-        seriesCat = map.SeriesCatalog(siteResult, varResult, res.ValueCount,
-                                      res.BeginDateTimeUTC, res.EndDateTimeUTC,
-                                      begin_date, end_date)
+        seriesCat = map.SeriesCatalog(
+            siteResult, varResult, res.ValueCount, res.BeginDateTimeUTC,
+            res.EndDateTimeUTC, begin_date, end_date)
        
         return [seriesCat]
          
@@ -114,18 +114,21 @@ class SwisSqlAlchDao(object):
         
         valueResultArr = None
         
+        #TODO: Should we be using DateTimeUTC instead of LocalDateTime?
+        # All the other WOF services uses local
+        
         if (not begin_date_time or not end_date_time):
             valueResultArr = map.DataValue.query.filter(
                 and_(map.DataValue.SiteID == siteResult.SiteID,
                      map.DataValue.VariableID == varResult.VariableID)
-                ).order_by(map.DataValue.LocalDateTime).all()
+                ).order_by(map.DataValue.DateTimeUTC).all()
         else:
             valueResultArr = map.DataValue.query.filter(
                 and_(map.DataValue.SiteID == siteResult.SiteID,
                      map.DataValue.VariableID == varResult.VariableID,
-                     map.DataValue.LocalDateTime >= begin_date_time, #TODO: SWIS doesn't have localdatetime
-                     map.DataValue.LocalDateTime <= end_date_time) #TODO: SWIS doesn't have localdatetime
-                ).order_by(map.DataValue.LocalDateTime).all()
+                     map.DataValue.DateTimeUTC >= begin_date_time, #TODO: SWIS doesn't have localdatetime
+                     map.DataValue.DateTimeUTC <= end_date_time) #TODO: SWIS doesn't have localdatetime
+                ).order_by(map.DataValue.DateTimeUTC).all()
             
         return valueResultArr
     
@@ -144,28 +147,22 @@ class SwisSqlAlchDao(object):
             map.Source.SourceID.in_(source_id_arr)).all()
     
     def get_qualifier_by_id(self, qualifier_id):
-        return map.Qualifier.query.filter(
-            map.Qualifier.QualifierID == qualifier_id).first()
+        return map.Qualifier()
     
     def get_qualifiers_by_ids(self, qualifier_id_arr):
-        return map.Qualifier.query.filter(map.Qualifier.QualifierID.in_(
-            qualifier_id_arr)).all()
+        return [map.Qualifier()]
     
     def get_qualcontrollvl_by_id(self, qual_control_lvl_id):
-        return map.QualityControlLevel.query.filter(
-                map.QualityControlLevel.QualityControlLevelID ==
-                qual_control_lvl_id).first()
+        return map.QualityControlLevel()
     
     def get_qualcontrollvls_by_ids(self, qual_control_lvl_id_arr):
-        return map.QualityControlLevel.query.filter(
-               map.QualityControlLevel.QualityControlLevelID.in_(
-                    qual_control_lvl_id_arr)).all()
+        return [map.QualityControlLevel()]
     
     def get_offsettype_by_id(self, offset_type_id):
-        return map.OffsetType.query.filter(
-            map.OffsetType.OffsetTypeID == offset_type_id).first()
+        #TODO
+        return None
     
     def get_offsettypes_by_ids(self, offset_type_id_arr):
-        return map.OffsetType.query.filter(map.OffsetType.OffsetTypeID.in_(
-            offset_type_id_arr)).all()
+        #TODO
+        return None
         

@@ -81,9 +81,9 @@ class DataValue(Base, wof_base.BaseDataValue):
     ValueID = Column('id', Integer, primary_key=True)
     DataValue = Column('data_value', Float)
     #ValueAccuracy = Column(Float)
-    #LocalDateTime = Column(DateTime)
     UTCOffset = Column('origin_utc_offset', Integer)
     DateTimeUTC = Column('datetime_utc', DateTime)
+    #LocalDateTime
     SiteID = Column('site_id', Integer)
     VariableID = Column('parameter_id', Integer) 
     OffsetValue = Column('vertical_offset', Float)
@@ -97,6 +97,7 @@ class DataValue(Base, wof_base.BaseDataValue):
     #SampleID = Column(Integer)
     #DerivedFromID = Column(Integer)
     QualityControlLevelID = 1 #All of SWIS data values are "raw data"
+            
 
 #Using instrument information for Method of WaterML
 class Method(Base, wof_base.BaseMethod):
@@ -182,6 +183,11 @@ class Source(Base, wof_base.BaseSource):
 #    ProfileVersion = Column(String)
 #    MetadataLink = Column(String)
 
+class Qualifier(wof_base.BaseQualifier):
+    #TODO
+    QualifierID = None
+    QualifierCode = None
+    QualifierDescription = None
 
 class QualityControlLevel(wof_base.BaseQualityControlLevel):
     #All of SWIS data values are "raw data"
@@ -192,9 +198,7 @@ class QualityControlLevel(wof_base.BaseQualityControlLevel):
   
 
 class SeriesCatalog(wof_base.BaseSeriesCatalog):
-    
-    
-    
+
     def __init__(self, site=None, variable=None, value_count=None,
                  begin_date_time_utc=None, end_date_time_utc=None,
                  begin_date_time=None, end_date_time=None):
@@ -207,8 +211,7 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
         self.BeginDateTime = begin_date_time
         self.EndDateTime = end_date_time
     
-        
-                
+
         #TODO:
         #self.Method
         #self.SourceID,

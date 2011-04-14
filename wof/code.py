@@ -135,53 +135,69 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
         v = create_value_element(valueResult)
         values.add_value(v)
         
-        methodIdSet.add(valueResult.MethodID)
-        sourceIdSet.add(valueResult.SourceID)
-        qualifierIdSet.add(valueResult.QualifierID)
-        qualControlLevelIdSet.add(valueResult.QualityControlLevelID)
-        offsetTypeIdSet.add(valueResult.OffsetTypeID)
+        if valueResult.MethodID:
+            methodIdSet.add(valueResult.MethodID)
+        
+        if valueResult.SourceID:
+            sourceIdSet.add(valueResult.SourceID)
+        
+        if valueResult.QualifierID:
+            qualifierIdSet.add(valueResult.QualifierID)
+        
+        if valueResult.QualityControlLevelID:
+            qualControlLevelIdSet.add(valueResult.QualityControlLevelID)
+        
+        if valueResult.OffsetTypeID:
+            offsetTypeIdSet.add(valueResult.OffsetTypeID)
 
     #Add method elements for each unique methodID
-    methodIdArr = list(methodIdSet)
-    methodResultArr = wof.dao.get_methods_by_ids(methodIdArr)
-    for methodResult in methodResultArr:
-        method = create_method_element(methodResult)
-        values.add_method(method)
+    if methodIdSet:
+        methodIdArr = list(methodIdSet)
+        methodResultArr = wof.dao.get_methods_by_ids(methodIdArr)
+        for methodResult in methodResultArr:
+            method = create_method_element(methodResult)
+            values.add_method(method)
 
     #Add source elements for each unique sourceID
-    sourceIdArr = list(sourceIdSet)
-    sourceResultArr = wof.dao.get_sources_by_ids(sourceIdArr)
-    for sourceResult in sourceResultArr:
-        source = create_source_element(sourceResult)
-        values.add_source(source)
+    if sourceIdSet:
+        sourceIdArr = list(sourceIdSet)
+        sourceResultArr = wof.dao.get_sources_by_ids(sourceIdArr)
+        for sourceResult in sourceResultArr:
+            source = create_source_element(sourceResult)
+            values.add_source(source)
     
     #Add qualifier elements
-    qualIdArr = list(qualifierIdSet)
-    qualResultArr = wof.dao.get_qualifiers_by_ids(qualIdArr)
-    for qualifierResult in qualResultArr:
-        q = WaterML.qualifier(qualifierID=qualifierResult.QualifierID,
-                                 default=None,
-                                 network=wof.network,
-                                 vocabulary=wof.vocabulary,
-                                 qualifierCode=qualifierResult.QualifierCode)
-        #TODO: values.add_qualifier(q)       
+    if qualifierIdSet:
+        qualIdArr = list(qualifierIdSet)
+        qualResultArr = wof.dao.get_qualifiers_by_ids(qualIdArr)
+        for qualifierResult in qualResultArr:
+            q = WaterML.qualifier(
+                qualifierID=qualifierResult.QualifierID,
+                default=None,
+                network=wof.network,
+                vocabulary=wof.vocabulary,
+                qualifierCode=qualifierResult.QualifierCode)
+            values.add_qualifier(q)
         
     #Add qualityControlLevel elements
-    qualControlLvlIdArr = list(qualControlLevelIdSet)
-    qualControlLevelResultArr = wof.dao.get_qualcontrollvls_by_ids(
-        qualControlLvlIdArr)
-    for qualControlLvlResult in qualControlLevelResultArr:
-        qualControlLevel = create_qualityControlLevel_element(
-            qualControlLvlResult)
-        values.add_qualityControlLevel(qualControlLevel)
+    if qualControlLevelIdSet:
+        qualControlLvlIdArr = list(qualControlLevelIdSet)
+        qualControlLevelResultArr = wof.dao.get_qualcontrollvls_by_ids(
+            qualControlLvlIdArr)
+        for qualControlLvlResult in qualControlLevelResultArr:
+            qualControlLevel = create_qualityControlLevel_element(
+                qualControlLvlResult)
+            values.add_qualityControlLevel(qualControlLevel)
     
     #Add offset elements
-    offsetTypeIdArr = list(offsetTypeIdSet)
-    offsetTypeResultArr = wof.dao.get_offsettypes_by_ids(offsetTypeIdArr)
-    for offsetTypeResult in offsetTypeResultArr:
-        offset = create_offset_element(offsetTypeResult)
-        values.add_offset(offset)
+    if offsetTypeIdSet:
+        offsetTypeIdArr = list(offsetTypeIdSet)
+        offsetTypeResultArr = wof.dao.get_offsettypes_by_ids(offsetTypeIdArr)
+        for offsetTypeResult in offsetTypeResultArr:
+            offset = create_offset_element(offsetTypeResult)
+            values.add_offset(offset)
         
+    
     timeSeries.values = values
     
     timeSeriesResponse.set_timeSeries(timeSeries)
