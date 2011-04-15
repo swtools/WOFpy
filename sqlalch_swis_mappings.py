@@ -1,3 +1,4 @@
+import datetime
 
 from sqlalchemy import create_engine, Table
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime
@@ -97,6 +98,15 @@ class DataValue(Base, wof_base.BaseDataValue):
     #SampleID = Column(Integer)
     #DerivedFromID = Column(Integer)
     QualityControlLevelID = 1 #All of SWIS data values are "raw data"
+    
+    @property
+    def LocalDateTime(self):
+        if self.UTCOffset:
+            offset_delta = datetime.timedelta(hours=self.UTCOffset)
+            
+            return self.DateTimeUTC + offset_delta
+        
+        return self.DateTimeUTC
             
 
 #Using instrument information for Method of WaterML
@@ -154,14 +164,15 @@ agency_site_association_table = Table(
     Column('agency_id', Integer, ForeignKey('agency.id')),
     Column('site_id', Integer, ForeignKey('site.id')))
 
+#TODO
 class Source(Base, wof_base.BaseSource):
     __tablename__ = 'agency'
+    
     SourceID = Column('id', Integer, primary_key=True)
     Organization = Column('name', String)
     
     #Not a clear mapping in SWIS. It could come from project.description
     #TODO: SourceDescription
-    
     
     Sites = relationship('Site',
                          secondary=agency_site_association_table,
@@ -195,7 +206,16 @@ class QualityControlLevel(wof_base.BaseQualityControlLevel):
     QualityControlLevelCode = "Raw Data"
     Definition = "Raw Data"
     Explanation = "Raw Data"
-  
+ 
+ 
+#TODO  Looks like SWIS only has one type of offset, 'vertical_offset'
+# but need to find out what the units will be
+class OffsetType(wof_base.BaseOffsetType):
+    OffsetTypeID = 1
+    OffsetUnitsID = None #TODO
+    OffsetDescription = "Vertical"
+    
+    OffsetUnits = None #TODO
 
 class SeriesCatalog(wof_base.BaseSeriesCatalog):
 
@@ -221,32 +241,32 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
         #self.QualityControlLevelID
         #self.QualityControlLevelCode
                     
-        #SeriesID = None
-        #SiteID = None
-        #SiteCode = Column(String, primary_key=True)
-        #SiteName = None
-        #VariableID = None
-        #VariableCode = Column(String, primary_key=True)
-        #VariableName = None
-        #Speciation = None
-        #VariableUnitsID = None 
-        #VariableUnitsName = None
-        #SampleMedium = None
-        #ValueType = None
-        #TimeSupport = None
-        #TimeUnitsID = None
-        #TimeUnitsName = None
-        #DataType = None
-        #GeneralCategory = None
-        #MethodID = None
-        #MethodDescription = None
-        #SourceID = None #TODO
-        #Organization = None
-        #SourceDescription = None
-        #Citation = None
-        #QualityControlLevelID = None #TODO
-        #QualityControlLevelCode = None
+    #SeriesID = None
+    #SiteID = None
+    #SiteCode = Column(String, primary_key=True)
+    #SiteName = None
+    #VariableID = None
+    #VariableCode = Column(String, primary_key=True)
+    #VariableName = None
+    #Speciation = None
+    #VariableUnitsID = None 
+    #VariableUnitsName = None
+    #SampleMedium = None
+    #ValueType = None
+    #TimeSupport = None
+    #TimeUnitsID = None
+    #TimeUnitsName = None
+    #DataType = None
+    #GeneralCategory = None
+    #MethodID = None
+    #MethodDescription = None
+    #SourceID = None #TODO
+    #Organization = None
+    #SourceDescription = None
+    #Citation = None
+    #QualityControlLevelID = None #TODO
+    #QualityControlLevelCode = None
 
-        #Method = BaseMethod()
+    #Method = BaseMethod()
     pass
     
