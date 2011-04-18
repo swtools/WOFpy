@@ -8,8 +8,10 @@ import wof.base_models as wof_base
 
 Base = declarative_base()
 
+
 def init_model(db_session):
     Base.query = db_session.query_property()
+
 
 class Variable(Base, wof_base.BaseVariable):
     __tablename__ = 'Variables'
@@ -29,10 +31,10 @@ class Variable(Base, wof_base.BaseVariable):
     NoDataValue = Column(Float)
     
     VariableUnits = relationship("Units",
-                                 primaryjoin='Variable.VariableUnitsID==Units.UnitsID')
+                        primaryjoin='Variable.VariableUnitsID==Units.UnitsID')
     
     TimeUnits = relationship("Units",
-                             primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
+                        primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
 
     def __repr__(self):
         return "<Variable('%s','%s')>" % (self.VariableCode, self.VariableName)
@@ -45,12 +47,14 @@ class Site(Base, wof_base.BaseSite):
     SiteName = Column(String)
     Latitude = Column(Float)
     Longitude = Column(Float)
-    LatLongDatumID = Column(Integer, ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
+    LatLongDatumID = Column(Integer,
+                        ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
     Elevation_m = Column(Float)
     VerticalDatum = Column(String)
     LocalX = Column(Float)
     LocalY = Column(Float)
-    LocalProjectionID = Column(Integer, ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
+    LocalProjectionID = Column(Integer,
+                        ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
     PosAccuracy_m = Column(Float)
     State = Column(String)
     County = Column(String)

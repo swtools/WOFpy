@@ -8,11 +8,11 @@ from flask import Module
 
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
-	 xmlns:xlink="http://www.w3.org/1999/xlink" \
-	 xmlns:xsd="http://www.w3.org/2001/XMLSchema" \
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \
-	 xmlns:wtr="http://www.cuahsi.org/waterML/" \
-	 xmlns="http://www.cuahsi.org/waterML/1.0/"'
+    xmlns:xlink="http://www.w3.org/1999/xlink" \
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" \
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \
+    xmlns:wtr="http://www.cuahsi.org/waterML/" \
+    xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
 rest = Module(__name__)
 
@@ -107,16 +107,15 @@ def get_values():
     
     if (siteArg == None or varArg == None):
         return "Must enter a site code (location) and a variable code (variable)"
-    
+
     timeSeriesResponse = wof.code.create_get_values_response(
         siteArg,varArg,startDateTime,endDateTime)
-       
+
     outStream = StringIO.StringIO()
     timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
                               namespacedef_= NSDEF)
-    
+
     response = Response(response=outStream.getvalue(), status=200,
                         headers=None, mimetype='text/xml')
 
     return response
-    
