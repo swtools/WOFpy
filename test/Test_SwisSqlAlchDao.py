@@ -1,9 +1,12 @@
 import unittest
 import SwisSqlAlchDao
+import private_config
 
 class Test_SwisSqlAlchDao(unittest.TestCase):
     def setUp(self):
-        self.dao = SwisSqlAlchDao.SwisSqlAlchDao()
+        self.dao = SwisSqlAlchDao.SwisSqlAlchDao(
+            private_config.swis_test_connection_string)
+        
         self.known_site_codes = (
             'ARA', 'ARROYD', 'ARROYS', 'BAFF', 'BAYT', 'BIRD', 'BLB', 'BOBH',
             'BOLI', 'BRAZOSD', 'BRAZOSS', 'BZ1U', 'BZ1UX', 'BZ2L', 'BZ2U',
@@ -72,14 +75,57 @@ class Test_SwisSqlAlchDao(unittest.TestCase):
         for known_code in self.known_var_codes:
             self.assertTrue(known_code in resultVarCodes)
             
-    def test_method_desc(self):        
-        methodResult = self.dao.get_method_by_id(1)
-        self.assertNotEqual(methodResult, None) #TODO
-                
-    def test_series(self):
+   
+    #TODO
+    def test_get_series_by_sitecode(self):
         seriesResult = self.dao.get_series_by_sitecode('BAYT')
         #print len(seriesResult)
         
-        
-        
+    #TODO
+    def test_get_series_by_sitecode_and_varcode(self):
+        pass
+    
+    #TODO
+    def test_get_datavalues(self):
+        pass
+    
+    #TODO
+    def test_get_method_by_id(self):
+        pass
+    
+    #TODO
+    def test_get_methods_by_ids(self):
+        pass
+    
+    #TODO
+    def test_get_source_by_id(self):
+        pass
+    
+    #TODO
+    def test_get_sources_by_ids(self):
+        pass
+    
+    #TODO
+    def test_get_qualifier_by_id(self):
+        pass
+    
+    #TODO
+    def test_get_qualifiers_by_ids(self):
+        pass
+    
+    #TODO
+    def test_get_qualcontrol_by_id(self):
+        pass
+    
+    #TODO
+    def test_get_qualcontrols_by_ids(self):
+        pass
+    
+    #TODO
+    def test_get_offsettype_by_id(self):
+        pass
+    
+    #TODO
+    def test_get_offsettypes_by_ids(self):
+        pass
         

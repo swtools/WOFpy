@@ -1,22 +1,15 @@
 import wof.base_mappings as wof_base
 
-from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime
 from sqlalchemy import Boolean
 
-from sqlalchemy.orm import scoped_session, sessionmaker, relationship
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-
-import private_config
-engine = create_engine(private_config.database_connection_string,
-                       convert_unicode=True)
-
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False,
-                                         bind=engine))
-
 Base = declarative_base()
-Base.query = db_session.query_property()
+
+def init_model(db_session):
+    Base.query = db_session.query_property()
 
 class Variable(Base, wof_base.BaseVariable):
     __tablename__ = 'Variables'

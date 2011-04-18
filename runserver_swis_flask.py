@@ -7,6 +7,7 @@ from soaplib.core.server import wsgi
 
 import wof
 import SwisSqlAlchDao
+import private_config
 
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
@@ -20,7 +21,7 @@ if __name__ == '__main__':
     flask_app.config.from_object(config.DevConfig)
     
     wof.config_from_file('config/swis_config.cfg')
-    wof.dao = SwisSqlAlchDao.SwisSqlAlchDao()
+    wof.dao = SwisSqlAlchDao.SwisSqlAlchDao(private_config.swis_connection_string)
     
     soap_app = soaplib.core.Application(services=[WOFService],
         tns='http://www.cuahsi.org/his/1.0/ws/',

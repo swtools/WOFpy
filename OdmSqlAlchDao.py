@@ -1,13 +1,16 @@
+from sqlalchemy import create_engine, distinct, func
+from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
 import sqlalch_odm_mappings as map
 
-
 class OdmSqlAlchDao(object):
 
-    def __init__(self):
-        #TODO: anything?
-        pass
+    def __init__(self, db_connection_string):
+        self.engine = create_engine(db_connection_string, convert_unicode=True)
+        self.db_session = scoped_session(sessionmaker(
+            autocommit=False, autoflush=False, bind=self.engine))
+        map.init_model(self.db_session)
     
     def get_all_sites(self):
         return map.Site.query.all()

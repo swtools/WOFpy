@@ -1,12 +1,18 @@
 import datetime
 
-from sqlalchemy import distinct, func
+from sqlalchemy import create_engine, distinct, func
+from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
 import sqlalch_swis_mappings as map
 
-#TODO
 class SwisSqlAlchDao(object):
+    
+    def __init__(self, db_connection_string):
+        self.engine = create_engine(db_connection_string, convert_unicode=True)
+        self.db_session = scoped_session(sessionmaker(
+            autocommit=False, autoflush=False, bind=self.engine))
+        map.init_model(self.db_session)
     
     def get_all_sites(self):
         return map.Site.query.all()
@@ -34,7 +40,7 @@ class SwisSqlAlchDao(object):
         
         if siteResult:
             
-            resultList = map.db_session.query(
+            resultList = self.db_session.query(
                 map.DataValue.VariableID.label('VariableID'),
                 func.count(map.DataValue.DataValue).label('ValueCount'),
                 func.min(map.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
@@ -81,7 +87,7 @@ class SwisSqlAlchDao(object):
         varResult = map.Variable.query.filter(
             map.Variable.VariableCode==var_code).one()
                 
-        res = map.db_session.query(
+        res = self.db_session.query(
                 func.count(map.DataValue.DataValue).label('ValueCount'),
                 func.min(map.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
                 func.max(map.DataValue.DateTimeUTC).label('EndDateTimeUTC'),
