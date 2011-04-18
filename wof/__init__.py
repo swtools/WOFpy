@@ -7,7 +7,6 @@ menu_group_name = 'MENU_GROUP_NAME'
 service_wsdl = 'SERVICE_WSDL'
 
 dao = None
-mappings = None
 
 def config_from_file(file_name):
     config = ConfigParser.RawConfigParser()

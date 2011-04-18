@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
-import sqlalch_swis_mappings as map
+import sqlalch_swis_models as model
 
 class SwisSqlAlchDao(object):
     
@@ -12,50 +12,50 @@ class SwisSqlAlchDao(object):
         self.engine = create_engine(db_connection_string, convert_unicode=True)
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
-        map.init_model(self.db_session)
+        model.init_model(self.db_session)
     
     def get_all_sites(self):
-        return map.Site.query.all()
+        return model.Site.query.all()
     
     def get_site_by_code(self, site_code):
-        return map.Site.query.filter(map.Site.SiteCode == site_code).first()
+        return model.Site.query.filter(model.Site.SiteCode == site_code).first()
     
     def get_sites_by_codes(self, site_codes_arr):
-        return map.Site.query.filter(map.Site.SiteCode.in_(site_codes_arr)).all()
+        return model.Site.query.filter(model.Site.SiteCode.in_(site_codes_arr)).all()
     
     def get_all_variables(self):
-        return map.Variable.query.all()
+        return model.Variable.query.all()
     
     def get_variable_by_code(self, var_code):
-        return map.Variable.query.filter(
-            map.Variable.VariableCode == var_code).first()
+        return model.Variable.query.filter(
+            model.Variable.VariableCode == var_code).first()
     
     def get_variables_by_codes(self, var_codes_arr):
-        return map.Variable.query.filter(map.Variable.VariableCode.in_(
+        return model.Variable.query.filter(model.Variable.VariableCode.in_(
             var_codes_arr)).all()
     
     def get_series_by_sitecode(self, site_code):
         
-        siteResult = map.Site.query.filter(map.Site.SiteCode==site_code).one()
+        siteResult = model.Site.query.filter(model.Site.SiteCode==site_code).one()
         
         if siteResult:
             
             resultList = self.db_session.query(
-                map.DataValue.VariableID.label('VariableID'),
-                func.count(map.DataValue.DataValue).label('ValueCount'),
-                func.min(map.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
-                func.max(map.DataValue.DateTimeUTC).label('EndDateTimeUTC'),
-                map.DataValue.UTCOffset.label('UTCOffset')
+                model.DataValue.VariableID.label('VariableID'),
+                func.count(model.DataValue.DataValue).label('ValueCount'),
+                func.min(model.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
+                func.max(model.DataValue.DateTimeUTC).label('EndDateTimeUTC'),
+                model.DataValue.UTCOffset.label('UTCOffset')
             ).group_by(
-                map.DataValue.VariableID).filter(
-                    map.DataValue.SiteID==siteResult.SiteID
-                ).order_by(map.DataValue.VariableID).all()
+                model.DataValue.VariableID).filter(
+                    model.DataValue.SiteID==siteResult.SiteID
+                ).order_by(model.DataValue.VariableID).all()
             
             varIDArr = [r.VariableID for r in resultList]
 
-            varResultArr = map.Variable.query.filter(
-                map.Variable.VariableID.in_(varIDArr)).order_by(
-                    map.Variable.VariableID).all()
+            varResultArr = model.Variable.query.filter(
+                model.Variable.VariableID.in_(varIDArr)).order_by(
+                    model.Variable.VariableID).all()
 
             seriesCatArr = []
             for i in range(len(resultList)):
@@ -70,7 +70,7 @@ class SwisSqlAlchDao(object):
                     begin_date = resultList[i].BeginDateTimeUTC + offset_delta
                     end_date = resultList[i].EndDateTimeUTC + offset_delta
                 
-                seriesCat = map.SeriesCatalog(
+                seriesCat = model.SeriesCatalog(
                     siteResult, varResultArr[i],
                     resultList[i].ValueCount,
                     resultList[i].BeginDateTimeUTC,
@@ -83,17 +83,17 @@ class SwisSqlAlchDao(object):
         return None
     
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
-        siteResult = map.Site.query.filter(map.Site.SiteCode==site_code).one()
-        varResult = map.Variable.query.filter(
-            map.Variable.VariableCode==var_code).one()
+        siteResult = model.Site.query.filter(model.Site.SiteCode==site_code).one()
+        varResult = model.Variable.query.filter(
+            model.Variable.VariableCode==var_code).one()
                 
         res = self.db_session.query(
-                func.count(map.DataValue.DataValue).label('ValueCount'),
-                func.min(map.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
-                func.max(map.DataValue.DateTimeUTC).label('EndDateTimeUTC'),
-                map.DataValue.UTCOffset.label('UTCOffset')
-            ).filter(and_(map.DataValue.SiteID==siteResult.SiteID,
-                        map.DataValue.VariableID==varResult.VariableID)).one()
+                func.count(model.DataValue.DataValue).label('ValueCount'),
+                func.min(model.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
+                func.max(model.DataValue.DateTimeUTC).label('EndDateTimeUTC'),
+                model.DataValue.UTCOffset.label('UTCOffset')
+            ).filter(and_(model.DataValue.SiteID==siteResult.SiteID,
+                        model.DataValue.VariableID==varResult.VariableID)).one()
             
         begin_date = None
         end_date = None
@@ -104,7 +104,7 @@ class SwisSqlAlchDao(object):
             begin_date = res.BeginDateTimeUTC + offset_delta
             end_date = res.EndDateTimeUTC + offset_delta
 
-        seriesCat = map.SeriesCatalog(
+        seriesCat = model.SeriesCatalog(
             siteResult, varResult, res.ValueCount, res.BeginDateTimeUTC,
             res.EndDateTimeUTC, begin_date, end_date)
        
@@ -124,45 +124,45 @@ class SwisSqlAlchDao(object):
         # All the other WOF services uses local
         
         if (not begin_date_time or not end_date_time):
-            valueResultArr = map.DataValue.query.filter(
-                and_(map.DataValue.SiteID == siteResult.SiteID,
-                     map.DataValue.VariableID == varResult.VariableID)
-                ).order_by(map.DataValue.DateTimeUTC).all()
+            valueResultArr = model.DataValue.query.filter(
+                and_(model.DataValue.SiteID == siteResult.SiteID,
+                     model.DataValue.VariableID == varResult.VariableID)
+                ).order_by(model.DataValue.DateTimeUTC).all()
         else:
-            valueResultArr = map.DataValue.query.filter(
-                and_(map.DataValue.SiteID == siteResult.SiteID,
-                     map.DataValue.VariableID == varResult.VariableID,
-                     map.DataValue.DateTimeUTC >= begin_date_time, #TODO: SWIS doesn't have localdatetime
-                     map.DataValue.DateTimeUTC <= end_date_time) #TODO: SWIS doesn't have localdatetime
-                ).order_by(map.DataValue.DateTimeUTC).all()
+            valueResultArr = model.DataValue.query.filter(
+                and_(model.DataValue.SiteID == siteResult.SiteID,
+                     model.DataValue.VariableID == varResult.VariableID,
+                     model.DataValue.DateTimeUTC >= begin_date_time, #TODO: SWIS doesn't have localdatetime
+                     model.DataValue.DateTimeUTC <= end_date_time) #TODO: SWIS doesn't have localdatetime
+                ).order_by(model.DataValue.DateTimeUTC).all()
             
         return valueResultArr
     
     def get_method_by_id(self, methodID):
-        return map.Method.query.filter(map.Method.MethodID == methodID).first()
+        return model.Method.query.filter(model.Method.MethodID == methodID).first()
         
     def get_methods_by_ids(self, method_id_arr):
-        return map.Method.query.filter(
-            map.Method.MethodID.in_(method_id_arr)).all()
+        return model.Method.query.filter(
+            model.Method.MethodID.in_(method_id_arr)).all()
         
     def get_source_by_id(self, source_id):
-        return map.Source.query.filter(map.Source.SourceID == source_id).first()
+        return model.Source.query.filter(model.Source.SourceID == source_id).first()
         
     def get_sources_by_ids(self, source_id_arr):
-        return map.Source.query.filter(
-            map.Source.SourceID.in_(source_id_arr)).all()
+        return model.Source.query.filter(
+            model.Source.SourceID.in_(source_id_arr)).all()
     
     def get_qualifier_by_id(self, qualifier_id):
-        return map.Qualifier()
+        return model.Qualifier()
     
     def get_qualifiers_by_ids(self, qualifier_id_arr):
-        return [map.Qualifier()]
+        return [model.Qualifier()]
     
     def get_qualcontrollvl_by_id(self, qual_control_lvl_id):
-        return map.QualityControlLevel()
+        return model.QualityControlLevel()
     
     def get_qualcontrollvls_by_ids(self, qual_control_lvl_id_arr):
-        return [map.QualityControlLevel()]
+        return [model.QualityControlLevel()]
     
     def get_offsettype_by_id(self, offset_type_id):
         #TODO

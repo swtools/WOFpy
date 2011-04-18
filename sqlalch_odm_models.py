@@ -1,10 +1,10 @@
-import wof.base_mappings as wof_base
-
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime
 from sqlalchemy import Boolean
 
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+
+import wof.base_models as wof_base
 
 Base = declarative_base()
 
