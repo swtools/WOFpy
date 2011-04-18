@@ -49,9 +49,7 @@ class Site(Base, wof_base.BaseSite):
     #Latitude = Column(Float)
     #Longitude = Column(Float)
     #LatLongDatumID = Column(Integer, ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
-    
-    
-    
+
     #Elevation_m = Column(Float)
     #VerticalDatum = Column(String)
     #LocalX = Column(Float)
@@ -67,8 +65,7 @@ class Site(Base, wof_base.BaseSite):
     
     #LocalProjection = relationship("SpatialReference",
     #                                    primaryjoin='Site.LocalProjectionID==SpatialReference.SpatialReferenceId')
-    
-    
+
 class DataValue(Base, wof_base.BaseDataValue):
     __tablename__ = 'raw_data_value'
     
@@ -100,7 +97,6 @@ class DataValue(Base, wof_base.BaseDataValue):
             return self.DateTimeUTC + offset_delta
         
         return self.DateTimeUTC
-            
 
 #Using instrument information for Method of WaterML
 class Method(Base, wof_base.BaseMethod):
@@ -125,8 +121,7 @@ class Method(Base, wof_base.BaseMethod):
                    self.InstrumentModel.ModelName)
         else:
             return None
-    
-    
+
 #SWIS-specific table
 class InstrumentModel(Base):
     __tablename__ = 'instrument_model'
@@ -224,7 +219,6 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
         self.BeginDateTime = begin_date_time
         self.EndDateTime = end_date_time
     
-
         #TODO:
         #self.Method
         #self.SourceID,

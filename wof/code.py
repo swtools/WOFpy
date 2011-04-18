@@ -88,7 +88,8 @@ def create_variable_info_response(varArg):
     return variableInfoResponse
 
 
-def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=None):
+def create_get_values_response(siteArg, varArg, startDateTime=None,
+                               endDateTime=None):
     
     siteCode = siteArg.replace(wof.network+':','')
     varCode = varArg.replace(wof.network+':','')
@@ -99,8 +100,10 @@ def create_get_values_response(siteArg, varArg, startDateTime=None, endDateTime=
     timeSeriesResponse = WaterML.TimeSeriesResponseType()
     
     queryInfo = WaterML.QueryInfoType()
-    timeParam = WaterML.timeParam(beginDateTime=startDateTime, endDateTime=endDateTime)
-    criteria = WaterML.criteria(locationParam=siteArg, variableParam=varArg, timeParam=timeParam)
+    timeParam = WaterML.timeParam(
+        beginDateTime=startDateTime, endDateTime=endDateTime)
+    criteria = WaterML.criteria(
+        locationParam=siteArg, variableParam=varArg, timeParam=timeParam)
     queryInfo.set_criteria(criteria)
     queryInfoNote = WaterML.NoteType()
     queryInfo.add_note(queryInfoNote)
@@ -215,24 +218,29 @@ def create_qualityControlLevel_element(qualControlLvlResult):
 def create_offset_element(offsetTypeResult):
     #TODO: where does offsetIsVertical come from
     #TODO: where does offsetHorizDirectionDegrees come from?
-    offset = WaterML.OffsetType(offsetTypeID = offsetTypeResult.OffsetTypeID,
-                                offsetValue=None,
-                                offsetDescription=offsetTypeResult.OffsetDescription,
-                                offsetIsVertical='true',
-                                offsetHorizDirectionDegrees=None)
+    offset = WaterML.OffsetType(
+        offsetTypeID = offsetTypeResult.OffsetTypeID,
+        offsetValue=None,
+        offsetDescription=offsetTypeResult.OffsetDescription,
+        offsetIsVertical='true',
+        offsetHorizDirectionDegrees=None)
+    
     if offsetTypeResult.OffsetUnits:
-        units = WaterML.UnitsType(UnitID=offsetTypeResult.OffsetUnits.UnitsID,
-                                  UnitAbbreviation=offsetTypeResult.OffsetUnits.UnitsAbbreviation,
-                                  UnitName=offsetTypeResult.OffsetUnits.UnitsName,
-                                  UnitType=offsetTypeResult.OffsetUnits.UnitsType)
+        units = WaterML.UnitsType(
+            UnitID=offsetTypeResult.OffsetUnits.UnitsID,
+            UnitAbbreviation=offsetTypeResult.OffsetUnits.UnitsAbbreviation,
+            UnitName=offsetTypeResult.OffsetUnits.UnitsName,
+            UnitType=offsetTypeResult.OffsetUnits.UnitsType)
+        
         offset.units = units
     
     return offset
 
 def create_method_element(methodResult):
-    method = WaterML.MethodType(methodID=methodResult.MethodID,
-                                 MethodDescription=methodResult.MethodDescription,
-                                 MethodLink=methodResult.MethodLink)
+    method = WaterML.MethodType(
+        methodID=methodResult.MethodID,
+        MethodDescription=methodResult.MethodDescription,
+        MethodLink=methodResult.MethodLink)
 
 
     #need at least one MethodLink element to meet WaterML 1.0 schema validation
@@ -243,12 +251,16 @@ def create_method_element(methodResult):
     return method
 
 def create_source_element(sourceResult):
-    source = WaterML.SourceType(sourceID=sourceResult.SourceID, Organization=sourceResult.Organization,
-                                    SourceDescription=sourceResult.SourceDescription,
-                                    SourceLink=sourceResult.SourceLink)
+    source = WaterML.SourceType(
+        sourceID=sourceResult.SourceID,
+        Organization=sourceResult.Organization,
+        SourceDescription=sourceResult.SourceDescription,
+        SourceLink=sourceResult.SourceLink)
         
     addressString = ", ".join([sourceResult.Address,
-                               sourceResult.City, sourceResult.State, sourceResult.ZipCode])
+                               sourceResult.City,
+                               sourceResult.State,
+                               sourceResult.ZipCode])
         
     contactInfo = WaterML.ContactInformationType(Email=sourceResult.Email,
                                     ContactName=sourceResult.ContactName,
@@ -309,7 +321,10 @@ def create_site_element(siteResult, seriesResultArr = None):
     site.set_siteInfo(siteInfo)
     
     #need at least one note element to meet WaterML 1.0 schema validation
-    if (not siteResult.County and not siteResult.State and not siteResult.Comments):
+    if (not siteResult.County
+        and not siteResult.State
+        and not siteResult.Comments):
+        
         siteInfo.add_note(WaterML.NoteType())
     else:
         if siteResult.County:
@@ -363,9 +378,10 @@ def create_site_info_element(siteResult):
     
     geoLocation = WaterML.geoLocation()
     
-    geogLocation = WaterML.LatLonPointType(srs="EPSG:{0}".format(siteResult.LatLongDatum.SRSID),
-                                       latitude=siteResult.Latitude,
-                                       longitude=siteResult.Longitude)
+    geogLocation = WaterML.LatLonPointType(
+        srs="EPSG:{0}".format(siteResult.LatLongDatum.SRSID),
+        latitude=siteResult.Latitude,
+        longitude=siteResult.Longitude)
 
     geoLocation.set_geogLocation(geogLocation)
     
@@ -414,12 +430,13 @@ def create_series_element(seriesResult):
    
     series.Method = method
     
-    source = WaterML.SourceType(sourceID=seriesResult.SourceID,
-                                Organization=seriesResult.Organization,
-                                SourceDescription=seriesResult.SourceDescription,
-                                Metadata=None, #TODO: Source Metadata
-                                ContactInformation=None, #TODO: Source ContactInformation
-                                SourceLink=None) #TODO: Source Link
+    source = WaterML.SourceType(
+        sourceID=seriesResult.SourceID,
+        Organization=seriesResult.Organization,
+        SourceDescription=seriesResult.SourceDescription,
+        Metadata=None, #TODO: Source Metadata
+        ContactInformation=None, #TODO: Source ContactInformation
+        SourceLink=None) #TODO: Source Link
     
     series.Source = source
     
@@ -432,12 +449,13 @@ def create_series_element(seriesResult):
     return series
 
 def create_variable_element(variableResult):
-    variable = WaterML.VariableInfoType(variableName=variableResult.VariableName,
-                                        valueType=variableResult.ValueType,
-                                        dataType=variableResult.DataType,
-                                        generalCategory=variableResult.GeneralCategory,
-                                        sampleMedium=variableResult.SampleMedium,
-                                        NoDataValue=variableResult.NoDataValue)
+    variable = WaterML.VariableInfoType(
+        variableName=variableResult.VariableName,
+        valueType=variableResult.ValueType,
+        dataType=variableResult.DataType,
+        generalCategory=variableResult.GeneralCategory,
+        sampleMedium=variableResult.SampleMedium,
+        NoDataValue=variableResult.NoDataValue)
     
     variableCode = WaterML.variableCode()
     variableCode.vocabulary = wof.vocabulary
@@ -447,21 +465,23 @@ def create_variable_element(variableResult):
     
     variable.add_variableCode(variableCode)
     
-    units = WaterML.units(unitsAbbreviation=variableResult.VariableUnits.UnitsAbbreviation,
-                          unitsCode=variableResult.VariableUnitsID,
-                          unitsType=variableResult.VariableUnits.UnitsType,
-                          valueOf_=variableResult.VariableUnits.UnitsName)
+    units = WaterML.units(
+        unitsAbbreviation=variableResult.VariableUnits.UnitsAbbreviation,
+        unitsCode=variableResult.VariableUnitsID,
+        unitsType=variableResult.VariableUnits.UnitsType,
+        valueOf_=variableResult.VariableUnits.UnitsName)
     
     variable.set_units(units)
     
     timeSupport = WaterML.timeSupport()
     timeSupport.isRegular = variableResult.IsRegular
     
-    timeUnits = WaterML.UnitsType(UnitID=variableResult.TimeUnits.UnitsID,
-                                  UnitName=variableResult.TimeUnits.UnitsName,
-                                  UnitDescription=variableResult.TimeUnits.UnitsName,
-                                  UnitType=variableResult.TimeUnits.UnitsType,
-                                  UnitAbbreviation=variableResult.TimeUnits.UnitsAbbreviation)
+    timeUnits = WaterML.UnitsType(
+        UnitID=variableResult.TimeUnits.UnitsID,
+        UnitName=variableResult.TimeUnits.UnitsName,
+        UnitDescription=variableResult.TimeUnits.UnitsName,
+        UnitType=variableResult.TimeUnits.UnitsType,
+        UnitAbbreviation=variableResult.TimeUnits.UnitsAbbreviation)
     
     timeSupport.set_unit(timeUnits)
     
