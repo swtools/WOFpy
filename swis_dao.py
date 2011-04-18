@@ -6,7 +6,7 @@ from sqlalchemy.sql import and_
 
 import sqlalch_swis_models as model
 
-class SwisSqlAlchDao(object):
+class SwisDao(object):
     
     def __init__(self, db_connection_string):
         self.engine = create_engine(db_connection_string, convert_unicode=True)

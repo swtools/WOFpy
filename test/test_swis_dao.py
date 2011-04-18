@@ -1,10 +1,10 @@
 import unittest
-import SwisSqlAlchDao
+import swis_dao
 import private_config
 
-class Test_SwisSqlAlchDao(unittest.TestCase):
+class Test_SwisDao(unittest.TestCase):
     def setUp(self):
-        self.dao = SwisSqlAlchDao.SwisSqlAlchDao(
+        self.dao = swis_dao.SwisDao(
             private_config.swis_test_connection_string)
         
         self.known_site_codes = (

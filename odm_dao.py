@@ -4,7 +4,7 @@ from sqlalchemy.sql import and_
 
 import sqlalch_odm_models as model
 
-class OdmSqlAlchDao(object):
+class OdmDao(object):
 
     def __init__(self, db_connection_string):
         self.engine = create_engine(db_connection_string, convert_unicode=True)

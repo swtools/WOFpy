@@ -5,7 +5,7 @@ import unittest
 from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
-import OdmSqlAlchDao
+import odm_dao
 
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
@@ -18,7 +18,7 @@ class Test_wofpy_soap(unittest.TestCase):
         '''
         flask_app.config.from_object(config.DevConfig)
         wof.config_from_file('config/lbr_config.cfg')
-        wof.dao = OdmSqlAlchDao.OdmSqlAlchDao()
+        wof.dao = odm_dao.OdmDao()
         
         soap_app = soaplib.core.Application([WOFService],
             'http://www.cuahsi.org/his/1.0/ws/')

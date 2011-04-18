@@ -1,10 +1,10 @@
 import unittest
-import OdmSqlAlchDao
+import odm_dao
 import private_config
 
-class Test_OdmSqlAlchDao(unittest.TestCase):
+class Test_OdmDao(unittest.TestCase):
     def setUp(self):
-        self.dao = OdmSqlAlchDao.OdmSqlAlchDao(
+        self.dao = odm_dao.OdmDao(
             private_config.lbr_connection_string)
         self.network_prefix = 'LBR'
         self.known_site_codes = (

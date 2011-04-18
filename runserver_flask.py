@@ -6,7 +6,7 @@ from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
 import wof
-import OdmSqlAlchDao
+import odm_dao
 import private_config
 
 #from wofpy_soap.soap_new import WOFService
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     flask_app.config.from_object(config.DevConfig)
     
     wof.config_from_file('config/lbr_config.cfg')
-    wof.dao = OdmSqlAlchDao.OdmSqlAlchDao(private_config.lbr_connection_string)
+    wof.dao = odm_dao.OdmDao(private_config.lbr_connection_string)
     
     soap_app = soaplib.core.Application(services=[WOFService],
         tns='http://www.cuahsi.org/his/1.0/ws/',
