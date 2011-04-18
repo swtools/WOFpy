@@ -2,7 +2,7 @@ import unittest
 import odm_dao
 import private_config
 
-class Test_OdmDao(unittest.TestCase):
+class TestOdmDao(unittest.TestCase):
     def setUp(self):
         self.dao = odm_dao.OdmDao(
             private_config.lbr_connection_string)

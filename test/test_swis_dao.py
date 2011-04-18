@@ -2,7 +2,7 @@ import unittest
 import swis_dao
 import private_config
 
-class Test_SwisDao(unittest.TestCase):
+class TestSwisDao(unittest.TestCase):
     def setUp(self):
         self.dao = swis_dao.SwisDao(
             private_config.swis_test_connection_string)
