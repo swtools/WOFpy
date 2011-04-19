@@ -5,6 +5,7 @@ network = 'NETWORK'
 vocabulary = 'VOCABULARY'
 menu_group_name = 'MENU_GROUP_NAME'
 service_wsdl = 'SERVICE_WSDL'
+timezone = None
 contact_info = None
 dao = None
 
@@ -16,6 +17,7 @@ def config_from_file(file_name):
     wof.vocabulary = config.get('WOF', 'Vocabulary')
     wof.menu_group_name = config.get('WOF', 'Menu_Group_Name')
     wof.service_wsdl = config.get('WOF', 'Service_WSDL')
+    wof.timezone = config.get('WOF', 'Timezone')
 
     if config.has_section('Contact'):
         wof.contact_info = dict()

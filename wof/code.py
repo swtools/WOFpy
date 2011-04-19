@@ -375,6 +375,14 @@ def create_site_info_element(siteResult):
     
     siteInfo.add_siteCode(siteCode)
     
+    #TODO: timezoneinfo
+    #Where does this information come from?  Can put default and dst info in config file maybe
+    timeZoneInfo = WaterML.timeZoneInfo(siteUsesDaylightSavingsTime=False,
+                                        defaultTimeZone=wof.timezone,
+                                        daylightSavingsTimeZone=None)
+    
+    siteInfo.set_timeZoneInfo(timeZoneInfo)
+    
     
     geoLocation = WaterML.geoLocation()
     

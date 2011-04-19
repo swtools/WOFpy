@@ -73,22 +73,22 @@ class DataValue(Base, wof_base.BaseDataValue):
     
     ValueID = Column('id', Integer, primary_key=True)
     DataValue = Column('data_value', Float)
-    #ValueAccuracy = Column(Float)
     UTCOffset = Column('origin_utc_offset', Integer)
     DateTimeUTC = Column('datetime_utc', DateTime)
-    #LocalDateTime
     SiteID = Column('site_id', Integer)
     VariableID = Column('parameter_id', Integer) 
     OffsetValue = Column('vertical_offset', Float)
-    #OffsetTypeID = Column(Integer)
-    #CensorCode = Column(String)
+    CensorCode = "nc" #Data are non-censored TODO: Check if this is always the case
+    
+    #LocalDateTime #TODO
+    #ValueAccuracy = Column(Float) #TODO
     #QualifierID = Column(Integer)
+    #OffsetTypeID = Column(Integer)
     
     #Using Instrument information for the Method
-    MethodID = Column('instrument_id', Integer, ForeignKey('Units.UnitsID'))
-    SourceID = 1
-    #SampleID = Column(Integer)
-    #DerivedFromID = Column(Integer)
+    MethodID = Column('instrument_id', Integer, ForeignKey('Method.MethodID'))
+    
+    SourceID = 1 #Only have one Source for SWIS data
     QualityControlLevelID = 1 #All of SWIS data values are "raw data"
     
     @property
