@@ -1,10 +1,11 @@
 
 import StringIO
 
+import wof
 import wof.code
 
-from flask import Flask, request, Markup, Response, render_template, make_response
-from flask import Module
+from flask import (Flask, request, Markup, Response, render_template,
+                   make_response, Module)
 
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
@@ -34,13 +35,13 @@ def get_wsdl(network):
 
 @rest.route('/')
 def index():
-    return render_template('index.html', p='LBR',s='USU-LBR-Paradise',
+    return render_template('index.html', p=wof.network, s='USU-LBR-Paradise',
                            v='USU36',sd='2007-08-17T12:00:00',
                            ed='2007-08-18T12:00:00')
 
 @rest.route('/swis')
 def swis_index():
-    return render_template('index.html', p='SWIS',s='BAYT',
+    return render_template('index.html', p=wof.network, s='BAYT',
                            v='seawater_salinity',sd='2007-03-23T12:00:00',
                            ed='2007-03-24T12:00:00')
 

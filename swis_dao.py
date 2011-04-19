@@ -4,7 +4,9 @@ from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
+import wof
 import sqlalch_swis_models as model
+
 
 class SwisDao(object):
     
@@ -18,10 +20,12 @@ class SwisDao(object):
         return model.Site.query.all()
     
     def get_site_by_code(self, site_code):
-        return model.Site.query.filter(model.Site.SiteCode == site_code).first()
+        return model.Site.query.filter(
+            model.Site.SiteCode == site_code).first()
     
     def get_sites_by_codes(self, site_codes_arr):
-        return model.Site.query.filter(model.Site.SiteCode.in_(site_codes_arr)).all()
+        return model.Site.query.filter(
+            model.Site.SiteCode.in_(site_codes_arr)).all()
     
     def get_all_variables(self):
         return model.Variable.query.all()
@@ -36,14 +40,16 @@ class SwisDao(object):
     
     def get_series_by_sitecode(self, site_code):
         
-        siteResult = model.Site.query.filter(model.Site.SiteCode==site_code).one()
+        siteResult = model.Site.query.filter(
+            model.Site.SiteCode==site_code).one()
         
         if siteResult:
             
             resultList = self.db_session.query(
                 model.DataValue.VariableID.label('VariableID'),
                 func.count(model.DataValue.DataValue).label('ValueCount'),
-                func.min(model.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
+                func.min(model.DataValue.DateTimeUTC).label(
+                    'BeginDateTimeUTC'),
                 func.max(model.DataValue.DateTimeUTC).label('EndDateTimeUTC'),
                 model.DataValue.UTCOffset.label('UTCOffset')
             ).group_by(
@@ -146,11 +152,23 @@ class SwisDao(object):
             model.Method.MethodID.in_(method_id_arr)).all()
         
     def get_source_by_id(self, source_id):
-        return model.Source.query.filter(model.Source.SourceID == source_id).first()
+        source = model.Source()
+        source.ContactName = wof.contact_info['name']
+        source.Phone = wof.contact_info['phone']
+        source.Email = wof.contact_info['email']
+        source.Organization = wof.contact_info['organization']
+        source.SourceLink = wof.contact_info['link']
+        source.SourceDescription = wof.contact_info['description']
+        source.Address = wof.contact_info['address']
+        source.City = wof.contact_info['city']
+        source.State = wof.contact_info['state']
+        source.ZipCode = wof.contact_info['zipcode']
+        
+        return source
         
     def get_sources_by_ids(self, source_id_arr):
-        return model.Source.query.filter(
-            model.Source.SourceID.in_(source_id_arr)).all()
+        #There is only ever one Source for SWIS
+        return [self.get_source_by_id(1)]
     
     def get_qualifier_by_id(self, qualifier_id):
         return model.Qualifier()

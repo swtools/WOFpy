@@ -6,6 +6,7 @@ class TestOdmDao(unittest.TestCase):
     def setUp(self):
         self.dao = odm_dao.OdmDao(
             private_config.lbr_connection_string)
+        
         self.network_prefix = 'LBR'
         self.known_site_codes = (
             'USU-LBR-Mendon',

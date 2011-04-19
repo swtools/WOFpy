@@ -366,7 +366,7 @@ def create_site_info_element(siteResult):
     siteInfo = WaterML.SiteInfoType()
     siteInfo.set_siteName(siteResult.SiteName)
     
-    #TODO: agencyIName
+    #TODO: agencyName
     siteCode = WaterML.siteCode(network=wof.network,
                                 siteID=siteResult.SiteID,
                                 valueOf_=siteResult.SiteCode,

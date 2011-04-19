@@ -1,8 +1,8 @@
+
 import datetime
 
-from sqlalchemy import Table
-from sqlalchemy import Column, Integer, String, ForeignKey, Float, DateTime
-from sqlalchemy import Boolean
+from sqlalchemy import (Table, Column, Integer, String, ForeignKey, Float,
+                        DateTime, Boolean)
 
 from sqlalchemy.sql import join, select, func, label
 from sqlalchemy.orm import mapper, relationship
@@ -45,26 +45,28 @@ class Site(Base, wof_base.BaseSite):
     SiteID = Column('id', Integer, primary_key=True)
     SiteCode = Column('site_code', String)
     SiteName = Column('name', String)
+    #Geom = GeometryColumn('geom', Point(2)) #TODO Andy
     
-    #Latitude = Column(Float)
-    #Longitude = Column(Float)
-    #LatLongDatumID = Column(Integer, ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
-
+    @property
+    def Latitude(self):
+        #x, y = self.Geom.coords(db_session) #TODO Andy
+        #return y
+        return 0.0
+    
+    @property
+    def Longitude(self):
+        #x, y = self.Geom.coords(db_session) #TODO Andy
+        #return x
+        return 0.0
+        
     #Elevation_m = Column(Float)
     #VerticalDatum = Column(String)
-    #LocalX = Column(Float)
-    #LocalY = Column(Float)
-    #LocalProjectionID = Column(Integer, ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
-    #PosAccuracy_m = Column(Float)
-    #State = Column(String)
-    #County = Column(String)
-    #Comments = Column(String)
     
-    #LatLongDatum = relationship("SpatialReference",
-    #                                    primaryjoin='Site.LatLongDatumID==SpatialReference.SpatialReferenceId')
-    
-    #LocalProjection = relationship("SpatialReference",
-    #                                    primaryjoin='Site.LocalProjectionID==SpatialReference.SpatialReferenceId')
+    #All sites are in WGS84
+    LatLongDatum = wof_base.BaseSpatialReference()
+    LatLongDatum.SRSID=4326
+    LatLongDatum.IsGeographic=True
+    LatLongDatum.SRSName="WGS84"
 
 class DataValue(Base, wof_base.BaseDataValue):
     __tablename__ = 'raw_data_value'
@@ -84,7 +86,7 @@ class DataValue(Base, wof_base.BaseDataValue):
     
     #Using Instrument information for the Method
     MethodID = Column('instrument_id', Integer, ForeignKey('Units.UnitsID'))
-    #SourceID = Column(Integer)
+    SourceID = 1
     #SampleID = Column(Integer)
     #DerivedFromID = Column(Integer)
     QualityControlLevelID = 1 #All of SWIS data values are "raw data"
@@ -144,7 +146,7 @@ class InstrumentManufacturer(Base):
     ManufacturerName = Column('instrument_manufacturer_name', String)   
 
 
-#Source is Agency in SWIS.  Each site has an agency associated with it in
+#Each site has an agency associated with it in
 # the agency_site_association table
 agency_site_association_table = Table(
     'agency_site_association',
@@ -152,21 +154,12 @@ agency_site_association_table = Table(
     Column('agency_id', Integer, ForeignKey('agency.id')),
     Column('site_id', Integer, ForeignKey('site.id')))
 
-#TODO
-class Source(Base, wof_base.BaseSource):
-    __tablename__ = 'agency'
+#TWDB is the Source/contact for all SWIS data
+class Source(wof_base.BaseSource):
     
-    SourceID = Column('id', Integer, primary_key=True)
-    Organization = Column('name', String)
+    SourceID = 1
     
-    #Not a clear mapping in SWIS. It could come from project.description
-    #TODO: SourceDescription
-    
-    Sites = relationship('Site',
-                         secondary=agency_site_association_table,
-                         backref='Sources')
-    
-    #TODO:
+    #TODO: Metadata
     Metadata = None
 
 
