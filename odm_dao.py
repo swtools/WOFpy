@@ -3,10 +3,11 @@ from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
+from wof.base_dao import BaseDao
 import sqlalch_odm_models as model
 
 
-class OdmDao(object):
+class OdmDao(BaseDao):
 
     def __init__(self, db_connection_string):
         self.engine = create_engine(db_connection_string, convert_unicode=True)
@@ -69,9 +70,9 @@ class OdmDao(object):
 
         return valueResultArr
 
-    def get_method_by_id(self, methodID):
+    def get_method_by_id(self, method_id):
         return model.Method.query.filter(
-            model.Method.MethodID == methodID).first()
+            model.Method.MethodID == method_id).first()
 
     def get_methods_by_ids(self, method_id_arr):
         return model.Method.query.filter(

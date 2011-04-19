@@ -7,8 +7,9 @@ from sqlalchemy.sql import and_
 import wof
 import sqlalch_swis_models as model
 
+from wof.base_dao import BaseDao
 
-class SwisDao(object):
+class SwisDao(BaseDao):
     
     def __init__(self, db_connection_string):
         self.engine = create_engine(db_connection_string, convert_unicode=True)
@@ -167,7 +168,7 @@ class SwisDao(object):
         return source
         
     def get_sources_by_ids(self, source_id_arr):
-        #There is only ever one Source for SWIS
+        #There is only ever one Source for SWIS: TWDB
         return [self.get_source_by_id(1)]
     
     def get_qualifier_by_id(self, qualifier_id):

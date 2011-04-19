@@ -53,7 +53,6 @@ class BaseSite(object):
     LatLongDatum = BaseSpatialReference()
     LocalProjection = BaseSpatialReference()
     
-
 class BaseDataValue(object):
     
     ValueID = None

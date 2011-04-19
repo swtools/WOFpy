@@ -7,8 +7,8 @@ import wof.code
 
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
-from soaplib.core.model.primitive import String, Any, Integer, Float, DateTime
-from soaplib.core.model.primitive import Boolean, Double
+from soaplib.core.model.primitive import (String, Any, Integer, Float,
+                                          DateTime, Boolean, Double)
 from soaplib.core.model.clazz import Array, ClassModel, XMLAttribute
 from soaplib.core.model.enum import Enum, EnumBase
 
@@ -23,7 +23,6 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
 
-        
 class WaterMLTypeBase(ClassModel):
     __namespace__ = "http://www.cuahsi.org/waterML/1.0/"
 
@@ -133,8 +132,6 @@ class series(WaterMLTypeBase):
 class seriesCatalogType(WaterMLTypeBase):
     note = Array(Note)
     
-
-
 class ArrayOfOption(WaterMLTypeBase):
     pass
 

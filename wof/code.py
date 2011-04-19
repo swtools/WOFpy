@@ -284,7 +284,8 @@ def create_source_element(sourceResult):
 #TODO: lots more stuff to fill out here
 def create_value_element(valueResult):
     
-    isoDateTime = str(valueResult.LocalDateTime).replace(' ','T')
+    #TODO correct time zone?
+    isoDateTimeUTC = str(valueResult.DateTimeUTC).replace(' ','T')+'Z'
     
     value = WaterML.ValueSingleVariable(
                     codedVocabularyTerm=None,
@@ -299,7 +300,7 @@ def create_value_element(valueResult):
                     offsetTypeID=valueResult.OffsetTypeID,
                     accuracyStdDev=valueResult.ValueAccuracy,
                     offsetValue=valueResult.OffsetValue,
-                    dateTime=isoDateTime,
+                    dateTime=isoDateTimeUTC,
                     qualifiers=valueResult.QualifierID,
                     valueOf_=valueResult.DataValue)
     
@@ -422,15 +423,11 @@ def create_series_element(seriesResult):
     
     #TODO: should we use BeginDateTime or BeginDateTimeUTC?
     # Most services use the non-UTC one
-    if seriesResult.BeginDateTime and seriesResult.EndDateTime:
-        isoBeginDateTime = str(seriesResult.BeginDateTime).replace(' ','T')
-        isoEndDateTime = str(seriesResult.EndDateTime).replace(' ','T')
-    else:
-        isoBeginDateTime = str(seriesResult.BeginDateTimeUTC).replace(' ','T')
-        isoEndDateTime = str(seriesResult.EndDateTimeUTC).replace(' ','T')
+    isoBeginDateTimeUTC = str(seriesResult.BeginDateTimeUTC).replace(' ','T')+'Z'
+    isoEndDateTimeUTC = str(seriesResult.EndDateTimeUTC).replace(' ','T')+'Z'
     
-    variableTimeInt = WaterML.TimeIntervalType(beginDateTime=isoBeginDateTime,
-                                              endDateTime=isoEndDateTime)
+    variableTimeInt = WaterML.TimeIntervalType(beginDateTime=isoBeginDateTimeUTC,
+                                              endDateTime=isoEndDateTimeUTC)
     
     series.variableTimeInterval = variableTimeInt
 

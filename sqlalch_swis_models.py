@@ -80,7 +80,6 @@ class DataValue(Base, wof_base.BaseDataValue):
     OffsetValue = Column('vertical_offset', Float)
     CensorCode = "nc" #Data are non-censored TODO: Check if this is always the case
     
-    #LocalDateTime #TODO
     #ValueAccuracy = Column(Float) #TODO
     #QualifierID = Column(Integer)
     #OffsetTypeID = Column(Integer)
@@ -90,15 +89,6 @@ class DataValue(Base, wof_base.BaseDataValue):
     
     SourceID = 1 #Only have one Source for SWIS data
     QualityControlLevelID = 1 #All of SWIS data values are "raw data"
-    
-    @property
-    def LocalDateTime(self):
-        if self.UTCOffset:
-            offset_delta = datetime.timedelta(hours=self.UTCOffset)
-            
-            return self.DateTimeUTC + offset_delta
-        
-        return self.DateTimeUTC
 
 #Using instrument information for Method of WaterML
 class Method(Base, wof_base.BaseMethod):
