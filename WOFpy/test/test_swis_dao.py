@@ -1,11 +1,16 @@
 import unittest
 import swis_dao
+import wof
 import private_config
+
 
 class TestSwisDao(unittest.TestCase):
     def setUp(self):
         self.dao = swis_dao.SwisDao(
             private_config.swis_test_connection_string)
+        
+        wof.config_from_file(
+            'config/swis_config.cfg')
         
         self.known_site_codes = (
             'ARA', 'ARROYD', 'ARROYS', 'BAFF', 'BAYT', 'BIRD', 'BLB', 'BOBH',
