@@ -282,10 +282,8 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
     #QualityControlLevelID = None #TODO
     #QualityControlLevelCode = None
 
-    Source = wof_base.BaseSource
-    Variable = wof_base.BaseVariable
-    Site = wof_base.BaseSite
-    Method = wof_base.BaseMethod
-    
-    pass
-    
+    Source = None
+    Variable = None
+    Site = None
+    Method = None
+        

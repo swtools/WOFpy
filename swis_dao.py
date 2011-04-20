@@ -51,18 +51,18 @@ class SwisDao(BaseDao):
                 func.count(model.DataValue.DataValue).label('ValueCount'),
                 func.min(model.DataValue.DateTimeUTC).label(
                     'BeginDateTimeUTC'),
-                func.max(model.DataValue.DateTimeUTC).label('EndDateTimeUTC'),
-                model.DataValue.UTCOffset.label('UTCOffset')
+                func.max(model.DataValue.DateTimeUTC).label('EndDateTimeUTC')
             ).group_by(
                 model.DataValue.VariableID).filter(
                     model.DataValue.SiteID==siteResult.SiteID
                 ).order_by(model.DataValue.VariableID).all()
-            
+                        
             varIDArr = [r.VariableID for r in resultList]
 
             varResultArr = model.Variable.query.filter(
                 model.Variable.VariableID.in_(varIDArr)).order_by(
                     model.Variable.VariableID).all()
+
 
             seriesCatArr = []
             for i in range(len(resultList)):
@@ -81,30 +81,24 @@ class SwisDao(BaseDao):
         return None
     
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
-        siteResult = model.Site.query.filter(model.Site.SiteCode==site_code).one()
+        siteResult = model.Site.query.filter(
+            model.Site.SiteCode==site_code).one()
         varResult = model.Variable.query.filter(
             model.Variable.VariableCode==var_code).one()
                 
         res = self.db_session.query(
                 func.count(model.DataValue.DataValue).label('ValueCount'),
-                func.min(model.DataValue.DateTimeUTC).label('BeginDateTimeUTC'),
+                func.min(model.DataValue.DateTimeUTC).label(
+                    'BeginDateTimeUTC'),
                 func.max(model.DataValue.DateTimeUTC).label('EndDateTimeUTC'),
-                model.DataValue.UTCOffset.label('UTCOffset')
-            ).filter(and_(model.DataValue.SiteID==siteResult.SiteID,
-                        model.DataValue.VariableID==varResult.VariableID)).one()
+            ).filter(
+                and_(model.DataValue.SiteID==siteResult.SiteID,
+                     model.DataValue.VariableID==varResult.VariableID)).one()
             
-        begin_date = None
-        end_date = None
-                
-        if res.UTCOffset:
-            offset_delta = datetime.timedelta(hours=res.UTCOffset)
-            
-            begin_date = res.BeginDateTimeUTC + offset_delta
-            end_date = res.EndDateTimeUTC + offset_delta
 
         seriesCat = model.SeriesCatalog(
             siteResult, varResult, res.ValueCount, res.BeginDateTimeUTC,
-            res.EndDateTimeUTC, begin_date, end_date)
+            res.EndDateTimeUTC, self.get_source_by_id())
        
         return [seriesCat]
          

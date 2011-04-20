@@ -434,21 +434,25 @@ def create_series_element(seriesResult):
     series.valueCount = WaterML.valueCount(valueOf_=seriesResult.ValueCount)
     
     #DateTimes
-    isoBeginDateTimeUTC = str(seriesResult.BeginDateTimeUTC).replace(' ','T')+'Z'
+    isoBeginDateTimeUTC = str(
+        seriesResult.BeginDateTimeUTC).replace(' ','T')+'Z'
     isoEndDateTimeUTC = str(seriesResult.EndDateTimeUTC).replace(' ','T')+'Z'
     
     #TimeInterval
-    variableTimeInt = WaterML.TimeIntervalType(beginDateTime=isoBeginDateTimeUTC,
-                                              endDateTime=isoEndDateTimeUTC)
+    variableTimeInt = WaterML.TimeIntervalType(
+        beginDateTime=isoBeginDateTimeUTC, endDateTime=isoEndDateTimeUTC)
     series.variableTimeInterval = variableTimeInt
     
     #Method
-    method = create_method_element(seriesResult.Method)
-    series.Method = method
+    if seriesResult.Method:
+        print seriesResult.Method
+        method = create_method_element(seriesResult.Method)
+        series.Method = method
     
     #Source
-    source = create_source_element(seriesResult.Source)
-    series.Source = source
+    if seriesResult.Source:
+        source = create_source_element(seriesResult.Source)
+        series.Source = source
     
     #QualityControlLevel
     qualityControlLevel = WaterML.QualityControlLevelType(
