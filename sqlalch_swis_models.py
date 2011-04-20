@@ -259,7 +259,7 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
         self.QualityControlLevelID = 1 #SWIS only has one QCLevel, "Raw Data"
         self.QualityControlLevelCode = "Raw Data"
     
-        #TODO:
+        #TODO:  Method is optional, so perhaps we just should not include it in Series for SWIS
         #self.MethodID
         #self.Method
         
