@@ -67,23 +67,17 @@ class SwisDao(BaseDao):
             seriesCatArr = []
             for i in range(len(resultList)):
 
-                begin_date = None
-                end_date = None
-
-                if resultList[i].UTCOffset:
-                    offset_delta = datetime.timedelta(
-                        hours=resultList[i].UTCOffset)
-                    
-                    begin_date = resultList[i].BeginDateTimeUTC + offset_delta
-                    end_date = resultList[i].EndDateTimeUTC + offset_delta
-                
                 seriesCat = model.SeriesCatalog(
                     siteResult, varResultArr[i],
                     resultList[i].ValueCount,
                     resultList[i].BeginDateTimeUTC,
-                    resultList[i].EndDateTimeUTC,
-                    begin_date, end_date)
-                               
+                    resultList[i].EndDateTimeUTC
+                    
+                    
+                    
+                    )
+
+                
                 seriesCatArr.append(seriesCat)
             return seriesCatArr
             
@@ -126,10 +120,7 @@ class SwisDao(BaseDao):
         varResult = self.get_variable_by_code(var_code)
         
         valueResultArr = None
-        
-        #TODO: Should we be using DateTimeUTC instead of LocalDateTime?
-        # All the other WOF services uses local
-        
+                
         if (not begin_date_time or not end_date_time):
             valueResultArr = model.DataValue.query.filter(
                 and_(model.DataValue.SiteID == siteResult.SiteID,

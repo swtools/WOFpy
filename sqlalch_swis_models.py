@@ -146,9 +146,8 @@ agency_site_association_table = Table(
 
 #TWDB is the Source/contact for all SWIS data
 class Source(wof_base.BaseSource):
-    
     SourceID = 1
-    
+
     #TODO: Metadata
     Metadata = None
 
@@ -191,25 +190,24 @@ class OffsetType(wof_base.BaseOffsetType):
 class SeriesCatalog(wof_base.BaseSeriesCatalog):
 
     def __init__(self, site=None, variable=None, value_count=None,
-                 begin_date_time_utc=None, end_date_time_utc=None,
-                 begin_date_time=None, end_date_time=None):
+                 begin_date_time_utc=None, end_date_time_utc=None):
         
         self.Site = site
         self.Variable = variable
         self.ValueCount = value_count
         self.BeginDateTimeUTC = begin_date_time_utc
         self.EndDateTimeUTC = end_date_time_utc
-        self.BeginDateTime = begin_date_time
-        self.EndDateTime = end_date_time
+    
+        self.QualityControlLevelID = 1 #SWIS only has one QCLevel, "Raw Data"
+        self.QualityControlLevelCode = "Raw Data"
     
         #TODO:
+        #self.MethodID
         #self.Method
-        #self.SourceID,
-        #self.Organization,
-        #self.SourceDescription,
+        
+        #self.SourceID
         #self.Source
-        #self.QualityControlLevelID
-        #self.QualityControlLevelCode
+        
                     
     #SeriesID = None
     #SiteID = None

@@ -52,6 +52,9 @@ def get_sites():
     
     siteResponse = wof.code.create_get_site_response(siteArg)
    
+    if not siteResponse:
+        return "Error: No site found for code [%s]" % (siteArg)
+   
     outStream = StringIO.StringIO()
     siteResponse.export(outStream, 0, name_="sitesResponse",
                         namespacedef_= NSDEF)
@@ -71,6 +74,10 @@ def get_site_info():
         return "Must enter a single site code (site)"
     
     siteInfoResponse = wof.code.create_get_site_info_response(siteArg,varArg)
+    
+    if not siteInfoResponse:
+        return "Error: No site info found for site code [%s] and var code [%s]" % (
+            siteArg, varArg)
     
     outStream = StringIO.StringIO()
     siteInfoResponse.export(outStream, 0, name_="sitesResponse",

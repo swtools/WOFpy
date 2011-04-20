@@ -70,7 +70,6 @@ class Site(Base, wof_base.BaseSite):
     def __repr__(self):
         return "<Site('%s','%s', ['%s' '%s'])>" % (self.SiteCode, self.SiteName, str(self.Latitude), str(self.Longitude))
 
-#TODO: Setup foreignkey relationships
 class DataValue(Base, wof_base.BaseDataValue):
     __tablename__ = 'DataValues'
     
@@ -92,7 +91,6 @@ class DataValue(Base, wof_base.BaseDataValue):
     DerivedFromID = Column(Integer)
     QualityControlLevelID = Column(Integer)
     
-
 class Qualifier(Base, wof_base.BaseQualifier):
     __tablename__ = 'Qualifiers'
     
@@ -178,7 +176,7 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     GeneralCategory = Column(String)
     MethodID = Column(Integer, ForeignKey('Methods.MethodID'))
     MethodDescription = Column(String)
-    SourceID = Column(Integer) #TODO
+    SourceID = Column(Integer, ForeignKey('Sources.SourceID'))
     Organization = Column(String)
     SourceDescription = Column(String)
     Citation = Column(String)
@@ -190,9 +188,18 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     EndDateTimeUTC = Column(DateTime)
     ValueCount = Column(Integer)
     
-    Site = relationship("Site", primaryjoin='SeriesCatalog.SiteID==Site.SiteID')
-    Variable = relationship("Variable", primaryjoin='SeriesCatalog.VariableID==Variable.VariableID')
-    Method = relationship("Method", primaryjoin='SeriesCatalog.MethodID==Method.MethodID')
+    Site = relationship("Site",
+                primaryjoin='SeriesCatalog.SiteID==Site.SiteID')
+    
+    Variable = relationship("Variable",
+                primaryjoin='SeriesCatalog.VariableID==Variable.VariableID')
+    
+    Method = relationship("Method",
+                primaryjoin='SeriesCatalog.MethodID==Method.MethodID')
+    
+    Source = relationship("Source",
+                primaryjoin='SeriesCatalog.SourceID==Source.SourceID')
+    
     
     #VariableUnits = relationship("Units", \
     #                                primaryjoin='SeriesCatalog.VariableUnitsID==Units.UnitsID')

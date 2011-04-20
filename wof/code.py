@@ -14,6 +14,9 @@ def create_get_site_response(siteArg):
         siteCodesArr = [s.replace(wof.network+':','') for s in siteCodesArr]
         siteResultArr = wof.dao.get_sites_by_codes(siteCodesArr)
 
+    if len(siteResultArr) == 0:
+        return None
+
     siteInfoResponse = WaterML.SiteInfoResponseType()
 
     queryInfo = WaterML.QueryInfoType()
@@ -39,8 +42,11 @@ def create_get_site_info_response(siteArg, varArg=None):
         seriesResultArr = wof.dao.get_series_by_sitecode(siteCode)
     else:
         varCode = varArg.replace(wof.network+':','')
-        seriesResultArr = \
-            wof.dao.get_series_by_sitecode_and_varcode(siteCode, varCode)
+        seriesResultArr = wof.dao.get_series_by_sitecode_and_varcode(
+            siteCode, varCode)
+    
+    if len(seriesResultArr) == 0:
+        return None
     
     siteInfoResponse = WaterML.SiteInfoResponseType()
     
@@ -51,8 +57,7 @@ def create_get_site_info_response(siteArg, varArg=None):
     queryInfo.add_note(queryInfoNote)
     queryInfo.set_extension('')
     siteInfoResponse.set_queryInfo(queryInfo)
-       
-    
+
     s = create_site_element(siteResult, seriesResultArr)
     siteInfoResponse.add_site(s)
 
@@ -257,15 +262,7 @@ def create_source_element(sourceResult):
         SourceDescription=sourceResult.SourceDescription,
         SourceLink=sourceResult.SourceLink)
         
-    addressString = ", ".join([sourceResult.Address,
-                               sourceResult.City,
-                               sourceResult.State,
-                               sourceResult.ZipCode])
-        
-    contactInfo = WaterML.ContactInformationType(Email=sourceResult.Email,
-                                    ContactName=sourceResult.ContactName,
-                                    Phone=sourceResult.Phone,
-                                    Address=addressString)
+    contactInfo = create_contact_info_element(sourceResult)
     
     source.ContactInformation=contactInfo
 
@@ -280,6 +277,20 @@ def create_source_element(sourceResult):
         source.Metadata = metadata
     
     return source
+
+def create_contact_info_element(sourceResult):
+    addressString = ", ".join([sourceResult.Address,
+                               sourceResult.City,
+                               sourceResult.State,
+                               sourceResult.ZipCode])
+        
+    contactInfo = WaterML.ContactInformationType(
+        Email=sourceResult.Email,
+        ContactName=sourceResult.ContactName,
+        Phone=sourceResult.Phone,
+        Address=addressString)
+    
+    return contactInfo
 
 #TODO: lots more stuff to fill out here
 def create_value_element(valueResult):
@@ -415,36 +426,31 @@ def create_site_info_element(siteResult):
 
 def create_series_element(seriesResult):
     series = WaterML.series()
-            
+        
+    #Variable    
     variable = create_variable_element(seriesResult.Variable)
     series.set_variable(variable)
     
     series.valueCount = WaterML.valueCount(valueOf_=seriesResult.ValueCount)
     
-    #TODO: should we use BeginDateTime or BeginDateTimeUTC?
-    # Most services use the non-UTC one
+    #DateTimes
     isoBeginDateTimeUTC = str(seriesResult.BeginDateTimeUTC).replace(' ','T')+'Z'
     isoEndDateTimeUTC = str(seriesResult.EndDateTimeUTC).replace(' ','T')+'Z'
     
+    #TimeInterval
     variableTimeInt = WaterML.TimeIntervalType(beginDateTime=isoBeginDateTimeUTC,
                                               endDateTime=isoEndDateTimeUTC)
-    
     series.variableTimeInterval = variableTimeInt
-
+    
+    #Method
     method = create_method_element(seriesResult.Method)
-   
     series.Method = method
     
-    source = WaterML.SourceType(
-        sourceID=seriesResult.SourceID,
-        Organization=seriesResult.Organization,
-        SourceDescription=seriesResult.SourceDescription,
-        Metadata=None, #TODO: Source Metadata
-        ContactInformation=None, #TODO: Source ContactInformation
-        SourceLink=None) #TODO: Source Link
-    
+    #Source
+    source = create_source_element(seriesResult.Source)
     series.Source = source
     
+    #QualityControlLevel
     qualityControlLevel = WaterML.QualityControlLevelType(
                     qualityControlLevelID=seriesResult.QualityControlLevelID,
                     valueOf_=seriesResult.QualityControlLevelCode)
