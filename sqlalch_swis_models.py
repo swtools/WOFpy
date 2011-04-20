@@ -15,10 +15,51 @@ Base = declarative_base()
 def init_model(db_session):
     Base.query = db_session.query_property()
 
+#TODO: Andy, please check
+param_to_medium_dict = dict( #TODO
+    water_ph = 'Surface Water',
+    water_y_velocity = 'Surface Water',
+    water_x_velocity = 'Surface Water',
+    water_temperature = 'Surface Water',
+    upward_water_velocity = 'Surface Water',
+    water_turbidity = 'Surface Water',
+    water_total_dissolved_salts = 'Surface Water',
+    seawater_salinity = 'Surface Water',
+    northward_water_velocity = 'Surface Water',
+    water_electrical_conductivity = 'Surface Water',
+    eastward_water_velocity = 'Surface Water',
+    water_dissolved_oxygen_percent_saturation = 'Surface Water',
+    water_dissolved_oxygen_concentration = 'Surface Water',
+    water_depth_vented = 'Surface Water',
+    water_depth_non_vented = 'Surface Water',
+    instrument_battery_voltage = 'Other',
+    air_pressure = 'Air',
+    air_temperature = 'Air',
+    water_specific_conductance = 'Surface Water'
+)
 
-param_to_medium_dict = dict() #TODO
-
-param_to_gen_category_dict = dict() #TODO
+#TODO: Andy, please check
+param_to_gen_category_dict = dict(
+    water_ph = 'Water Quality',
+    water_y_velocity = 'Hydrology',
+    water_x_velocity = 'Hydrology',
+    water_temperature = 'Water Quality',
+    upward_water_velocity = 'Hydrology',
+    water_turbidity = 'Water Quality',
+    water_total_dissolved_salts = 'Water Quality',
+    seawater_salinity = 'Water Quality',
+    northward_water_velocity = 'Hydrology',
+    water_electrical_conductivity = 'Water Quality',
+    eastward_water_velocity = 'Hydrology',
+    water_dissolved_oxygen_percent_saturation = 'Water Quality',
+    water_dissolved_oxygen_concentration = 'Water Quality',
+    water_depth_vented = 'Hydrology',
+    water_depth_non_vented = 'Hydrology',
+    instrument_battery_voltage = 'Instrumentation',
+    air_pressure = 'Climate',
+    air_temperature = 'Climate',
+    water_specific_conductance = 'Water Quality'
+)
 
 class Variable(Base, wof_base.BaseVariable):
     __tablename__ = 'parameter'
