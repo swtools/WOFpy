@@ -15,24 +15,40 @@ Base = declarative_base()
 def init_model(db_session):
     Base.query = db_session.query_property()
 
+
+param_to_medium_dict = dict() #TODO
+
+param_to_gen_category_dict = dict() #TODO
+
 class Variable(Base, wof_base.BaseVariable):
     __tablename__ = 'parameter'
 
     VariableID = Column('id', Integer, primary_key=True)
     VariableCode = Column('parameter_code', String)
     VariableName = Column('parameter_description', String)
-    #Speciation = Column(String)
+    IsRegular = False
+    ValueType = "Field Observation"
+    DataType = "Sporadic"
+    NoDataValue = -9999
+    
+    @property
+    def SampleMedium(self):
+        if self.VariableCode in param_to_medium_dict:
+            return param_to_medium_dict[self.VariableCode]
+        return "Unknown"
+    
+    @property
+    def GeneralCategory(self):
+        if self.VariableCode in param_to_gen_category_dict:
+            return param_to_gen_category_dict[self.VariableCode]
+        return "Unknown"
+    
+    #TODO
     #VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
-    #SampleMedium = Column(String)
-    #ValueType = Column(String)
-    #IsRegular = Column(Boolean)
     #TimeSupport = Column(Float)
     #TimeUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
-    #DataType = Column(String)
-    #GeneralCategory = Column(String)
-    #NoDataValue = Column(Float)
     
-    #TODO: Might be good to have a Units table in the SWIS schema
+    #TODO: Need Units table in the SWIS schema
     #VariableUnits = relationship("Units",
     #                            primaryjoin='Variable.VariableUnitsID==Units.UnitsID')
     
@@ -190,7 +206,8 @@ class OffsetType(wof_base.BaseOffsetType):
 class SeriesCatalog(wof_base.BaseSeriesCatalog):
 
     def __init__(self, site=None, variable=None, value_count=None,
-                 begin_date_time_utc=None, end_date_time_utc=None):
+                 begin_date_time_utc=None, end_date_time_utc=None,
+                 source=None):
         
         self.Site = site
         self.Variable = variable
@@ -205,21 +222,10 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
         #self.MethodID
         #self.Method
         
-        #self.SourceID
-        #self.Source
+        self.Source = source
         
                     
-    #SeriesID = None
-    #SiteID = None
-    #SiteCode = Column(String, primary_key=True)
-    #SiteName = None
-    #VariableID = None
-    #VariableCode = Column(String, primary_key=True)
-    #VariableName = None
     #Speciation = None
-    #VariableUnitsID = None 
-    #VariableUnitsName = None
-    #SampleMedium = None
     #ValueType = None
     #TimeSupport = None
     #TimeUnitsID = None
@@ -235,6 +241,10 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
     #QualityControlLevelID = None #TODO
     #QualityControlLevelCode = None
 
-    #Method = BaseMethod()
+    Source = wof_base.BaseSource
+    Variable = wof_base.BaseVariable
+    Site = wof_base.BaseSite
+    Method = wof_base.BaseMethod
+    
     pass
     

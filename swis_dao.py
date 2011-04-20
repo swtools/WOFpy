@@ -68,16 +68,13 @@ class SwisDao(BaseDao):
             for i in range(len(resultList)):
 
                 seriesCat = model.SeriesCatalog(
-                    siteResult, varResultArr[i],
-                    resultList[i].ValueCount,
-                    resultList[i].BeginDateTimeUTC,
-                    resultList[i].EndDateTimeUTC
-                    
-                    
-                    
+                        siteResult, varResultArr[i],
+                        resultList[i].ValueCount,
+                        resultList[i].BeginDateTimeUTC,
+                        resultList[i].EndDateTimeUTC,
+                        self.get_source_by_id()
                     )
 
-                
                 seriesCatArr.append(seriesCat)
             return seriesCatArr
             
@@ -143,7 +140,7 @@ class SwisDao(BaseDao):
         return model.Method.query.filter(
             model.Method.MethodID.in_(method_id_arr)).all()
         
-    def get_source_by_id(self, source_id):
+    def get_source_by_id(self, source_id=1):
         source = model.Source()
         source.ContactName = wof.contact_info['name']
         source.Phone = wof.contact_info['phone']
@@ -160,7 +157,7 @@ class SwisDao(BaseDao):
         
     def get_sources_by_ids(self, source_id_arr):
         #There is only ever one Source for SWIS: TWDB
-        return [self.get_source_by_id(1)]
+        return [self.get_source_by_id()]
     
     def get_qualifier_by_id(self, qualifier_id):
         return model.Qualifier()
