@@ -5,11 +5,11 @@ import datetime
 
 import wof.code
 
-from soaplib.core.model.base import Base
+from soaplib.core.model.base import Base, SimpleType
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import (String, Any, Integer, Float,
                                           DateTime, Boolean, Double)
-from soaplib.core.model.clazz import Array, ClassModel, XMLAttribute
+from soaplib.core.model.clazz import Array, ClassModel, XMLAttribute, ClassModelMeta, ClassModelBase
 from soaplib.core.model.enum import Enum, EnumBase
 
 
@@ -28,180 +28,187 @@ class WaterMLTypeBase(ClassModel):
 
 
 
-class Criteria(WaterMLTypeBase):
-    locationParam = String
-    variableParam = String
-    timeParam = Any #type is not defined in WML1
-  
-class Note(WaterMLTypeBase):
-    type = XMLAttribute('xs:string')
-    href = XMLAttribute('xs:string')
-    title = XMLAttribute('xs:string')
-    show = XMLAttribute('xs:string')
-    
-    #What about the value of the element?
-    
-class QueryInfoType(WaterMLTypeBase):
-    
-    creationTime = DateTime
-    queryURL = String
-    querySQL = String
-    
-    criteria = Criteria
-    
-    note = Array(Note)
-    #extension
-    
-    
-class GeogLocationType(WaterMLTypeBase):
-    srs = XMLAttribute
+#class Criteria(WaterMLTypeBase):
+#    locationParam = String
+#    variableParam = String
+#    timeParam = Any #type is not defined in WML1
+#  
+#class Note(WaterMLTypeBase):
+#    type = XMLAttribute('xs:string')
+#    href = XMLAttribute('xs:string')
+#    title = XMLAttribute('xs:string')
+#    show = XMLAttribute('xs:string')
+#    
+#    #What about the value of the element?
+#    
+#class QueryInfoType(WaterMLTypeBase):
+#    
+#    creationTime = DateTime
+#    queryURL = String
+#    querySQL = String
+#    
+#    criteria = Criteria
+#    
+#    note = Array(Note)
+#    #extension
+#    
+#    
+#class GeogLocationType(WaterMLTypeBase):
+#    srs = XMLAttribute
+#
+#class LatLonBoxType(GeogLocationType):
+#    pass
+#
+#class LatLonPointType(GeogLocationType):
+#    latitude = Double
+#    longitude = Double
+#
+#
+#    
+#
+#class SiteInfoType(SourceInfoType):
+#    siteName = String
+#    sitecode = String
+#    defaultId = Boolean
+#    geoLocation = GeogLocationType
+#    
+#class SiteInfoResponseType(WaterMLTypeBase):
+#
+#    queryInfo = QueryInfoType
+#    site = Array(SiteInfoType) #site is an Array of elements with siteInfo, 0..* seriesCatalog and, extension
+#
+#
+#
+#class DataSetInfoType(WaterMLTypeBase):
+#    pass
+#
+#
+#class VariableInfoType(WaterMLTypeBase):
+#    pass
+#
+#dataTypeEnum = Enum(
+#
+#    'Continuous',
+#    'Instantaneous',
+#    'Cumulative',
+#    'Incremental',
+#    'Average',
+#    'Maximum',
+#    'Minimum',
+#    'Constant Over Interval',
+#    'Categorical',
+#    'Best Easy Systematic Estimator',
+#    'Unknown',
+#    'Variance',
+#    type_name = 'dataTypeEnum'
+#)
+#
+#class TimePeriodType(WaterMLTypeBase):
+#    pass
+#
+#class series(WaterMLTypeBase):
+#    #dataType = dataTypeEnum #? is this how to do it?
+#    #variable = VariableInfoType
+#    #valueCount = Integer #this has a 'countIsEstimated' boolean attribute
+#    #variableTimeInterval = TimePeriodType
+#    #valueType = valueTypeEnum
+#    #generalCategory = generalCategoryEnum
+#    #sampleMedium = SampleMediumEnum
+#    #Method = MthodType
+#    #Source = SourceType
+#    #QualityControlLevel = QualityControlLevelType
+#    #menuGroupName = XMLAttribute('xs:string')
+#    #serviceWsdl = XMLAttribute('xs:anyURI')
+#    pass
+#
+#class seriesCatalogType(WaterMLTypeBase):
+#    note = Array(Note)
+#    
+#class ArrayOfOption(WaterMLTypeBase):
+#    pass
+#
+#class UnitsType(WaterMLTypeBase):
+#    pass
+#
+#
+#
+#class TimeIntervalType(WaterMLTypeBase):
+#    pass
+#
+#class TimeSingleType(WaterMLTypeBase):
+#    pass
+#
+#class TimePeriodRealTimeType(WaterMLTypeBase):
+#    pass
+#
+#class MethodType(WaterMLTypeBase):
+#    pass
+#
+#class SourceType(WaterMLTypeBase):
+#    pass
+#
+#class MetaDataType(WaterMLTypeBase):
+#    pass
+#
+#class ContactInformationType(WaterMLTypeBase):
+#    pass
+#
+#class QualityControlLevelType(WaterMLTypeBase):
+#    pass
+#
+#class VariablesResponseType(WaterMLTypeBase):
+#    pass
+#
+#class ArrayOfVariableInfoType(WaterMLTypeBase):
+#    pass
+#
+#class TimeSeriesResponseType(WaterMLTypeBase):
+#    pass
+#
+#class TimeSeriesType(WaterMLTypeBase):
+#    pass
+#
+#class TsValuesSingleVariableType(WaterMLTypeBase):
+#    pass
+#
+#class ValueSingleVariable(WaterMLTypeBase):
+#    pass
+#
+#class OffsetType(WaterMLTypeBase):
+#    pass
 
-class LatLonBoxType(GeogLocationType):
-    pass
 
-class LatLonPointType(GeogLocationType):
-    latitude = Double
-    longitude = Double
-
-class SiteCode(String):
+class SiteCode(WaterMLTypeBase):
+    __extends__ = String
     defaultId = XMLAttribute('xs:boolean')
-    #network = XMLAttribute('xs:normalizedString')
-    #siteID = XMLAttribute('xs:normalizedString')
-    #agencyCode = XMLAttribute('xs:normalizedString')
-    #agencyName = XMLAttribute('xs:normalizedString')
+    network = XMLAttribute('xs:normalizedString')
+    siteID = XMLAttribute('xs:normalizedString')
+    agencyCode = XMLAttribute('xs:normalizedString')
+    agencyName = XMLAttribute('xs:normalizedString')
 
 class SourceInfoType(WaterMLTypeBase):
     siteName = String
-    siteCode = SiteCode
     
-
-class SiteInfoType(SourceInfoType):
-    siteName = String
-    sitecode = String
-    defaultId = Boolean
-    geoLocation = GeogLocationType
+    class siteCode(WaterMLTypeBase):
+        __extends__ = String
+        defaultId = XMLAttribute('xs:boolean')
+        network = XMLAttribute('xs:normalizedString')
+        siteID = XMLAttribute('xs:normalizedString')
+        agencyCode = XMLAttribute('xs:normalizedString')
+        agencyName = XMLAttribute('xs:normalizedString')
     
-class SiteInfoResponseType(WaterMLTypeBase):
-
-    queryInfo = QueryInfoType
-    site = Array(SiteInfoType) #site is an Array of elements with siteInfo, 0..* seriesCatalog and, extension
-
-
-
-
-
-
-class DataSetInfoType(WaterMLTypeBase):
-    pass
-
-
-class VariableInfoType(WaterMLTypeBase):
-    pass
-
-dataTypeEnum = Enum(
-
-    'Continuous',
-    'Instantaneous',
-    'Cumulative',
-    'Incremental',
-    'Average',
-    'Maximum',
-    'Minimum',
-    'Constant Over Interval',
-    'Categorical',
-    'Best Easy Systematic Estimator',
-    'Unknown',
-    'Variance',
-    type_name = 'dataTypeEnum'
-)
-
-class series(WaterMLTypeBase):
-    dataType = dataTypeEnum #? is this how to do it?
-    variable = VariableInfoType
-    valueCount = Integer #this has a 'countIsEstimated' boolean attribute
-    variableTimeInterval = TimePeriodType
-    valueType = valueTypeEnum
-    generalCategory = generalCategoryEnum
-    sampleMedium = SampleMediumEnum
-    Method = MthodType
-    Source = SourceType
-    QualityControlLevel = QualityControlLevelType
-    menuGroupName = XMLAttribute('xs:string')
-    serviceWsdl = XMLAttribute('xs:anyURI')
-
-class seriesCatalogType(WaterMLTypeBase):
-    note = Array(Note)
     
-class ArrayOfOption(WaterMLTypeBase):
-    pass
-
-class UnitsType(WaterMLTypeBase):
-    pass
-
-class TimePeriodType(WaterMLTypeBase):
-    pass
-
-class TimeIntervalType(WaterMLTypeBase):
-    pass
-
-class TimeSingleType(WaterMLTypeBase):
-    pass
-
-class TimePeriodRealTimeType(WaterMLTypeBase):
-    pass
-
-class MethodType(WaterMLTypeBase):
-    pass
-
-class SourceType(WaterMLTypeBase):
-    pass
-
-class MetaDataType(WaterMLTypeBase):
-    pass
-
-class ContactInformationType(WaterMLTypeBase):
-    pass
-
-class QualityControlLevelType(WaterMLTypeBase):
-    pass
-
-class VariablesResponseType(WaterMLTypeBase):
-    pass
-
-class ArrayOfVariableInfoType(WaterMLTypeBase):
-    pass
-
-class TimeSeriesResponseType(WaterMLTypeBase):
-    pass
-
-class TimeSeriesType(WaterMLTypeBase):
-    pass
-
-class TsValuesSingleVariableType(WaterMLTypeBase):
-    pass
-
-class ValueSingleVariable(WaterMLTypeBase):
-    pass
-
-class OffsetType(WaterMLTypeBase):
-    pass
-
 
 class WOFService(DefinitionBase):
         
-    @soap(_returns=SiteInfoResponseType)
+    @soap(_returns=SourceInfoType)
     def TestMethod(self):
-        s = SiteInfoResponseType()
-        s.queryInfo = QueryInfoType()
-        
-        s.queryInfo.creationTime = datetime.datetime(1984,2,11)
-        s.queryInfo.querySQL = 'www.url.com'
-        s.querySQL = 'query sql'
-        
-        s.criteria = Criteria()
-        s.criteria.locationParam = "here"
-        s.criteria.variableParam = "variable"
-        
+        s = SourceInfoType()
+        s.siteName = "JamesSite"
+        s.siteCode = SiteCode()
+        s.siteCode.agencyName = "AgencyName"
+        s.siteCode.siteID = "1"
+        #s.siteCode = "code"        
         
         
         return s

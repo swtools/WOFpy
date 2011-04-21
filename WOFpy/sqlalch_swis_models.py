@@ -16,7 +16,7 @@ def init_model(db_session):
     Base.query = db_session.query_property()
 
 #TODO: Andy, please check
-param_to_medium_dict = dict( #TODO
+param_to_medium_dict = dict(
     water_ph = 'Surface Water',
     water_y_velocity = 'Surface Water',
     water_x_velocity = 'Surface Water',

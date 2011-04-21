@@ -63,7 +63,6 @@ class SwisDao(BaseDao):
                 model.Variable.VariableID.in_(varIDArr)).order_by(
                     model.Variable.VariableID).all()
 
-
             seriesCatArr = []
             for i in range(len(resultList)):
 
