@@ -15,50 +15,75 @@ Base = declarative_base()
 def init_model(db_session):
     Base.query = db_session.query_property()
 
+class SampleMediumTypes:
+    SURFACE_WATER='Surface Water'
+    GROUND_WATER='Ground Water'
+    SEDIMENT='Sediment'
+    SOIL='Soil'
+    AIR='Air'
+    TISSUE='Tissue'
+    PRECIPITATION='Precipitation'
+    UNKNOWN='Unknown'
+    OTHER='Other'
+    SNOW='Snow'
+    NOT_RELEVANT='Not Relevant'
+    
+class GeneralCategoryTypes:
+    WATER_QUALITY='Water Quality'
+    CLIMATE='Climate'
+    HYDROLOGY='Hydrology'
+    GEOLOGY='Geology'
+    BIOTA='Biota'
+    UNKNOWN='Unknown'
+    INSTRUMENTATION='Instrumentation'
+    
+
 #TODO: Andy, please check
 param_to_medium_dict = dict(
-    water_ph = 'Surface Water',
-    water_y_velocity = 'Surface Water',
-    water_x_velocity = 'Surface Water',
-    water_temperature = 'Surface Water',
-    upward_water_velocity = 'Surface Water',
-    water_turbidity = 'Surface Water',
-    water_total_dissolved_salts = 'Surface Water',
-    seawater_salinity = 'Surface Water',
-    northward_water_velocity = 'Surface Water',
-    water_electrical_conductivity = 'Surface Water',
-    eastward_water_velocity = 'Surface Water',
-    water_dissolved_oxygen_percent_saturation = 'Surface Water',
-    water_dissolved_oxygen_concentration = 'Surface Water',
-    water_depth_vented = 'Surface Water',
-    water_depth_non_vented = 'Surface Water',
-    instrument_battery_voltage = 'Not Relevant',
-    air_pressure = 'Air',
-    air_temperature = 'Air',
-    water_specific_conductance = 'Surface Water'
+    water_ph = SampleMediumTypes.SURFACE_WATER,
+    water_y_velocity = SampleMediumTypes.SURFACE_WATER,
+    water_x_velocity = SampleMediumTypes.SURFACE_WATER,
+    water_temperature = SampleMediumTypes.SURFACE_WATER,
+    upward_water_velocity = SampleMediumTypes.SURFACE_WATER,
+    water_turbidity = SampleMediumTypes.SURFACE_WATER,
+    water_total_dissolved_salts = SampleMediumTypes.SURFACE_WATER,
+    seawater_salinity = SampleMediumTypes.SURFACE_WATER,
+    northward_water_velocity = SampleMediumTypes.SURFACE_WATER,
+    water_electrical_conductivity = SampleMediumTypes.SURFACE_WATER,
+    eastward_water_velocity = SampleMediumTypes.SURFACE_WATER,
+    water_dissolved_oxygen_percent_saturation = \
+                                            SampleMediumTypes.SURFACE_WATER,
+    water_dissolved_oxygen_concentration = SampleMediumTypes.SURFACE_WATER,
+    water_depth_vented = SampleMediumTypes.SURFACE_WATER,
+    water_depth_non_vented = SampleMediumTypes.SURFACE_WATER,
+    instrument_battery_voltage = SampleMediumTypes.NOT_RELEVANT,
+    air_pressure = SampleMediumTypes.AIR,
+    air_temperature = SampleMediumTypes.AIR,
+    water_specific_conductance = SampleMediumTypes.SURFACE_WATER
 )
 
 #TODO: Andy, please check
 param_to_gen_category_dict = dict(
-    water_ph = 'Water Quality',
-    water_y_velocity = 'Hydrology',
-    water_x_velocity = 'Hydrology',
-    water_temperature = 'Water Quality',
-    upward_water_velocity = 'Hydrology',
-    water_turbidity = 'Water Quality',
-    water_total_dissolved_salts = 'Water Quality',
-    seawater_salinity = 'Water Quality',
-    northward_water_velocity = 'Hydrology',
-    water_electrical_conductivity = 'Water Quality',
-    eastward_water_velocity = 'Hydrology',
-    water_dissolved_oxygen_percent_saturation = 'Water Quality',
-    water_dissolved_oxygen_concentration = 'Water Quality',
-    water_depth_vented = 'Hydrology',
-    water_depth_non_vented = 'Hydrology',
-    instrument_battery_voltage = 'Instrumentation',
-    air_pressure = 'Climate',
-    air_temperature = 'Climate',
-    water_specific_conductance = 'Water Quality'
+    water_ph = GeneralCategoryTypes.WATER_QUALITY,
+    water_y_velocity = GeneralCategoryTypes.HYDROLOGY,
+    water_x_velocity = GeneralCategoryTypes.HYDROLOGY,
+    water_temperature = GeneralCategoryTypes.WATER_QUALITY,
+    upward_water_velocity = GeneralCategoryTypes.HYDROLOGY,
+    water_turbidity = GeneralCategoryTypes.WATER_QUALITY,
+    water_total_dissolved_salts = GeneralCategoryTypes.WATER_QUALITY,
+    seawater_salinity = GeneralCategoryTypes.WATER_QUALITY,
+    northward_water_velocity = GeneralCategoryTypes.HYDROLOGY,
+    water_electrical_conductivity = GeneralCategoryTypes.WATER_QUALITY,
+    eastward_water_velocity = GeneralCategoryTypes.HYDROLOGY,
+    water_dissolved_oxygen_percent_saturation = \
+                                            GeneralCategoryTypes.WATER_QUALITY,
+    water_dissolved_oxygen_concentration = GeneralCategoryTypes.WATER_QUALITY,
+    water_depth_vented = GeneralCategoryTypes.HYDROLOGY,
+    water_depth_non_vented = GeneralCategoryTypes.HYDROLOGY,
+    instrument_battery_voltage = GeneralCategoryTypes.INSTRUMENTATION,
+    air_pressure = GeneralCategoryTypes.CLIMATE,
+    air_temperature = GeneralCategoryTypes.CLIMATE,
+    water_specific_conductance = GeneralCategoryTypes.WATER_QUALITY
 )
 
 class Variable(Base, wof_base.BaseVariable):
@@ -76,13 +101,13 @@ class Variable(Base, wof_base.BaseVariable):
     def SampleMedium(self):
         if self.VariableCode in param_to_medium_dict:
             return param_to_medium_dict[self.VariableCode]
-        return "Unknown"
+        return SampleMediumTypes.UNKNOWN
     
     @property
     def GeneralCategory(self):
         if self.VariableCode in param_to_gen_category_dict:
             return param_to_gen_category_dict[self.VariableCode]
-        return "Unknown"
+        return GeneralCategoryTypes.UNKNOWN
     
     #TODO
     #VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
