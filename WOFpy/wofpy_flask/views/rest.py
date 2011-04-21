@@ -3,6 +3,7 @@ import StringIO
 
 import wof
 import wof.code
+import swis_dao
 
 from flask import (Flask, request, Markup, Response, render_template,
                    make_response, Module)
@@ -35,15 +36,16 @@ def get_wsdl(network):
 
 @rest.route('/')
 def index():
+    
+    if isinstance(wof.dao, swis_dao.SwisDao):
+        return render_template('index.html', p=wof.network, s='BAYT',
+                           v='seawater_salinity',sd='2007-03-23T12:00:00',
+                           ed='2007-03-24T12:00:00')
+    
     return render_template('index.html', p=wof.network, s='USU-LBR-Paradise',
                            v='USU36',sd='2007-08-17T12:00:00',
                            ed='2007-08-18T12:00:00')
 
-@rest.route('/swis')
-def swis_index():
-    return render_template('index.html', p=wof.network, s='BAYT',
-                           v='seawater_salinity',sd='2007-03-23T12:00:00',
-                           ed='2007-03-24T12:00:00')
 
 @rest.route('/GetSites', methods=['GET'])
 def get_sites():
