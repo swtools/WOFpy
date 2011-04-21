@@ -120,7 +120,8 @@ class TestSwisDao(unittest.TestCase):
                     self.assertTrue(series_cat.Source)
                     self.assertEqual(site_code, series_cat.Site.SiteCode)
                     self.assertTrue(series_cat.ValueCount > 0)
-                    self.assertEqual(var_code, series_cat.Variable.VariableCode)
+                    self.assertEqual(var_code,
+                                     series_cat.Variable.VariableCode)
     
     #TODO
     def test_get_datavalues(self):
