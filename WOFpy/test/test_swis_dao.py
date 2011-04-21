@@ -96,9 +96,9 @@ class TestSwisDao(unittest.TestCase):
     def test_get_series_by_sitecode(self):
         
         for site_code in self.known_series:
-            seriesResult = self.dao.get_series_by_sitecode(site_code)
+            seriesResultArr = self.dao.get_series_by_sitecode(site_code)
             
-            for series_cat in seriesResult:
+            for series_cat in seriesResultArr:
                 self.assertTrue(series_cat.Site)
                 self.assertTrue(series_cat.Variable)
                 self.assertTrue(series_cat.Source)
@@ -111,7 +111,16 @@ class TestSwisDao(unittest.TestCase):
     def test_get_series_by_sitecode_and_varcode(self):
         for site_code in self.known_series:
             for var_code in self.known_series[site_code]:
-                pass
+                seriesResultArr = self.dao.get_series_by_sitecode_and_varcode(
+                    site_code, var_code)
+                
+                for series_cat in seriesResultArr:
+                    self.assertTrue(series_cat.Site)
+                    self.assertTrue(series_cat.Variable)
+                    self.assertTrue(series_cat.Source)
+                    self.assertEqual(site_code, series_cat.Site.SiteCode)
+                    self.assertTrue(series_cat.ValueCount > 0)
+                    self.assertEqual(var_code, series_cat.Variable.VariableCode)
     
     #TODO
     def test_get_datavalues(self):
