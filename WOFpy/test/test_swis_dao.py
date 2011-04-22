@@ -52,6 +52,7 @@ class TestSwisDao(unittest.TestCase):
            'upward_water_velocity', 'water_x_velocity', 'water_y_velocity'
         )
         
+        #Need more test data, only JOB and BAYT have datavalues associated with them
         self.known_series = dict(
             BAYT = ['instrument_battery_voltage',
                     'water_electrical_conductivity',
@@ -61,6 +62,7 @@ class TestSwisDao(unittest.TestCase):
                     'water_depth_non_vented'],
             JOB = ['water_dissolved_oxygen_percent_saturation']
         )
+        
         
     def test_get_all_sites(self):
         siteResultList = self.dao.get_all_sites()
@@ -97,8 +99,6 @@ class TestSwisDao(unittest.TestCase):
             self.assertTrue(known_code in resultVarCodes)
             
    
-    #TODO
-    #Need more test data, only JOB and BAYT have datavalues associated with them
     def test_get_series_by_sitecode(self):
         
         for site_code in self.known_series:
@@ -110,10 +110,7 @@ class TestSwisDao(unittest.TestCase):
                 self.assertTrue(series_cat.Source)
                 self.assertEqual(site_code, series_cat.Site.SiteCode)
                 self.assertTrue(series_cat.ValueCount > 0)
-            
-        
-    #TODO
-    #Need more test data, only JOB and BAYT have datavalues associated with them
+             
     def test_get_series_by_sitecode_and_varcode(self):
         for site_code in self.known_series:
             for var_code in self.known_series[site_code]:
@@ -131,7 +128,9 @@ class TestSwisDao(unittest.TestCase):
     
     #TODO
     def test_get_datavalues(self):
-        pass
+        for site_code in self.known_series:
+            for var_code in self.known_series[site_code]:
+                self.dao.get_datavalues()
     
     #TODO
     def test_get_method_by_id(self):
