@@ -1,8 +1,10 @@
 
 class BaseDao(object):
 
-
     def get_all_sites(self):
+        """
+        Returns a list of all the Sites in the data source
+        """
         pass
 
     def get_site_by_code(self, site_code):
