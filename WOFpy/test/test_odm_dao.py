@@ -4,10 +4,8 @@ import private_config
 
 class TestOdmDao(unittest.TestCase):
     def setUp(self):
-        self.dao = odm_dao.OdmDao(
-            private_config.lbr_connection_string)
-        
-        self.network_prefix = 'LBR'
+        self.dao = odm_dao.OdmDao(private_config.lbr_connection_string)
+
         self.known_site_codes = (
             'USU-LBR-Mendon',
             'USU-LBR-Paradise',

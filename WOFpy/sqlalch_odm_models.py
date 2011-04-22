@@ -62,13 +62,18 @@ class Site(Base, wof_base.BaseSite):
     Comments = Column(String)
     
     LatLongDatum = relationship("SpatialReference",
-                                        primaryjoin='Site.LatLongDatumID==SpatialReference.SpatialReferenceId')
+                                    primaryjoin='Site.LatLongDatumID==\
+                                        SpatialReference.SpatialReferenceId')
     
     LocalProjection = relationship("SpatialReference",
-                                        primaryjoin='Site.LocalProjectionID==SpatialReference.SpatialReferenceId')
+                                    primaryjoin='Site.LocalProjectionID==\
+                                        SpatialReference.SpatialReferenceId')
       
     def __repr__(self):
-        return "<Site('%s','%s', ['%s' '%s'])>" % (self.SiteCode, self.SiteName, str(self.Latitude), str(self.Longitude))
+        return "<Site('%s','%s', ['%s' '%s'])>" % (self.SiteCode,
+                                                   self.SiteName,
+                                                   str(self.Latitude),
+                                                   str(self.Longitude))
 
 class DataValue(Base, wof_base.BaseDataValue):
     __tablename__ = 'DataValues'
@@ -199,13 +204,6 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     
     Source = relationship("Source",
                 primaryjoin='SeriesCatalog.SourceID==Source.SourceID')
-    
-    
-    #VariableUnits = relationship("Units", \
-    #                                primaryjoin='SeriesCatalog.VariableUnitsID==Units.UnitsID')
-    
-    #TimeUnits = relationship("Units", \
-    #                            primaryjoin='SeriesCatalog.TimeUnitsID==Units.UnitsID')
 
 
 class Units(Base, wof_base.BaseUnits):
