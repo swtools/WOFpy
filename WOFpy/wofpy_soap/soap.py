@@ -19,6 +19,7 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
+#TODO: Input validation and error messages
 class WOFService(DefinitionBase):
         
     @soap(Array(String), String, _returns=Any)

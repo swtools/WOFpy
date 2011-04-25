@@ -1,3 +1,35 @@
+
+class SampleMediumTypes:
+    SURFACE_WATER='Surface Water'
+    GROUND_WATER='Ground Water'
+    SEDIMENT='Sediment'
+    SOIL='Soil'
+    AIR='Air'
+    TISSUE='Tissue'
+    PRECIPITATION='Precipitation'
+    UNKNOWN='Unknown'
+    OTHER='Other'
+    SNOW='Snow'
+    NOT_RELEVANT='Not Relevant'
+    
+class GeneralCategoryTypes:
+    WATER_QUALITY='Water Quality'
+    CLIMATE='Climate'
+    HYDROLOGY='Hydrology'
+    GEOLOGY='Geology'
+    BIOTA='Biota'
+    UNKNOWN='Unknown'
+    INSTRUMENTATION='Instrumentation'
+
+QualityControlLevelTypes = dict(
+    UNKNOWN=('Unknown',-9999),
+    RAW_DATA=('Raw data',0),
+    QUAL_CONTROLLED_DATA=('Quality controlled data',1),
+    DERIVED_PRODUCTS=('Derived products',2),
+    INTERPRETED_PRODUCTS=('Interpreted products',3),
+    KNOWLEDGE_PRODUCTS=('Knowledge products',4)
+)
+
 class BaseUnits(object):
     
     UnitsID = None
@@ -71,6 +103,7 @@ class BaseDataValue(object):
     SourceID = None
     SampleID = None
     DerivedFromID = None
+    QualityControlLevel = None
     QualityControlLevelID = None
     
 

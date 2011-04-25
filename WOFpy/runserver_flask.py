@@ -18,11 +18,11 @@ logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
 
-    flask_app = create_app()
-    flask_app.config.from_object(config.DevConfig)
-
     wof.config_from_file('config/lbr_config.cfg')
     wof.dao = odm_dao.OdmDao(private_config.lbr_connection_string)
+    
+    flask_app = create_app()
+    flask_app.config.from_object(config.DevConfig)
 
     soap_app = soaplib.core.Application(services=[WOFService],
         tns='http://www.cuahsi.org/his/1.0/ws/',

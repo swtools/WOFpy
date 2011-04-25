@@ -1,5 +1,6 @@
 
 import wof
+import wof.base_models as wof_base
 import WaterML
 
 from xml.sax.saxutils import escape
@@ -136,7 +137,6 @@ def create_get_values_response(siteArg, varArg, startDateTime=None,
     methodIdSet = set()
     sourceIdSet = set()
     qualifierIdSet = set()
-    qualControlLevelIdSet = set()
     offsetTypeIdSet = set()
     
     for valueResult in valueResultArr:
@@ -151,9 +151,6 @@ def create_get_values_response(siteArg, varArg, startDateTime=None,
         
         if valueResult.QualifierID:
             qualifierIdSet.add(valueResult.QualifierID)
-        
-        if valueResult.QualityControlLevelID:
-            qualControlLevelIdSet.add(valueResult.QualityControlLevelID)
         
         if valueResult.OffsetTypeID:
             offsetTypeIdSet.add(valueResult.OffsetTypeID)
@@ -186,16 +183,6 @@ def create_get_values_response(siteArg, varArg, startDateTime=None,
                 vocabulary=wof.vocabulary,
                 qualifierCode=qualifierResult.QualifierCode)
             values.add_qualifier(q)
-        
-    #Add qualityControlLevel elements
-    if qualControlLevelIdSet:
-        qualControlLvlIdArr = list(qualControlLevelIdSet)
-        qualControlLevelResultArr = wof.dao.get_qualcontrollvls_by_ids(
-            qualControlLvlIdArr)
-        for qualControlLvlResult in qualControlLevelResultArr:
-            qualControlLevel = create_qualityControlLevel_element(
-                qualControlLvlResult)
-            values.add_qualityControlLevel(qualControlLevel)
     
     #Add offset elements
     if offsetTypeIdSet:
@@ -211,14 +198,6 @@ def create_get_values_response(siteArg, varArg, startDateTime=None,
     timeSeriesResponse.set_timeSeries(timeSeries)
     
     return timeSeriesResponse
-
-
-def create_qualityControlLevel_element(qualControlLvlResult):
-    qualityControlLevel = WaterML.QualityControlLevelType(
-        qualityControlLevelID = qualControlLvlResult.QualityControlLevelID,
-        valueOf_=qualControlLvlResult.Definition)
-
-    return qualityControlLevel
 
 def create_offset_element(offsetTypeResult):
     #TODO: where does offsetIsVertical come from
@@ -301,7 +280,7 @@ def create_value_element(valueResult):
     value = WaterML.ValueSingleVariable(
                     codedVocabularyTerm=None,
                     metadataDateTime=None,
-                    qualityControlLevel=valueResult.QualityControlLevelID,
+                    qualityControlLevel=valueResult.QualityControlLevel,          #TODO: This should be the enum name, like "Raw data"
                     methodID=valueResult.MethodID,
                     codedVocabulary=None,
                     sourceID=valueResult.SourceID,
@@ -389,11 +368,15 @@ def create_site_info_element(siteResult):
     
     #TODO: timezoneinfo
     #Where does this information come from?  Can put default and dst info in config file maybe
+    
+    defaultTimeZone = WaterML.defaultTimeZone()
+    defaultTimeZone.ZoneAbbreviation = 'GMT'
+    defaultTimeZone.ZoneOffset = '00:00'
     timeZoneInfo = WaterML.timeZoneInfo(siteUsesDaylightSavingsTime=False,
-                                        defaultTimeZone=wof.timezone,
+                                        defaultTimeZone=defaultTimeZone,
                                         daylightSavingsTimeZone=None)
     
-    siteInfo.set_timeZoneInfo(timeZoneInfo)
+    siteInfo.set_timeZoneInfo(defaultTimeZone)
     
     
     geoLocation = WaterML.geoLocation()

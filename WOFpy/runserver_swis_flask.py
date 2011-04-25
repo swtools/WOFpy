@@ -9,7 +9,7 @@ import wof
 import swis_dao
 import private_config
 
-from wofpy_soap.soap_new import WOFService
+from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
 
@@ -17,11 +17,11 @@ logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
 
-    flask_app = create_app()
-    flask_app.config.from_object(config.DevConfig)
-
     wof.config_from_file('config/swis_config.cfg')
     wof.dao = swis_dao.SwisDao(private_config.swis_connection_string)
+
+    flask_app = create_app()
+    flask_app.config.from_object(config.DevConfig)
 
     soap_app = soaplib.core.Application(services=[WOFService],
         tns='http://www.cuahsi.org/his/1.0/ws/',

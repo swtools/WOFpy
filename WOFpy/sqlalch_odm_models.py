@@ -96,6 +96,14 @@ class DataValue(Base, wof_base.BaseDataValue):
     DerivedFromID = Column(Integer)
     QualityControlLevelID = Column(Integer)
     
+    @property
+    def QualityControlLevel(self):
+        for name_code in wof_base.QualityControlLevelTypes:
+            if self.QualityControlLevelID==name_code[1]:
+                return name_code[0]
+        
+        return wof_base.QualityControlLevelTypes['RAW_DATA'][0]
+    
 class Qualifier(Base, wof_base.BaseQualifier):
     __tablename__ = 'Qualifiers'
     

@@ -15,75 +15,54 @@ Base = declarative_base()
 def init_model(db_session):
     Base.query = db_session.query_property()
 
-class SampleMediumTypes:
-    SURFACE_WATER='Surface Water'
-    GROUND_WATER='Ground Water'
-    SEDIMENT='Sediment'
-    SOIL='Soil'
-    AIR='Air'
-    TISSUE='Tissue'
-    PRECIPITATION='Precipitation'
-    UNKNOWN='Unknown'
-    OTHER='Other'
-    SNOW='Snow'
-    NOT_RELEVANT='Not Relevant'
-    
-class GeneralCategoryTypes:
-    WATER_QUALITY='Water Quality'
-    CLIMATE='Climate'
-    HYDROLOGY='Hydrology'
-    GEOLOGY='Geology'
-    BIOTA='Biota'
-    UNKNOWN='Unknown'
-    INSTRUMENTATION='Instrumentation'
-    
-
 #TODO: Andy, please check
 param_to_medium_dict = dict(
-    water_ph = SampleMediumTypes.SURFACE_WATER,
-    water_y_velocity = SampleMediumTypes.SURFACE_WATER,
-    water_x_velocity = SampleMediumTypes.SURFACE_WATER,
-    water_temperature = SampleMediumTypes.SURFACE_WATER,
-    upward_water_velocity = SampleMediumTypes.SURFACE_WATER,
-    water_turbidity = SampleMediumTypes.SURFACE_WATER,
-    water_total_dissolved_salts = SampleMediumTypes.SURFACE_WATER,
-    seawater_salinity = SampleMediumTypes.SURFACE_WATER,
-    northward_water_velocity = SampleMediumTypes.SURFACE_WATER,
-    water_electrical_conductivity = SampleMediumTypes.SURFACE_WATER,
-    eastward_water_velocity = SampleMediumTypes.SURFACE_WATER,
+    water_ph = wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_y_velocity = wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_x_velocity = wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_temperature = wof_base.SampleMediumTypes.SURFACE_WATER,
+    upward_water_velocity = wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_turbidity = wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_total_dissolved_salts = wof_base.SampleMediumTypes.SURFACE_WATER,
+    seawater_salinity = wof_base.SampleMediumTypes.SURFACE_WATER,
+    northward_water_velocity = wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_electrical_conductivity = wof_base.SampleMediumTypes.SURFACE_WATER,
+    eastward_water_velocity = wof_base.SampleMediumTypes.SURFACE_WATER,
     water_dissolved_oxygen_percent_saturation = \
-                                            SampleMediumTypes.SURFACE_WATER,
-    water_dissolved_oxygen_concentration = SampleMediumTypes.SURFACE_WATER,
-    water_depth_vented = SampleMediumTypes.SURFACE_WATER,
-    water_depth_non_vented = SampleMediumTypes.SURFACE_WATER,
-    instrument_battery_voltage = SampleMediumTypes.NOT_RELEVANT,
-    air_pressure = SampleMediumTypes.AIR,
-    air_temperature = SampleMediumTypes.AIR,
-    water_specific_conductance = SampleMediumTypes.SURFACE_WATER
+                                    wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_dissolved_oxygen_concentration = \
+                                    wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_depth_vented = wof_base.SampleMediumTypes.SURFACE_WATER,
+    water_depth_non_vented = wof_base.SampleMediumTypes.SURFACE_WATER,
+    instrument_battery_voltage = wof_base.SampleMediumTypes.NOT_RELEVANT,
+    air_pressure = wof_base.SampleMediumTypes.AIR,
+    air_temperature = wof_base.SampleMediumTypes.AIR,
+    water_specific_conductance = wof_base.SampleMediumTypes.SURFACE_WATER
 )
 
 #TODO: Andy, please check
 param_to_gen_category_dict = dict(
-    water_ph = GeneralCategoryTypes.WATER_QUALITY,
-    water_y_velocity = GeneralCategoryTypes.HYDROLOGY,
-    water_x_velocity = GeneralCategoryTypes.HYDROLOGY,
-    water_temperature = GeneralCategoryTypes.WATER_QUALITY,
-    upward_water_velocity = GeneralCategoryTypes.HYDROLOGY,
-    water_turbidity = GeneralCategoryTypes.WATER_QUALITY,
-    water_total_dissolved_salts = GeneralCategoryTypes.WATER_QUALITY,
-    seawater_salinity = GeneralCategoryTypes.WATER_QUALITY,
-    northward_water_velocity = GeneralCategoryTypes.HYDROLOGY,
-    water_electrical_conductivity = GeneralCategoryTypes.WATER_QUALITY,
-    eastward_water_velocity = GeneralCategoryTypes.HYDROLOGY,
+    water_ph = wof_base.GeneralCategoryTypes.WATER_QUALITY,
+    water_y_velocity = wof_base.GeneralCategoryTypes.HYDROLOGY,
+    water_x_velocity = wof_base.GeneralCategoryTypes.HYDROLOGY,
+    water_temperature = wof_base.GeneralCategoryTypes.WATER_QUALITY,
+    upward_water_velocity = wof_base.GeneralCategoryTypes.HYDROLOGY,
+    water_turbidity = wof_base.GeneralCategoryTypes.WATER_QUALITY,
+    water_total_dissolved_salts = wof_base.GeneralCategoryTypes.WATER_QUALITY,
+    seawater_salinity = wof_base.GeneralCategoryTypes.WATER_QUALITY,
+    northward_water_velocity = wof_base.GeneralCategoryTypes.HYDROLOGY,
+    water_electrical_conductivity = wof_base.GeneralCategoryTypes.WATER_QUALITY,
+    eastward_water_velocity = wof_base.GeneralCategoryTypes.HYDROLOGY,
     water_dissolved_oxygen_percent_saturation = \
-                                            GeneralCategoryTypes.WATER_QUALITY,
-    water_dissolved_oxygen_concentration = GeneralCategoryTypes.WATER_QUALITY,
-    water_depth_vented = GeneralCategoryTypes.HYDROLOGY,
-    water_depth_non_vented = GeneralCategoryTypes.HYDROLOGY,
-    instrument_battery_voltage = GeneralCategoryTypes.INSTRUMENTATION,
-    air_pressure = GeneralCategoryTypes.CLIMATE,
-    air_temperature = GeneralCategoryTypes.CLIMATE,
-    water_specific_conductance = GeneralCategoryTypes.WATER_QUALITY
+                                 wof_base.GeneralCategoryTypes.WATER_QUALITY,
+    water_dissolved_oxygen_concentration = \
+                                wof_base.GeneralCategoryTypes.WATER_QUALITY,
+    water_depth_vented = wof_base.GeneralCategoryTypes.HYDROLOGY,
+    water_depth_non_vented = wof_base.GeneralCategoryTypes.HYDROLOGY,
+    instrument_battery_voltage = wof_base.GeneralCategoryTypes.INSTRUMENTATION,
+    air_pressure = wof_base.GeneralCategoryTypes.CLIMATE,
+    air_temperature = wof_base.GeneralCategoryTypes.CLIMATE,
+    water_specific_conductance = wof_base.GeneralCategoryTypes.WATER_QUALITY
 )
 
 class Variable(Base, wof_base.BaseVariable):
@@ -101,13 +80,13 @@ class Variable(Base, wof_base.BaseVariable):
     def SampleMedium(self):
         if self.VariableCode in param_to_medium_dict:
             return param_to_medium_dict[self.VariableCode]
-        return SampleMediumTypes.UNKNOWN
+        return wof_base.SampleMediumTypes.UNKNOWN
     
     @property
     def GeneralCategory(self):
         if self.VariableCode in param_to_gen_category_dict:
             return param_to_gen_category_dict[self.VariableCode]
-        return GeneralCategoryTypes.UNKNOWN
+        return wof_base.GeneralCategoryTypes.UNKNOWN
     
     #TODO
     #VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
@@ -170,8 +149,11 @@ class DataValue(Base, wof_base.BaseDataValue):
     MethodID = Column('instrument_id', Integer, ForeignKey('Method.MethodID'))
     
     SourceID = 1 #Only have one Source for SWIS data
-    QualityControlLevelID = 1 #All of SWIS data values are "raw data"
-
+    
+    #All of SWIS data values are "raw data"
+    QualityControlLevel = wof_base.QualityControlLevelTypes['RAW_DATA'][0]
+    QualityControlLevelID = wof_base.QualityControlLevelTypes['RAW_DATA'][1] 
+    
 #Using instrument information for Method of WaterML
 class Method(Base, wof_base.BaseMethod):
     __tablename__ = 'instrument'
@@ -195,6 +177,7 @@ class Method(Base, wof_base.BaseMethod):
                    self.InstrumentModel.ModelName)
         else:
             return None
+
 
 #SWIS-specific table
 class InstrumentModel(Base):
@@ -252,14 +235,7 @@ class Qualifier(wof_base.BaseQualifier):
     QualifierCode = None
     QualifierDescription = None
 
-class QualityControlLevel(wof_base.BaseQualityControlLevel):
-    #All of SWIS data values are "raw data"
-    QualityControlLevelID = 1
-    QualityControlLevelCode = "Raw Data"
-    Definition = "Raw Data"
-    Explanation = "Raw Data"
- 
- 
+
 #TODO  Looks like SWIS only has one type of offset, 'vertical_offset'
 # but need to find out what the units will be
 class OffsetType(wof_base.BaseOffsetType):
@@ -281,8 +257,12 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
         self.BeginDateTimeUTC = begin_date_time_utc
         self.EndDateTimeUTC = end_date_time_utc
     
-        self.QualityControlLevelID = 1 #SWIS only has one QCLevel, "Raw Data"
-        self.QualityControlLevelCode = "Raw Data"
+        #SWIS data are all "Raw Data"
+        # though might have more than one QC level in the future
+        self.QualityControlLevelID = \
+                            wof_base.QualityControlLevelTypes['RAW_DATA'][1]
+        self.QualityControlLevelCode = \
+                            wof_base.QualityControlLevelTypes['RAW_DATA'][0]
     
         #TODO:  Method is optional, so perhaps we just should not include it in Series for SWIS
         #self.MethodID
@@ -310,5 +290,4 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
     Source = None
     Variable = None
     Site = None
-    Method = None
-        
+
