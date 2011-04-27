@@ -366,16 +366,13 @@ def create_site_info_element(siteResult):
     
     siteInfo.add_siteCode(siteCode)
     
-    #TODO: timezoneinfo
-    #Where does this information come from?  Can put default and dst info in config file maybe
-    
-    
-    
+    #TODO: Maybe remove this?  None of the other WOF services return this info
+    # probably because it is not that useful
     timeZoneInfo = WaterML.timeZoneInfo(siteUsesDaylightSavingsTime=False,
                                         daylightSavingsTimeZone=None)
-    timeZoneInfo.defaultTimeZone = WaterML.defaultTimeZone()
-    timeZoneInfo.defaultTimeZone.ZoneOffset = '00:00'
-    timeZoneInfo.defaultTimeZone.ZoneAbbreviation = 'GMT'
+    timeZoneInfo.defaultTimeZone = WaterML.defaultTimeZone(
+        ZoneOffset=wof.timezone,
+        ZoneAbbreviation=wof.timezone_abbr)
     
     siteInfo.set_timeZoneInfo(timeZoneInfo)
     
