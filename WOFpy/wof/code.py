@@ -376,7 +376,7 @@ def create_site_info_element(siteResult):
                                         defaultTimeZone=defaultTimeZone,
                                         daylightSavingsTimeZone=None)
     
-    siteInfo.set_timeZoneInfo(defaultTimeZone)
+    siteInfo.set_timeZoneInfo(timeZoneInfo)
     
     
     geoLocation = WaterML.geoLocation()
