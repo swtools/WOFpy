@@ -16,7 +16,8 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
-class TestSwisDao(unittest.TestCase):
+class TestWofpyCode(unittest.TestCase):
+    
     def setUp(self):
         test_db_path = os.path.join(os.path.dirname(__file__),
                                         'test_swis2.db')
@@ -30,8 +31,8 @@ class TestSwisDao(unittest.TestCase):
         waterml_schema_path = os.path.join(os.path.dirname(__file__),
                                         'cuahsiTimeSeries_v1_0.xsd')
         
-        self.waterml_schema_doc = etree.parse(waterml_schema_path)
-        self.waterml_schema = etree.XMLSchema(self.waterml_schema_doc)
+        waterml_schema_doc = etree.parse(waterml_schema_path)
+        self.waterml_schema = etree.XMLSchema(waterml_schema_doc)
         
     def test_create_get_site_response(self):
         get_site_response = wof.code.create_get_site_response()
