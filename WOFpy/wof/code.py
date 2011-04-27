@@ -369,12 +369,13 @@ def create_site_info_element(siteResult):
     #TODO: timezoneinfo
     #Where does this information come from?  Can put default and dst info in config file maybe
     
-    defaultTimeZone = WaterML.defaultTimeZone()
-    defaultTimeZone.ZoneAbbreviation = 'GMT'
-    defaultTimeZone.ZoneOffset = '00:00'
+    
+    
     timeZoneInfo = WaterML.timeZoneInfo(siteUsesDaylightSavingsTime=False,
-                                        defaultTimeZone=defaultTimeZone,
                                         daylightSavingsTimeZone=None)
+    timeZoneInfo.defaultTimeZone = WaterML.defaultTimeZone()
+    timeZoneInfo.defaultTimeZone.ZoneOffset = '00:00'
+    timeZoneInfo.defaultTimeZone.ZoneAbbreviation = 'GMT'
     
     siteInfo.set_timeZoneInfo(timeZoneInfo)
     

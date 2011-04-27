@@ -2101,11 +2101,9 @@ class timeZoneInfo(GeneratedsSuper):
             outfile.write(' siteUsesDaylightSavingsTime="%s"' % self.gds_format_boolean(self.gds_str_lower(str(self.siteUsesDaylightSavingsTime)), input_name='siteUsesDaylightSavingsTime'))
     def exportChildren(self, outfile, level, namespace_='', name_='timeZoneInfo'):
         if self.defaultTimeZone is not None:
-            showIndent(outfile, level)
-            outfile.write('<%sdefaultTimeZone>%s</%sdefaultTimeZone>\n' % (namespace_, self.gds_format_string(quote_xml(self.defaultTimeZone).encode(ExternalEncoding), input_name='defaultTimeZone'), namespace_))
+            self.defaultTimeZone.export(outfile, level, namespace_, 'defaultTimeZone')
         if self.daylightSavingsTimeZone is not None:
-            showIndent(outfile, level)
-            outfile.write('<%sdaylightSavingsTimeZone>%s</%sdaylightSavingsTimeZone>\n' % (namespace_, self.gds_format_string(quote_xml(self.daylightSavingsTimeZone).encode(ExternalEncoding), input_name='daylightSavingsTimeZone'), namespace_))
+            self.daylightSavingsTimeZone.export(outfile, level, namespace_, 'daylightSavingsTimeZone')
     def hasContent_(self):
         if (
             self.defaultTimeZone is not None or
