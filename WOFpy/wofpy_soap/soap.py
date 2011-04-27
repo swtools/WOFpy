@@ -20,16 +20,18 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
 #TODO: Input validation and error messages
+#TODO: For some reason, soaplib does not ignore <!--comments--> in the soap 
+# requests so the default requests from soapUI will cause errors
+
 class WOFService(DefinitionBase):
         
     @soap(Array(String), String, _returns=Any)
     def GetSites(self, site, authToken):
         
         siteArg = ','.join(str(s) for s in site)
-        
+         
         logging.debug(site)
         logging.debug(siteArg)
-        
         
         siteResponse = wof.code.create_get_site_response(siteArg)
         outStream = StringIO.StringIO()
