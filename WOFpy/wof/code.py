@@ -228,7 +228,6 @@ def create_method_element(methodResult):
 
 
     #need at least one MethodLink element to meet WaterML 1.0 schema validation
-    #TODO: Instead of creating empty elements like this one here for schema validation, should this be done in WaterML.py?
     if method.MethodLink == None:
         method.MethodLink = ''
         

@@ -94,7 +94,6 @@ class SwisDao(BaseDao):
                 and_(model.DataValue.SiteID==siteResult.SiteID,
                      model.DataValue.VariableID==varResult.VariableID)).one()
             
-
         seriesCat = model.SeriesCatalog(
             siteResult, varResult, res.ValueCount, res.BeginDateTimeUTC,
             res.EndDateTimeUTC, self.get_source_by_id())
@@ -120,14 +119,15 @@ class SwisDao(BaseDao):
             valueResultArr = model.DataValue.query.filter(
                 and_(model.DataValue.SiteID == siteResult.SiteID,
                      model.DataValue.VariableID == varResult.VariableID,
-                     model.DataValue.DateTimeUTC >= begin_date_time, #TODO: SWIS doesn't have localdatetime
-                     model.DataValue.DateTimeUTC <= end_date_time) #TODO: SWIS doesn't have localdatetime
+                     model.DataValue.DateTimeUTC >= begin_date_time, #SWIS doesn't have localdatetime, so using UTC
+                     model.DataValue.DateTimeUTC <= end_date_time)
                 ).order_by(model.DataValue.DateTimeUTC).all()
             
         return valueResultArr
     
     def get_method_by_id(self, methodID):
-        return model.Method.query.filter(model.Method.MethodID == methodID).first()
+        return model.Method.query.filter(
+            model.Method.MethodID == methodID).first()
         
     def get_methods_by_ids(self, method_id_arr):
         return model.Method.query.filter(

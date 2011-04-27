@@ -263,31 +263,11 @@ class SeriesCatalog(wof_base.BaseSeriesCatalog):
                             wof_base.QualityControlLevelTypes['RAW_DATA'][1]
         self.QualityControlLevelCode = \
                             wof_base.QualityControlLevelTypes['RAW_DATA'][0]
-    
-        #TODO:  Method is optional, so perhaps we just should not include it in Series for SWIS
-        #self.MethodID
-        #self.Method
         
         self.Source = source
         
-                    
-    #Speciation = None
-    #ValueType = None
-    #TimeSupport = None
-    #TimeUnitsID = None
-    #TimeUnitsName = None
-    #DataType = None
-    #GeneralCategory = None
-    #MethodID = None
-    #MethodDescription = None
-    #SourceID = None #TODO
-    #Organization = None
-    #SourceDescription = None
-    #Citation = None
-    #QualityControlLevelID = None #TODO
-    #QualityControlLevelCode = None
-
     Source = None
     Variable = None
     Site = None
+    Method = None
 
