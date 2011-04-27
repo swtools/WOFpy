@@ -6,7 +6,7 @@ import WaterML
 from xml.sax.saxutils import escape
 
 
-def create_get_site_response(siteArg):
+def create_get_site_response(siteArg=None):
     
     if siteArg == None or siteArg == '':
         siteResultArr = wof.dao.get_all_sites()
@@ -64,7 +64,7 @@ def create_get_site_info_response(siteArg, varArg=None):
 
     return siteInfoResponse
 
-def create_variable_info_response(varArg):
+def create_get_variable_info_response(varArg=None):
     
     if (varArg == None or varArg == ''):
         variableResultArr = wof.dao.get_all_variables()
@@ -292,7 +292,7 @@ def create_value_element(valueResult):
                     offsetValue=valueResult.OffsetValue,
                     dateTime=isoDateTimeUTC,
                     qualifiers=valueResult.QualifierID,
-                    valueOf_=valueResult.DataValue)
+                    valueOf_=str(valueResult.DataValue))
     
     
     #TODO: value.offset stuff?  Why does value element have all this offset stuff
@@ -414,7 +414,8 @@ def create_series_element(seriesResult):
     variable = create_variable_element(seriesResult.Variable)
     series.set_variable(variable)
     
-    series.valueCount = WaterML.valueCount(valueOf_=seriesResult.ValueCount)
+    series.valueCount = WaterML.valueCount(
+        valueOf_=str(seriesResult.ValueCount))
     
     #DateTimes
     isoBeginDateTimeUTC = str(
@@ -428,7 +429,6 @@ def create_series_element(seriesResult):
     
     #Method
     if seriesResult.Method:
-        print seriesResult.Method
         method = create_method_element(seriesResult.Method)
         series.Method = method
     

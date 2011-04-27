@@ -95,7 +95,7 @@ def get_site_info():
 def get_variable_info():
     varArg = request.args.get('variable',None)
     
-    variableInfoResponse = wof.code.create_variable_info_response(varArg)
+    variableInfoResponse = wof.code.create_get_variable_info_response(varArg)
     
     outStream = StringIO.StringIO()
     variableInfoResponse.export(outStream, 0, name_="variablesResponse",

@@ -80,7 +80,8 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=String)
     def GetVariableInfo(self, variable, authToken):
         
-        variableInfoResponse = wof.code.create_variable_info_response(variable)
+        variableInfoResponse = wof.code.create_get_variable_info_response(
+            variable)
         
         outStream = StringIO.StringIO()
         variableInfoResponse.export(outStream, 0, name_="variablesResponse",
@@ -91,7 +92,8 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=Any)
     def GetVariableInfoObject(self, variable, authToken):
         
-        variableInfoResponse = wof.code.create_variable_info_response(variable)
+        variableInfoResponse = wof.code.create_get_variable_info_response(
+            variable)
         
         outStream = StringIO.StringIO()
         variableInfoResponse.export(outStream, 0, name_="variablesResponse",
