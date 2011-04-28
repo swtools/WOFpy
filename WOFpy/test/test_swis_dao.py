@@ -63,6 +63,16 @@ class TestSwisDao(unittest.TestCase):
             JOB = ['water_dissolved_oxygen_percent_saturation']
         )
         
+        self.known_method_ids = ()
+        
+        self.known_source_ids = ()
+        
+        self.known_qualifier_ids = ()
+        
+        self.known_quality_control_ids = ()
+        
+        self.known_offsettype_ids = ()
+        
         
     def test_get_all_sites(self):
         siteResultList = self.dao.get_all_sites()
@@ -130,8 +140,9 @@ class TestSwisDao(unittest.TestCase):
     def test_get_datavalues(self):
         for site_code in self.known_series:
             for var_code in self.known_series[site_code]:
-                #self.dao.get_datavalues()
-                pass
+                dv = self.dao.get_datavalues(site_code, var_code)
+                self.assertNotEqual(dv, None)
+                self.assertNotEqual(len(dv), 0)
     
     #TODO
     def test_get_method_by_id(self):
