@@ -27,7 +27,8 @@ setup(
         'sqlalchemy>=0.6.7',
         'pyodbc>=2.1.8',
         'lxml>=2.2',
-        'soaplib>=2.0.0'
+        'soaplib>=2.0.0',
+        'owslib>=0.3.1'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

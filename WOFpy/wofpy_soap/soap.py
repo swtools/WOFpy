@@ -7,6 +7,7 @@ import wof.code
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import String, Any, Integer, Float
+from soaplib.core.model.exception import Fault
 from soaplib.core.model.clazz import Array, ClassModel
 
 
@@ -38,6 +39,8 @@ class WOFService(DefinitionBase):
         siteResponse.export(outStream, 0, name_="sitesResponse",
                             namespacedef_= NSDEF)
         
+        #TODO: Fault
+        
         return outStream.getvalue()
     
     @soap(Array(String), String, _returns=String)
@@ -51,6 +54,8 @@ class WOFService(DefinitionBase):
         siteResponse.export(outStream, 0, name_="sitesResponse",
                             namespacedef_= NSDEF)
         
+        #TODO: Fault
+        
         return str(outStream.getvalue()).replace('\n','')
     
     ###########################################################################
@@ -63,6 +68,8 @@ class WOFService(DefinitionBase):
         outStream = StringIO.StringIO()
         siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
                                 namespacedef_= NSDEF)
+        
+        #TODO: Fault
      
         return str(outStream.getvalue()).replace('\n','')
     
@@ -74,6 +81,8 @@ class WOFService(DefinitionBase):
         outStream = StringIO.StringIO()
         siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
                                 namespacedef_= NSDEF)
+        
+        #TODO: Fault
      
         return outStream.getvalue()
     
@@ -89,6 +98,8 @@ class WOFService(DefinitionBase):
         variableInfoResponse.export(outStream, 0, name_="variablesResponse",
                                     namespacedef_= NSDEF)
         
+        #TODO: Fault
+        
         return str(outStream.getvalue()).replace('\n','')
     
     @soap(String, String, _returns=Any)
@@ -100,6 +111,8 @@ class WOFService(DefinitionBase):
         outStream = StringIO.StringIO()
         variableInfoResponse.export(outStream, 0, name_="variablesResponse",
                                     namespacedef_= NSDEF)
+        
+        #TODO: Fault
         
         return outStream.getvalue()
     
@@ -115,6 +128,8 @@ class WOFService(DefinitionBase):
         timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
                                   namespacedef_= NSDEF)
         
+        #TODO: Fault
+        
         return str(outStream.getvalue()).replace('\n','')
     
     @soap(String, String, String, String, _returns=Any)
@@ -126,6 +141,8 @@ class WOFService(DefinitionBase):
         outStream = StringIO.StringIO()
         timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
                                   namespacedef_= NSDEF)
+        
+        #TODO: Fault
         
         return outStream.getvalue()
     
