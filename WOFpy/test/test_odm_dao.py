@@ -1,10 +1,11 @@
 import unittest
-import odm_dao
 import private_config
+
+from odm.odm_dao import OdmDao
 
 class TestOdmDao(unittest.TestCase):
     def setUp(self):
-        self.dao = odm_dao.OdmDao(private_config.lbr_connection_string)
+        self.dao = OdmDao(private_config.lbr_connection_string)
 
         self.known_site_codes = (
             'USU-LBR-Mendon',

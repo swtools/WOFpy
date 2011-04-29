@@ -7,7 +7,7 @@ import wof
 import wof.code
 import private_config
 
-import swis_dao
+from swis.swis_dao import SwisDao
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:xlink="http://www.w3.org/1999/xlink" \
@@ -25,7 +25,7 @@ class TestWofpyCode(unittest.TestCase):
         test_config_path = os.path.join(os.path.dirname(__file__),
                                         'test_swis_config.cfg')
         
-        wof.dao = swis_dao.SwisDao('sqlite:///'+test_db_path)
+        wof.dao = SwisDao('sqlite:///'+test_db_path)
         wof.config_from_file(test_config_path)
         
         waterml_schema_path = os.path.join(os.path.dirname(__file__),

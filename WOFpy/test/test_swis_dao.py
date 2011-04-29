@@ -1,10 +1,10 @@
 import unittest
 import os
 
-import swis_dao
 import wof
 import private_config
 
+from swis.swis_dao import SwisDao
 
 class TestSwisDao(unittest.TestCase):
     def setUp(self):
@@ -14,7 +14,7 @@ class TestSwisDao(unittest.TestCase):
         test_config_path = os.path.join(os.path.dirname(__file__),
                                         'test_swis_config.cfg')
         
-        self.dao = swis_dao.SwisDao('sqlite:///'+test_db_path)
+        self.dao = SwisDao('sqlite:///'+test_db_path)
            
         wof.config_from_file(test_config_path)
         
@@ -77,6 +77,7 @@ class TestSwisDao(unittest.TestCase):
     def test_get_all_sites(self):
         siteResultList = self.dao.get_all_sites()
         resultSiteCodes = [s.SiteCode for s in siteResultList]
+        
         for known_code in self.known_site_codes:
             self.assertTrue(known_code in resultSiteCodes)
           
