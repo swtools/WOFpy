@@ -7,7 +7,7 @@ from sqlalchemy.sql import and_
 import wof
 import sqlalch_swis_models as model
 
-from wof.base_dao import BaseDao
+from daos.base_dao import BaseDao
 
 class SwisDao(BaseDao):
     

@@ -12,7 +12,7 @@ import private_config
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
-from swis.swis_dao import SwisDao
+from daos.swis.swis_dao import SwisDao
 
 logging.basicConfig(level=logging.DEBUG)
 

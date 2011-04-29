@@ -7,7 +7,7 @@ import wof
 import wof.code
 import private_config
 
-from swis.swis_dao import SwisDao
+from daos.swis.swis_dao import SwisDao
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:xlink="http://www.w3.org/1999/xlink" \

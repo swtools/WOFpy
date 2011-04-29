@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
-from wof.base_dao import BaseDao
+from daos.base_dao import BaseDao
 import sqlalch_odm_models as model
 
 

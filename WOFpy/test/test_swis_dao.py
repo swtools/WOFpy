@@ -4,7 +4,7 @@ import os
 import wof
 import private_config
 
-from swis.swis_dao import SwisDao
+from daos.swis.swis_dao import SwisDao
 
 class TestSwisDao(unittest.TestCase):
     def setUp(self):

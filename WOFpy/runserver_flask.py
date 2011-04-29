@@ -12,7 +12,7 @@ import private_config
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
-from odm.odm_dao import OdmDao
+from daos.odm.odm_dao import OdmDao
 
 logging.basicConfig(level=logging.DEBUG)
 

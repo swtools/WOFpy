@@ -4,7 +4,7 @@ import owslib
 import wof
 import sqlalch_swis_models as model
 
-from wof.base_dao import BaseDao
+from daos.base_dao import BaseDao
 
 # List of sites in GML: http://lighthouse.tamucc.edu/ioosobsreg.xml
 

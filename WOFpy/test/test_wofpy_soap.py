@@ -5,7 +5,7 @@ import unittest
 from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
-from odm.odm_dao import OdmDao
+from daos.odm.odm_dao import OdmDao
 
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
