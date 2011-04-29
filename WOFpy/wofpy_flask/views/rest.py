@@ -3,11 +3,11 @@ import StringIO
 
 import wof
 import wof.code
-import swis_dao
 
 from flask import (Flask, request, Markup, Response, render_template,
                    make_response, Module)
 
+from swis.swis_dao import SwisDao
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:xlink="http://www.w3.org/1999/xlink" \
@@ -21,7 +21,7 @@ rest = Module(__name__)
 @rest.route('/')
 def index():
     
-    if isinstance(wof.dao, swis_dao.SwisDao):
+    if isinstance(wof.dao, SwisDao):
         return render_template('index.html', p=wof.network, s='BAYT',
                            v='seawater_salinity',sd='2007-03-23T12:00:00',
                            ed='2007-03-24T12:00:00')

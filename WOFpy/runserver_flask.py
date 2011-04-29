@@ -6,20 +6,20 @@ from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
 import wof
-import odm_dao
 import private_config
 
 #from wofpy_soap.soap_new import WOFService
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
+from odm.odm_dao import OdmDao
 
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
 
     wof.config_from_file('config/lbr_config.cfg')
-    wof.dao = odm_dao.OdmDao(private_config.lbr_connection_string)
+    wof.dao = OdmDao(private_config.lbr_connection_string)
     
     flask_app = create_app()
     flask_app.config.from_object(config.DevConfig)

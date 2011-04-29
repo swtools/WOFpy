@@ -12,13 +12,14 @@ import private_config
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
+from swis.swis_dao import SwisDao
 
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
 
     wof.config_from_file('config/swis_config.cfg')
-    wof.dao = swis_dao.SwisDao(private_config.swis_connection_string)
+    wof.dao = SwisDao(private_config.swis_connection_string)
 
     flask_app = create_app()
     flask_app.config.from_object(config.DevConfig)
