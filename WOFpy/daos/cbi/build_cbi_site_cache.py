@@ -29,6 +29,10 @@ def fetch_ioos_site_file(site_file_url, local_site_file_path):
 
 
 def parse_site_file(local_site_file_path):
+    
+    parameter_set = set()
+    site_set = set()
+    
     site_file = open(local_site_file_path)
     
     tree = etree.parse(site_file)
@@ -49,6 +53,7 @@ def parse_site_file(local_site_file_path):
         longitude = pos.text.split()[1]
          
         vert_position = point_obs.find(nspath('verticalPosition', namespaces['ioos']))
+        print vert_position.attrib
         #TODO: get units of measure attribute, uom
         
         operator = point_obs.find(nspath('operator', namespaces['ioos']))
