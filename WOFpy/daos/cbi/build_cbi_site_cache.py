@@ -32,7 +32,7 @@ class Site(object):
         
         
     def __key(self):
-        return (self.code, self.name, self.latitude, self.longitude)
+        return (self.name, self.latitude, self.longitude)
         
     def __eq__(self, other):
         return self.__key() == other.__key()
@@ -123,7 +123,7 @@ def parse_site_file(local_site_file_path, db_session):
         
         site_set.add(site)
 
-        
+    print len(site_set)
 
 
 if __name__ == '__main__':
