@@ -37,4 +37,10 @@ class Site(Base):
 class Parameter(Base):
     __tablename__ = 'Parameters'
     
+    def __init__(self, code, name):
+        self.ParamCode = code
+        self.ParamName = name
+    
     ParamID = Column(Integer, primary_key=True)
+    ParamCode = Column(String)
+    ParamName = Column(String)

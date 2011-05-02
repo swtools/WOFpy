@@ -68,7 +68,7 @@ def fetch_ioos_site_file(site_file_url, local_site_file_path):
     cbi_site_file.close()
 
 
-def parse_site_file(local_site_file_path, db_session):
+def parse_site_file(local_site_file_path):
     
     parameter_set = set()
     site_set = set()
@@ -116,11 +116,11 @@ def parse_site_file(local_site_file_path, db_session):
         data_uri = point_obs.find(nspath('dataURI', namespaces['ioos']))
         comments = point_obs.find(nspath('comments', namespaces['ioos']))
         
-        code = platform_name.text.split(':')[0]
         
+        site_code = platform_name.text.split(':')[0]
+        site_name = platform_name.text.split(':')[1]
         
-        site = Site(code, platform_name.text, latitude,
-                    longitude)
+        site = Site(site_code, site_name, latitude, longitude)
         site_set.add(site)
         
         
@@ -128,8 +128,7 @@ def parse_site_file(local_site_file_path, db_session):
         
         parameter_set.add(parameter)
 
-    print len(site_set)
-    print len(parameter_set)
+    return (site_set, parameter_set)
 
 
 if __name__ == '__main__':
@@ -151,9 +150,28 @@ if __name__ == '__main__':
     
     
     model.init_model(db_session)
-    
 
-    
     print "Parsing IOOS site file."
-    parse_site_file(LOCAL_SITE_FILE_PATH, db_session)
+    (sites, params) = parse_site_file(LOCAL_SITE_FILE_PATH)
+    
+        
+    cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
+                   for s in sites]
+        
+    cache_params = [model.Parameter(p.code, p.name) for p in params]
+    
+    db_session.add_all(cache_sites)
+    db_session.add_all(cache_params)
+    db_session.commit()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
