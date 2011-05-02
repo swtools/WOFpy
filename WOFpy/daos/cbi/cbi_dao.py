@@ -2,7 +2,6 @@ import urllib2
 import owslib
 
 import wof
-import sqlalch_swis_models as model
 
 from daos.base_dao import BaseDao
 
