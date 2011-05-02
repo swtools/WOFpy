@@ -6,16 +6,6 @@ import sqlalch_swis_models as model
 
 from daos.base_dao import BaseDao
 
-# List of sites in GML: http://lighthouse.tamucc.edu/ioosobsreg.xml
-
-if __name__ == '__main__':
-    response = urllib2.urlopen('http://lighthouse.tamucc.edu/ioosobsreg.xml')
-    
-    cbi_site_file = open('cbi_site_file.xml', 'w')
-    
-    cbi_site_file.write(response.read())
-    
-    cbi_site_file.close()
 
 class CbiDao(BaseDao):
     
