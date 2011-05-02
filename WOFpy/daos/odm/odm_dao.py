@@ -1,6 +1,6 @@
 
 from sqlalchemy import create_engine, distinct, func
-from sqlalchemy.orm import mapper, scoped_session, sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
 from daos.base_dao import BaseDao
