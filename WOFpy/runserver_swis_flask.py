@@ -6,7 +6,6 @@ from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
 import wof
-import swis_dao
 import private_config
 
 from wofpy_soap.soap import WOFService
