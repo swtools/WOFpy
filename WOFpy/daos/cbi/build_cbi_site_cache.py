@@ -32,7 +32,7 @@ class Site(object):
         
         
     def __key(self):
-        return (self.name, self.latitude, self.longitude)
+        return (self.code, self.name, self.latitude, self.longitude)
         
     def __eq__(self, other):
         return self.__key() == other.__key()
@@ -116,9 +116,10 @@ def parse_site_file(local_site_file_path, db_session):
         data_uri = point_obs.find(nspath('dataURI', namespaces['ioos']))
         comments = point_obs.find(nspath('comments', namespaces['ioos']))
         
+        code = platform_name.text.split(':')[0]
         
         
-        site = Site(gml_id, platform_name.text, latitude,
+        site = Site(code, platform_name.text, latitude,
                     longitude)
         
         site_set.add(site)
