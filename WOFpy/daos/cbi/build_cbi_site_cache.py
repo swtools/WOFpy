@@ -121,10 +121,15 @@ def parse_site_file(local_site_file_path, db_session):
         
         site = Site(code, platform_name.text, latitude,
                     longitude)
-        
         site_set.add(site)
+        
+        
+        parameter = Parameter(observation_name.text, observation_name.text)
+        
+        parameter_set.add(parameter)
 
     print len(site_set)
+    print len(parameter_set)
 
 
 if __name__ == '__main__':
