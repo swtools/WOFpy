@@ -1,6 +1,7 @@
 
 import urllib2
 
+from optparse import OptionParser
 from lxml import etree
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -131,23 +132,32 @@ def parse_site_file(local_site_file_path):
     return (site_set, parameter_set)
 
 
+
 if __name__ == '__main__':
+    parser = OptionParser()
+    parser.add_option("-d","--dropall", dest="dropall", default=False,
+                  help="Drop all from site cache database before rebuilding.")
+    
+    (options, args) = parser.parse_args()
+
+    #Attempt to open local site file to see if it exists
     try:
         f = open(LOCAL_SITE_FILE_PATH)
         f.close()
-    except:
+    except: #If it doesn't exist, then fetch a new one from the remote location
         print "Fetching IOOS site file from remote location."
         fetch_ioos_site_file(IOOS_SITE_FILE_URL, LOCAL_SITE_FILE_PATH)
     
+    
     engine = create_engine(cbi_site_cache_connection_string,
                            convert_unicode=True)
+    if options.dropall:
+        model.clear_model(engine)
     
-    model.clear_model(engine)
     model.create_model(engine)
     
     db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=engine))
-    
     
     model.init_model(db_session)
 
@@ -160,11 +170,17 @@ if __name__ == '__main__':
         
     cache_params = [model.Parameter(p.code, p.name) for p in params]
     
-    db_session.add_all(cache_sites)
-    db_session.add_all(cache_params)
-    db_session.commit()
+    print "Adding %s sites and %s params to local cache." % (
+        len(cache_sites), len(cache_params))
     
+    try:
+        db_session.add_all(cache_sites)
+        db_session.add_all(cache_params)
+        db_session.commit()
     
+        print "Finished."
+    except Exception as inst:
+        print "ERROR: %s, %s" % (type(inst), inst)
     
     
     
