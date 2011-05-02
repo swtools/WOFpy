@@ -70,6 +70,10 @@ def fetch_ioos_site_file(site_file_url, local_site_file_path):
 
 
 def parse_site_file(local_site_file_path):
+    '''
+    Reads an IOOS XML site file and returns a set of sites and a set of
+    paramaters.
+    '''
     
     parameter_set = set()
     site_set = set()
@@ -86,9 +90,16 @@ def parse_site_file(local_site_file_path):
         point_obs = feature.find(nspath('InsituPointObs', namespaces['ioos']))
         
         gml_id = point_obs.attrib[nspath('id', namespaces['gml'])]
+        param_code = gml_id.split('.')[2]
         
         observation_name = point_obs.find(nspath('observationName',
                                                  namespaces['ioos']))
+        
+        #Create a Parameter object and add it to the return set
+        parameter = Parameter(param_code, observation_name.text)
+        parameter_set.add(parameter)
+        
+        #Parse Site info
         status = point_obs.find(nspath('status', namespaces['ioos']))
         platform_name = point_obs.find(nspath('platformName',
                                               namespaces['ioos']))
@@ -121,13 +132,10 @@ def parse_site_file(local_site_file_path):
         site_code = platform_name.text.split(':')[0]
         site_name = platform_name.text.split(':')[1]
         
+        #Create a Site object and add it to the return set
         site = Site(site_code, site_name, latitude, longitude)
         site_set.add(site)
-        
-        
-        parameter = Parameter(observation_name.text, observation_name.text)
-        
-        parameter_set.add(parameter)
+   
 
     return (site_set, parameter_set)
 
