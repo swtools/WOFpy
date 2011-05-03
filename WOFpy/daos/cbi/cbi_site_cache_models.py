@@ -1,10 +1,10 @@
 
 from sqlalchemy import (Column, Integer, String, ForeignKey, Float, DateTime,
                         Boolean)
-
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
+import daos.base_models as wof_base
 
 Base = declarative_base()
 
@@ -18,7 +18,7 @@ def create_model(engine):
 def init_model(db_session):
     Base.query = db_session.query_property()
 
-class Site(Base):
+class Site(Base, wof_base.BaseSite):
     __tablename__ = 'Sites'
     
     def __init__(self, code, name, latitude, longitude):

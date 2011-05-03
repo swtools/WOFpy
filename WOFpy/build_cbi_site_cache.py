@@ -7,14 +7,15 @@ from lxml import etree
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-import cbi_site_cache_models as model
+import daos.cbi.cbi_site_cache_models as model
 
 cbi_site_cache_connection_string = 'sqlite:///' + os.path.join(
-    os.path.dirname(__file__), 'cbi_site_cache.db')
+    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_cache.db')
 
 
 IOOS_SITE_FILE_URL = 'http://lighthouse.tamucc.edu/ioosobsreg.xml'
-LOCAL_SITE_FILE_PATH = 'cbi_site_file.xml'
+local_site_file_path = os.path.join(
+    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_file.xml')
 
 namespaces = {
     'gml': "http://www.opengis.net/gml",
@@ -151,11 +152,11 @@ if __name__ == '__main__':
 
     #Attempt to open local site file to see if it exists
     try:
-        f = open(LOCAL_SITE_FILE_PATH)
+        f = open(local_site_file_path)
         f.close()
     except: #If it doesn't exist, then fetch a new one from the remote location
         print "Fetching IOOS site file from remote location."
-        fetch_ioos_site_file(IOOS_SITE_FILE_URL, LOCAL_SITE_FILE_PATH)
+        fetch_ioos_site_file(IOOS_SITE_FILE_URL, local_site_file_path)
     
     
     engine = create_engine(cbi_site_cache_connection_string,
@@ -171,7 +172,7 @@ if __name__ == '__main__':
     model.init_model(db_session)
 
     print "Parsing IOOS site file."
-    (sites, params) = parse_site_file(LOCAL_SITE_FILE_PATH)
+    (sites, params) = parse_site_file(local_site_file_path)
     
         
     cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
