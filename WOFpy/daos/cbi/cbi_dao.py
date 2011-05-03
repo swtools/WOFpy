@@ -17,24 +17,23 @@ class CbiDao(BaseDao):
     
     def get_all_sites(self):
         """
-        Returns a list of all the Sites in the data source.
+        Returns a list of all the Sites in the CBI site cache.
         """
-        
         return model.Site.query.all()
-        
-        pass
 
     def get_site_by_code(self, site_code):
         """
         Returns a single Site identified by its code.
-        """
-        pass
+        """        
+        return model.Site.query.filter(model.Site.SiteCode==site_code).first()
+
 
     def get_sites_by_codes(self, site_codes_arr):
         """
         Returns a list of Sites identified by the given site code list.
         """
-        pass
+        return model.Site.query.filter(
+            model.Site.SiteCode.in_(site_codes_arr)).all()
 
     def get_all_variables(self):
         """

@@ -28,7 +28,7 @@ def index():
                            ed='2007-03-24T12:00:00')
     elif isinstance(wof.dao, CbiDao):
         #TODO:
-        return render_template('index.html', p=wof.network, s='TODO',
+        return render_template('index.html', p=wof.network, s='023',
                            v='TODO',sd='TODO',
                            ed='TODO')
     
