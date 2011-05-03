@@ -19,6 +19,9 @@ class CbiDao(BaseDao):
         """
         Returns a list of all the Sites in the data source.
         """
+        
+        return model.Site.query.all()
+        
         pass
 
     def get_site_by_code(self, site_code):

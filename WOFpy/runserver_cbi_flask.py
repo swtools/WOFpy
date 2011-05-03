@@ -23,9 +23,6 @@ if __name__ == '__main__':
         os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_cache.db')
     
     
-    print cbi_site_cache_connection_string
-    
-    '''
     wof.dao = CbiDao(cbi_site_cache_connection_string)
 
     flask_app = create_app()
@@ -42,4 +39,3 @@ if __name__ == '__main__':
     })
 
     flask_app.run(host='0.0.0.0', port=8080, threaded=True)
-    '''
