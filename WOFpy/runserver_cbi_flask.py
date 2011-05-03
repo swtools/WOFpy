@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     wof.config_from_file('config/cbi_config.cfg')
     
-    cbi_site_cache_connection_string = os.path.join(
+    cbi_site_cache_connection_string = 'sqlite:///' + os.path.join(
         os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_cache.db')
     
     
