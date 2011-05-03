@@ -1,4 +1,4 @@
-
+import os
 import soaplib
 import logging
 
@@ -18,7 +18,15 @@ logging.basicConfig(level=logging.DEBUG)
 if __name__ == '__main__':
 
     wof.config_from_file('config/cbi_config.cfg')
-    wof.dao = CbiDao()
+    
+    cbi_site_cache_connection_string = os.path.join(
+        os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_cache.db')
+    
+    
+    print cbi_site_cache_connection_string
+    
+    '''
+    wof.dao = CbiDao(cbi_site_cache_connection_string)
 
     flask_app = create_app()
     flask_app.config.from_object(config.DevConfig)
@@ -34,3 +42,4 @@ if __name__ == '__main__':
     })
 
     flask_app.run(host='0.0.0.0', port=8080, threaded=True)
+    '''

@@ -1,5 +1,6 @@
 
 import urllib2
+import os
 
 from optparse import OptionParser
 from lxml import etree
@@ -8,8 +9,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 import cbi_site_cache_models as model
 
-cbi_site_cache_connection_string = \
-    'sqlite:///C:\\Software\\CODE\\TWDB_PROJECT\\WOFpy\\WOFpy\\daos\\cbi\\cbi_site_cache.db'
+cbi_site_cache_connection_string = 'sqlite:///' + os.path.join(
+    os.path.dirname(__file__), 'cbi_site_cache.db')
 
 
 IOOS_SITE_FILE_URL = 'http://lighthouse.tamucc.edu/ioosobsreg.xml'

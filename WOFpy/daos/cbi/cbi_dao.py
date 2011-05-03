@@ -1,12 +1,19 @@
 import urllib2
-import owslib
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 import wof
-
 from daos.base_dao import BaseDao
-
+import cbi_site_cache_models as model
 
 class CbiDao(BaseDao):
+    
+    def __init__(self, db_connection_string):
+        self.engine = create_engine(db_connection_string, convert_unicode=True)
+        self.db_session = scoped_session(sessionmaker(
+            autocommit=False, autoflush=False, bind=self.engine))
+        model.init_model(self.db_session)
     
     def get_all_sites(self):
         """
