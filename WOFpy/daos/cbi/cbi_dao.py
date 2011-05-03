@@ -39,18 +39,22 @@ class CbiDao(BaseDao):
         """
         Returns a list of all Variables in the data source.
         """
+        
+        #TODO: Not sure where to get all the variable info
         pass
 
     def get_variable_by_code(self, var_code):
         """
         Returns a single Variable identified by its code.
         """
+        #TODO: Not sure where to get all the variable info
         pass
 
     def get_variables_by_codes(self, var_codes_arr):
         """
         Returns a list of Variables identified by the given variable code list.
         """
+        #TODO: Not sure where to get all the variable info
         pass
 
     def get_series_by_sitecode(self, site_code):
