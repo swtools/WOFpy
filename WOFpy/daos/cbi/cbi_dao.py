@@ -3,9 +3,11 @@ import urllib2
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-import wof
 from daos.base_dao import BaseDao
+
+import wof
 import cbi_site_cache_models as model
+import cbi_sos_client
 
 class CbiDao(BaseDao):
     
@@ -14,6 +16,9 @@ class CbiDao(BaseDao):
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
         model.init_model(self.db_session)
+        
+        self.sos_client = cbi_sos_client.CbiSosClient(
+            'http://lighthouse.tamucc.edu/sos')
     
     def get_all_sites(self):
         """
@@ -76,6 +81,15 @@ class CbiDao(BaseDao):
         Returns a list of DataValues for the given site code and variable code,
         filtered by the optional begin and end datetimes.
         """
+        
+        #http://sdf.ndbc.noaa.gov/sos/server.php?
+        #request=GetObservation&
+        #service=SOS&
+        #offering=urn:ioos:station:wmo:41012&
+        #observedproperty=Winds&
+        #responseformat=text/xml;schema=%22ioos/0.6.1%22&
+        #eventtime=2008-08-01T00:00Z/2008-08-02T00:00Z
+        
         pass
 
     def get_method_by_id(self, method_id):

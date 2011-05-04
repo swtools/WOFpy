@@ -1,5 +1,5 @@
 import urllib
-
+import time
 
 class CbiSosClient(object):
     
@@ -14,11 +14,12 @@ class CbiSosClient(object):
         
         response = urllib.urlopen(self.endpoint_url+'?%s' % params)
         
+        return response
         #TODO: might be able to do series catalog from this, look at
         # ObservationOffering elements of response xml
     
     
-    def describe_sensor(self, sensor_id, ):
+    def describe_sensor(self, sensor_id):
         
         #?request=DescribeSensor&service=SOS&version=1.0.0&outputformat=text/xml;subtype=%22sensorML/1.0.0%22&procedure=urn:ioos:sensor:wmo:41012::adcp0
         #or
@@ -30,13 +31,41 @@ class CbiSosClient(object):
                                    'outputformat':'text/xml;subtype="sensorML/1.0.0"',
                                    'procedure':'urn:ioos:sensor:wmo:41012::adcp0'})
         
-        pass
+        
     
     
-    def get_observations(self):
-        pass
-    
+    def get_observation(self, offering, observed_property, start_datetime=None,
+                        end_datetime=None):
+        """
+        
+        start_datetime and end_datetime in YYYY-MM-DD HH:MM:SS format
+        """
+        
+        #http://lighthouse.tamucc.edu/sos?request=GetObservation&service=SOS&version=1.0.0&observedProperty=water_temperature&offering=014
+        
+        param_dict = {'request':'GetObservation',
+                      'service':'SOS',
+                      'version':'1.0.0',
+                      'offering':offering,
+                      'observedProperty':observed_property
+                      }
+        
+        if start_datetime and end_datetime:
+            event_time_string = '%s/%s' % (
+                time.strftime("%Y-%m-%dT%H:%M:%SZ",
+                            time.strptime(start_datetime,"%Y-%m-%dT%H:%M:%S")),
+                time.strftime("%Y-%m-%dT%H:%M:%SZ",
+                            time.strptime(end_datetime,"%Y-%m-%dT%H:%M:%S")))
+            
+            params_dict['eventtime'] = event_time_string
+            
+        params = urllib.urlencode(param_dict)
+        
+        response = urllib.urlopen(self.endpoint_url+'?%s' % params)
+        
+        return response
     
 if __name__ == '__main__':
     c = CbiSosClient('http://lighthouse.tamucc.edu/sos')
-    c.get_capabilities()
+    r = c.get_observation('014','water_temperature')
+    print r.read()
