@@ -1,14 +1,16 @@
 import urllib2
-import lxml
 
+
+from StringIO import StringIO
+from lxml import etree
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from daos.base_dao import BaseDao
-from daos.base_models import BaseDataValue
 
 import wof
-import cbi_site_cache_models as model
+import cbi_site_cache_models as site_cache_model
+import cbi_models as model
 import cbi_sos_client
 
 
@@ -29,7 +31,7 @@ class CbiDao(BaseDao):
         self.engine = create_engine(db_connection_string, convert_unicode=True)
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
-        model.init_model(self.db_session)
+        site_cache_model.init_model(self.db_session)
         
         self.cbi_sos_client = cbi_sos_client.CbiSosClient(
             'http://lighthouse.tamucc.edu/sos')
@@ -38,21 +40,22 @@ class CbiDao(BaseDao):
         """
         Returns a list of all the Sites in the CBI site cache.
         """
-        return model.Site.query.all()
+        return site_cache_model.Site.query.all()
 
     def get_site_by_code(self, site_code):
         """
         Returns a single Site identified by its code.
         """        
-        return model.Site.query.filter(model.Site.SiteCode==site_code).first()
+        return site_cache_model.Site.query.filter(
+            site_cache_model.Site.SiteCode==site_code).first()
 
 
     def get_sites_by_codes(self, site_codes_arr):
         """
         Returns a list of Sites identified by the given site code list.
         """
-        return model.Site.query.filter(
-            model.Site.SiteCode.in_(site_codes_arr)).all()
+        return site_cache_model.Site.query.filter(
+            site_cache_model.Site.SiteCode.in_(site_codes_arr)).all()
 
     def get_all_variables(self):
         """
@@ -100,9 +103,42 @@ class CbiDao(BaseDao):
         response = self.cbi_sos_client.get_observation(site_code, var_code,
                                             begin_date_time, end_date_time)
         
-        print nspath('encoding', namespaces['swe'])
+        tree = etree.parse(StringIO(response.read()))
         
-        return [BaseDataValue()]
+        #The data values from the response xml are organized into 'blocks'
+        # with each block containing several fields (PlatformName, time,
+        # latitude, longitude, depth, observedProperty1).
+        # These fields are described in swe:field elements
+        
+        fields = tree.findall('.//'+nspath('field', namespaces['swe']))
+        field_names = [f.attrib['name'] for f in fields]
+        
+        #Now that we have the fields, we can parse the values appropriately
+        
+        text_block = tree.find('.//'+nspath('encoding', namespaces['swe'])
+                        +'/'+nspath('TextBlock', namespaces['swe']))
+        block_sep = text_block.attrib['blockSeparator']
+        token_sep = text_block.attrib['tokenSeparator']
+        
+        values_blocks = tree.findtext('.//'+nspath('values',
+                                                   namespaces['swe']))
+   
+        datavalue_list = []
+        val_lines_arr = [block.split(token_sep)
+                         for block in values_blocks.split(block_sep)]
+        
+        for val_line in val_lines_arr:
+            field_val_dict = dict(zip(field_names, val_line))
+            
+            dv = model.DataValue(field_val_dict['observedProperty1'], #TODO: Is it always observedProperty1 ?
+                                 field_val_dict['time'],
+                                 field_val_dict['depth'],
+                                 site_code,
+                                 var_code) #TODO: SITEID and VARID (instead of code)
+            
+            datavalue_list.append(dv)
+    
+        return datavalue_list
         
         #Parse swe:values from the response
         
