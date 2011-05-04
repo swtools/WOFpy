@@ -17,7 +17,7 @@ class CbiDao(BaseDao):
             autocommit=False, autoflush=False, bind=self.engine))
         model.init_model(self.db_session)
         
-        self.sos_client = cbi_sos_client.CbiSosClient(
+        self.cbi_sos_client = cbi_sos_client.CbiSosClient(
             'http://lighthouse.tamucc.edu/sos')
     
     def get_all_sites(self):
@@ -82,16 +82,13 @@ class CbiDao(BaseDao):
         filtered by the optional begin and end datetimes.
         """
         
-        #http://sdf.ndbc.noaa.gov/sos/server.php?
-        #request=GetObservation&
-        #service=SOS&
-        #offering=urn:ioos:station:wmo:41012&
-        #observedproperty=Winds&
-        #responseformat=text/xml;schema=%22ioos/0.6.1%22&
-        #eventtime=2008-08-01T00:00Z/2008-08-02T00:00Z
+        #Call GetObservation
+        response = self.cbi_sos_client.get_observation(site_code, var_code,
+                                            begin_date_time, end_date_time)
         
-        pass
-
+        #Parse swe:values from the response
+        
+        
     def get_method_by_id(self, method_id):
         """
         Returns a single Method identified by the given id.

@@ -38,7 +38,8 @@ class CbiSosClient(object):
                         end_datetime=None):
         """
         
-        start_datetime and end_datetime in YYYY-MM-DD HH:MM:SS format
+        start_datetime and end_datetime in YYYY-MM-DDTHH:MM:SS format
+            (e.g. 2010-02-11T12:00:00)
         """
         
         #http://lighthouse.tamucc.edu/sos?request=GetObservation&service=SOS&version=1.0.0&observedProperty=water_temperature&offering=014
@@ -57,15 +58,15 @@ class CbiSosClient(object):
                 time.strftime("%Y-%m-%dT%H:%M:%SZ",
                             time.strptime(end_datetime,"%Y-%m-%dT%H:%M:%S")))
             
-            params_dict['eventtime'] = event_time_string
+            param_dict['eventtime'] = event_time_string
             
         params = urllib.urlencode(param_dict)
-        
+
         response = urllib.urlopen(self.endpoint_url+'?%s' % params)
         
         return response
     
 if __name__ == '__main__':
     c = CbiSosClient('http://lighthouse.tamucc.edu/sos')
-    r = c.get_observation('014','water_temperature')
+    r = c.get_observation('014','water_temperature','2011-05-04T17:24:00','2011-05-04T17:36:00')
     print r.read()

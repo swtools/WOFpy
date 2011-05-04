@@ -27,10 +27,9 @@ def index():
                            v='seawater_salinity',sd='2007-03-23T12:00:00',
                            ed='2007-03-24T12:00:00')
     elif isinstance(wof.dao, CbiDao):
-        #TODO:
-        return render_template('index.html', p=wof.network, s='023',
-                           v='TODO',sd='TODO',
-                           ed='TODO')
+        return render_template('index.html', p=wof.network, s='014',
+                           v='water_temperature',sd='2011-05-04T17:24:00',
+                           ed='2011-05-04T17:36:00')
     
     return render_template('index.html', p=wof.network, s='USU-LBR-Paradise',
                            v='USU36',sd='2007-08-17T12:00:00',
@@ -68,8 +67,8 @@ def get_site_info():
     siteInfoResponse = wof.code.create_get_site_info_response(siteArg,varArg)
     
     if not siteInfoResponse:
-        return "Error: No site info found for site code [%s] and var code [%s]" % (
-            siteArg, varArg)
+        return "Error: No site info found for site code [%s] \
+            and var code [%s]" % (siteArg, varArg)
     
     outStream = StringIO.StringIO()
     siteInfoResponse.export(outStream, 0, name_="sitesResponse",
@@ -106,7 +105,8 @@ def get_values():
     endDateTime = request.args.get('endDate',None) #TODO
     
     if (siteArg == None or varArg == None):
-        return "Must enter a site code (location) and a variable code (variable)"
+        return "Must enter a site code (location) and a variable code \
+            (variable)"
 
     timeSeriesResponse = wof.code.create_get_values_response(
         siteArg,varArg,startDateTime,endDateTime)
