@@ -5,7 +5,7 @@ class CbiSosClient(object):
     
     def __init__(self, endpoint_url):
         self.endpoint_url = endpoint_url
-        
+  
     
     def get_capabilities(self):
         

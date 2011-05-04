@@ -1,13 +1,27 @@
 import urllib2
+import lxml
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from daos.base_dao import BaseDao
+from daos.base_models import BaseDataValue
 
 import wof
 import cbi_site_cache_models as model
 import cbi_sos_client
+
+
+namespaces = {
+        'xsi': "http://www.w3.org/2001/XMLSchema-instance",
+        'xlink': "http://www.w3.org/1999/xlink",
+        'om': "http://www.opengis.net/om/1.0",
+        'gml': "http://www.opengis.net/gml",
+        'swe': "http://www.opengis.net/swe/1.0.1"
+    }
+
+def nspath(path, ns):
+    return '{%s}%s' % (ns, path) 
 
 class CbiDao(BaseDao):
     
@@ -85,6 +99,10 @@ class CbiDao(BaseDao):
         #Call GetObservation
         response = self.cbi_sos_client.get_observation(site_code, var_code,
                                             begin_date_time, end_date_time)
+        
+        print nspath('encoding', namespaces['swe'])
+        
+        return [BaseDataValue()]
         
         #Parse swe:values from the response
         
