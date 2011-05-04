@@ -31,7 +31,9 @@ class CbiSosClient(object):
                                    'outputformat':'text/xml;subtype="sensorML/1.0.0"',
                                    'procedure':'urn:ioos:sensor:wmo:41012::adcp0'})
         
+        response = urllib.urlopen(self.endpoint_url+'?%s' % params)
         
+        return response
     
     
     def get_observation(self, offering, observed_property, start_datetime=None,
