@@ -26,10 +26,11 @@ class DataValue(wof_base.BaseDataValue):
 class Variable(wof_base.BaseVariable):
     
     
+    def __init__(self, variable_id, variable_code, variable_name):
+        self.VariableID = variable_id
+        self.VariableCode = variable_code
+        self.VariableName = variable_name
     
-    VariableID = None
-    VariableCode = None
-    VariableName = None
     Speciation = None
     VariableUnitsID = None
     SampleMedium = None

@@ -129,9 +129,11 @@ def create_get_values_response(siteArg, varArg, startDateTime=None,
     timeSeries.variable = variable
     
     values = WaterML.TsValuesSingleVariableType() #TODO: fill in some more of the attributes in this element
-    values.unitsAbbreviation = varResult.VariableUnits.UnitsAbbreviation
-    values.unitsCode = varResult.VariableUnits.UnitsID
     values.count = len(valueResultArr)
+    
+    if varResult.VariableUnits:
+        values.unitsAbbreviation = varResult.VariableUnits.UnitsAbbreviation
+        values.unitsCode = varResult.VariableUnits.UnitsID
     
     #Need to keep track of unique methodIDs and sourceIDs
     methodIdSet = set()
@@ -460,25 +462,27 @@ def create_variable_element(variableResult):
     
     variable.add_variableCode(variableCode)
     
-    units = WaterML.units(
-        unitsAbbreviation=variableResult.VariableUnits.UnitsAbbreviation,
-        unitsCode=variableResult.VariableUnitsID,
-        unitsType=variableResult.VariableUnits.UnitsType,
-        valueOf_=variableResult.VariableUnits.UnitsName)
-    
-    variable.set_units(units)
+    if variableResult.VariableUnits:
+        units = WaterML.units(
+            unitsAbbreviation=variableResult.VariableUnits.UnitsAbbreviation,
+            unitsCode=variableResult.VariableUnitsID,
+            unitsType=variableResult.VariableUnits.UnitsType,
+            valueOf_=variableResult.VariableUnits.UnitsName)
+        
+        variable.set_units(units)
     
     timeSupport = WaterML.timeSupport()
     timeSupport.isRegular = variableResult.IsRegular
     
-    timeUnits = WaterML.UnitsType(
-        UnitID=variableResult.TimeUnits.UnitsID,
-        UnitName=variableResult.TimeUnits.UnitsName,
-        UnitDescription=variableResult.TimeUnits.UnitsName,
-        UnitType=variableResult.TimeUnits.UnitsType,
-        UnitAbbreviation=variableResult.TimeUnits.UnitsAbbreviation)
-    
-    timeSupport.set_unit(timeUnits)
+    if variableResult.TimeUnits:
+        timeUnits = WaterML.UnitsType(
+            UnitID=variableResult.TimeUnits.UnitsID,
+            UnitName=variableResult.TimeUnits.UnitsName,
+            UnitDescription=variableResult.TimeUnits.UnitsName,
+            UnitType=variableResult.TimeUnits.UnitsType,
+            UnitAbbreviation=variableResult.TimeUnits.UnitsAbbreviation)
+        
+        timeSupport.set_unit(timeUnits)
     
     #TODO: time interval is not the same as time support.  Time interval refers to a spacing between values for regular data, which isn't stored in ODM.
     if variableResult.TimeSupport:

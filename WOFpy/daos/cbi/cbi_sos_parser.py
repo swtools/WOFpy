@@ -46,7 +46,7 @@ def parse_datavalues_from_get_observation(tree, site_code, var_code):
     for val_line in val_lines_arr:
         field_val_dict = dict(zip(field_names, val_line))
         
-        dv = model.DataValue(field_val_dict['observedProperty1'], #TODO: Is it always observedProperty1 ?
+        dv = model.DataValue(float(field_val_dict['observedProperty1']), #TODO: Is it always observedProperty1 ?
                              field_val_dict['time'],
                              field_val_dict['depth'],
                              site_code,

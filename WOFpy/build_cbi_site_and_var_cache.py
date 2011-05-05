@@ -7,15 +7,23 @@ from lxml import etree
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-import daos.cbi.cbi_site_cache_models as model
+import daos.cbi.cbi_cache_models as model
 
-cbi_site_cache_connection_string = 'sqlite:///' + os.path.join(
-    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_cache.db')
+cbi_cache_connection_string = 'sqlite:///' + os.path.join(
+    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_cache.db')
 
 
 IOOS_SITE_FILE_URL = 'http://lighthouse.tamucc.edu/ioosobsreg.xml'
+
+GCOOS_ONTOLOGY_FILE_URL = \
+    'http://mmisw.org/ont?form=rdf&uri=http://mmisw.org/ont/gcoos/parameter'
+
 local_site_file_path = os.path.join(
     os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_file.xml')
+
+local_ontology_file_path = os.path.join(
+    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_ontology_file.xml'
+)
 
 namespaces = {
     'gml': "http://www.opengis.net/gml",
@@ -24,15 +32,12 @@ namespaces = {
     'ioos': "http://www.csc.noaa.gov/ioos"
 }
 
-schema_location = "http://www.csc.noaa.gov/ioos/schema obsRegistry.xsd"
-
 class Site(object):
     def __init__(self, code, name, latitude, longitude):
         self.code = code
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
-        
         
     def __key(self):
         return (self.code, self.name, self.latitude, self.longitude)

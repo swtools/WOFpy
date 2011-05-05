@@ -58,7 +58,7 @@ class CbiDao(BaseDao):
         Returns a single Variable identified by its code.
         """
         #TODO: Not sure where to get all the variable info
-        pass
+        return model.Variable(var_code, var_code, var_code)
 
     def get_variables_by_codes(self, var_codes_arr):
         """
