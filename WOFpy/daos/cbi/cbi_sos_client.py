@@ -12,12 +12,18 @@ class CbiSosClient(object):
         params = urllib.urlencode({'request':'GetCapabilities',
                                    'service':'SOS'})
         
-        response = urllib.urlopen(self.endpoint_url+'?%s' % params)
         
-        return response
         #TODO: might be able to do series catalog from this, look at
         # ObservationOffering elements of response xml
     
+        
+        try:
+            response = urllib.urlopen(self.endpoint_url+'?%s' % params)
+            return response
+        except IOError as ioe: #TODO: Do something with exception (log?)
+            return None
+        
+        return None
     
     def describe_sensor(self, sensor_id):
         
@@ -31,10 +37,13 @@ class CbiSosClient(object):
                                    'outputformat':'text/xml;subtype="sensorML/1.0.0"',
                                    'procedure':'urn:ioos:sensor:wmo:41012::adcp0'})
         
-        response = urllib.urlopen(self.endpoint_url+'?%s' % params)
+        try:
+            response = urllib.urlopen(self.endpoint_url+'?%s' % params)
+            return response
+        except IOError as ioe:
+            return None
         
-        return response
-    
+        return None
     
     def get_observation(self, offering, observed_property, start_datetime=None,
                         end_datetime=None):
@@ -64,9 +73,13 @@ class CbiSosClient(object):
             
         params = urllib.urlencode(param_dict)
 
-        response = urllib.urlopen(self.endpoint_url+'?%s' % params)
+        try:
+            response = urllib.urlopen(self.endpoint_url+'?%s' % params)
+            return response
+        except IOError as IOE:
+            return None
         
-        return response
+        return None
     
 if __name__ == '__main__':
     c = CbiSosClient('http://lighthouse.tamucc.edu/sos')
