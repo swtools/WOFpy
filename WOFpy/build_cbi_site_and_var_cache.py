@@ -208,14 +208,17 @@ if __name__ == '__main__':
     cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
                    for s in sites]
         
-    cache_params = [model.Variable(p.code, p.name) for p in params]
+    cache_variables = [model.Variable(p.code, p.name) for p in params]
+    
+    #TODO: Maybe should read the parameters from the SOS Capabilities
+    # and then find them in the GCOOS parameter file
     
     print "Adding %s sites and %s variables to local cache." % (
-        len(cache_sites), len(cache_params))
+        len(cache_sites), len(cache_variables))
     
     try:
         db_session.add_all(cache_sites)
-        db_session.add_all(cache_params)
+        db_session.add_all(cache_variables)
         db_session.commit()
     
         print "Finished."
