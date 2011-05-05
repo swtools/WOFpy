@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<om:ObservationCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:om="http://www.opengis.net/om/1.0" xmlns:gml="http://www.opengis.net/gml" xmlns:swe="http://www.opengis.net/swe/1.0.1" xsi:schemaLocation="http://www.opengis.net/om/1.0 http://schemas.opengis.net/om/1.0.0/observation.xsd" gml:id="CBI/TAMU-CC_sensor">
+
+  <gml:description>WATER_TEMPERATURE measurements from CBI/TAMU-CC 014</gml:description>
+  <gml:name>WATER_TEMPERATURE measurements from CBI/TAMU-CC 014</gml:name>
+  <gml:boundedBy>
+      <gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.5:4326">
+<!-- overwrite these with your actual offering ROI -->
+          <gml:lowerCorner>27.58102 -97.21646 0</gml:lowerCorner>
+          <gml:upperCorner>27.58102 -97.21646 0</gml:upperCorner>
+      </gml:Envelope>
+  </gml:boundedBy>
+  <om:member>
+      <om:Observation gml:id="CBI/TAMU-CC_014">
+          <gml:description>WATER_TEMPERATURE measurements from CBI/TAMU-CC 014</gml:description>
+          <gml:name>WATER_TEMPERATURE measurements from CBI/TAMU-CC 014</gml:name>
+          <gml:boundedBy>
+              <gml:Envelope srsName="urn:ogc:def:crs:EPSG:6.5:4326">
+                  <!-- overwrite these with your actual offering  ROI -->
+                  <gml:lowerCorner>27.58102 -97.21646 0</gml:lowerCorner>
+                  <gml:upperCorner>27.58102 -97.21646 0</gml:upperCorner>
+              </gml:Envelope>
+          </gml:boundedBy>     
+          <!-- Observation time -->
+          <om:samplingTime><gml:TimePeriod><gml:beginPosition>2011-05-04T17:24:00Z</gml:beginPosition><gml:endPosition>2011-05-04T17:30:00Z</gml:endPosition></gml:TimePeriod></om:samplingTime>
+          <!-- Sensor description (SensorML) -->
+          <om:procedure xlink:href="http://lighthouse.tamucc.edu/overview/014"/>
+         <!-- Observed Property, can be multiple -->
+         <om:observedProperty>
+         <swe:CompositePhenomenon dimension="1" gml:id="BUOY_OBSERVABLES">
+               <gml:name>Buoy Observables</gml:name>
+          <swe:component xlink:href="http://mmisw.org/ont/gcoos/parameter/water_temperature"/></swe:CompositePhenomenon>
+          </om:observedProperty>
+           <!-- Feature Of Interest -->
+           <om:featureOfInterest xlink:href="urn:something:bodyOfWater"/>
+           <!-- Result Structure, Encoding, and Data -->
+           <om:result>
+               <swe:DataArray>
+                   <swe:elementCount>
+                       <swe:Count>
+                             <swe:value>6</swe:value>  <!-- Number of Records here -->
+                         </swe:Count>
+                     </swe:elementCount>
+                     <swe:elementType name="014Observations">
+                         <swe:DataRecord>
+                            <swe:field name="PlatformName">
+                                <swe:Quantity definition="urn:mmisw.org#platform"/>
+                            </swe:field>
+                            <!--  Time -->
+                            <swe:field name="time">
+                                <swe:Time definition="urn:ogc:phenomenon:time:iso8601"/>
+                            </swe:field>
+                            <swe:field name="latitude">
+                                <swe:Quantity definition="urn:ogc:phenomenon:latitude:wgs84">
+                                    <swe:uom code="deg"/>
+                                </swe:Quantity>
+                            </swe:field>
+                            <swe:field name="longitude">
+                                <swe:Quantity definition="urn:ogc:phenomenon:longitude:wgs84">
+                                     <swe:uom code="deg"/> 
+                                </swe:Quantity>
+                            </swe:field>
+                            <swe:field name="depth">
+            					<swe:Quantity definition="http://mmisw.org/cf#depth" referenceFrame="urn:ogc:def:crs:EPSG:6.15:5113">
+                                     <swe:uom code="m"/>
+                                 </swe:Quantity>
+                            </swe:field>
+                            <!--  Observable fields -->
+                            
+                         <swe:field name="observedProperty1">
+                                <swe:Quantity definition="http://mmisw.org/ont/gcoos/parameter/water_temperature">
+                                    <swe:uom code="degC"/>                    
+                                </swe:Quantity>
+                            </swe:field></swe:DataRecord>
+                     </swe:elementType>
+                     <swe:encoding>
+                         <swe:TextBlock blockSeparator=" " decimalSeparator="." tokenSeparator=","/>
+                     </swe:encoding>
+                     <swe:values>014,2011-05-04T17:24:00Z,27.5810200,-97.2164600,,23.3 014,2011-05-04T17:30:00Z,27.5810200,-97.2164600,,23.5</swe:values>
+                 </swe:DataArray>
+             </om:result>
+         </om:Observation>
+     </om:member>
+</om:ObservationCollection>
