@@ -106,6 +106,9 @@ class BaseDataValue(object):
     QualityControlLevel = None
     QualityControlLevelID = None
     
+    def __repr__(self):
+        return '<DataValue: (%s, %s)>' % (self.DataValue, self.DateTimeUTC)
+    
 
 class BaseQualifier(object):
     

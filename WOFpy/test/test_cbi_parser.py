@@ -21,8 +21,9 @@ class TestCbiParser(unittest.TestCase):
         dataval_list = \
             parse_datavalues_from_get_observation(tree, '014',
                                                   'water_temperature')
-        
+
         self.assertTrue(dataval_list)
+        self.assertTrue(len(dataval_list) == 2)
         
         for datavalue in dataval_list:
             self.assertTrue(datavalue.DataValue)
