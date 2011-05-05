@@ -8,7 +8,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from daos.base_dao import BaseDao
 
 import wof
-import cbi_site_cache_models as site_cache_model
+import cbi_cache_models as cache_model
 import cbi_models as model
 import cbi_sos_client
 import cbi_sos_parser
@@ -19,7 +19,7 @@ class CbiDao(BaseDao):
         self.engine = create_engine(db_connection_string, convert_unicode=True)
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
-        site_cache_model.init_model(self.db_session)
+        cache_model.init_model(self.db_session)
         
         self.cbi_sos_client = cbi_sos_client.CbiSosClient(
             'http://lighthouse.tamucc.edu/sos')
@@ -28,22 +28,22 @@ class CbiDao(BaseDao):
         """
         Returns a list of all the Sites in the CBI site cache.
         """
-        return site_cache_model.Site.query.all()
+        return cache_model.Site.query.all()
 
     def get_site_by_code(self, site_code):
         """
         Returns a single Site identified by its code.
         """        
-        return site_cache_model.Site.query.filter(
-            site_cache_model.Site.SiteCode==site_code).first()
+        return cache_model.Site.query.filter(
+            cache_model.Site.SiteCode==site_code).first()
 
 
     def get_sites_by_codes(self, site_codes_arr):
         """
         Returns a list of Sites identified by the given site code list.
         """
-        return site_cache_model.Site.query.filter(
-            site_cache_model.Site.SiteCode.in_(site_codes_arr)).all()
+        return cache_model.Site.query.filter(
+            cache_model.Site.SiteCode.in_(site_codes_arr)).all()
 
     def get_all_variables(self):
         """

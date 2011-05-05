@@ -164,7 +164,7 @@ if __name__ == '__main__':
         fetch_ioos_site_file(IOOS_SITE_FILE_URL, local_site_file_path)
     
     
-    engine = create_engine(cbi_site_cache_connection_string,
+    engine = create_engine(cbi_cache_connection_string,
                            convert_unicode=True)
     if options.dropall:
         model.clear_model(engine)

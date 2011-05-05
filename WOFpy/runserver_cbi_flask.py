@@ -19,11 +19,11 @@ if __name__ == '__main__':
 
     wof.config_from_file('config/cbi_config.cfg')
     
-    cbi_site_cache_connection_string = 'sqlite:///' + os.path.join(
-        os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_cache.db')
+    cbi_cache_connection_string = 'sqlite:///' + os.path.join(
+        os.path.dirname(__file__), 'daos', 'cbi', 'cbi_cache.db')
     
     
-    wof.dao = CbiDao(cbi_site_cache_connection_string)
+    wof.dao = CbiDao(cbi_cache_connection_string)
 
     flask_app = create_app()
     flask_app.config.from_object(config.DevConfig)
