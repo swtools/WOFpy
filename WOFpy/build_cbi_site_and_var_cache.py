@@ -29,7 +29,12 @@ namespaces = {
     'gml': "http://www.opengis.net/gml",
     'xlink': "http://www.w3.org/1999/xlink",
     'xsi': "http://www.w3.org/2001/XMLSchema-instance",
-    'ioos': "http://www.csc.noaa.gov/ioos"
+    'ioos': "http://www.csc.noaa.gov/ioos",
+    'omvmmi':"http://mmisw.org/ont/mmi/20081020/ontologyMetadata/",
+    'rdfs':"http://www.w3.org/2000/01/rdf-schema#",
+    'owl':"http://www.w3.org/2002/07/owl#",
+    'omv':"http://omv.ontoware.org/2005/05/ontology#",
+    'dc':"http://purl.org/dc/elements/1.1/"
 }
 
 class Site(object):
