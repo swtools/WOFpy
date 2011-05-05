@@ -1,0 +1,660 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://mmisw.org/ont/gcoos/parameter/"
+    xmlns:omvmmi="http://mmisw.org/ont/mmi/20081020/ontologyMetadata/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:omv="http://omv.ontoware.org/2005/05/ontology#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xml:base="http://mmisw.org/ont/gcoos/parameter">
+    <owl:Ontology rdf:about="">
+        <omvmmi:origMaintainerCode>gcoos</omvmmi:origMaintainerCode>
+        <omvmmi:hasResourceType>parameter</omvmmi:hasResourceType>
+        <omvmmi:hasContentCreator>Matt Howard</omvmmi:hasContentCreator>
+        <omv:hasCreator>Felimon Gayanilo</omv:hasCreator>
+        <omv:name>GCOOS Vocabulary</omv:name>
+        <dc:date>0</dc:date>
+        <omv:version>20100915T174300</omv:version>
+        <omv:acronym>parameter</omv:acronym>
+        <dc:title>GCOOS Vocabularies</dc:title>
+        <dc:creator>Matt Howard</dc:creator>
+        <dc:description>Parameters used in the system databases and primary documents</dc:description>
+        <omv:creationDate>2011-05-05T20:52:56+0000</omv:creationDate>
+        <omv:description>Parameters used in the system databases and primary documents. Largely adapted from the posted SECOORA data dictionary</omv:description>
+        <omvmmi:creditRequired>not specified</omvmmi:creditRequired>
+        <omv:uri>http://mmisw.org/ont/gcoos/parameter</omv:uri>
+    </owl:Ontology>
+    <owl:Class rdf:about="http://mmisw.org/ont/gcoos/parameter/Parameters">
+        <rdfs:label>Parameters</rdfs:label>
+    </owl:Class>
+    <owl:DatatypeProperty rdf:about="http://mmisw.org/ont/gcoos/parameter/description">
+        <rdfs:label>description</rdfs:label>
+        <rdfs:domain rdf:resource="http://mmisw.org/ont/gcoos/parameter/Parameters"/>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="http://mmisw.org/ont/gcoos/parameter/name">
+        <rdfs:domain rdf:resource="http://mmisw.org/ont/gcoos/parameter/Parameters"/>
+        <rdfs:label>name</rdfs:label>
+    </owl:DatatypeProperty>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_to_direction">
+        <description>Direction toward which wind is blowing.  Oceanographic convention.(Range: 0.0 - 360.0; Unit: degrees_true; Abbreviation: wdir)</description>
+        <name>wind_to_direction</name>
+        <rdfs:label>wind_to_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/light_attenuation_coefficient">
+        <description>Measure of combined effects on light caused by absorption and scattering over a defined distance for a specific wavelength of light.(Unit: m-1; Abbreviation: attenuate)</description>
+        <name>light_attenuation_coefficient</name>
+        <rdfs:label>light_attenuation_coefficient</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/spectral_reflectance">
+        <description>Upwelling irradiance (Eu) divided by downwelling radiance (Ed) at a specific spectral wavelength.(Abbreviation: R)</description>
+        <name>spectral_reflectance</name>
+        <rdfs:label>spectral_reflectance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bin_direction">
+        <description>Current direction of bin(Range: 0.0 - 360.0; Unit: cm s-1; Abbreviation: bin_dir)</description>
+        <name>bin_direction</name>
+        <rdfs:label>bin_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/significant_wave_period">
+        <description>Period of the significant wave.(Unit: second; Abbreviation: sig_wv_per)</description>
+        <name>significant_wave_period</name>
+        <rdfs:label>significant_wave_period</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/sound_velocity">
+        <description>Magnitude of velocity of sound in water.(Unit: m s-1; Abbreviation: sound_velocity)</description>
+        <name>sound_velocity</name>
+        <rdfs:label>sound_velocity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bin_width">
+        <description>Width distance between bins(Unit: meters; Abbreviation: bin_width)</description>
+        <name>bin_width</name>
+        <rdfs:label>bin_width</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam3_velocity">
+        <description>Current velocity measured parallel to the path of beam 3(Unit: cm s-1; Abbreviation: beam3_vel)</description>
+        <name>beam3_velocity</name>
+        <rdfs:label>beam3_velocity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/spectral_irradiance">
+        <description>Light energy of specific wavelength from all directions at a point and time in space.(Unit: W m-2 m-1; Abbreviation: E)</description>
+        <name>spectral_irradiance</name>
+        <rdfs:label>spectral_irradiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/upwelling_radiance">
+        <description>Radiance from above.(Unit: W m-2 m-1 sr-1; Abbreviation: Lu)</description>
+        <name>upwelling_radiance</name>
+        <rdfs:label>upwelling_radiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/downward_shortwave_radiation">
+        <description>Downward solar insolation. Positive is downward.(Range: 0.0 - 1400.0; Unit: W m-2; Abbreviation: Q_dsw)</description>
+        <name>downward_shortwave_radiation</name>
+        <rdfs:label>downward_shortwave_radiation</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/net_longwave_radiation">
+        <description>Net IR radiation includes reflected IR radiation. Positive is downward.(Unit: W m-2; Abbreviation: Q_lw)</description>
+        <name>net_longwave_radiation</name>
+        <rdfs:label>net_longwave_radiation</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/downwelling_irradiance">
+        <description>Irradiance from above.(Unit: W m-2 m-1; Abbreviation: Ed)</description>
+        <name>downwelling_irradiance</name>
+        <rdfs:label>downwelling_irradiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/voltage">
+        <description>Voltage measurement of the battery(Unit: volts; Abbreviation: volt)</description>
+        <name>voltage</name>
+        <rdfs:label>voltage</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam_velocity">
+        <description>Current velocity measured parallel to the path of an Acoustic Doppler Current Profiler beam(Range: -300.0 - 300.0; Unit: cm s-1; Abbreviation: beam_vel)</description>
+        <name>beam_velocity</name>
+        <rdfs:label>beam_velocity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/mixing_ratio">
+        <description>The ratio of mass of water vapor to the mass of dry air in the sample.(Unit: g kg-1; Abbreviation: mix)</description>
+        <name>mixing_ratio</name>
+        <rdfs:label>mixing_ratio</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bw_irradiance">
+        <description>Irradiance for black body and white light source.(Unit: W m-2; Abbreviation: bw_irrad)</description>
+        <name>bw_irradiance</name>
+        <rdfs:label>bw_irradiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/conductivity">
+        <description>Ability of a material to pass an electrical current.  Inverse of resistance.(Unit: siemens | uS; Abbreviation: cond)</description>
+        <name>conductivity</name>
+        <rdfs:label>conductivity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/salinity">
+        <description>Measure of salt content of a seawater sample follows UNESCO standards; approximately parts per thousand.(Range: 20.0 - 38.0; Unit: PSS or PSU or PPT; Abbreviation: salinity)</description>
+        <name>salinity</name>
+        <rdfs:label>salinity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/sensible_heat_flux">
+        <description>Conductive or convective exchange of heat from the atmosphere to the ocean. Positive is downward.(Unit: W m-2; Abbreviation: Q_sensible)</description>
+        <name>sensible_heat_flux</name>
+        <rdfs:label>sensible_heat_flux</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/downwelling_uv_radiance">
+        <description>Integrated downwelling radiance for wavelengths in the ultraviolet region.(Unit: W m-2 sr-1; Abbreviation: uv_rad)</description>
+        <name>downwelling_uv_radiance</name>
+        <rdfs:label>downwelling_uv_radiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/number_profile_bins">
+        <description>Number of uniformely spaced depth cells where data is collected(Abbreviation: number_bins)</description>
+        <name>number_profile_bins</name>
+        <rdfs:label>number_profile_bins</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/signifcant_wave_to_direction">
+        <description>Significant wave direction.(Unit: degrees_true; Abbreviation: sig_wv_dir)</description>
+        <name>signifcant_wave_to_direction</name>
+        <rdfs:label>signifcant_wave_to_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/air_density">
+        <description>Mass of air per unit volume.(Unit: kg m-3; Abbreviation: air density)</description>
+        <name>air_density</name>
+        <rdfs:label>air_density</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/latitude_hemisphere">
+        <description>Northern or Southern hemisphere(Unit: N | S; Abbreviation: lat_hem)</description>
+        <name>latitude_hemisphere</name>
+        <rdfs:label>latitude_hemisphere</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bin_v_vector">
+        <description>North/South component of bin vector. Northward is positive.(Unit: cm s-1; Abbreviation: bin_v)</description>
+        <name>bin_v_vector</name>
+        <rdfs:label>bin_v_vector</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bw_radiance">
+        <description>Radiance for black body and white light source.(Unit: W m-2 sr-1; Abbreviation: bw_rad)</description>
+        <name>bw_radiance</name>
+        <rdfs:label>bw_radiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/net_shortwave_radiation">
+        <description>Net solar insolation considering albedo effects. Positive is downward.(Range: 0.0 - 1400.0; Unit: W m-2; Abbreviation: Q_sw)</description>
+        <name>net_shortwave_radiation</name>
+        <rdfs:label>net_shortwave_radiation</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/oxygen_concentration">
+        <description>Concentration in water of dissolved oxygen.(Unit: ug L-1; Abbreviation: oxygen_concen)</description>
+        <name>oxygen_concentration</name>
+        <rdfs:label>oxygen_concentration</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/precipitation_rate">
+        <description>Amount of wet equivalent precipitation per unit time.(Unit: mm hr-1; Abbreviation: precip_rate)</description>
+        <name>precipitation_rate</name>
+        <rdfs:label>precipitation_rate</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/latitude_seconds">
+        <description>Fraction of lat_min divided by 60.(Range: 0.0 - 60.0; Unit: angular_second; Abbreviation: lat_sec)</description>
+        <name>latitude_seconds</name>
+        <rdfs:label>latitude_seconds</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/relative_wind_from_direction">
+        <description>Direction from which wind is blowing relative to a moving platform, e.g. ship.(Range: 0.0 - 360.0; Unit: degrees_true; Abbreviation: rel_wnddirec)</description>
+        <name>relative_wind_from_direction</name>
+        <rdfs:label>relative_wind_from_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/specific_conductance">
+        <description>Ability of a specific volume (1 cubic centimeter) of water to pass an electrical current.(Unit: uS cm-1; Abbreviation: sp_cond)</description>
+        <name>specific_conductance</name>
+        <rdfs:label>specific_conductance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/albedo">
+        <description>Fraction of downward radiation that is reflected or scattered(Range: 0.0 - 1.0; Abbreviation: alb)</description>
+        <name>albedo</name>
+        <rdfs:label>albedo</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/skin">
+        <description>Upper millimeter to centimeter of a surface.(Unit: meter; Abbreviation: skin)</description>
+        <name>skin</name>
+        <rdfs:label>skin</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/downwelling_radiance">
+        <description>Radiance from below.(Unit: W m-2 m-1 sr-1; Abbreviation: Ld)</description>
+        <name>downwelling_radiance</name>
+        <rdfs:label>downwelling_radiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/water_pressure">
+        <description>Amount of pressure caused by overlying water column.(Unit: Pa | bar | dbar | atm; Abbreviation: water_press)</description>
+        <name>water_pressure</name>
+        <rdfs:label>water_pressure</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/downward_longwave_radiation">
+        <description>Downward IR radiation. Positive is downward.(Range: 250.0 - 450.0; Unit: W m-2; Abbreviation: Q_dlw)</description>
+        <name>downward_longwave_radiation</name>
+        <rdfs:label>downward_longwave_radiation</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/northward_wind_stress">
+        <description>North/South component of wind stress. Northward is positive.(Unit: N m-2; Abbreviation: tau_y)</description>
+        <name>northward_wind_stress</name>
+        <rdfs:label>northward_wind_stress</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/net_heat_flux">
+        <description>Combined net shortwave, net longwave, sensible and latent heat fluxes.  Positive is downward.(Unit: W m-2; Abbreviation: Q_net)</description>
+        <name>net_heat_flux</name>
+        <rdfs:label>net_heat_flux</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_gust">
+        <description>Maximum instantaneous wind speed (usually no more than but not limited to 10 seconds) within a sample averaging interval.(Range: 0.0 - 250.0; Unit: m s-1; Abbreviation: wgust)</description>
+        <name>wind_gust</name>
+        <rdfs:label>wind_gust</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/surface">
+        <description>Upper 1-2  meters of an interface between two layers, commonly the sea surface.(Abbreviation: surface)</description>
+        <name>surface</name>
+        <rdfs:label>surface</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/relative_humidity">
+        <description>Amount of moisture in the air as vapor relative to how much it can possibly hold at the same temperature.(Range: 0.0 - 105.0; Unit: precent; Abbreviation: rel_humid)</description>
+        <name>relative_humidity</name>
+        <rdfs:label>relative_humidity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bin_u_vector">
+        <description>East/West component of bin vector. Eastward is positive.(Unit: cm s-1; Abbreviation: bin_u)</description>
+        <name>bin_u_vector</name>
+        <rdfs:label>bin_u_vector</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/longitude_minutes">
+        <description>Fraction of longitude degree divided by 60.(Range: 0.0 - 60.0; Unit: angular_minute; Abbreviation: lon_min)</description>
+        <name>longitude_minutes</name>
+        <rdfs:label>longitude_minutes</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/remote_sensing_spectral_reflectance">
+        <description>Upwelling radiance (Lu) divided by downwelling radiance (Ed) at a specific spectral wavelength.(Unit: sr-1; Abbreviation: Rrs)</description>
+        <name>remote_sensing_spectral_reflectance</name>
+        <rdfs:label>remote_sensing_spectral_reflectance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/turbidity">
+        <description>Measure of light scattering due to suspended material in water.(Unit: NTU; Abbreviation: turb)</description>
+        <name>turbidity</name>
+        <rdfs:label>turbidity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/chl_concentration">
+        <description>concentration of chloropyll-a in a defined volume of water(Unit: ug L-1 (not kg m-3); Abbreviation: chl_conc)</description>
+        <name>chl_concentration</name>
+        <rdfs:label>chl_concentration</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam3_echo_intensity">
+        <description>Measure of the echo intensity returning to beam 3 from the ADCP transmit pulse(Range: 0.0 - 200.0; Unit: db; Abbreviation: beam3_echo)</description>
+        <name>beam3_echo_intensity</name>
+        <rdfs:label>beam3_echo_intensity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/visibility">
+        <description>Greatest distance an object can be seen and identified. Usually refering to visibility in air but could be other medium.(Unit: m; Abbreviation: visibility)</description>
+        <name>visibility</name>
+        <rdfs:label>visibility</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam1_velocity">
+        <description>Current velocity measured parallel to the path of beam 1(Range: -300.0 - 300.0; Unit: cm s-1; Abbreviation: beam1_vel)</description>
+        <name>beam1_velocity</name>
+        <rdfs:label>beam1_velocity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/cloud_cover">
+        <description>Percent of sky covered by clouds of all types.(Range: 0.0 - 100.0; Unit: percent; Abbreviation: cloud cover)</description>
+        <name>cloud_cover</name>
+        <rdfs:label>cloud_cover</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/upwelling_irradiance">
+        <description>Irradiance from below(Unit: W m-2 m-1; Abbreviation: Eu)</description>
+        <name>upwelling_irradiance</name>
+        <rdfs:label>upwelling_irradiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam4_velocity">
+        <description>Current velocity measured parallel to the path of beam 4(Unit: cm s-1; Abbreviation: beam4_vel)</description>
+        <name>beam4_velocity</name>
+        <rdfs:label>beam4_velocity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam2_velocity">
+        <description>Current velocity measured parallel to the path of beam 2(Unit: cm s-1; Abbreviation: beam2_vel)</description>
+        <name>beam2_velocity</name>
+        <rdfs:label>beam2_velocity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/signifcant_wave_height">
+        <description>Average height of the highest one-third of the waves.(Unit: meter; Abbreviation: sig_wv_ht)</description>
+        <name>signifcant_wave_height</name>
+        <rdfs:label>signifcant_wave_height</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/nitrate_concentration">
+        <description>Measured nitrate concentration in the immediate environment(Unit: ug L-1; Abbreviation: nitrate)</description>
+        <name>nitrate_concentration</name>
+        <rdfs:label>nitrate_concentration</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/swell_height">
+        <description>Average height of the highest one-third of the swells, if a separation between swell and wind-wave energy peak exists.(Unit: meter; Abbreviation: swell_ht)</description>
+        <name>swell_height</name>
+        <rdfs:label>swell_height</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/eastward_wind">
+        <description>East/West component of wind vector. Eastward wind is positive.(Unit: m s-1; Abbreviation: east_wind)</description>
+        <name>eastward_wind</name>
+        <rdfs:label>eastward_wind</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/eastward_wind_stress">
+        <description>East/West component of wind stress. Eastward is positive.(Unit: N m-2; Abbreviation: tau_x)</description>
+        <name>eastward_wind_stress</name>
+        <rdfs:label>eastward_wind_stress</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/swell_to_direction">
+        <description>Direction the swell is coming from.(Unit: degrees_true; Abbreviation: swell_dir)</description>
+        <name>swell_to_direction</name>
+        <rdfs:label>swell_to_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_wave_to_direction">
+        <description>Direction the wind-waves are coming from.(Unit: degrees_true; Abbreviation: wind_wv_dir)</description>
+        <name>wind_wave_to_direction</name>
+        <rdfs:label>wind_wave_to_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/sea_surface_elevation">
+        <description>Height or altitude of the sea surface above specified reference.(Unit: meter; Abbreviation: surf_el)</description>
+        <name>sea_surface_elevation</name>
+        <rdfs:label>sea_surface_elevation</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_stress">
+        <description>Magnitude of wind stress. Wind stress is the force of wind imposed on a unit area.(Unit: N m-2; Abbreviation: tau)</description>
+        <name>wind_stress</name>
+        <rdfs:label>wind_stress</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/initial_bin_distance">
+        <description>Distance from instrument to first bin measurement(Unit: meters; Abbreviation: init_bin_dist)</description>
+        <name>initial_bin_distance</name>
+        <rdfs:label>initial_bin_distance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/water_density">
+        <description>Mass of water per unit volume(Unit: kg m-3; Abbreviation: density)</description>
+        <name>water_density</name>
+        <rdfs:label>water_density</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/upward_wind">
+        <description>Up/Down component of wind vector. Up is positive.(Unit: m s-1; Abbreviation: z_wind)</description>
+        <name>upward_wind</name>
+        <rdfs:label>upward_wind</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/electromagnetic_wavelength">
+        <description>specific frequency of energy within the electromagnetic spectrum.(Unit: m; Abbreviation: wavelength)</description>
+        <name>electromagnetic_wavelength</name>
+        <rdfs:label>electromagnetic_wavelength</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_stress_to_direction">
+        <description>Direction toward which wind stress is acting.(Unit: degrees_true; Abbreviation: tau_dir)</description>
+        <name>wind_stress_to_direction</name>
+        <rdfs:label>wind_stress_to_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/northward_wind">
+        <description>North/South component of wind vector. Northward wind is positive.(Unit: m s-1; Abbreviation: north_wind)</description>
+        <name>northward_wind</name>
+        <rdfs:label>northward_wind</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/source_time">
+        <description>Time coordinate of observation based on unit of time (seconds, hours, days) since a defined reference time.(Unit: {sec | hr | day} since YYYY-MM-DD HH:MM:SS.xxx {+/- ZONE}; Abbreviation: source_time)</description>
+        <name>source_time</name>
+        <rdfs:label>source_time</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bin_velocity">
+        <description>Current velocity of bin(Unit: cm s-1; Abbreviation: bin_vel)</description>
+        <name>bin_velocity</name>
+        <rdfs:label>bin_velocity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/oxygen_saturation">
+        <description>Concentration at which oxygen becomes saturated in water.(Unit: ug L-1; Abbreviation: oxygen_sat)</description>
+        <name>oxygen_saturation</name>
+        <rdfs:label>oxygen_saturation</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_wave_height">
+        <description>Average height of the highest one-third of the wind-waves, if a separation between swell and wind-wave energy peak exists.(Unit: meter; Abbreviation: wind_wv_ht)</description>
+        <name>wind_wave_height</name>
+        <rdfs:label>wind_wave_height</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/photosynthetically_available_radiation">
+        <description>Integrated downwelling irradiance for wavelengths from 400 to 700nm.(Unit: W m-2; Abbreviation: PAR)</description>
+        <name>photosynthetically_available_radiation</name>
+        <rdfs:label>photosynthetically_available_radiation</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/longitude_hemisphere">
+        <description>Eastern or Western hemisphere(Unit: E | W; Abbreviation: lon_hem)</description>
+        <name>longitude_hemisphere</name>
+        <rdfs:label>longitude_hemisphere</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam4_echo_intensity">
+        <description>Measure of the echo intensity returning to beam 4 from the ADCP transmit pulse(Range: 0.0 - 200.0; Unit: db; Abbreviation: beam4_echo)</description>
+        <name>beam4_echo_intensity</name>
+        <rdfs:label>beam4_echo_intensity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam_echo_intensity">
+        <description>Measure of the echo intensity returning to beam 1 from the ADCP transmit pulse(Range: 0.0 - 200.0; Unit: db; Abbreviation: beam_echo)</description>
+        <name>beam_echo_intensity</name>
+        <rdfs:label>beam_echo_intensity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/relative_wind_speed">
+        <description>Magnitude of wind velocity relative to a moving platform, e.g. ship.(Range: 0.0 - 70.0; Unit: m s-1; Abbreviation: rel_wndspd)</description>
+        <name>relative_wind_speed</name>
+        <rdfs:label>relative_wind_speed</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/air_pressure">
+        <description>Pressure exerted by overlying air.(Range: 822.0 - 1040.0; Unit: hPa; Abbreviation: air_press)</description>
+        <name>air_pressure</name>
+        <rdfs:label>air_pressure</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/downwelling_shortwave_irradiance">
+        <description>Integrated downwelling irradiance for spectral wavelengths less than 700nm.(Unit: W m-2; Abbreviation: psp_irrad)</description>
+        <name>downwelling_shortwave_irradiance</name>
+        <rdfs:label>downwelling_shortwave_irradiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/vertical_current">
+        <description>Upward/Downward component of ocean current. Upward is positive.(Unit: cm s-1; Abbreviation: water_w)</description>
+        <name>vertical_current</name>
+        <rdfs:label>vertical_current</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://gcoos.rsmas.miami.edu/dp/data/Parameters.owl#longitude_seconds+A151">
+        <description>Fraction of lon_min divided by 60.(Range: 0.0 - 60.0; Unit: angular_second; Abbreviation: lon_sec)</description>
+        <rdfs:label>longitude_seconds+A151</rdfs:label>
+        <name>longitude_seconds+A151</name>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/altitude">
+        <description>Z-coordinate of observation in vertical distance above reference. Up is positive.(Unit: meter; Abbreviation: altitude)</description>
+        <name>altitude</name>
+        <rdfs:label>altitude</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/water_temperature">
+        <description>In situ water temperature(Range: 5.0 - 35.0; Unit: celsius; Abbreviation: wtemp)</description>
+        <name>water_temperature</name>
+        <rdfs:label>water_temperature</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/downwelling_uv_irradiance">
+        <description>Integrated downwelling irradiance for wavelengths in the ultraviolet region.(Unit: W m-2; Abbreviation: uv_irrad)</description>
+        <name>downwelling_uv_irradiance</name>
+        <rdfs:label>downwelling_uv_irradiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/averaging_interval">
+        <description>Time periood over which several observations are averaged.(Unit: seconds; Abbreviation: average_interval)</description>
+        <name>averaging_interval</name>
+        <rdfs:label>averaging_interval</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_from_direction">
+        <description>Direction from which wind is blowing.  Meteorological Convention.(Range: 0.0 - 360.0; Unit: degrees_true; Abbreviation: wdir)</description>
+        <name>wind_from_direction</name>
+        <rdfs:label>wind_from_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/latitude_degrees">
+        <description>Integer degrees of latitude(Unit: degrees_north; Abbreviation: lat_deg)</description>
+        <name>latitude_degrees</name>
+        <rdfs:label>latitude_degrees</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/swell_period">
+        <description>Period of the swells.(Unit: second; Abbreviation: swell_per)</description>
+        <name>swell_period</name>
+        <rdfs:label>swell_period</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/z">
+        <description>Z-coordinate of observation. Zero (z=0) is defined by reference. Up is positive.(Unit: meter; Abbreviation: z)</description>
+        <name>z</name>
+        <rdfs:label>z</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wet_bulb_temperature">
+        <description>Temperature of evaporative cooling.(Unit: celsius; Abbreviation: wet_bulb_temp)</description>
+        <name>wet_bulb_temperature</name>
+        <rdfs:label>wet_bulb_temperature</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/btm_track_heading">
+        <description>Heading in degrees to by a series of long pulses sent out from ADCP(Unit: degrees; Abbreviation: btm_track_hdg)</description>
+        <name>btm_track_heading</name>
+        <rdfs:label>btm_track_heading</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/latitude_minutes">
+        <description>Fraction of latitude degree divided by 60.(Range: 0.0 - 60.0; Unit: angular_minute; Abbreviation: lat_min)</description>
+        <name>latitude_minutes</name>
+        <rdfs:label>latitude_minutes</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/air_temperature">
+        <description>Temperature of air (in situ).(Range: 10.0 - 38.0; Unit: celsius; Abbreviation: air_temp)</description>
+        <name>air_temperature</name>
+        <rdfs:label>air_temperature</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam2_echo_intensity">
+        <description>Measure of the echo intensity returning to beam 2 from the ADCP transmit pulse(Unit: db; Abbreviation: beam2_echo)</description>
+        <name>beam2_echo_intensity</name>
+        <rdfs:label>beam2_echo_intensity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/pH">
+        <description>Measure of the acidity or alkalinity of seawater defined as the cologarithm (base 10) of the activity of dissolved hydrogen ions (H+)(Range: 0.0 - 14.0; Unit: pH; Abbreviation: pH)</description>
+        <name>pH</name>
+        <rdfs:label>pH</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/eastward_current">
+        <description>East/West component of ocean current. Eastward is positive.(Unit: cm s-1; Abbreviation: water_u)</description>
+        <name>eastward_current</name>
+        <rdfs:label>eastward_current</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/latitude">
+        <description>Y-coordinate of dependent observation in geographic coordinate. North is positive.  Alternate definition: The angular distance north and south of the equator, with the equator being 0 deg and the poles 90 deg.(Unit: degrees_north; Abbreviation: lat)</description>
+        <name>latitude</name>
+        <rdfs:label>latitude</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_speed">
+        <description>Magnitude of wind velocity.(Range: 0.0 - 150.0; Unit: m s-1; Abbreviation: wspd)</description>
+        <name>wind_speed</name>
+        <rdfs:label>wind_speed</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/date_time_string">
+        <description>Date and time character string of observation that includes year, month, day, hour, minute and second.(Unit: string YYYY MM DD hh mm ss; Abbreviation: date_time_string)</description>
+        <name>date_time_string</name>
+        <rdfs:label>date_time_string</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/spectral_radiance">
+        <description>Light energy of specific wavelength from a set of directions (solid angle) at a point and time in space.(Unit: W m-2 m-1 sr-1; Abbreviation: L)</description>
+        <name>spectral_radiance</name>
+        <rdfs:label>spectral_radiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/longitude_degrees">
+        <description>Integer degrees of longitude(Unit: degrees_east; Abbreviation: lon_deg)</description>
+        <name>longitude_degrees</name>
+        <rdfs:label>longitude_degrees</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/latent_heat_flux">
+        <description>Evaporative exchange of heat from the atmosphere to the ocean.  Positive is downward.(Unit: W m-2; Abbreviation: Q_latent)</description>
+        <name>latent_heat_flux</name>
+        <rdfs:label>latent_heat_flux</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/current_speed">
+        <description>Magnitude of velocity of ocean current.(Range: 0.0 - 360.0; Unit: cm s-1; Abbreviation: c_spd)</description>
+        <name>current_speed</name>
+        <rdfs:label>current_speed</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bottom">
+        <description>Ocean bottom.(Abbreviation: bottom)</description>
+        <name>bottom</name>
+        <rdfs:label>bottom</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/depth">
+        <description>Z-coordinate of observation in vertical distance below reference. Down is positive.(Range: 0.0 - 300.0; Unit: meter/decibar; Abbreviation: depth)</description>
+        <name>depth</name>
+        <rdfs:label>depth</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/water_leaving_radiance">
+        <description>Radiance from below, leaving the water surface.(Unit: W m-2 m-1 sr-1; Abbreviation: Luw)</description>
+        <name>water_leaving_radiance</name>
+        <rdfs:label>water_leaving_radiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/beam1_echo_intensity">
+        <description>Measure of the echo intensity returning to beam 1 from the ADCP transmit pulse(Range: 0.0 - 200.0; Unit: db; Abbreviation: beam1_echo)</description>
+        <name>beam1_echo_intensity</name>
+        <rdfs:label>beam1_echo_intensity</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/bottom_tracking_depth">
+        <description>Distance to sea floor determined by a series of long pulses sent out from ADCP(Unit: meters; Abbreviation: btm_track_depth)</description>
+        <name>bottom_tracking_depth</name>
+        <rdfs:label>bottom_tracking_depth</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/cdom">
+        <description>colored (or chromophoric) dissolved organic matter, of riverine origin(Unit: mg/l or 1/m; Abbreviation: cdom)</description>
+        <name>cdom</name>
+        <rdfs:label>cdom</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/longitude">
+        <description>X-coordinate of dependent observation in geographic coordinate. East is positive. Alternate definition: The angular distance east and west of the prime meridian (0 deg lon.),  that runs through Greenwich, England.(Unit: degrees_east; Abbreviation: lon)</description>
+        <name>longitude</name>
+        <rdfs:label>longitude</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wave_steepness">
+        <description>Measure of departure from typical wave slope.(Abbreviation: steepness)</description>
+        <name>wave_steepness</name>
+        <rdfs:label>wave_steepness</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/gps_elevation">
+        <description>Elevation from where the GPS reading was made(Unit: km; Abbreviation: gps_elev)</description>
+        <name>gps_elevation</name>
+        <rdfs:label>gps_elevation</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/day_of_year">
+        <description>Number of days since day 1 of reference year.(Range: 0.0 - 366.0; Unit: days; Abbreviation: doy)</description>
+        <name>day_of_year</name>
+        <rdfs:label>day_of_year</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/number_adcp_beams">
+        <description>Number of directionally independent beams of the ADCP(Range: 2.0 - 6.0; Abbreviation: number_beams)</description>
+        <name>number_adcp_beams</name>
+        <rdfs:label>number_adcp_beams</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/downwelling_longwave_irradiance">
+        <description>Integrated downwelling irradiance for spectral wavelengths greater than 700nm.(Unit: W m-2; Abbreviation: pir_irrad)</description>
+        <name>downwelling_longwave_irradiance</name>
+        <rdfs:label>downwelling_longwave_irradiance</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/sample_interval">
+        <description>Time period between observations.(Unit: seconds; Abbreviation: sample_interval)</description>
+        <name>sample_interval</name>
+        <rdfs:label>sample_interval</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/northward_current">
+        <description>North/South component of ocean current. Northward is positive.(Unit: cm s-1; Abbreviation: water_v)</description>
+        <name>northward_current</name>
+        <rdfs:label>northward_current</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/precipitation_accumlated_daily">
+        <description>Amount of wet equivalent precipitation accumulated for a 24 hour period.(Unit: mm; Abbreviation: precip_accum)</description>
+        <name>precipitation_accumlated_daily</name>
+        <rdfs:label>precipitation_accumlated_daily</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/current_to_direction">
+        <description>Direction towards which ocean current is going.(Range: 0.0 - 360.0; Unit: degrees_true; Abbreviation: c_dir)</description>
+        <name>current_to_direction</name>
+        <rdfs:label>current_to_direction</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/time">
+        <description>Time coordinate of observation based on number of seconds since the defined reference time.(Unit: sec since 1970-1-1 00:00:00; Abbreviation: time)</description>
+        <name>time</name>
+        <rdfs:label>time</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/dew_point_temperature">
+        <description>Temperature at which air begins to condense.(Unit: celsius; Abbreviation: dew_point)</description>
+        <name>dew_point_temperature</name>
+        <rdfs:label>dew_point_temperature</rdfs:label>
+    </Parameters>
+    <Parameters rdf:about="http://mmisw.org/ont/gcoos/parameter/wind_wave_period">
+        <description>Period of wind-waves.(Unit: second; Abbreviation: wind_wv_per)</description>
+        <name>wind_wave_period</name>
+        <rdfs:label>wind_wave_period</rdfs:label>
+    </Parameters>
+</rdf:RDF>

@@ -21,8 +21,8 @@ GCOOS_ONTOLOGY_FILE_URL = \
 local_site_file_path = os.path.join(
     os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_file.xml')
 
-local_ontology_file_path = os.path.join(
-    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_ontology_file.xml'
+local_parameter_file_path = os.path.join(
+    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_parameter_file.xml'
 )
 
 namespaces = {
@@ -67,7 +67,7 @@ def nspath(path, ns):
     return '{%s}%s' % (ns, path)
 
 def fetch_ioos_site_file(site_file_url, local_site_file_path):
-    response = urllib2.urlopen(site_file_url, )
+    response = urllib2.urlopen(site_file_url)
     
     cbi_site_file = open(local_site_file_path, 'w')
     
@@ -147,6 +147,22 @@ def parse_site_file(local_site_file_path):
     return (site_set, parameter_set)
 
 
+def fetch_gcoos_parameter_file(parameter_file_url, local_parameter_file_path):
+    response = urllib2.urlopen(parameter_file_url)
+    
+    cbi_parameter_file = open(local_parameter_file_path, 'w')
+    
+    cbi_parameter_file.write(response.read())
+    
+    cbi_parameter_file.close()
+
+
+def parse_parameter_file(local_parameter_file_path):
+    '''
+    Reads an GCOOS XML site file and returns a set of sites and a set of
+    paramaters.
+    '''
+    pass
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -162,6 +178,15 @@ if __name__ == '__main__':
     except: #If it doesn't exist, then fetch a new one from the remote location
         print "Fetching IOOS site file from remote location."
         fetch_ioos_site_file(IOOS_SITE_FILE_URL, local_site_file_path)
+    
+    #Attempt to open local parameter file to see if it exists
+    try:
+        f = open(local_parameter_file_path)
+        f.close()
+    except: #If it doesn't exist, then fetch a new one from the remote location
+        print "Fetching GCOOS parameter file from remote location."
+        fetch_gcoos_parameter_file(GCOOS_ONTOLOGY_FILE_URL,
+                                   local_parameter_file_path)
     
     
     engine = create_engine(cbi_cache_connection_string,
@@ -183,9 +208,9 @@ if __name__ == '__main__':
     cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
                    for s in sites]
         
-    cache_params = [model.Parameter(p.code, p.name) for p in params]
+    cache_params = [model.Variable(p.code, p.name) for p in params]
     
-    print "Adding %s sites and %s params to local cache." % (
+    print "Adding %s sites and %s variables to local cache." % (
         len(cache_sites), len(cache_params))
     
     try:

@@ -34,13 +34,27 @@ class Site(Base, wof_base.BaseSite):
     Longitude = Column(Float)
     
     
-class Parameter(Base):
-    __tablename__ = 'Parameters'
+class Variable(Base, wof_base.BaseVariable):
+    __tablename__ = 'Variables'
     
     def __init__(self, code, name):
-        self.ParamCode = code
-        self.ParamName = name
+        self.VariableCode = code
+        self.VariableName = name
     
-    ParamID = Column(Integer, primary_key=True)
-    ParamCode = Column(String)
-    ParamName = Column(String)
+    VariableID = Column(Integer, primary_key=True)
+    VariableCode = Column(String)
+    VariableName = Column(String)
+    
+    #Speciation = None
+    #VariableUnitsID = None
+    #SampleMedium = None
+    #ValueType = None
+    #IsRegular = None
+    #TimeSupport = None
+    #TimeUnitsID = None
+    #DataType = None
+    #GeneralCategory = None
+    #NoDataValue = None
+    
+    #VariableUnits = None
+    #TimeUnits = None
