@@ -15,14 +15,24 @@ cbi_cache_connection_string = 'sqlite:///' + os.path.join(
 
 IOOS_SITE_FILE_URL = 'http://lighthouse.tamucc.edu/ioosobsreg.xml'
 
+CBI_SOS_CAPABILITIES_URL = 'http://lighthouse.tamucc.edu/sos'
+
 GCOOS_ONTOLOGY_FILE_URL = \
     'http://mmisw.org/ont?form=rdf&uri=http://mmisw.org/ont/gcoos/parameter'
 
 local_site_file_path = os.path.join(
-    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_site_file.xml')
+    os.path.dirname(__file__), 'daos', 'cbi', 'local_cache_files',
+    'cbi_site_file.xml'
+)
 
 local_parameter_file_path = os.path.join(
-    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_parameter_file.xml'
+    os.path.dirname(__file__), 'daos', 'cbi', 'local_cache_files',
+    'cbi_parameter_file.xml'
+)
+
+local_capabilities_file_path = os.path.join(
+    os.path.dirname(__file__), 'daos', 'cbi', 'local_cache_files',
+    'cbi_sos_capabilities_file.xml'
 )
 
 namespaces = {
@@ -34,7 +44,11 @@ namespaces = {
     'rdfs':"http://www.w3.org/2000/01/rdf-schema#",
     'owl':"http://www.w3.org/2002/07/owl#",
     'omv':"http://omv.ontoware.org/2005/05/ontology#",
-    'dc':"http://purl.org/dc/elements/1.1/"
+    'dc':"http://purl.org/dc/elements/1.1/",
+    'oost':"http://www.oostethys.org/schemas/0.1.0/oostethys",
+    'ows':"http://www.opengis.net/ows/1.1",
+    'swe':"http://www.opengis.net/swe/1.0",
+    'sos':"http://www.opengis.net/sos/1.0" 
 }
 
 class Site(object):
@@ -83,13 +97,10 @@ def fetch_ioos_site_file(site_file_url, local_site_file_path):
 
 def parse_site_file(local_site_file_path):
     '''
-    Reads an IOOS XML site file and returns a set of sites and a set of
-    paramaters.
+    Reads an IOOS XML site file and returns a set of sites.
     '''
-    
-    parameter_set = set()
+
     site_set = set()
-    site_list = []
     
     site_file = open(local_site_file_path)
     
@@ -106,10 +117,6 @@ def parse_site_file(local_site_file_path):
         
         observation_name = point_obs.find(nspath('observationName',
                                                  namespaces['ioos']))
-        
-        #Create a Parameter object and add it to the return set
-        parameter = Parameter(param_code, observation_name.text)
-        parameter_set.add(parameter)
         
         #Parse Site info
         status = point_obs.find(nspath('status', namespaces['ioos']))
@@ -148,9 +155,34 @@ def parse_site_file(local_site_file_path):
         site = Site(site_code, site_name, latitude, longitude)
         site_set.add(site)
    
+    return site_set
 
-    return (site_set, parameter_set)
 
+def fetch_cbi_capabilities_file(cbi_capabilities_file_url,
+                                local_capabilities_file_path):
+    
+    response = urllib2.urlopen(cbi_capabilities_file_url)
+    
+    local_capabilities_file = open(local_capabilities_file_path,'w')
+    
+    local_capabilities_file.write(response.read())
+    
+    local_capabilities_file.close()
+
+def extract_parameters(local_capabilities_file_path):
+    capabilities_file = open(local_capabilities_file_path)
+    
+    tree = etree.parse(capabilities_file)
+    
+    #.//ows:Parameter[name=observedProperty]/ows:AllowedValues/ows:Value
+    
+    param_name_elements = tree.findall(
+        './/'+nspath("Parameter[@name='observedProperty']", namespaces['ows'])
+        +'/'+nspath("AllowedValues", namespaces['ows'])
+        +'/'+nspath("Value", namespaces['ows'])
+    )
+    
+    return [p.text for p in param_name_elements]
 
 def fetch_gcoos_parameter_file(parameter_file_url, local_parameter_file_path):
     response = urllib2.urlopen(parameter_file_url)
@@ -164,10 +196,11 @@ def fetch_gcoos_parameter_file(parameter_file_url, local_parameter_file_path):
 
 def parse_parameter_file(local_parameter_file_path):
     '''
-    Reads an GCOOS XML site file and returns a set of sites and a set of
-    paramaters.
+    Reads a GCOOS XML site file and returns a set of parameters
     '''
-    pass
+    param_set = set()
+    
+    return param_set
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -184,6 +217,15 @@ if __name__ == '__main__':
         print "Fetching IOOS site file from remote location."
         fetch_ioos_site_file(IOOS_SITE_FILE_URL, local_site_file_path)
     
+    #Attempt to open local capbilities file to see if it exists
+    try:
+        f = open(local_capabilities_file_path)
+        f.close()
+    except:
+        print "Fetching CBI SOS Capabilities file from remote location."
+        fetch_cbi_capabilities_file(CBI_SOS_CAPABILITIES_URL,
+                                    local_capabilities_file_path)
+    
     #Attempt to open local parameter file to see if it exists
     try:
         f = open(local_parameter_file_path)
@@ -197,6 +239,7 @@ if __name__ == '__main__':
     engine = create_engine(cbi_cache_connection_string,
                            convert_unicode=True)
     if options.dropall:
+        print "Dropping existing tables from cache."
         model.clear_model(engine)
     
     model.create_model(engine)
@@ -207,13 +250,25 @@ if __name__ == '__main__':
     model.init_model(db_session)
 
     print "Parsing IOOS site file."
-    (sites, params) = parse_site_file(local_site_file_path)
+    site_set = parse_site_file(local_site_file_path)
     
         
     cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
-                   for s in sites]
+                   for s in site_set]
         
-    cache_variables = [model.Variable(p.code, p.name) for p in params]
+    
+    print "Extracting valid parameters from SOS capabilities file."
+    parameter_codes = extract_parameters(local_capabilities_file_path)
+    
+    
+    print "Parsing GCOOS parameter file."
+    
+    test_units = model.Units('test_units','tu')    
+    
+    param_set = parse_parameter_file(local_parameter_file_path)
+    
+    cache_variables = [model.Variable(p.code, p.name, test_units)
+                       for p in param_set]
     
     #TODO: Maybe should read the parameters from the SOS Capabilities
     # and then find them in the GCOOS parameter file
