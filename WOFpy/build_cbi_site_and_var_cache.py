@@ -48,7 +48,8 @@ namespaces = {
     'oost':"http://www.oostethys.org/schemas/0.1.0/oostethys",
     'ows':"http://www.opengis.net/ows/1.1",
     'swe':"http://www.opengis.net/swe/1.0",
-    'sos':"http://www.opengis.net/sos/1.0" 
+    'sos':"http://www.opengis.net/sos/1.0",
+    'par_base':"http://mmisw.org/ont/gcoos/parameter/"
 }
 
 class Site(object):
@@ -67,11 +68,26 @@ class Site(object):
     def __hash__(self):
         return hash(self.__key())
 
+
+class Unit(object):
+    def __init__(self, name, abbreviation):
+        self.name = name
+        self.abbreviation = abbreviation
+    
+    def __key(self):
+        return (self.name, self.abbreviation)
+        
+    def __eq__(self, other):
+        return self.__key() == other.__key()
+        
+    def __hash__(self):
+        return hash(self.__key())
+
 class Parameter(object):
-    def __init__(self, code, name):
+    def __init__(self, code, name, unit):
         self.code = code
         self.name = name
-        
+        self.unit = unit
     
     def __key(self):
         return (self.code, self.name)
@@ -81,7 +97,8 @@ class Parameter(object):
         
     def __hash__(self):
         return hash(self.__key())
-
+    
+    
 def nspath(path, ns):
     return '{%s}%s' % (ns, path)
 
@@ -106,7 +123,7 @@ def parse_site_file(local_site_file_path):
     
     tree = etree.parse(site_file)
     
-    feature_member_list = tree.findall('//'+nspath('featureMember',
+    feature_member_list = tree.findall('.//'+nspath('featureMember',
                                                    namespaces['gml']))
     
     for feature in feature_member_list:
@@ -174,7 +191,7 @@ def extract_parameters(local_capabilities_file_path):
     
     tree = etree.parse(capabilities_file)
     
-    #.//ows:Parameter[name=observedProperty]/ows:AllowedValues/ows:Value
+    #.//ows:Parameter[@name='observedProperty']/ows:AllowedValues/ows:Value
     
     param_name_elements = tree.findall(
         './/'+nspath("Parameter[@name='observedProperty']", namespaces['ows'])
@@ -194,13 +211,45 @@ def fetch_gcoos_parameter_file(parameter_file_url, local_parameter_file_path):
     cbi_parameter_file.close()
 
 
-def parse_parameter_file(local_parameter_file_path):
-    '''
-    Reads a GCOOS XML site file and returns a set of parameters
-    '''
-    param_set = set()
+def parse_parameter_file(param_names, local_parameter_file_path):
+    """
+    Reads a GCOOS XML site file and returns a set of parameters and a set
+    of units.
+    The list of parameters returned is constrained to those in the input
+    param_names list.
+    """
     
-    return param_set
+    param_set = set()
+    units_set = set()
+    
+    param_file = open(local_parameter_file_path)
+    
+    tree = etree.parse(param_file)
+    
+    all_params = tree.findall('.//'+ nspath('Parameters',
+                                            namespaces['par_base']))
+    
+    for p in all_params:
+        name = p.findtext(nspath('name', namespaces['par_base']))
+        
+        
+        if name in param_names: #then found one we want
+            description = p.findtext(nspath('description',
+                                            namespaces['par_base']))
+            
+            #units are in the description, prefaced by "Unit: " and
+            # ending with a semicolon (eg Unit: celsius;)
+            start_index = description.find('Unit: ')
+            end_index = description.find(';', start_index)
+            unit_abbr = description[start_index+6:end_index]
+            unit = Unit(unit_abbr, unit_abbr) #TODO: Where to get names?
+                                            #TODO: Some of these units are not really that good
+            units_set.add(unit)
+            
+            param = Parameter(name, name, unit)
+            param_set.add(param)
+            
+    return (param_set, units_set)
 
 if __name__ == '__main__':
     parser = OptionParser()
@@ -258,26 +307,34 @@ if __name__ == '__main__':
         
     
     print "Extracting valid parameters from SOS capabilities file."
-    parameter_codes = extract_parameters(local_capabilities_file_path)
+    param_names = extract_parameters(local_capabilities_file_path)
     
     
     print "Parsing GCOOS parameter file."
+     
+    (param_set, units_set) = parse_parameter_file(
+        param_names, local_parameter_file_path)
     
-    test_units = model.Units('test_units','tu')    
+    cache_units = [model.Units(u.name, u.abbreviation) for u in units_set]
     
-    param_set = parse_parameter_file(local_parameter_file_path)
+    cache_variables = []
     
-    cache_variables = [model.Variable(p.code, p.name, test_units)
-                       for p in param_set]
-    
-    #TODO: Maybe should read the parameters from the SOS Capabilities
-    # and then find them in the GCOOS parameter file
+    for p in param_set:
+        v = model.Variable(p.code, p.name)
+        
+        #Find the matching unit in the cache_units list
+        for cu in cache_units:
+            if p.unit.name == cu.UnitsName:
+                v.VariableUnits = cu
+        
+        cache_variables.append(v)
     
     print "Adding %s sites and %s variables to local cache." % (
         len(cache_sites), len(cache_variables))
     
     try:
         db_session.add_all(cache_sites)
+        db_session.add_all(cache_units)
         db_session.add_all(cache_variables)
         db_session.commit()
     

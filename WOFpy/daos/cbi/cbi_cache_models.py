@@ -110,10 +110,9 @@ class Units(Base, wof_base.BaseUnits):
 class Variable(Base, wof_base.BaseVariable):
     __tablename__ = 'Variables'
     
-    def __init__(self, code, name, units):
+    def __init__(self, code, name):
         self.VariableCode = code
         self.VariableName = name
-        self.VariableUnits = units
         self.NoDataValue = -9999
         
         if self.VariableCode in param_to_medium_dict:
