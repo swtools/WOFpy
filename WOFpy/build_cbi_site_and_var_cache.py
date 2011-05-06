@@ -242,8 +242,14 @@ def parse_parameter_file(param_names, local_parameter_file_path):
             start_index = description.find('Unit: ')
             end_index = description.find(';', start_index)
             unit_abbr = description[start_index+6:end_index]
-            unit = Unit(unit_abbr, unit_abbr) #TODO: Where to get names?
-                                            #TODO: Some of these units are not really that good
+            unit = Unit(unit_abbr, unit_abbr) #TODO: Where to get unit names?
+            
+            #TODO: Some of these units are not really that good,
+            # like "Pa | bar |dbar |atm" for pressure, "ug L-1 (not kg m-3)",
+            # "precent"
+            # Maybe we need a units dictionary or something since the GCOOS
+            # registry is not very good
+            
             units_set.add(unit)
             
             param = Parameter(name, name, unit)
