@@ -190,7 +190,7 @@ class BaseSeriesCatalog(object):
     Organization = None
     SourceDescription = None
     Citation = None
-    QualityControlLevelID = None #TODO
+    QualityControlLevelID = None
     QualityControlLevelCode = None
     BeginDateTime = None
     EndDateTime = None

@@ -309,7 +309,9 @@ class WOF(object):
     def create_value_element(self, valueResult):
         
         #TODO correct time zone?
-        isoDateTimeUTC = str(valueResult.DateTimeUTC).replace(' ','T')+'Z'
+        isoDateTimeUTC = str(valueResult.DateTimeUTC).replace(' ','T')
+        if isoDateTimeUTC.find('Z') == -1:
+            isoDateTimeUTC += 'Z'
         
         value = WaterML.ValueSingleVariable(
                         qualityControlLevel=valueResult.QualityControlLevel,          #TODO: This should be the enum name, like "Raw data"

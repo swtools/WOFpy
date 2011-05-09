@@ -30,6 +30,7 @@ def parse_datavalues_from_get_observation(tree, site_code, var_code):
     fields = tree.findall('.//'+nspath('field', namespaces['swe']))
     field_names = [f.attrib['name'] for f in fields]
     
+    
     #Now that we have the fields, we can parse the values appropriately
     
     text_block = tree.find('.//'+nspath('encoding', namespaces['swe'])
@@ -45,6 +46,9 @@ def parse_datavalues_from_get_observation(tree, site_code, var_code):
     
     for val_line in val_lines_arr:
         field_val_dict = dict(zip(field_names, val_line))
+
+        if not 'observedProperty1' in field_val_dict:
+            continue
         
         dv = model.DataValue(float(field_val_dict['observedProperty1']), #TODO: Is it always observedProperty1 ?
                              field_val_dict['time'],

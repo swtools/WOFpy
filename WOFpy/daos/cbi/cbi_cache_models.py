@@ -141,4 +141,45 @@ class Variable(Base, wof_base.BaseVariable):
     VariableUnits = relationship("Units",
                         primaryjoin='Variable.VariableUnitsID==Units.UnitsID') 
     #TimeUnits = None
+
+'''
+class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     
+    SeriesID = Column(Integer, primary_key=True)
+    SiteID = Column(Integer, ForeignKey('Site.SiteID'))
+    SiteCode = Column(String)
+    SiteName = Column(String)
+    VariableID = Column(Intger, ForeignKey('Variable.VariableID'))
+    VariableCode = Column(String)
+    VariableName = Column(String)
+    #Speciation = None
+    VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID')) 
+    VariableUnitsName = Column(String)
+    SampleMedium = Column(String)
+    #ValueType = None
+    #TimeSupport = None
+    #TimeUnitsID = None
+    #TimeUnitsName = None
+    #DataType = None
+    GeneralCategory = Column(String)
+    #MethodID = None
+    #MethodDescription = None
+    #SourceID = None #TODO
+    #Organization = None
+    #SourceDescription = None
+    #Citation = None
+    #QualityControlLevelID = None
+    #QualityControlLevelCode = None
+    #BeginDateTime = None
+    #EndDateTime = None
+    BeginDateTimeUTC = Column(DateTime)
+    EndDateTimeUTC = Column(DateTime)
+    ValueCount = Column(Intger)
+    
+    Site = relationship("Site",
+                    primaryjoin="Site.SiteID==SeriesCatalog.SiteID")
+    Variable = relationship("Variable",
+                    primaryjoin="Variable.VariableID==SeriesCatalog.SiteID")
+    
+    #Method = None
+'''

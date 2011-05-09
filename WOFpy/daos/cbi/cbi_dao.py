@@ -69,6 +69,8 @@ class CbiDao(BaseDao):
         """
         Returns a list of SeriesCatalogs for the given site code.
         """
+        
+        #TODO: I think I can get all this information from the Capabilities doc
         pass
 
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
@@ -76,6 +78,7 @@ class CbiDao(BaseDao):
         Returns a list of SeriesCatalogs for the given site code and variable
         code combination.
         """
+        #TODO: I think I can get all this information from the Capabilities doc
         pass
 
     def get_datavalues(self, site_code, var_code, begin_date_time=None,
@@ -84,6 +87,12 @@ class CbiDao(BaseDao):
         Returns a list of DataValues for the given site code and variable code,
         filtered by the optional begin and end datetimes.
         """
+        
+        #TODO: if begin and end date time are not specified, then need to
+        #check series catalog to get full time extent and use those values
+        #in the getobservation request.  The expected behavior of WOF:GetValues
+        #is to return all data values for the full period of record, but
+        #the GetObservation method only returns the last 10 or something.
         
         #Call GetObservation
         response = self.cbi_sos_client.get_observation(site_code, var_code,
