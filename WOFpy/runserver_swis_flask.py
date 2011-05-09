@@ -5,9 +5,10 @@ import logging
 from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
-import wof
+
 import private_config
 
+from wof import WOF
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
@@ -16,11 +17,12 @@ from daos.swis.swis_dao import SwisDao
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
+    
+    dao = SwisDao(private_config.swis_connection_string)
+    swis_wof = WOF(dao)
+    swis_wof.config_from_file('config/swis_config.cfg')
 
-    wof.config_from_file('config/swis_config.cfg')
-    wof.dao = SwisDao(private_config.swis_connection_string)
-
-    flask_app = create_app()
+    flask_app = create_app(swis_wof)
     flask_app.config.from_object(config.DevConfig)
 
     soap_app = soaplib.core.Application(services=[WOFService],

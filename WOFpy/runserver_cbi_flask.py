@@ -5,9 +5,10 @@ import logging
 from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
-import wof
+
 import private_config
 
+from wof import WOF
 from wofpy_soap.soap import WOFService
 from wofpy_flask import config
 from wofpy_flask import create_app
@@ -17,15 +18,14 @@ logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
 
-    wof.config_from_file('config/cbi_config.cfg')
-    
     cbi_cache_connection_string = 'sqlite:///' + os.path.join(
         os.path.dirname(__file__), 'daos', 'cbi', 'cbi_cache.db')
-    
-    
-    wof.dao = CbiDao(cbi_cache_connection_string)
 
-    flask_app = create_app()
+    dao = CbiDao(cbi_cache_connection_string)
+    cbi_wof = WOF(dao)
+    cbi_wof.config_from_file('config/cbi_config.cfg')
+
+    flask_app = create_app(cbi_wof)
     flask_app.config.from_object(config.DevConfig)
 
     soap_app = soaplib.core.Application(services=[WOFService],

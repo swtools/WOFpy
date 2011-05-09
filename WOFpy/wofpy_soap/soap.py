@@ -2,8 +2,6 @@ import StringIO
 import logging
 import soaplib #soaplib 2.0.0-beta
 
-import wof.code
-
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import String, Any, Integer, Float

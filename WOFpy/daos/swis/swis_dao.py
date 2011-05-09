@@ -4,7 +4,6 @@ from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
-import wof
 import sqlalch_swis_models as model
 
 from daos.base_dao import BaseDao
@@ -135,16 +134,21 @@ class SwisDao(BaseDao):
         
     def get_source_by_id(self, source_id=1):
         source = model.Source()
-        source.ContactName = wof.contact_info['name']
-        source.Phone = wof.contact_info['phone']
-        source.Email = wof.contact_info['email']
-        source.Organization = wof.contact_info['organization']
-        source.SourceLink = wof.contact_info['link']
-        source.SourceDescription = wof.contact_info['description']
-        source.Address = wof.contact_info['address']
-        source.City = wof.contact_info['city']
-        source.State = wof.contact_info['state']
-        source.ZipCode = wof.contact_info['zipcode']
+        
+        
+        # --------------------- TODO ------------------------
+        # Move this into the DAO __init__ instead of putting it in wof
+        
+        #source.ContactName = wof.contact_info['name']
+        #source.Phone = wof.contact_info['phone']
+        #source.Email = wof.contact_info['email']
+        #source.Organization = wof.contact_info['organization']
+        #source.SourceLink = wof.contact_info['link']
+        #source.SourceDescription = wof.contact_info['description']
+        #source.Address = wof.contact_info['address']
+        #source.City = wof.contact_info['city']
+        #source.State = wof.contact_info['state']
+        #source.ZipCode = wof.contact_info['zipcode']
         
         return source
         

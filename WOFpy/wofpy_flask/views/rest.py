@@ -1,11 +1,8 @@
 
 import StringIO
 
-import wof
-import wof.code
-
 from flask import (Flask, request, Markup, Response, render_template,
-                   make_response, Module)
+                   make_response, Module, current_app)
 
 from daos.swis.swis_dao import SwisDao
 from daos.cbi.cbi_dao import CbiDao
@@ -19,20 +16,30 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
 
 rest = Module(__name__)
 
+
+
 @rest.route('/')
 def index():
+     
+    if isinstance(current_app.wof_inst.dao, SwisDao):
+        return render_template('index.html',
+                               p=current_app.wof_inst.network,
+                               s='BAYT', v='seawater_salinity',
+                               sd='2007-03-23T12:00:00',
+                               ed='2007-03-24T12:00:00')
+    elif isinstance(current_app.wof_inst.dao, CbiDao):
+        return render_template('index.html',
+                               p=current_app.wof_inst.network,
+                               s='014',
+                               v='water_temperature',
+                               sd='2011-05-04T17:24:00',
+                               ed='2011-05-04T17:36:00')
     
-    if isinstance(wof.dao, SwisDao):
-        return render_template('index.html', p=wof.network, s='BAYT',
-                           v='seawater_salinity',sd='2007-03-23T12:00:00',
-                           ed='2007-03-24T12:00:00')
-    elif isinstance(wof.dao, CbiDao):
-        return render_template('index.html', p=wof.network, s='014',
-                           v='water_temperature',sd='2011-05-04T17:24:00',
-                           ed='2011-05-04T17:36:00')
-    
-    return render_template('index.html', p=wof.network, s='USU-LBR-Paradise',
-                           v='USU36',sd='2007-08-17T12:00:00',
+    return render_template('index.html',
+                           p=current_app.wof_inst.network,
+                           s='USU-LBR-Paradise',
+                           v='USU36',
+                           sd='2007-08-17T12:00:00',
                            ed='2007-08-18T12:00:00')
 
 
@@ -41,7 +48,7 @@ def get_sites():
     
     siteArg = request.args.get('site',None)
     
-    siteResponse = wof.code.create_get_site_response(siteArg)
+    siteResponse = current_app.wof_inst.create_get_site_response(siteArg)
    
     if not siteResponse:
         return "Error: No site found for code [%s]" % (siteArg)
@@ -64,7 +71,7 @@ def get_site_info():
     if siteArg == None:
         return "Must enter a single site code (site)"
     
-    siteInfoResponse = wof.code.create_get_site_info_response(siteArg,varArg)
+    siteInfoResponse = current_app.wof_inst.create_get_site_info_response(siteArg,varArg)
     
     if not siteInfoResponse:
         return "Error: No site info found for site code [%s] \
@@ -84,7 +91,7 @@ def get_site_info():
 def get_variable_info():
     varArg = request.args.get('variable',None)
     
-    variableInfoResponse = wof.code.create_get_variable_info_response(varArg)
+    variableInfoResponse = current_app.wof_inst.create_get_variable_info_response(varArg)
     
     outStream = StringIO.StringIO()
     variableInfoResponse.export(outStream, 0, name_="variablesResponse",
@@ -108,7 +115,7 @@ def get_values():
         return "Must enter a site code (location) and a variable code \
             (variable)"
 
-    timeSeriesResponse = wof.code.create_get_values_response(
+    timeSeriesResponse = current_app.wof_inst.create_get_values_response(
         siteArg,varArg,startDateTime,endDateTime)
 
     outStream = StringIO.StringIO()
