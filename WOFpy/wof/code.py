@@ -279,13 +279,9 @@ def create_value_element(valueResult):
     isoDateTimeUTC = str(valueResult.DateTimeUTC).replace(' ','T')+'Z'
     
     value = WaterML.ValueSingleVariable(
-                    codedVocabularyTerm=None,
-                    metadataDateTime=None,
                     qualityControlLevel=valueResult.QualityControlLevel,          #TODO: This should be the enum name, like "Raw data"
                     methodID=valueResult.MethodID,
-                    codedVocabulary=None,
                     sourceID=valueResult.SourceID,
-                    oid=None,
                     censorCode=valueResult.CensorCode,
                     sampleID=valueResult.SampleID,
                     offsetTypeID=valueResult.OffsetTypeID,

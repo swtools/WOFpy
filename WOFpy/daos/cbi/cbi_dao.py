@@ -102,9 +102,6 @@ class CbiDao(BaseDao):
     
         return datavalue_list
         
-        #Parse swe:values from the response
-        
-        
     def get_method_by_id(self, method_id):
         """
         Returns a single Method identified by the given id.

@@ -48,9 +48,12 @@ def parse_datavalues_from_get_observation(tree, site_code, var_code):
         
         dv = model.DataValue(float(field_val_dict['observedProperty1']), #TODO: Is it always observedProperty1 ?
                              field_val_dict['time'],
-                             field_val_dict['depth'],
                              site_code,
                              var_code) #TODO: SiteID and VarID (instead of code)
+        
+        #TODO: OffsetValue if field_val_dict['depth'] not empty
+        if field_val_dict['depth']:
+            dv.OffsetValue = field_val_dict['depth']
         
         datavalue_list.append(dv)
         
