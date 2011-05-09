@@ -5,6 +5,7 @@ import logging
 from werkzeug.wsgi import DispatcherMiddleware
 from soaplib.core.server import wsgi
 
+import wofpy_soap
 import private_config
 
 from wof import WOF
@@ -24,6 +25,8 @@ if __name__ == '__main__':
     
     flask_app = create_app(odm_wof)
     flask_app.config.from_object(config.DevConfig)
+
+    wofpy_soap.wof_inst = odm_wof #TODO: better way of setting WOF instance into the soap service
 
     soap_app = soaplib.core.Application(services=[WOFService],
         tns='http://www.cuahsi.org/his/1.0/ws/',

@@ -2,6 +2,8 @@ import StringIO
 import logging
 import soaplib #soaplib 2.0.0-beta
 
+import wofpy_soap
+
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import String, Any, Integer, Float
@@ -18,12 +20,12 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
-#TODO: Input validation and error messages
+#TODO: Input validation, error messages, test classes (use suds)
 #TODO: For some reason, soaplib does not ignore <!--comments--> in the soap 
 # requests so the default requests from soapUI will cause errors
 
 class WOFService(DefinitionBase):
-        
+      
     @soap(Array(String), String, _returns=Any)
     def GetSites(self, site, authToken):
         
@@ -32,7 +34,7 @@ class WOFService(DefinitionBase):
         logging.debug(site)
         logging.debug(siteArg)
         
-        siteResponse = wof.code.create_get_site_response(siteArg)
+        siteResponse = wofpy_soap.wof_inst.create_get_site_response(siteArg)
         outStream = StringIO.StringIO()
         siteResponse.export(outStream, 0, name_="sitesResponse",
                             namespacedef_= NSDEF)
@@ -46,7 +48,7 @@ class WOFService(DefinitionBase):
         
         siteArg = ','.join(str(s) for s in site)
         
-        siteResponse = wof.code.create_get_site_response(siteArg)
+        siteResponse = wofpy_soap.wof_inst.create_get_site_response(siteArg)
    
         outStream = StringIO.StringIO()
         siteResponse.export(outStream, 0, name_="sitesResponse",
@@ -61,7 +63,7 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=String)
     def GetSiteInfo(self,site,authToken):
         
-        siteInfoResponse = wof.code.create_get_site_info_response(site)
+        siteInfoResponse = wofpy_soap.wof_inst.create_get_site_info_response(site)
         
         outStream = StringIO.StringIO()
         siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
@@ -74,7 +76,7 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=Any)
     def GetSiteInfoObject(self,site,authToken):
         
-        siteInfoResponse = wof.code.create_get_site_info_response(site)
+        siteInfoResponse = wofpy_soap.wof_inst.create_get_site_info_response(site)
         
         outStream = StringIO.StringIO()
         siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
@@ -89,7 +91,7 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=String)
     def GetVariableInfo(self, variable, authToken):
         
-        variableInfoResponse = wof.code.create_get_variable_info_response(
+        variableInfoResponse = wofpy_soap.wof_inst.create_get_variable_info_response(
             variable)
         
         outStream = StringIO.StringIO()
@@ -103,7 +105,7 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=Any)
     def GetVariableInfoObject(self, variable, authToken):
         
-        variableInfoResponse = wof.code.create_get_variable_info_response(
+        variableInfoResponse = wofpy_soap.wof_inst.create_get_variable_info_response(
             variable)
         
         outStream = StringIO.StringIO()
@@ -119,7 +121,7 @@ class WOFService(DefinitionBase):
     @soap(String, String, String, String, _returns=String)
     def GetValues(self, location, variable, startDate, endDate):
         
-        timeSeriesResponse = wof.code.create_get_values_response(
+        timeSeriesResponse = wofpy_soap.wof_inst.create_get_values_response(
             location,variable,startDate,endDate)
            
         outStream = StringIO.StringIO()
@@ -133,7 +135,7 @@ class WOFService(DefinitionBase):
     @soap(String, String, String, String, _returns=Any)
     def GetValuesObject(self, location, variable, startDate, endDate):
         
-        timeSeriesResponse = wof.code.create_get_values_response(
+        timeSeriesResponse = wofpy_soap.wof_inst.create_get_values_response(
             location,variable,startDate,endDate)
            
         outStream = StringIO.StringIO()
