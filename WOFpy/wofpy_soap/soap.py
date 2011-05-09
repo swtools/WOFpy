@@ -76,7 +76,8 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=Any)
     def GetSiteInfoObject(self,site,authToken):
         
-        siteInfoResponse = wofpy_soap.wof_inst.create_get_site_info_response(site)
+        siteInfoResponse = \
+                        wofpy_soap.wof_inst.create_get_site_info_response(site)
         
         outStream = StringIO.StringIO()
         siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
@@ -91,8 +92,8 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=String)
     def GetVariableInfo(self, variable, authToken):
         
-        variableInfoResponse = wofpy_soap.wof_inst.create_get_variable_info_response(
-            variable)
+        variableInfoResponse = \
+                wofpy_soap.wof_inst.create_get_variable_info_response(variable)
         
         outStream = StringIO.StringIO()
         variableInfoResponse.export(outStream, 0, name_="variablesResponse",
@@ -105,8 +106,8 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=Any)
     def GetVariableInfoObject(self, variable, authToken):
         
-        variableInfoResponse = wofpy_soap.wof_inst.create_get_variable_info_response(
-            variable)
+        variableInfoResponse = \
+                wofpy_soap.wof_inst.create_get_variable_info_response(variable)
         
         outStream = StringIO.StringIO()
         variableInfoResponse.export(outStream, 0, name_="variablesResponse",
