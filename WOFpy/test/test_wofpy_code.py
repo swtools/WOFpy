@@ -25,7 +25,7 @@ class TestWofpyCode(unittest.TestCase):
         test_config_path = os.path.join(os.path.dirname(__file__),
                                         'test_swis_config.cfg')
         
-        dao = SwisDao('sqlite:///'+test_db_path)
+        dao = SwisDao('sqlite:///'+test_db_path, test_config_path)
         self.wof_inst = WOF(dao)
         self.wof_inst.config_from_file(test_config_path)
         

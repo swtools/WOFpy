@@ -14,19 +14,7 @@ class WOF(object):
     timezone = None
     timezone_abbr = None
     
-    contact_info = dict(
-        name = 'NAME',
-        phone = 'PHONE',
-        email = 'EMAIL',
-        organization = 'ORGANIZATION',
-        link = 'LINK',
-        description = 'DESCRIPTION',
-        address = 'ADDRESS',
-        city = 'CITY',
-        state = 'STATE',
-        zipcode = 'ZIP'
-    )
-    
+   
     dao = None
     
     def __init__(self, dao):
@@ -43,20 +31,7 @@ class WOF(object):
         self.timezone = config.get('WOF', 'Timezone')
         self.timezone_abbr = config.get('WOF', 'TimezoneAbbreviation')
     
-        if config.has_section('Contact'):
-            self.contact_info = dict(
-                name = config.get('Contact', 'Name'),
-                phone = config.get('Contact', 'Phone'),
-                email = config.get('Contact', 'Email'),
-                organization = config.get('Contact', 'Organization'),
-                link = config.get('Contact', 'Link'),
-                description = config.get('Contact', 'Description'),
-                address = config.get('Contact', 'Address'),
-                city = config.get('Contact', 'City'),
-                state = config.get('Contact', 'State'),
-                zipcode = config.get('Contact', 'ZipCode')
-            )
-        
+
     def create_get_site_response(self, siteArg=None):
         
         if siteArg == None or siteArg == '':

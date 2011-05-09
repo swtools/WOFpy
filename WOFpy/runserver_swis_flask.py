@@ -19,7 +19,9 @@ logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
     
-    dao = SwisDao(private_config.swis_connection_string)
+    dao = SwisDao(private_config.swis_connection_string,
+                  'config/swis_config.cfg')
+    
     swis_wof = WOF(dao)
     swis_wof.config_from_file('config/swis_config.cfg')
 

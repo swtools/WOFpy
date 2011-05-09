@@ -1,4 +1,5 @@
 import datetime
+import ConfigParser
 
 from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
@@ -10,11 +11,41 @@ from daos.base_dao import BaseDao
 
 class SwisDao(BaseDao):
     
-    def __init__(self, db_connection_string):
+    contact_info = dict(
+        name = 'NAME',
+        phone = 'PHONE',
+        email = 'EMAIL',
+        organization = 'ORGANIZATION',
+        link = 'LINK',
+        description = 'DESCRIPTION',
+        address = 'ADDRESS',
+        city = 'CITY',
+        state = 'STATE',
+        zipcode = 'ZIP'
+    )
+    
+    def __init__(self, db_connection_string, config_file_path):
         self.engine = create_engine(db_connection_string, convert_unicode=True)
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
         model.init_model(self.db_session)
+    
+        config = ConfigParser.RawConfigParser()
+        config.read(config_file_path)
+        
+        if config.has_section('Contact'):
+            self.contact_info = dict(
+                name = config.get('Contact', 'Name'),
+                phone = config.get('Contact', 'Phone'),
+                email = config.get('Contact', 'Email'),
+                organization = config.get('Contact', 'Organization'),
+                link = config.get('Contact', 'Link'),
+                description = config.get('Contact', 'Description'),
+                address = config.get('Contact', 'Address'),
+                city = config.get('Contact', 'City'),
+                state = config.get('Contact', 'State'),
+                zipcode = config.get('Contact', 'ZipCode')
+            )
     
     def get_all_sites(self):
         return model.Site.query.all()
@@ -135,20 +166,16 @@ class SwisDao(BaseDao):
     def get_source_by_id(self, source_id=1):
         source = model.Source()
         
-        
-        # --------------------- TODO ------------------------
-        # Move this into the DAO __init__ instead of putting it in wof
-        
-        #source.ContactName = wof.contact_info['name']
-        #source.Phone = wof.contact_info['phone']
-        #source.Email = wof.contact_info['email']
-        #source.Organization = wof.contact_info['organization']
-        #source.SourceLink = wof.contact_info['link']
-        #source.SourceDescription = wof.contact_info['description']
-        #source.Address = wof.contact_info['address']
-        #source.City = wof.contact_info['city']
-        #source.State = wof.contact_info['state']
-        #source.ZipCode = wof.contact_info['zipcode']
+        source.ContactName = self.contact_info['name']
+        source.Phone = self.contact_info['phone']
+        source.Email = self.contact_info['email']
+        source.Organization = self.contact_info['organization']
+        source.SourceLink = self.contact_info['link']
+        source.SourceDescription = self.contact_info['description']
+        source.Address = self.contact_info['address']
+        source.City = self.contact_info['city']
+        source.State = self.contact_info['state']
+        source.ZipCode = self.contact_info['zipcode']
         
         return source
         

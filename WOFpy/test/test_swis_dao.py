@@ -13,9 +13,8 @@ class TestSwisDao(unittest.TestCase):
         test_config_path = os.path.join(os.path.dirname(__file__),
                                         'test_swis_config.cfg')
         
-        self.dao = SwisDao('sqlite:///'+test_db_path)
+        self.dao = SwisDao('sqlite:///'+test_db_path, test_config_path)
            
-        #wof.config_from_file(test_config_path)
         
         self.known_site_codes = (
             'ARA', 'ARROYD', 'ARROYS', 'BAFF', 'BAYT', 'BIRD', 'BLB', 'BOBH',
