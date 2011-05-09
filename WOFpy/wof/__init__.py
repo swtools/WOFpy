@@ -22,6 +22,7 @@ contact_info = dict(
 )
 
 dao = None
+#test
 
 def config_from_file(file_name):
     config = ConfigParser.RawConfigParser()
