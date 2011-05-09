@@ -3,11 +3,11 @@ import unittest
 import os
 import StringIO
 
-import wof
-import wof.code
+from wof import WOF
+from daos.swis.swis_dao import SwisDao
+
 import private_config
 
-from daos.swis.swis_dao import SwisDao
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:xlink="http://www.w3.org/1999/xlink" \
@@ -25,8 +25,9 @@ class TestWofpyCode(unittest.TestCase):
         test_config_path = os.path.join(os.path.dirname(__file__),
                                         'test_swis_config.cfg')
         
-        wof.dao = SwisDao('sqlite:///'+test_db_path)
-        wof.config_from_file(test_config_path)
+        dao = SwisDao('sqlite:///'+test_db_path)
+        self.wof_inst = WOF(dao)
+        self.wof_inst.config_from_file(test_config_path)
         
         waterml_schema_path = os.path.join(os.path.dirname(__file__),
                                         'cuahsiTimeSeries_v1_0.xsd')
@@ -35,7 +36,7 @@ class TestWofpyCode(unittest.TestCase):
         self.waterml_schema = etree.XMLSchema(waterml_schema_doc)
         
     def test_create_get_site_response(self):
-        get_site_response = wof.code.create_get_site_response()
+        get_site_response = self.wof_inst.create_get_site_response()
         
         out_file_path = os.path.join(os.path.dirname(__file__),
                                      'GetSitesResponse.xml')
@@ -51,7 +52,7 @@ class TestWofpyCode(unittest.TestCase):
         self.assertTrue(self.waterml_schema.validate(doc))
     
     def test_create_get_site_info_response(self):
-        get_site_response = wof.code.create_get_site_info_response('BAYT')
+        get_site_response = self.wof_inst.create_get_site_info_response('BAYT')
         
         out_file_path = os.path.join(os.path.dirname(__file__),
                                      'GetSiteInfoResponse.xml')
@@ -67,7 +68,7 @@ class TestWofpyCode(unittest.TestCase):
         self.assertTrue(self.waterml_schema.validate(doc))
     
     def test_create_get_variable_info_response(self):
-        get_site_response = wof.code.create_get_variable_info_response()
+        get_site_response = self.wof_inst.create_get_variable_info_response()
         
         out_file_path = os.path.join(os.path.dirname(__file__),
                                      'GetVariableInfoResponse.xml')
@@ -83,7 +84,7 @@ class TestWofpyCode(unittest.TestCase):
         self.assertTrue(self.waterml_schema.validate(doc))
     
     def test_create_get_values_response(self):
-        get_site_response = wof.code.create_get_values_response(
+        get_site_response = self.wof_inst.create_get_values_response(
             'BAYT','seawater_salinity')
         
         out_file_path = os.path.join(os.path.dirname(__file__),

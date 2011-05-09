@@ -7,7 +7,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from daos.base_dao import BaseDao
 
-import wof
 import cbi_cache_models as cache
 import cbi_models as model
 import cbi_sos_client

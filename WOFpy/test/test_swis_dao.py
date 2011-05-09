@@ -1,7 +1,6 @@
 import unittest
 import os
 
-import wof
 import private_config
 
 from daos.swis.swis_dao import SwisDao
@@ -16,7 +15,7 @@ class TestSwisDao(unittest.TestCase):
         
         self.dao = SwisDao('sqlite:///'+test_db_path)
            
-        wof.config_from_file(test_config_path)
+        #wof.config_from_file(test_config_path)
         
         self.known_site_codes = (
             'ARA', 'ARROYD', 'ARROYS', 'BAFF', 'BAYT', 'BIRD', 'BLB', 'BOBH',
