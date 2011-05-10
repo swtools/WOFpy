@@ -71,8 +71,15 @@ class CbiDao(BaseDao):
         """
         
         #TODO: I think I can get all this information from the Capabilities doc
-        pass
-
+        response = self.cbi_sos_client.get_get_capabilities()
+        
+        if not response:
+            return None
+        
+        tree = etree.parse(StringIO(response.read()))
+        
+        #cbi_sos_parser.parse
+        
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
         """
         Returns a list of SeriesCatalogs for the given site code and variable

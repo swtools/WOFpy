@@ -1,6 +1,7 @@
 
 import urllib2
 import os
+import time
 
 from optparse import OptionParser
 from lxml import etree
@@ -98,6 +99,26 @@ class Parameter(object):
     def __hash__(self):
         return hash(self.__key())
     
+class Series(object):
+    def __init__(self, site_code, var_code, start_time, end_time,
+                 time_interval, time_interval_unit, is_current):
+        self.site_code = site_code
+        self.var_code = var_code
+        self.start_time = start_time
+        self.end_time = end_time
+        self.time_interval = time_interval
+        self.time_interval_unit = time_interval_unit
+        self.is_current = is_current
+    
+    def __key(self):
+        return (self.site_code, self.var_code, self.start_time, self.end_time,
+                self.time_interval, self.time_interval_unit, self.is_current)
+        
+    def __eq__(self, other):
+        return self.__key() == other.__key()
+        
+    def __hash__(self):
+        return hash(self.__key())
     
 def nspath(path, ns):
     return '{%s}%s' % (ns, path)
@@ -122,6 +143,8 @@ def parse_site_file(local_site_file_path):
     site_file = open(local_site_file_path)
     
     tree = etree.parse(site_file)
+    
+    site_file.close()
     
     feature_member_list = tree.findall('.//'+nspath('featureMember',
                                                    namespaces['gml']))
@@ -185,11 +208,14 @@ def fetch_cbi_capabilities_file(cbi_capabilities_file_url,
     local_capabilities_file.write(response.read())
     
     local_capabilities_file.close()
+    
 
 def extract_parameters(local_capabilities_file_path):
     capabilities_file = open(local_capabilities_file_path)
     
     tree = etree.parse(capabilities_file)
+    
+    capabilities_file.close()
     
     #.//ows:Parameter[@name='observedProperty']/ows:AllowedValues/ows:Value
     
@@ -200,6 +226,57 @@ def extract_parameters(local_capabilities_file_path):
     )
     
     return [p.text for p in param_name_elements]
+
+
+def parse_capabilities_for_series(local_capabilities_file_path):
+    capabilities_file = open(local_capabilities_file_path)
+    
+    tree = etree.parse(capabilities_file)
+    
+    capabilities_file.close()
+    
+    obs_offerings = tree.findall('.//'+nspath(
+        'ObservationOffering', namespaces['sos']))
+    
+    series_set = set()
+    
+    for offering in obs_offerings:
+        site_code = offering.findtext(nspath('name', namespaces['gml']))
+        
+        time_period = offering.find(
+            nspath('eventTime', namespaces['sos'])
+            +'/'+nspath('TimePeriod', namespaces['gml']))
+            
+        start_time = time_period.findtext(
+            nspath('beginPosition', namespaces['gml']))    
+
+        end_time = time_period.findtext(
+            nspath('endPosition', namespaces['gml']))
+        
+        time_interval_node = time_period.find(
+            nspath('timeInterval', namespaces['gml']))
+        
+        time_interval_unit = time_interval_node.attrib['unit']
+        time_interval = time_interval_node.text
+
+        properties = offering.findall(
+            nspath('observedProperty', namespaces['sos']))
+        
+        is_current = not end_time
+        
+        for prop in properties:
+            #TODO: It would be best if the observedProperty elements had
+            # the variable names/codes as their inner text, but they don't currently
+            prop_link = prop.attrib[(nspath('href', namespaces['xlink']))]
+            split_prop_link = prop_link.split('/')
+            var_code = split_prop_link[len(split_prop_link)-1]
+            
+            series = Series(site_code, var_code, start_time, end_time,
+                            time_interval, time_interval_unit, is_current)
+            
+            series_set.add(series)
+       
+    return series_set
 
 def fetch_gcoos_parameter_file(parameter_file_url, local_parameter_file_path):
     response = urllib2.urlopen(parameter_file_url)
@@ -225,6 +302,8 @@ def parse_parameter_file(param_names, local_parameter_file_path):
     param_file = open(local_parameter_file_path)
     
     tree = etree.parse(param_file)
+    
+    param_file.close()
     
     all_params = tree.findall('.//'+ nspath('Parameters',
                                             namespaces['par_base']))
@@ -312,6 +391,7 @@ if __name__ == '__main__':
                    for s in site_set]
         
     
+    
     print "Extracting valid parameters from SOS capabilities file."
     param_names = extract_parameters(local_capabilities_file_path)
     
@@ -335,6 +415,11 @@ if __name__ == '__main__':
         
         cache_variables.append(v)
     
+    
+    print "Parsing SOS Capabilities file for Series Catalog."
+    
+    series_set = parse_capabilities_for_series(local_capabilities_file_path)
+    
     print "Adding %s sites and %s variables to local cache." % (
         len(cache_sites), len(cache_variables))
     
@@ -344,7 +429,79 @@ if __name__ == '__main__':
         db_session.add_all(cache_variables)
         db_session.commit()
     
+        #Now try to add series
+        
+        print "Adding %s series to local cache." % len(series_set)
+        
+        cache_series_cats = []
+        
+        for series in series_set:
+            
+            #TODO: Not all sites in the SOS Capabilities document are in the
+            # IOOS Reg file.  Why?
+            
+            
+            #Find the site in the cache
+            site = model.Site.query.filter(
+                model.Site.SiteCode==series.site_code).first()
+            
+            #Find the variable in the cache
+            variable = model.Variable.query.filter(
+                model.Variable.VariableCode==series.var_code).first()
+        
+            if site and variable: #Need to check because of situtation mentioned above
+                
+                series_cat = model.SeriesCatalog()
+                
+                series_cat.Site = site
+                series_cat.SiteID = site.SiteID
+                series_cat.SiteCode = site.SiteCode
+                series_cat.SiteName = site.SiteName
+                
+                series_cat.Variable = variable
+                series_cat.VariableID = variable.VariableID
+                series_cat.VariableCode = variable.VariableCode
+                series_cat.VariableName = variable.VariableName
+                series_cat.VariableUnitsID = variable.VariableUnits.UnitsID
+                series_cat.VariableUnitsName = variable.VariableUnits.UnitsName
+                series_cat.SampleMedium = variable.SampleMedium
+                series_cat.GeneralCategory = variable.GeneralCategory
+                
+                #TODO set variable and series_cat time_support and time_unit
+                #TODO add the time unit to the database
+                #series.time_interval_unit
+                #series.time_interval
+                time_units = model.Units.query.filter(
+                    model.Units.UnitsName==series.time_interval_unit).first()
+                
+                if not time_units:
+                    time_units = model.Units(series.time_interval_unit,
+                                             series.time_interval_unit)
+                    db_session.add(time_units)
+                    db_session.commit()
+                    
+                variable.TimeUnits = time_units
+                variable.TimeUnitsID = time_units.UnitsID
+                
+                #TODO: DataType Sporadic
+                
+                #TODO: turn into python datetime
+                
+                #series_cat.BeginDateTimeUTC = time.strptime(
+                #    series.start_time,"%Y-%m-%dT%H:%M:%SZ")
+                
+                #if series.end_time:
+                #   series_cat.EndDateTime = series.end_time
+                
+                series_cat.IsCurrent = series.is_current
+                
+                cache_series_cats.append(series_cat)
+        
+        db_session.add_all(cache_series_cats)
+        db_session.commit()
+        
         print "Finished."
+    
     except Exception as inst:
         print "ERROR: %s, %s" % (type(inst), inst)
     

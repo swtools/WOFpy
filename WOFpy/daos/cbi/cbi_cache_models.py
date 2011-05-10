@@ -134,22 +134,25 @@ class Variable(Base, wof_base.BaseVariable):
     SampleMedium = Column(String)
     #ValueType = None
     #IsRegular = None
-    #DataType = None
+    TimeUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
+    DataType = Column(String)
     GeneralCategory = Column(String)
     NoDataValue = Column(Integer)
     
     VariableUnits = relationship("Units",
                         primaryjoin='Variable.VariableUnitsID==Units.UnitsID') 
-    #TimeUnits = None
+    TimeUnits = relationship("Units",
+                        primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
 
-'''
+
 class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
+    __tablename__ = 'SeriesCatalog'
     
     SeriesID = Column(Integer, primary_key=True)
-    SiteID = Column(Integer, ForeignKey('Site.SiteID'))
+    SiteID = Column(Integer, ForeignKey('Sites.SiteID'))
     SiteCode = Column(String)
     SiteName = Column(String)
-    VariableID = Column(Intger, ForeignKey('Variable.VariableID'))
+    VariableID = Column(Integer, ForeignKey('Variables.VariableID'))
     VariableCode = Column(String)
     VariableName = Column(String)
     #Speciation = None
@@ -157,10 +160,10 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     VariableUnitsName = Column(String)
     SampleMedium = Column(String)
     #ValueType = None
-    #TimeSupport = None
+    TimeSupport = Column(Float)
     #TimeUnitsID = None
-    #TimeUnitsName = None
-    #DataType = None
+    TimeUnitsName = Column(String)
+    DataType = Column(String)
     GeneralCategory = Column(String)
     #MethodID = None
     #MethodDescription = None
@@ -174,12 +177,14 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     #EndDateTime = None
     BeginDateTimeUTC = Column(DateTime)
     EndDateTimeUTC = Column(DateTime)
-    ValueCount = Column(Intger)
+    
+    IsCurrent = Column(Boolean)
+    
+    ValueCount = Column(Integer)
     
     Site = relationship("Site",
-                    primaryjoin="Site.SiteID==SeriesCatalog.SiteID")
+                primaryjoin="Site.SiteID==SeriesCatalog.SiteID")
     Variable = relationship("Variable",
-                    primaryjoin="Variable.VariableID==SeriesCatalog.SiteID")
+                primaryjoin="Variable.VariableID==SeriesCatalog.VariableID")
     
     #Method = None
-'''
