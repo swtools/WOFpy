@@ -1,4 +1,5 @@
 import urllib2
+import time
 
 from lxml import etree
 from StringIO import StringIO
@@ -69,16 +70,18 @@ class CbiDao(BaseDao):
         """
         Returns a list of SeriesCatalogs for the given site code.
         """
+        seriesResultArr = cache.SeriesCatalog.query.filter(
+            cache.SeriesCatalog.SiteCode==site_code).all()
         
-        #TODO: I think I can get all this information from the Capabilities doc
-        response = self.cbi_sos_client.get_get_capabilities()
         
-        if not response:
-            return None
+        for sr in seriesResultArr:
+            if sr.IsCurrent: #TODO: Get current time in GMT
+                et = time.gmtime(time.time())
+                sr.EndDateTimeUTC = time.strftime("%Y-%m-%dT%H:%M:%SZ", et)
+                
+            #TODO: Source
         
-        tree = etree.parse(StringIO(response.read()))
-        
-        #cbi_sos_parser.parse
+        return seriesResultArr
         
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
         """

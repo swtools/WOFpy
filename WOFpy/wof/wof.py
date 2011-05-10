@@ -449,8 +449,15 @@ class WOF(object):
         
         #DateTimes
         isoBeginDateTimeUTC = str(
-            seriesResult.BeginDateTimeUTC).replace(' ','T')+'Z'
-        isoEndDateTimeUTC = str(seriesResult.EndDateTimeUTC).replace(' ','T')+'Z'
+            seriesResult.BeginDateTimeUTC).replace(' ','T')
+        if isoBeginDateTimeUTC.find('Z') == -1:
+            isoBeginDateTimeUTC += 'Z'
+        
+        isoEndDateTimeUTC = str(
+            seriesResult.EndDateTimeUTC).replace(' ','T')
+        if isoEndDateTimeUTC.find('Z') == -1:
+            isoEndDateTimeUTC += 'Z'
+        
         
         #TimeInterval
         variableTimeInt = WaterML.TimeIntervalType(

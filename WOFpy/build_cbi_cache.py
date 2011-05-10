@@ -441,7 +441,6 @@ if __name__ == '__main__':
             #TODO: Not all sites in the SOS Capabilities document are in the
             # IOOS Reg file.  Why?
             
-            
             #Find the site in the cache
             site = model.Site.query.filter(
                 model.Site.SiteCode==series.site_code).first()
@@ -450,7 +449,7 @@ if __name__ == '__main__':
             variable = model.Variable.query.filter(
                 model.Variable.VariableCode==series.var_code).first()
         
-            if site and variable: #Need to check because of situtation mentioned above
+            if site and variable: #Need to check because of situation mentioned above
                 
                 series_cat = model.SeriesCatalog()
                 
@@ -468,10 +467,7 @@ if __name__ == '__main__':
                 series_cat.SampleMedium = variable.SampleMedium
                 series_cat.GeneralCategory = variable.GeneralCategory
                 
-                #TODO set variable and series_cat time_support and time_unit
-                #TODO add the time unit to the database
-                #series.time_interval_unit
-                #series.time_interval
+
                 time_units = model.Units.query.filter(
                     model.Units.UnitsName==series.time_interval_unit).first()
                 
@@ -487,7 +483,7 @@ if __name__ == '__main__':
                 series_cat.TimeUnitsID = time_units.UnitsID
                 series_cat.TimeUnitsName = time_units.UnitsName
                 
-                #TODO: DataType Sporadic
+                #TODO: DataType
                 
                 #TODO: is this the best way to do the datetime conversion?
                 st = time.strptime(
@@ -495,7 +491,6 @@ if __name__ == '__main__':
                 
                 series_cat.BeginDateTimeUTC = \
                     datetime.datetime(st[0], st[1], st[2], st[3], st[4], st[5])
-                
                 
                 if series.end_time:
                     et = time.strptime(
@@ -514,13 +509,6 @@ if __name__ == '__main__':
     
     except Exception as inst:
         print "ERROR: %s, %s" % (type(inst), inst)
-    
-    
-    
-    
-    
-    
-    
     
     
     

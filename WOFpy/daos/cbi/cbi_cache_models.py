@@ -187,4 +187,5 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     Variable = relationship("Variable",
                 primaryjoin="Variable.VariableID==SeriesCatalog.VariableID")
     
-    #Method = None
+    Method = None #TODO
+    Source = None #TODO
