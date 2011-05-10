@@ -2,6 +2,7 @@
 import urllib2
 import os
 import time
+import datetime
 
 from optparse import OptionParser
 from lxml import etree
@@ -482,16 +483,25 @@ if __name__ == '__main__':
                     
                 variable.TimeUnits = time_units
                 variable.TimeUnitsID = time_units.UnitsID
+                series_cat.TimeSupport = series.time_interval
+                series_cat.TimeUnitsID = time_units.UnitsID
+                series_cat.TimeUnitsName = time_units.UnitsName
                 
                 #TODO: DataType Sporadic
                 
-                #TODO: turn into python datetime
+                #TODO: is this the best way to do the datetime conversion?
+                st = time.strptime(
+                    series.start_time,"%Y-%m-%dT%H:%M:%SZ")
                 
-                #series_cat.BeginDateTimeUTC = time.strptime(
-                #    series.start_time,"%Y-%m-%dT%H:%M:%SZ")
+                series_cat.BeginDateTimeUTC = \
+                    datetime.datetime(st[0], st[1], st[2], st[3], st[4], st[5])
                 
-                #if series.end_time:
-                #   series_cat.EndDateTime = series.end_time
+                
+                if series.end_time:
+                    et = time.strptime(
+                        series.end_time,"%Y-%m-%dT%H:%M:%SZ")
+                    series_cat.EndDateTimeUTC = datetime.datetime(
+                        et[0], et[1], et[2], et[3], et[4], et[5])
                 
                 series_cat.IsCurrent = series.is_current
                 
