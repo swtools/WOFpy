@@ -103,7 +103,7 @@ class Units(Base, wof_base.BaseUnits):
     
     UnitsID = Column(Integer, primary_key=True)
     UnitsName = Column(String)
-    #UnitsType = None
+    UnitsType = Column(String)
     UnitsAbbreviation = Column(String)
 
    

@@ -474,6 +474,8 @@ if __name__ == '__main__':
                 if not time_units:
                     time_units = model.Units(series.time_interval_unit,
                                              series.time_interval_unit)
+                    time_units.UnitsType = "Time"
+                    
                     db_session.add(time_units)
                     db_session.commit()
                     

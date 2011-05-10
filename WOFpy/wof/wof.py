@@ -522,7 +522,9 @@ class WOF(object):
             
             timeSupport.set_unit(timeUnits)
         
-        #TODO: time interval is not the same as time support.  Time interval refers to a spacing between values for regular data, which isn't stored in ODM.
+        #TODO: time interval is not the same as time support.
+        # Time interval refers to a spacing between values for regular data,
+        # which isn't stored in ODM.
         if variableResult.TimeSupport:
             timeSupport.timeInterval = str(int(variableResult.TimeSupport)) #integer in WaterML 1.0
         variable.set_timeSupport(timeSupport)
