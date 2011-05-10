@@ -135,6 +135,7 @@ class Variable(Base, wof_base.BaseVariable):
     #ValueType = None
     #IsRegular = None
     TimeUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
+    TimeSupport = Column(Float)
     DataType = Column(String)
     GeneralCategory = Column(String)
     NoDataValue = Column(Integer)

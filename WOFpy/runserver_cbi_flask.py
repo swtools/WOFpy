@@ -21,7 +21,7 @@ if __name__ == '__main__':
     cbi_cache_connection_string = 'sqlite:///' + os.path.join(
         os.path.dirname(__file__), 'daos', 'cbi', 'cbi_cache.db')
 
-    dao = CbiDao(cbi_cache_connection_string)
+    dao = CbiDao(cbi_cache_connection_string, 'config/cbi_config.cfg')
     cbi_wof = WOF(dao)
     cbi_wof.config_from_file('config/cbi_config.cfg')
 

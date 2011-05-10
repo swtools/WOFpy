@@ -21,25 +21,6 @@ class DataValue(wof_base.BaseDataValue):
     #QualityControlLevel = None
     #QualityControlLevelID = None
     
-
-class Variable(wof_base.BaseVariable):
     
-    
-    def __init__(self, variable_id, variable_code, variable_name):
-        self.VariableID = variable_id
-        self.VariableCode = variable_code
-        self.VariableName = variable_name
-    
-    Speciation = None
-    VariableUnitsID = None
-    SampleMedium = None
-    ValueType = None
-    IsRegular = None
-    TimeSupport = None
-    TimeUnitsID = None
-    DataType = None
-    GeneralCategory = None
-    NoDataValue = None
-    
-    VariableUnits = None
-    TimeUnits = None
+class Source(wof_base.BaseSource):
+    pass

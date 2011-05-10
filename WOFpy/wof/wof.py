@@ -156,6 +156,7 @@ class WOF(object):
         timeSeries.variable = variable
         
         values = WaterML.TsValuesSingleVariableType() #TODO: fill in some more of the attributes in this element
+        
         values.count = len(valueResultArr)
         
         if varResult.VariableUnits:

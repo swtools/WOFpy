@@ -1,10 +1,13 @@
 import urllib2
 import time
+import ConfigParser
 
 from lxml import etree
 from StringIO import StringIO
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.sql import and_
+
 
 from daos.base_dao import BaseDao
 
@@ -15,7 +18,7 @@ import cbi_sos_parser
 
 class CbiDao(BaseDao):
     
-    def __init__(self, db_connection_string):
+    def __init__(self, db_connection_string, config_file_path):
         self.engine = create_engine(db_connection_string, convert_unicode=True)
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
@@ -23,6 +26,23 @@ class CbiDao(BaseDao):
         
         self.cbi_sos_client = cbi_sos_client.CbiSosClient(
             'http://lighthouse.tamucc.edu/sos')
+    
+        config = ConfigParser.RawConfigParser()
+        config.read(config_file_path)
+        
+        if config.has_section('Contact'):
+            self.contact_info = dict(
+                name = config.get('Contact', 'Name'),
+                phone = config.get('Contact', 'Phone'),
+                email = config.get('Contact', 'Email'),
+                organization = config.get('Contact', 'Organization'),
+                link = config.get('Contact', 'Link'),
+                description = config.get('Contact', 'Description'),
+                address = config.get('Contact', 'Address'),
+                city = config.get('Contact', 'City'),
+                state = config.get('Contact', 'State'),
+                zipcode = config.get('Contact', 'ZipCode')
+            )
     
     def get_all_sites(self):
         """
@@ -73,13 +93,12 @@ class CbiDao(BaseDao):
         seriesResultArr = cache.SeriesCatalog.query.filter(
             cache.SeriesCatalog.SiteCode==site_code).all()
         
-        
         for sr in seriesResultArr:
             if sr.IsCurrent: #TODO: Get current time in GMT
                 et = time.gmtime(time.time())
                 sr.EndDateTimeUTC = time.strftime("%Y-%m-%dT%H:%M:%SZ", et)
-                
-            #TODO: Source
+            
+            sr.Source = self.get_source_by_id()
         
         return seriesResultArr
         
@@ -88,8 +107,19 @@ class CbiDao(BaseDao):
         Returns a list of SeriesCatalogs for the given site code and variable
         code combination.
         """
-        #TODO: I think I can get all this information from the Capabilities doc
-        pass
+        
+        seriesResultArr = cache.SeriesCatalog.query.filter(and_(
+             cache.SeriesCatalog.SiteCode==site_code,
+             cache.SeriesCatalog.VariableCode==var_code)).all()
+        
+        for sr in seriesResultArr:
+            if sr.IsCurrent: #TODO: Get current time in GMT
+                et = time.gmtime(time.time())
+                sr.EndDateTimeUTC = time.strftime("%Y-%m-%dT%H:%M:%SZ", et)
+            
+            sr.Source = self.get_source_by_id()
+        
+        return seriesResultArr
 
     def get_datavalues(self, site_code, var_code, begin_date_time=None,
                        end_date_time=None):
@@ -132,17 +162,30 @@ class CbiDao(BaseDao):
         """
         pass
 
-    def get_source_by_id(self, source_id):
+    def get_source_by_id(self, source_id=1):
         """
         Returns a single Source identified by the given id.
         """
-        pass
+        source = model.Source()
+        
+        source.ContactName = self.contact_info['name']
+        source.Phone = self.contact_info['phone']
+        source.Email = self.contact_info['email']
+        source.Organization = self.contact_info['organization']
+        source.SourceLink = self.contact_info['link']
+        source.SourceDescription = self.contact_info['description']
+        source.Address = self.contact_info['address']
+        source.City = self.contact_info['city']
+        source.State = self.contact_info['state']
+        source.ZipCode = self.contact_info['zipcode']
+        
+        return source
 
     def get_sources_by_ids(self, source_id_arr):
         """
         Returns a list of Sources identified by the given id list.
         """
-        pass
+        return [self.get_source_by_id()]
 
     def get_qualifier_by_id(self, qualifier_id):
         """

@@ -481,7 +481,11 @@ if __name__ == '__main__':
                     
                 variable.TimeUnits = time_units
                 variable.TimeUnitsID = time_units.UnitsID
-                series_cat.TimeSupport = series.time_interval
+                
+                #TODO: WaterML1 only supports integers for time interval
+                # but the CBI service offerings have 0.5 hour intervals
+                #variable.TimeSupport = series.time_interval
+                #series_cat.TimeSupport = series.time_interval
                 series_cat.TimeUnitsID = time_units.UnitsID
                 series_cat.TimeUnitsName = time_units.UnitsName
                 
