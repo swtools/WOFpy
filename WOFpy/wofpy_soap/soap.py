@@ -63,29 +63,37 @@ class WOFService(DefinitionBase):
     @soap(String, String, _returns=String)
     def GetSiteInfo(self,site,authToken):
         
-        siteInfoResponse = wofpy_soap.wof_inst.create_get_site_info_response(site)
+        try:
+            siteInfoResponse = wofpy_soap.wof_inst.create_get_site_info_response(site)
+            
+            outStream = StringIO.StringIO()
+            siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
+                                    namespacedef_= NSDEF)
+            
+            #TODO: Fault
+         
+            return str(outStream.getvalue()).replace('\n','')
         
-        outStream = StringIO.StringIO()
-        siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
-                                namespacedef_= NSDEF)
-        
-        #TODO: Fault
-     
-        return str(outStream.getvalue()).replace('\n','')
+        except Exception as inst:
+            return "ERROR: %s, %s" % (type(inst), inst)
     
     @soap(String, String, _returns=Any)
     def GetSiteInfoObject(self,site,authToken):
         
-        siteInfoResponse = \
+        try:
+            siteInfoResponse = \
                         wofpy_soap.wof_inst.create_get_site_info_response(site)
         
-        outStream = StringIO.StringIO()
-        siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
+            outStream = StringIO.StringIO()
+            siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
                                 namespacedef_= NSDEF)
         
-        #TODO: Fault
+            #TODO: Fault
      
-        return outStream.getvalue()
+            return outStream.getvalue()
+        
+        except Exception as inst:
+            return "ERROR: %s, %s" % (type(inst), inst)
     
     ###########################################################################
     
