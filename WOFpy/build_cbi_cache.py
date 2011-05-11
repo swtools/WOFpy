@@ -156,41 +156,42 @@ def parse_site_file(local_site_file_path):
         gml_id = point_obs.attrib[nspath('id', namespaces['gml'])]
         param_code = gml_id.split('.')[2]
         
-        observation_name = point_obs.find(nspath('observationName',
-                                                 namespaces['ioos']))
+        observation_name = point_obs.findtext(
+            nspath('observationName', namespaces['ioos']))
         
         #Parse Site info
-        status = point_obs.find(nspath('status', namespaces['ioos']))
-        platform_name = point_obs.find(nspath('platformName',
+        platform_name = point_obs.findtext(nspath('platformName',
                                               namespaces['ioos']))
        
-        horiz_position = point_obs.find(nspath('horizontalPosition',
+        horiz_position_node = point_obs.find(nspath('horizontalPosition',
                                                namespaces['ioos']))
-        pos = horiz_position.find(nspath('Point', namespaces['gml'])+'/'+
-                                  nspath('pos', namespaces['gml']))
-        latitude = pos.text.split()[0]
-        longitude = pos.text.split()[1]
-         
-        vert_position = point_obs.find(nspath('verticalPosition',
-                                              namespaces['ioos']))
-        vert_pos_units = vert_position.attrib['uom']
+        pos = horiz_position_node.findtext(
+            nspath('Point', namespaces['gml'])
+            +'/'+nspath('pos', namespaces['gml']))
         
-        vert_datum = point_obs.find(nspath('verticalDatum',
+        latitude = pos.split()[0]
+        longitude = pos.split()[1]
+         
+        vert_position_node = point_obs.find(nspath('verticalPosition',
+                                              namespaces['ioos']))
+        vert_pos_units = vert_position_node.attrib['uom']
+        
+        vert_datum = point_obs.findtext(nspath('verticalDatum',
                                            namespaces['ioos']))
         
-        operator = point_obs.find(nspath('operator', namespaces['ioos']))
-        start_date = point_obs.find(nspath('startDate', namespaces['ioos']))
-        end_date = point_obs.find(nspath('endDate', namespaces['ioos']))
-        operator_uri = point_obs.find(nspath('operatorURI',
+        operator = point_obs.findtext(nspath('operator', namespaces['ioos']))
+        start_date = point_obs.findtext(nspath('startDate', namespaces['ioos']))
+        end_date = point_obs.findtext(nspath('endDate', namespaces['ioos']))
+        operator_uri = point_obs.findtext(nspath('operatorURI',
                                              namespaces['ioos']))
-        platform_uri = point_obs.find(nspath('platformURI',
+        platform_uri = point_obs.findtext(nspath('platformURI',
                                              namespaces['ioos']))
-        data_uri = point_obs.find(nspath('dataURI', namespaces['ioos']))
-        comments = point_obs.find(nspath('comments', namespaces['ioos']))
+        data_uri = point_obs.findtext(nspath('dataURI', namespaces['ioos']))
+        comments = point_obs.findtext(nspath('comments', namespaces['ioos']))
         
         
-        site_code = platform_name.text.split(':')[0]
-        site_name = platform_name.text.split(':')[1]
+        site_code = platform_name.split(':')[0]
+        site_name = platform_name.split(':')[1].strip()
         
         #Create a Site object and add it to the return set
         site = Site(site_code, site_name, latitude, longitude)

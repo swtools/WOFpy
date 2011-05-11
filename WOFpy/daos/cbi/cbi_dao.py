@@ -96,7 +96,7 @@ class CbiDao(BaseDao):
         for sr in seriesResultArr:
             if sr.IsCurrent: #TODO: Get current time in GMT
                 et = time.gmtime(time.time())
-                sr.EndDateTimeUTC = time.strftime("%Y-%m-%dT%H:%M:%SZ", et)
+                sr.EndDateTimeUTC = time.strftime("%Y-%m-%d %H:%M:%S", et)
             
             sr.Source = self.get_source_by_id()
         
@@ -115,7 +115,7 @@ class CbiDao(BaseDao):
         for sr in seriesResultArr:
             if sr.IsCurrent: #TODO: Get current time in GMT
                 et = time.gmtime(time.time())
-                sr.EndDateTimeUTC = time.strftime("%Y-%m-%dT%H:%M:%SZ", et)
+                sr.EndDateTimeUTC = time.strftime("%Y-%m-%d %H:%M:%S", et)
             
             sr.Source = self.get_source_by_id()
         
@@ -128,11 +128,23 @@ class CbiDao(BaseDao):
         filtered by the optional begin and end datetimes.
         """
         
-        #TODO: if begin and end date time are not specified, then need to
+        #if begin and end date time are not specified, then need to
         #check series catalog to get full time extent and use those values
         #in the getobservation request.  The expected behavior of WOF:GetValues
         #is to return all data values for the full period of record, but
-        #the GetObservation method only returns the last 10 or something.
+        #the CBI SOS:GetObservation method only returns the last 9.
+        if not begin_date_time or not end_date_time:
+            #need to find the start and end dates from the cache
+            series_cat = self.get_series_by_sitecode_and_varcode(
+                site_code, var_code)[0]
+            
+            if not begin_date_time:
+                begin_date_time = series_cat.BeginDateTimeUTC
+                begin_date_time = str(begin_date_time).replace(' ','T')
+            
+            if not end_date_time:
+                end_date_time = series_cat.EndDateTimeUTC
+                end_date_time = str(end_date_time).replace(' ','T')
         
         #Call GetObservation
         response = self.cbi_sos_client.get_observation(site_code, var_code,
