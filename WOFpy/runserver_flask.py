@@ -28,6 +28,7 @@ if __name__ == '__main__':
 
     wofpy_soap.wof_inst = odm_wof #TODO: better way of setting WOF instance into the soap service
 
+
     soap_app = soaplib.core.Application(services=[WOFService],
         tns='http://www.cuahsi.org/his/1.0/ws/',
         name='WaterOneFlow')
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
 
     flask_app.wsgi_app = DispatcherMiddleware(flask_app.wsgi_app, {
-        '/soap': soap_wsgi_app
+        '/soap': soap_wsgi_app,        
     })
 
     flask_app.run(host='0.0.0.0', port=8080, threaded=True)

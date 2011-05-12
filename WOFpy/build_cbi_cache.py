@@ -151,11 +151,9 @@ def parse_site_file(local_site_file_path):
                                                    namespaces['gml']))
     
     for feature in feature_member_list:
-        
-        
         point_obs = feature.find(nspath('InsituPointObs', namespaces['ioos']))
         
-        # gml:id="CBI-TAMUCC.009.bpr"  bpr is the param code
+        # ex: gml:id="CBI-TAMUCC.009.bpr"  bpr is the param code
         gml_id = point_obs.attrib[nspath('id', namespaces['gml'])]
         param_code = gml_id.split('.')[2]
         
@@ -163,6 +161,7 @@ def parse_site_file(local_site_file_path):
             nspath('observationName', namespaces['ioos']))
         
         #Parse Site info
+        #ex 009: Port Aransas (87752371)
         platform_name = point_obs.findtext(nspath('platformName',
                                               namespaces['ioos']))
        
@@ -415,7 +414,6 @@ if __name__ == '__main__':
         local_capabilities_file_path)
     
 
-    #TODO: REMOVE SITES
     valid_site_list = [s for s in site_set if s.code in capabilities_site_list]
     
     cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
@@ -461,7 +459,7 @@ if __name__ == '__main__':
     
         #Now try to add series
         
-        print "Adding SeriesCatalogs to local cache." % len(series_set)
+        print "Adding SeriesCatalogs to local cache."
         
         cache_series_cats = []
         
