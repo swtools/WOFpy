@@ -151,8 +151,11 @@ def parse_site_file(local_site_file_path):
                                                    namespaces['gml']))
     
     for feature in feature_member_list:
+        
+        
         point_obs = feature.find(nspath('InsituPointObs', namespaces['ioos']))
         
+        # gml:id="CBI-TAMUCC.009.bpr"  bpr is the param code
         gml_id = point_obs.attrib[nspath('id', namespaces['gml'])]
         param_code = gml_id.split('.')[2]
         
@@ -212,7 +215,7 @@ def fetch_cbi_capabilities_file(cbi_capabilities_file_url,
     local_capabilities_file.close()
     
 
-def extract_parameters(local_capabilities_file_path):
+def extract_parameters_from_capabilities_doc(local_capabilities_file_path):
     capabilities_file = open(local_capabilities_file_path)
     
     tree = etree.parse(capabilities_file)
@@ -228,6 +231,23 @@ def extract_parameters(local_capabilities_file_path):
     )
     
     return [p.text for p in param_name_elements]
+
+def extract_sites_from_capabilities_doc(local_capabilities_file_path):
+    capabilities_file = open(local_capabilities_file_path)
+    
+    tree = etree.parse(capabilities_file)
+    
+    capabilities_file.close()
+    
+    #.//ows:Parameter[@name='observedProperty']/ows:AllowedValues/ows:Value
+    
+    site_code_elements = tree.findall(
+        './/'+nspath("Parameter[@name='offering']", namespaces['ows'])
+        +'/'+nspath("AllowedValues", namespaces['ows'])
+        +'/'+nspath("Value", namespaces['ows'])
+    )
+    
+    return [s.text for s in site_code_elements]
 
 
 def parse_capabilities_for_series(local_capabilities_file_path):
@@ -388,14 +408,22 @@ if __name__ == '__main__':
     print "Parsing IOOS site file."
     site_set = parse_site_file(local_site_file_path)
     
-        
-    cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
-                   for s in site_set]
-        
     
+    print "Extracting valid site codes from SOS capabilities file and removing non-matching sites from site cache."
+    
+    capabilities_site_list = extract_sites_from_capabilities_doc(
+        local_capabilities_file_path)
+    
+
+    #TODO: REMOVE SITES
+    valid_site_list = [s for s in site_set if s.code in capabilities_site_list]
+    
+    cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
+                   for s in valid_site_list]
     
     print "Extracting valid parameters from SOS capabilities file."
-    param_names = extract_parameters(local_capabilities_file_path)
+    param_names = extract_parameters_from_capabilities_doc(
+        local_capabilities_file_path)
     
     
     print "Parsing GCOOS parameter file."
@@ -433,7 +461,7 @@ if __name__ == '__main__':
     
         #Now try to add series
         
-        print "Adding %s series to local cache." % len(series_set)
+        print "Adding SeriesCatalogs to local cache." % len(series_set)
         
         cache_series_cats = []
         
