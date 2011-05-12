@@ -1,4 +1,6 @@
 
+
+
 class SampleMediumTypes:
     SURFACE_WATER='Surface Water'
     GROUND_WATER='Ground Water'
@@ -29,6 +31,8 @@ QualityControlLevelTypes = dict(
     INTERPRETED_PRODUCTS=('Interpreted products',3),
     KNOWLEDGE_PRODUCTS=('Knowledge products',4)
 )
+
+#TODO: CLEAR OUT FIELDS THAT ARE NOT USED IN THE WOF CLASS
 
 class BaseUnits(object):
     

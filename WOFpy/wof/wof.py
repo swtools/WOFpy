@@ -491,7 +491,8 @@ class WOF(object):
             dataType=variableResult.DataType,
             generalCategory=variableResult.GeneralCategory,
             sampleMedium=variableResult.SampleMedium,
-            NoDataValue=variableResult.NoDataValue)
+            NoDataValue=variableResult.NoDataValue,
+            variableDescription=variableResult.VariableDescription)
         
         variableCode = WaterML.variableCode()
         variableCode.vocabulary = self.vocabulary

@@ -86,9 +86,10 @@ class Unit(object):
         return hash(self.__key())
 
 class Parameter(object):
-    def __init__(self, code, name, unit):
+    def __init__(self, code, name, description, unit):
         self.code = code
         self.name = name
+        self.description = description
         self.unit = unit
     
     def __key(self):
@@ -352,7 +353,7 @@ def parse_parameter_file(param_names, local_parameter_file_path):
             
             units_set.add(unit)
             
-            param = Parameter(name, name, unit)
+            param = Parameter(name, name, description, unit)
             param_set.add(param)
             
     return (param_set, units_set)
@@ -434,7 +435,7 @@ if __name__ == '__main__':
     cache_variables = []
     
     for p in param_set:
-        v = model.Variable(p.code, p.name)
+        v = model.Variable(p.code, p.name, p.description)
         
         #Find the matching unit in the cache_units list
         for cu in cache_units:
