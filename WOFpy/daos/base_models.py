@@ -60,6 +60,7 @@ class BaseVariable(object):
     DataType = None
     GeneralCategory = None
     NoDataValue = None
+    VariableDescription = None
     
     VariableUnits = BaseUnits()
     TimeUnits = BaseUnits()

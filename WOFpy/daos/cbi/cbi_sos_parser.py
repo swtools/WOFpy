@@ -35,6 +35,7 @@ def parse_datavalues_from_get_observation(tree, site_code, var_code):
     
     text_block = tree.find('.//'+nspath('encoding', namespaces['swe'])
                     +'/'+nspath('TextBlock', namespaces['swe']))
+    
     block_sep = text_block.attrib['blockSeparator']
     token_sep = text_block.attrib['tokenSeparator']
     

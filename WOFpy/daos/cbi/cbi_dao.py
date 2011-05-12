@@ -113,8 +113,8 @@ class CbiDao(BaseDao):
              cache.SeriesCatalog.VariableCode==var_code)).all()
         
         for sr in seriesResultArr:
-            if sr.IsCurrent: #TODO: Get current time in GMT
-                et = time.gmtime(time.time())
+            if sr.IsCurrent: 
+                et = time.gmtime(time.time()) #Get current time in GMT
                 sr.EndDateTimeUTC = time.strftime("%Y-%m-%d %H:%M:%S", et)
             
             sr.Source = self.get_source_by_id()
