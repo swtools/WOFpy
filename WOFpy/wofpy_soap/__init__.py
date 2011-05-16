@@ -1,2 +1,2 @@
 
-wof_inst = None
+from soap import create_wof_service_class

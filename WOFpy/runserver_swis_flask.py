@@ -9,8 +9,7 @@ import wofpy_soap
 import private_config
 
 from wof import WOF
-
-from wofpy_soap.soap import WOFService
+from wofpy_soap import create_wof_service_class
 from wofpy_flask import config
 from wofpy_flask import create_app
 from daos.swis.swis_dao import SwisDao
@@ -28,9 +27,9 @@ if __name__ == '__main__':
     flask_app = create_app(swis_wof)
     flask_app.config.from_object(config.DevConfig)
 
-    wofpy_soap.wof_inst = swis_wof #TODO: better way of setting WOF instance into the soap service
-
-    soap_app = soaplib.core.Application(services=[WOFService],
+    SWISWOFService = create_wof_service_class(swis_wof)
+    
+    soap_app = soaplib.core.Application(services=[SWISWOFService],
         tns='http://www.cuahsi.org/his/1.0/ws/',
         name='WaterOneFlow')
 

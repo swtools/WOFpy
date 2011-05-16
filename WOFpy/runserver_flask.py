@@ -9,7 +9,7 @@ import wofpy_soap
 import private_config
 
 from wof import WOF
-from wofpy_soap.soap import WOFService
+from wofpy_soap import create_wof_service_class
 from wofpy_flask import config
 from wofpy_flask import create_app
 from daos.odm.odm_dao import OdmDao
@@ -26,10 +26,9 @@ if __name__ == '__main__':
     flask_app = create_app(odm_wof)
     flask_app.config.from_object(config.DevConfig)
 
-    wofpy_soap.wof_inst = odm_wof #TODO: better way of setting WOF instance into the soap service
+    ODMWOFService = create_wof_service_class(odm_wof)
 
-
-    soap_app = soaplib.core.Application(services=[WOFService],
+    soap_app = soaplib.core.Application(services=[ODMWOFService],
         tns='http://www.cuahsi.org/his/1.0/ws/',
         name='WaterOneFlow')
 
