@@ -54,6 +54,11 @@ namespaces = {
     'par_base':"http://mmisw.org/ont/gcoos/parameter/"
 }
 
+#TODO: make this variable to units map instead of using the GCOOS whacky units
+ioos_variable_to_units_map = {
+    
+}
+
 class Site(object):
     def __init__(self, code, name, latitude, longitude):
         self.code = code
@@ -69,7 +74,6 @@ class Site(object):
 
     def __hash__(self):
         return hash(self.__key())
-
 
 class Unit(object):
     def __init__(self, name, abbreviation):

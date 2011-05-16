@@ -108,8 +108,8 @@ def get_values():
     
     siteArg = request.args.get('location',None)
     varArg = request.args.get('variable',None)
-    startDateTime = request.args.get('startDate',None) #TODO
-    endDateTime = request.args.get('endDate',None) #TODO
+    startDateTime = request.args.get('startDate',None)
+    endDateTime = request.args.get('endDate',None)
     
     if (siteArg == None or varArg == None):
         return "Must enter a site code (location) and a variable code \

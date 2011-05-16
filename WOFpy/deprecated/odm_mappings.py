@@ -57,7 +57,6 @@ class Site(db.Model):
     def __repr__(self):
         return "<Site('%s','%s', ['%s' '%s'])>" % (self.SiteCode, self.SiteName, str(self.Latitude), str(self.Longitude))
 
-#TODO: Setup foreignkey relationships
 class DataValue(db.Model):
     __tablename__ = 'DataValues'
     

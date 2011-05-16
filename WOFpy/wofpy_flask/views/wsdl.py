@@ -7,7 +7,8 @@ wsdl = Module(__name__)
 
 @wsdl.route('/soap/<network>.wsdl')
 def get_wsdl(network):
-#TODO: The WSDL should be served separately from the Flask application
+#TODO: The WSDL should be served separately from the Flask application.
+# Come up with a better way to do this.
     if network == 'lbr' or network == 'swis' or network == 'cbi':
 
         serv_loc = 'http://%s/soap/%s/WOFService' %\

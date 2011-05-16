@@ -315,7 +315,7 @@ class WOF(object):
             isoDateTimeUTC += 'Z'
         
         value = WaterML.ValueSingleVariable(
-                        qualityControlLevel=valueResult.QualityControlLevel,          #TODO: This should be the enum name, like "Raw data"
+                        qualityControlLevel=valueResult.QualityControlLevel,
                         methodID=valueResult.MethodID,
                         sourceID=valueResult.SourceID,
                         censorCode=valueResult.CensorCode,
@@ -496,7 +496,7 @@ class WOF(object):
         
         variableCode = WaterML.variableCode()
         variableCode.vocabulary = self.vocabulary
-        variableCode.default = "true" #TODO
+        variableCode.default = "true" #TODO: What is this, should it always be true?
         variableCode.variableID = variableResult.VariableID
         variableCode.valueOf_ = variableResult.VariableCode
         
