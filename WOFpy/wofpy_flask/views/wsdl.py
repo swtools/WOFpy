@@ -1,16 +1,20 @@
 
 
 from flask import (Flask, request, Markup, Response, render_template,
-                   make_response, Module)
+                   make_response, Module, current_app)
 
 wsdl = Module(__name__)
 
-@wsdl.route('/<network>.wsdl')
+@wsdl.route('/soap/<network>.wsdl')
 def get_wsdl(network):
 #TODO: The WSDL should be served separately from the Flask application
     if network == 'lbr' or network == 'swis' or network == 'cbi':
-        #TODO: should have different serv_loc based on network
-        serv_loc = 'http://crwr-little.austin.utexas.edu:8080/soap/WOFService'
+
+        serv_loc = 'http://%s/soap/%s/WOFService' %\
+            (request.environ['HTTP_HOST'], network)
+        
+        serv_loc = 'http://crwr-little.austin.utexas.edu:8080/soap/%s/WOFService' % network
+        
         response = make_response(render_template('wsdl_temp.wsdl',
                                                  serv_loc=serv_loc,
                                                  network=network))
