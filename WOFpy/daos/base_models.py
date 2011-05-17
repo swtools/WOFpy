@@ -125,9 +125,8 @@ class BaseOffsetType(object):
     
     OffsetUnits = BaseUnits()
 
-
 class BaseMethod(object):
-     
+ 
     MethodID = None
     MethodDescription = None
     MethodLink = None
