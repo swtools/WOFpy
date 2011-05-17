@@ -521,7 +521,7 @@ if __name__ == '__main__':
                 series_cat.TimeUnitsID = time_units.UnitsID
                 series_cat.TimeUnitsName = time_units.UnitsName
                 
-                #TODO: DataType
+                #TODO: DataType = "Raw data" ?
                 
                 #TODO: is this the best way to do the datetime conversion?
                 st = time.strptime(
