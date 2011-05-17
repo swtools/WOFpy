@@ -16,8 +16,7 @@ class DataValue(wof_base.BaseDataValue):
     #QualifierID = None
     #MethodID = None
     #SourceID = None
-    #SampleID = None
-    #DerivedFromID = None
+    #SampleID = None=
     #QualityControlLevel = None
     #QualityControlLevelID = None
     

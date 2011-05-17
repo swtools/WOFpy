@@ -126,7 +126,6 @@ class Site(Base, wof_base.BaseSite):
     #All sites are in WGS84
     LatLongDatum = wof_base.BaseSpatialReference()
     LatLongDatum.SRSID=4326
-    LatLongDatum.IsGeographic=True
     LatLongDatum.SRSName="WGS84"
 
 class DataValue(Base, wof_base.BaseDataValue):

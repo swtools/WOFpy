@@ -132,7 +132,6 @@ class Variable(Base, wof_base.BaseVariable):
     VariableName = Column(String)
     VariableDescription = Column(String)
     VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
-    #Speciation = None
     SampleMedium = Column(String)
     #ValueType = None
     #IsRegular = None
@@ -158,7 +157,6 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     VariableID = Column(Integer, ForeignKey('Variables.VariableID'))
     VariableCode = Column(String)
     VariableName = Column(String)
-    #Speciation = None
     VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID')) 
     VariableUnitsName = Column(String)
     SampleMedium = Column(String)

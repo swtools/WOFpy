@@ -46,7 +46,6 @@ class BaseSpatialReference(object):
     SpatialReferenceId = None
     SRSID = None
     SRSName = None
-    IsGeographic = None
     Notes = None
 
 class BaseVariable(object):
@@ -54,7 +53,6 @@ class BaseVariable(object):
     VariableID = None
     VariableCode = None
     VariableName = None
-    Speciation = None
     VariableUnitsID = None
     SampleMedium = None
     ValueType = None
@@ -70,7 +68,7 @@ class BaseVariable(object):
     TimeUnits = BaseUnits()
 
 class BaseSite(object):
-      
+
     SiteID = None
     SiteCode = None
     SiteName = None
@@ -82,7 +80,6 @@ class BaseSite(object):
     LocalX = None
     LocalY = None
     LocalProjectionID = None #FK to SpatialReferences
-    PosAccuracy_m = None
     State = None
     County = None
     Comments = None
@@ -107,7 +104,6 @@ class BaseDataValue(object):
     MethodID = None
     SourceID = None
     SampleID = None
-    DerivedFromID = None
     QualityControlLevel = None
     QualityControlLevelID = None
     
@@ -179,7 +175,6 @@ class BaseSeriesCatalog(object):
     VariableID = None
     VariableCode = None
     VariableName = None
-    Speciation = None
     VariableUnitsID = None 
     VariableUnitsName = None
     SampleMedium = None

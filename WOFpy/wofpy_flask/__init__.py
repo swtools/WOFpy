@@ -1,6 +1,8 @@
-from flask import Flask
+from flask import Flask, render_template
 
 import config
+
+#TODO: Error handlers (404, etc.)
 
 def create_app(wof_inst):
     app = Flask(__name__)
@@ -15,8 +17,3 @@ def create_app(wof_inst):
     app.register_module(wsdl)
     
     return app
-
-#app = Flask(__name__)
-#app.config.from_object(config.Config)
-
-#import views

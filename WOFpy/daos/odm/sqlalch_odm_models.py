@@ -20,7 +20,6 @@ class Variable(Base, wof_base.BaseVariable):
     VariableID = Column(Integer, primary_key=True)
     VariableCode = Column(String)
     VariableName = Column(String)
-    Speciation = Column(String)
     VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
     SampleMedium = Column(String)
     ValueType = Column(String)
@@ -56,7 +55,6 @@ class Site(Base, wof_base.BaseSite):
     LocalY = Column(Float)
     LocalProjectionID = Column(Integer,
                         ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
-    PosAccuracy_m = Column(Float)
     State = Column(String)
     County = Column(String)
     Comments = Column(String)
@@ -93,7 +91,6 @@ class DataValue(Base, wof_base.BaseDataValue):
     MethodID = Column(Integer)
     SourceID = Column(Integer)
     SampleID = Column(Integer)
-    DerivedFromID = Column(Integer)
     QualityControlLevelID = Column(Integer)
     
     @property
@@ -177,7 +174,6 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     VariableID = Column(Integer, ForeignKey('Variables.VariableID'))
     VariableCode = Column(String)
     VariableName = Column(String)
-    Speciation = Column(String)
     VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID')) 
     VariableUnitsName = Column(String)
     SampleMedium = Column(String)
@@ -228,7 +224,6 @@ class SpatialReference(Base, wof_base.BaseSpatialReference):
     SpatialReferenceId = Column(Integer, primary_key=True)
     SRSID = Column(Integer)
     SRSName = Column(String)
-    IsGeographic = Column(Boolean)
     Notes = Column(String)
     
 class VerticalDatum(Base, wof_base.BaseVerticalDatum):

@@ -421,7 +421,8 @@ class WOF(object):
         
         if (siteResult.LocalX and siteResult.LocalY):
             localSiteXY = WaterML.localSiteXY()
-            localSiteXY.projectionInformation = siteResult.LocalProjection.SRSName
+            localSiteXY.projectionInformation = \
+                                        siteResult.LocalProjection.SRSName
             localSiteXY.X = siteResult.LocalX
             localSiteXY.Y = siteResult.LocalY
             geoLocation.add_localSiteXY(localSiteXY)

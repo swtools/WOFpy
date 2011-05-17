@@ -42,13 +42,8 @@ if __name__ == '__main__':
     
     #Create the Flask applications
     lbr_flask_app = create_app(lbr_wof)
-    lbr_flask_app.config.from_object(config.DevConfig)
-    
     swis_flask_app = create_app(swis_wof)
-    swis_flask_app.config.from_object(config.DevConfig)
-
     cbi_flask_app = create_app(cbi_wof)
-    cbi_flask_app.config.from_object(config.DevConfig)
     
     #Create the soaplib classes
     LBRWOFService = create_wof_service_class(lbr_wof)
@@ -91,6 +86,5 @@ if __name__ == '__main__':
     
     run_simple('0.0.0.0', 8080, combined_app, use_reloader=True,
                use_debugger=True, threaded=True)
-    
     
     

@@ -9,7 +9,6 @@ class Variable(db.Model):
     VariableID = db.Column(db.Integer, primary_key=True)
     VariableCode = db.Column(db.String)
     VariableName = db.Column(db.String)
-    Speciation = db.Column(db.String)
     VariableUnitsID = db.Column(db.Integer, db.ForeignKey('Units.UnitsID'))
     SampleMedium = db.Column(db.String)
     ValueType = db.Column(db.String)
@@ -43,7 +42,6 @@ class Site(db.Model):
     LocalX = db.Column(db.Float)
     LocalY = db.Column(db.Float)
     LocalProjectionID = db.Column(db.Integer, db.ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences
-    PosAccuracy_m = db.Column(db.Float)
     State = db.Column(db.String)
     County = db.Column(db.String)
     Comments = db.Column(db.String)
@@ -75,7 +73,6 @@ class DataValue(db.Model):
     MethodID = db.Column(db.Integer)
     SourceID = db.Column(db.Integer)
     SampleID = db.Column(db.Integer)
-    DerivedFromID = db.Column(db.Integer)
     QualityControlLevelID = db.Column(db.Integer)
     
 
@@ -152,7 +149,6 @@ class SeriesCatalog(db.Model):
     VariableID = db.Column(db.Integer, db.ForeignKey('Variables.VariableID'))
     VariableCode = db.Column(db.String)
     VariableName = db.Column(db.String)
-    Speciation = db.Column(db.String)
     VariableUnitsID = db.Column(db.Integer, db.ForeignKey('Units.UnitsID')) 
     VariableUnitsName = db.Column(db.String)
     SampleMedium = db.Column(db.String)
@@ -204,7 +200,6 @@ class SpatialReference(db.Model):
     SpatialReferenceId = db.Column(db.Integer, primary_key=True)
     SRSID = db.Column(db.Integer)
     SRSName = db.Column(db.String)
-    IsGeographic = db.Column(db.Boolean)
     Notes = db.Column(db.String)
     
 class VerticalDatum(db.Model):
