@@ -17,6 +17,10 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
 class TestWofpyCode(unittest.TestCase):
+    """
+    Tests wof response generation methods for validation against
+    the WaterML 1.0 schema.
+    """
     
     def setUp(self):
         test_db_path = os.path.join(os.path.dirname(__file__),

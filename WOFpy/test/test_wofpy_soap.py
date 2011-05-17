@@ -14,7 +14,7 @@ from wofpy_flask import create_app
 class TestWofpySoap(unittest.TestCase):
     
     def setUp(self):
-        self.wsdlurl = 'http://127.0.0.1:8080/soap/WOFService.wsdl'
+        self.wsdlurl = 'http://localhost:8080/soap/swis.wsdl'
         '''
         flask_app.config.from_object(config.DevConfig)
         wof.config_from_file('config/lbr_config.cfg')
