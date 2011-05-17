@@ -7,7 +7,7 @@ from soaplib.core.server import wsgi
 
 from daos.odm.odm_dao import OdmDao
 
-from wofpy_soap.soap import WOFService
+from wofpy_soap import create_wof_service_class
 from wofpy_flask import config
 from wofpy_flask import create_app
 

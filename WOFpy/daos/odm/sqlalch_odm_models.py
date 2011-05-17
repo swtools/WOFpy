@@ -140,7 +140,6 @@ class Source(Base, wof_base.BaseSource):
     City = Column(String)
     State = Column(String)
     ZipCode = Column(String)
-    Citation = Column(String)
     MetadataID = Column(Integer, ForeignKey('ISOMetadata.MetadataID'))
     
     Metadata = relationship("Metadata",
@@ -161,8 +160,6 @@ class QualityControlLevel(Base, wof_base.BaseQualityControlLevel):
     
     QualityControlLevelID = Column(Integer, primary_key=True)
     QualityControlLevelCode = Column(String)
-    Definition = Column(String)
-    Explanation = Column(String)
 
 class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     __tablename__ = 'SeriesCatalog'
@@ -188,7 +185,6 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     SourceID = Column(Integer, ForeignKey('Sources.SourceID'))
     Organization = Column(String)
     SourceDescription = Column(String)
-    Citation = Column(String)
     QualityControlLevelID = Column(Integer) #TODO
     QualityControlLevelCode = Column(String)
     BeginDateTime = Column(DateTime)

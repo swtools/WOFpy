@@ -171,7 +171,6 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     #SourceID = None #TODO
     #Organization = None
     #SourceDescription = None
-    #Citation = None
     #QualityControlLevelID = None
     #QualityControlLevelCode = None
     #BeginDateTime = None

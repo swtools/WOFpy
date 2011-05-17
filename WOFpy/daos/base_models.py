@@ -140,8 +140,9 @@ class BaseMetadata(object):
     ProfileVersion = None
     MetadataLink = None
     
-class BaseSource(object):
     
+class BaseSource(object):
+
     SourceID = None
     Organization = None
     SourceDescription = None
@@ -153,17 +154,14 @@ class BaseSource(object):
     City = None
     State = None
     ZipCode = None
-    Citation = None
     MetadataID = None
     
     Metadata = BaseMetadata()
     
 class BaseQualityControlLevel(object):
-    
+    #here
     QualityControlLevelID = None
     QualityControlLevelCode = None
-    Definition = None
-    Explanation = None
 
 class BaseSeriesCatalog(object):
     
@@ -188,7 +186,6 @@ class BaseSeriesCatalog(object):
     SourceID = None #TODO
     Organization = None
     SourceDescription = None
-    Citation = None
     QualityControlLevelID = None
     QualityControlLevelCode = None
     BeginDateTime = None

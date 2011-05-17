@@ -115,7 +115,6 @@ class Source(db.Model):
     City = db.Column(db.String)
     State = db.Column(db.String)
     ZipCode = db.Column(db.String)
-    Citation = db.Column(db.String)
     MetadataID = db.Column(db.Integer, db.ForeignKey('ISOMetadata.MetadataID'))
     
     Metadata = db.relationship("ISOMetadata", backref="Source")
@@ -136,8 +135,6 @@ class QualityControlLevel(db.Model):
     
     QualityControlLevelID = db.Column(db.Integer, primary_key=True)
     QualityControlLevelCode = db.Column(db.String)
-    Definition = db.Column(db.String)
-    Explanation = db.Column(db.String)
 
 class SeriesCatalog(db.Model):
     __tablename__ = 'SeriesCatalog'
@@ -163,7 +160,6 @@ class SeriesCatalog(db.Model):
     SourceID = db.Column(db.Integer) #TODO
     Organization = db.Column(db.String)
     SourceDescription = db.Column(db.String)
-    Citation = db.Column(db.String)
     QualityControlLevelID = db.Column(db.Integer) #TODO
     QualityControlLevelCode = db.Column(db.String)
     BeginDateTime = db.Column(db.DateTime)
