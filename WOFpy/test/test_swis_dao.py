@@ -14,7 +14,6 @@ class TestSwisDao(unittest.TestCase):
                                         'test_swis_config.cfg')
         
         self.dao = SwisDao('sqlite:///'+test_db_path, test_config_path)
-           
         
         self.known_site_codes = (
             'ARA', 'ARROYD', 'ARROYS', 'BAFF', 'BAYT', 'BIRD', 'BLB', 'BOBH',
@@ -61,9 +60,22 @@ class TestSwisDao(unittest.TestCase):
             JOB = ['water_dissolved_oxygen_percent_saturation']
         )
         
-        self.known_method_ids = ()
+        self.known_method_ids = [1] #TODO: Need more instruments in test_swis.db
         
-        self.known_source_ids = ()
+        self.known_source_id = 1 #Only have one Source in SWIS DAO, whose info is in dao.contact_info
+        
+        self.known_source_info = {
+            'Name': 'Andrew Wilson',
+            'Phone': '512-555-5555',
+            'Email': 'Andrew.Wilson@twdb.state.tx.us',
+            'Organization': 'TWDB',
+            'Link': 'http://www.twdb.state.tx.us/',
+            'Description': 'Texas Water Development Board Surface Water Information System (TWDB SWIS)',
+            'Address': '1700 North Congress, Suite #670',
+            'City': 'Austin',
+            'State': 'TX',
+            'ZipCode': '78701'
+        }
         
         self.known_qualifier_ids = ()
         
@@ -135,7 +147,6 @@ class TestSwisDao(unittest.TestCase):
                     self.assertEqual(var_code,
                                      series_cat.Variable.VariableCode)
     
-    #TODO
     def test_get_datavalues(self):
         for site_code in self.known_series:
             for var_code in self.known_series[site_code]:
@@ -143,21 +154,62 @@ class TestSwisDao(unittest.TestCase):
                 self.assertNotEqual(dv, None)
                 self.assertNotEqual(len(dv), 0)
     
-    #TODO
     def test_get_method_by_id(self):
-        pass
+        for method_id in self.known_method_ids:
+            methodResult = self.dao.get_method_by_id(method_id)
+            self.assertNotEqual(methodResult, None)
+            self.assertTrue(methodResult.MethodID in self.known_method_ids)
     
-    #TODO
     def test_get_methods_by_ids(self):
-        pass
+        methodResultArr = self.dao.get_methods_by_ids(self.known_method_ids)
+        self.assertNotEqual(methodResultArr, None)
+        self.assertNotEqual(len(methodResultArr), 0)
+        for methodResult in methodResultArr:
+            self.assertTrue(methodResult.MethodID in self.known_method_ids)
     
-    #TODO
     def test_get_source_by_id(self):
-        pass
+        sourceResult = self.dao.get_source_by_id(1) #Only have one source in SWIS
+        self.assertNotEqual(sourceResult, None)
+       
+        self.assertEqual(sourceResult.ContactName,
+                         self.known_source_info['Name'])
+        self.assertEqual(sourceResult.Phone,self.known_source_info['Phone'])
+        self.assertEqual(sourceResult.Email,self.known_source_info['Email'])
+        self.assertEqual(sourceResult.Organization,
+                         self.known_source_info['Organization'])
+        self.assertEqual(sourceResult.SourceLink,
+                         self.known_source_info['Link'])
+        self.assertEqual(sourceResult.SourceDescription,
+                         self.known_source_info['Description'])
+        self.assertEqual(sourceResult.Address,
+                         self.known_source_info['Address'])
+        self.assertEqual(sourceResult.City,self.known_source_info['City'])
+        self.assertEqual(sourceResult.State,self.known_source_info['State'])
+        self.assertEqual(sourceResult.ZipCode,
+                         self.known_source_info['ZipCode'])
     
-    #TODO
     def test_get_sources_by_ids(self):
-        pass
+        sourceResultArr = self.dao.get_sources_by_ids([1])
+        
+        self.assertEqual(len(sourceResultArr),1) #should only have one Source for SWIS
+        sourceResult = sourceResultArr[0]
+        
+        self.assertEqual(sourceResult.ContactName,
+                         self.known_source_info['Name'])
+        self.assertEqual(sourceResult.Phone,self.known_source_info['Phone'])
+        self.assertEqual(sourceResult.Email,self.known_source_info['Email'])
+        self.assertEqual(sourceResult.Organization,
+                         self.known_source_info['Organization'])
+        self.assertEqual(sourceResult.SourceLink,
+                         self.known_source_info['Link'])
+        self.assertEqual(sourceResult.SourceDescription,
+                         self.known_source_info['Description'])
+        self.assertEqual(sourceResult.Address,
+                         self.known_source_info['Address'])
+        self.assertEqual(sourceResult.City,self.known_source_info['City'])
+        self.assertEqual(sourceResult.State,self.known_source_info['State'])
+        self.assertEqual(sourceResult.ZipCode,
+                         self.known_source_info['ZipCode'])
     
     #TODO
     def test_get_qualifier_by_id(self):
