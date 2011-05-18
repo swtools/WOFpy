@@ -1,4 +1,5 @@
 <?xml version="1.0" ?>
+{# TODO: Make this better once we know how #}
 <wml2:WaterCollection xmlns:wml2="http://www.opengis.net/waterml/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:om="http://www.opengis.net/om/2.0" xmlns:sf="http://www.opengis.net/sampling/2.0" xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/waterml/2.0">
 	<wml2:metadata>
 		<wml2:DocumentMetadata gml:id="doc_md">
@@ -17,7 +18,7 @@
 			</om:phenomenonTime>
 			<om:resultTime>
 				<gml:TimeInstant>
-					<gml:timePosition></gml:timePosition>
+					<gml:timePosition></gml:timePosition> {# TODO: Figure out what this is #}
 				</gml:TimeInstant>
 			</om:resultTime>
 			<om:procedure xlink:href="" xlink:title=""/>
@@ -31,8 +32,7 @@
                                             <wml2:TimeValuePair>
                                                     <wml2:unitOfMeasure xlink:href="{{variable_result.VariableUnits.UnitsAbbreviation}}" xlink:title="{{variable_result.VariableUnits.UnitsName}}"/>
                                                     <wml2:dataType xlink:href="" xlink:title="{{variable_result.DataType}}"/>
-                                                    <wml2:qualifier xlink:href="" xlink:title=""/>
-                                                    <wml2:quality xlink:href="" xlink:title=""/>
+                                                    <wml2:quality xlink:href="Raw_data" xlink:title="Raw data"/> {# TODO: Figure out default and set if different for individual values #}
                                             </wml2:TimeValuePair>
                                         </wml2:defaultTimeValuePair>
                                         
@@ -41,7 +41,7 @@
                                                 <wml2:TimeValuePair>
                                                         <wml2:time>{{ dv.DateTimeUTC }}</wml2:time>
                                                         <wml2:value>{{ dv.DataValue }}</wml2:value>
-                                                        <wml2:processing>{{ dv.QualityControlLevel }}</wml2:processing>
+                                                        <wml2:processing>{{ dv.QualityControlLevel }}</wml2:processing> {# TODO: necessary? #}
                                                 </wml2:TimeValuePair>
                                         </wml2:point>
                                         {% endfor %}
