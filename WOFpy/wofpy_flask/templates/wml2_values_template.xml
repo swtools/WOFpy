@@ -20,7 +20,7 @@
 					<gml:timePosition></gml:timePosition>
 				</gml:TimeInstant>
 			</om:resultTime>
-			<om:procedure xlink:href="Raw data" xlink:title="Raw data"/>
+			<om:procedure xlink:href="" xlink:title=""/>
 			<om:observedProperty xlink:href="{{ variable_result.VariableCode}}" xlink:title="{{ variable_result.VariableName }}"/>
 			<om:featureOfInterest xlink:href="{{ site_result.SiteCode }}" xlink:title="{{ site_result.SiteName }}"/>
 			<om:result>
@@ -29,9 +29,10 @@
                                             
                                         <wml2:defaultTimeValuePair>
                                             <wml2:TimeValuePair>
-                                                    <wml2:unitOfMeasure xlink:href="cfs" xlink:title="cfs"/>
-                                                    <wml2:dataType xlink:href="" xlink:title="Raw data"/>
-                                                    <wml2:qualifier xlink:href="" xlink:title="0"/>
+                                                    <wml2:unitOfMeasure xlink:href="{{variable_result.VariableUnits.UnitsAbbreviation}}" xlink:title="{{variable_result.VariableUnits.UnitsName}}"/>
+                                                    <wml2:dataType xlink:href="" xlink:title="{{variable_result.DataType}}"/>
+                                                    <wml2:qualifier xlink:href="" xlink:title=""/>
+                                                    <wml2:quality xlink:href="" xlink:title=""/>
                                             </wml2:TimeValuePair>
                                         </wml2:defaultTimeValuePair>
                                         
@@ -40,6 +41,7 @@
                                                 <wml2:TimeValuePair>
                                                         <wml2:time>{{ dv.DateTimeUTC }}</wml2:time>
                                                         <wml2:value>{{ dv.DataValue }}</wml2:value>
+                                                        <wml2:processing>{{ dv.QualityControlLevel }}</wml2:processing>
                                                 </wml2:TimeValuePair>
                                         </wml2:point>
                                         {% endfor %}
