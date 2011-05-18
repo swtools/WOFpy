@@ -1,5 +1,6 @@
 
 import StringIO
+import datetime
 
 from flask import (Flask, request, Markup, Response, render_template,
                    make_response, Module, current_app)
@@ -125,4 +126,45 @@ def get_values():
     response = Response(response=outStream.getvalue(), status=200,
                         headers=None, mimetype='text/xml')
 
+    return response
+
+@rest.route('/GetValuesWML2', methods=['GET'])
+def get_values_wml2():
+    """
+    Experimental/Demo WaterML2-formatted Values response.
+    """
+    
+    #TODO: Make this better once WaterML2 Schema is better understood
+    # and/or best practices for using it are agreed to.
+    
+    siteArg = request.args.get('location',None)
+    varArg = request.args.get('variable',None)
+    startDateTime = request.args.get('startDate',None)
+    endDateTime = request.args.get('endDate',None)
+    
+    if (siteArg == None or varArg == None):
+        return "Must enter a site code (location) and a variable code \
+            (variable)"
+    
+    siteCode = siteArg.replace(current_app.wof_inst.network+':','')
+    varCode = varArg.replace(current_app.wof_inst.network+':','')
+    
+    
+    data_values = current_app.wof_inst.dao.get_datavalues(siteCode, varCode,
+                                                          startDateTime,
+                                                          endDateTime)
+    
+    site_result = current_app.wof_inst.dao.get_site_by_code(siteCode)
+    variable_result = current_app.wof_inst.dao.get_variable_by_code(varCode)
+    
+    current_date = str(datetime.datetime.now())
+    
+    response = make_response(render_template('wml2_values_template.xml',
+                                            current_date=current_date,
+                                            data_values=data_values,
+                                            site_result=site_result,
+                                            variable_result=variable_result))
+
+    response.headers['Content-Type'] = 'text/xml'
+    
     return response

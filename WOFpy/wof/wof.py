@@ -14,7 +14,6 @@ class WOF(object):
     timezone = None
     timezone_abbr = None
     
-   
     dao = None
     
     def __init__(self, dao):
@@ -533,3 +532,24 @@ class WOF(object):
         variable.set_timeSupport(timeSupport)
         
         return variable
+
+
+    def create_wml2_values_object(self, siteArg, varArg, startDateTime=None,
+                                   endDateTime=None):
+        
+        siteCode = siteArg.replace(self.network+':','')
+        varCode = varArg.replace(self.network+':','')
+    
+        valueResultArr = self.dao.get_datavalues(siteCode, varCode,
+                                                 startDateTime, endDateTime)
+    
+        return valueResultArr
+    
+    
+    
+    
+    
+    
+    
+    
+    

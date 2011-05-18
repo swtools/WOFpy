@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<wml2:WaterCollection xmlns:wml2="http://www.opengis.net/waterml/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:om="http://www.opengis.net/om/2.0" xmlns:sf="http://www.opengis.net/sampling/2.0" xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/waterml/2.0">
+	<wml2:metadata>
+		<wml2:DocumentMetadata gml:id="doc_md">
+			<wml2:generationDate>{{ current_date }}</wml2:generationDate>
+			<wml2:generationSystem>WOFpy Experimental/Demo WaterML2 Method</wml2:generationSystem>
+		</wml2:DocumentMetadata>
+	</wml2:metadata>
+	<wml2:observationMember>
+		<wml2:WaterMonitoringObservation gml:id="wml2test">
+			<gml:name codeSpace="http://www.opengis.net/waterml/2.0/examples">WML2fromWOFpy</gml:name>
+			<om:phenomenonTime>
+                            <gml:TimePeriod gml:id="phen_time">
+                                    <gml:beginPosition>{{ data_values[0].DateTimeUTC }}</gml:beginPosition>
+                                    <gml:endPosition>{{ data_values[data_values|length-1].DateTimeUTC }}</gml:endPosition>
+                            </gml:TimePeriod>
+			</om:phenomenonTime>
+			<om:resultTime>
+				<gml:TimeInstant>
+					<gml:timePosition></gml:timePosition>
+				</gml:TimeInstant>
+			</om:resultTime>
+			<om:procedure xlink:href="Raw data" xlink:title="Raw data"/>
+			<om:observedProperty xlink:href="{{ variable_result.VariableCode}}" xlink:title="{{ variable_result.VariableName }}"/>
+			<om:featureOfInterest xlink:href="{{ site_result.SiteCode }}" xlink:title="{{ site_result.SiteName }}"/>
+			<om:result>
+				<wml2:Timeseries>
+					<wml2:domainExtent xlink:href="#phen_time"/>
+                                            
+                                        <wml2:defaultTimeValuePair>
+                                            <wml2:TimeValuePair>
+                                                    <wml2:unitOfMeasure xlink:href="cfs" xlink:title="cfs"/>
+                                                    <wml2:dataType xlink:href="" xlink:title="Raw data"/>
+                                                    <wml2:qualifier xlink:href="" xlink:title="0"/>
+                                            </wml2:TimeValuePair>
+                                        </wml2:defaultTimeValuePair>
+                                        
+					{% for dv in data_values %}
+                                        <wml2:point>
+                                                <wml2:TimeValuePair>
+                                                        <wml2:time>{{ dv.DateTimeUTC }}</wml2:time>
+                                                        <wml2:value>{{ dv.DataValue }}</wml2:value>
+                                                </wml2:TimeValuePair>
+                                        </wml2:point>
+                                        {% endfor %}
+				</wml2:Timeseries>
+			</om:result>
+		</wml2:WaterMonitoringObservation>
+	</wml2:observationMember>
+</wml2:WaterCollection>

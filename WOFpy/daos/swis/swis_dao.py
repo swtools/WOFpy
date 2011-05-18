@@ -130,7 +130,6 @@ class SwisDao(BaseDao):
        
         return [seriesCat]
          
-    #TODO
     def get_datavalues(self, site_code, var_code, begin_date_time=None,
                        end_date_time=None):
         

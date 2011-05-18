@@ -26,3 +26,12 @@ class identifier(ClassModel):
     #__namespace__
     #__type_name__
     pass
+
+class result(ClassModel):
+    pass
+
+class owner(ClassModel):
+    pass
+
+class organisationName(ClassModel):
+    pass
