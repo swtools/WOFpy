@@ -1,0 +1,62 @@
+Search "WaterOneFlowException" (44 hits in 17 files)
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\GetSiteInfoOD.cs (2 hits)
+	Line 53:                 throw new WaterOneFlowException("Site '" + locationParameter.ToString() + "' Not Found");
+	Line 141:                     throw new WaterOneFlowException(error);
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\GetSiteInfoOD_v1_1.cs (3 hits)
+	Line 55:                     throw new WaterOneFlowException("Site '" + locationParameter.ToString() + "' Not Found");
+	Line 179:                         throw new WaterOneFlowException(error);
+	Line 324:                     throw new WaterOneFlowException("No Sites found in specified region: ");
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\GetSitesOD.cs (1 hits)
+	Line 88:                 throw new WaterOneFlowException("No Sites found");
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\GetValuesOD.cs (5 hits)
+	Line 84:                     throw new WaterOneFlowException("Improper BeginDate '" +
+	Line 101:                     throw new WaterOneFlowException("Improper EndDate '" +
+	Line 123:                     throw new WaterOneFlowException("Variable parameter not found: " + Variable);
+	Line 129:                 throw new WaterOneFlowException("Variable parameter is required ");
+	Line 137:                 throw new WaterOneFlowException("Location by Geometry not accepted: " + SiteNumber);
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\GetValuesOD_v1_1.cs (5 hits)
+	Line 86:                         throw new WaterOneFlowException("No Data Available for Time Period.");
+	Line 196:                     throw new WaterOneFlowException("Location by Geometry not accepted: " + SiteNumber);
+	Line 216:                         throw new WaterOneFlowException("Variable parameter not found: " + Variable);
+	Line 234:                         throw new WaterOneFlowException("Improper EndDate '" +
+	Line 257:                         throw new WaterOneFlowException("Improper BeginDate '" +
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\GetVariablesOD.cs (1 hits)
+	Line 53:                 throw new WaterOneFlowException("Variable Not Found");
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\GetVariablesOD_v1_1.cs (1 hits)
+	Line 51:                     throw new WaterOneFlowException("Variable Not Found");
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\ODService.cs (3 hits)
+	Line 100:                     throw new WaterOneFlowException(error);
+	Line 103:             catch (WaterOneFlowException we)
+	Line 116:                 throw new WaterOneFlowException(error);
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\ODService_v1_1.cs (3 hits)
+	Line 129:                             throw new WaterOneFlowException(error);
+	Line 137:                 catch (WaterOneFlowException we)
+	Line 148:                     throw new WaterOneFlowException(error);
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\genericODws\App_Code\ODSiteInfo_v1_1.cs (1 hits)
+	Line 213:                     throw new WaterOneFlowException("No Sites found in specified region: " + queryBox.ToString());
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\waterOneFlowImpl\box.cs (2 hits)
+	Line 81:                 throw new WaterOneFlowException("Invalid Parameter to create a geometry. Null Parameter passed");
+	Line 92:             throw new WaterOneFlowException("Unable to create geometry for box from string. String does not include string '"+geomType +"'");
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\waterOneFlowImpl\locationParam.cs (2 hits)
+	Line 107:                         throw new WaterOneFlowException("SITEID must be an integer. '" + location + "'");
+	Line 124:                         throw new WaterOneFlowException("Unsupported Geometry :'" + SiteCode + "' " +
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\waterOneFlowImpl\point.cs (1 hits)
+	Line 81:                 throw new WaterOneFlowException("Could not create a point. Coordinates are separated by a space 'X Y'");
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\waterOneFlowImpl\SoapExceptionGenerator.cs (2 hits)
+	Line 34:         private static readonly ILog log = LogManager.GetLogger(typeof(WaterOneFlowException));
+	Line 43:             if (eType == typeof (WaterOneFlowException))
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\waterOneFlowImpl\variableParameter.cs (3 hits)
+	Line 104:                 throw new WaterOneFlowException("Bad Variable Parameter. Please enter a non-empty or not null  variable parameter");
+	Line 110:                 throw new WaterOneFlowException("Bad Variable Parameter. Variable parameters have the form: " + variableParamForm);
+	Line 126:                         throw new WaterOneFlowException("Variable options should be key=value pairs " + variableParamForm);
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\waterOneFlowImpl\WaterOneFlowException.cs (5 hits)
+	Line 8:     public class WaterOneFlowException : global::System.Exception
+	Line 17:         public WaterOneFlowException() { }
+	Line 18:         public WaterOneFlowException(string message) : base(message) { }
+	Line 19:         public WaterOneFlowException(string message, global::System.Exception inner) : base(message, inner) { }
+	Line 20:         protected WaterOneFlowException(
+  C:\Software\CODE\HydroServer\HydroServer\WaterOneFlow\GenericOdWs_vs2010\waterOneFlowImpl\WSUtils.cs (4 hits)
+	Line 52:                         throw new WaterOneFlowException("Unexpected response from server for URL:'" + address + "' " + response.StatusDescription);
+	Line 56:                         throw new WaterOneFlowException("Probable Parameter Error. Try different Time period. URL:'" + address + "' " + response.StatusDescription);
+	Line 62:                 throw new WaterOneFlowException("Error occured reading from '" + address + "' "
+	Line 65:             catch (WaterOneFlowException we)
