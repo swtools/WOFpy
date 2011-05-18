@@ -34,11 +34,17 @@
 		<li>
                     <a href="{{request.script_root|safe}}/GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}">
                         GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}
-                    </a>
+                    </a> Note: May crash browser for large values sets.
                 </li>
 		<li>
 			<a href="{{request.script_root|safe}}/GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}">
 				GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}
+			</a>
+		</li>
+                
+                <li>
+			WaterML2 Example: <a href="{{request.script_root|safe}}/GetValues?format=wml2&location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}">
+				GetValues?format=wml2&location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}
 			</a>
 		</li>
 	</ul>

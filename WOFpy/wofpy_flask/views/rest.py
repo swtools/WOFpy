@@ -107,11 +107,10 @@ def get_variable_info():
 @rest.route('/GetValues', methods=['GET'])
 def get_values():
     
-    
     #can also use "format=wml2" to get the waterml2 response
     formatArg = request.args.get('format',None)
     if formatArg and formatArg.lower() == 'wml2':
-        return get_variable_info()
+        return get_values_wml2()
     
     siteArg = request.args.get('location',None)
     varArg = request.args.get('variable',None)
