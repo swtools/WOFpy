@@ -5,7 +5,7 @@ from flask import (Flask, request, Markup, Response, render_template,
 
 wsdl = Module(__name__)
 
-@wsdl.route('/soap/<network>.wsdl')
+@wsdl.route('/<network>.wsdl')
 def get_wsdl(network):
 #TODO: The WSDL should be served separately from the Flask application.
 # Come up with a better way to do this.

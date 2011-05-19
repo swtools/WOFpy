@@ -226,3 +226,10 @@ class TestCbiDao(unittest.TestCase):
             self.assertTrue(known_code in resultVarCodes)
     
     #TODO: Test other DAO Methods
+    
+    def test_get_series_by_sitecode(self):
+        for known_code in self.known_sites:
+            seriesResultArr = self.dao.get_series_by_sitecode(known_code)
+            self.assertNotEqual(seriesResultArr, None)
+            self.assertNotEqual(len(seriesResultArr), 0)
+    

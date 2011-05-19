@@ -80,7 +80,7 @@ if __name__ == '__main__':
 
     print "------------------------------------------------------------"
     print "Access 'REST' endpoints at http://HOST:PORT/<network>"
-    print "Access SOAP WSDLs at http://HOST:PORT/soap/<network>.wsdl"
+    print "Access SOAP WSDLs at http://HOST:PORT/soap/<network>/<network>.wsdl"
     print "Available <network>s are 'lbr', 'swis' and 'cbi'"
     print "------------------------------------------------------------"
     
