@@ -32,8 +32,6 @@ QualityControlLevelTypes = dict(
     KNOWLEDGE_PRODUCTS=('Knowledge products',4)
 )
 
-#TODO: CLEAR OUT FIELDS THAT ARE NOT USED IN THE WOF CLASS
-
 class BaseUnits(object):
     
     UnitsID = None
@@ -159,7 +157,6 @@ class BaseSource(object):
     Metadata = BaseMetadata()
     
 class BaseQualityControlLevel(object):
-    #here
     QualityControlLevelID = None
     QualityControlLevelCode = None
 
