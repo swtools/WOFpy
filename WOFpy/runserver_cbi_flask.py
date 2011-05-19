@@ -37,7 +37,7 @@ if __name__ == '__main__':
     soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
 
     flask_app.wsgi_app = DispatcherMiddleware(flask_app.wsgi_app, {
-        '/soap': soap_wsgi_app
+        '/soap/cbi': soap_wsgi_app
     })
 
     flask_app.run(host='0.0.0.0', port=8080, threaded=True)

@@ -5,16 +5,21 @@ from flask import (Flask, request, Markup, Response, render_template,
 
 wsdl = Module(__name__)
 
-@wsdl.route('/<network>.wsdl')
-def get_wsdl(network):
+@wsdl.route('/soap/wateroneflow.wsdl')
+def get_wsdl():
 #TODO: The WSDL should be served separately from the Flask application.
 # Come up with a better way to do this.
-    if network == 'lbr' or network == 'swis' or network == 'cbi':
+    network = current_app.wof_inst.network.lower()
+    if (network == 'lbr' or network == 'swis' or network == 'cbi'):
 
         serv_loc = 'http://%s/soap/%s/WOFService' %\
             (request.environ['HTTP_HOST'], network)
         
+        print "--------------------------"
+        print network
         serv_loc = 'http://crwr-little.austin.utexas.edu:8080/soap/%s/WOFService' % network
+        
+        print serv_loc
         
         response = make_response(render_template('wsdl_temp.wsdl',
                                                  serv_loc=serv_loc,

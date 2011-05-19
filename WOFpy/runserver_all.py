@@ -80,11 +80,10 @@ if __name__ == '__main__':
 
     print "------------------------------------------------------------"
     print "Access 'REST' endpoints at http://HOST:PORT/<network>"
-    print "Access SOAP WSDLs at http://HOST:PORT/soap/<network>/<network>.wsdl"
+    print "Access SOAP WSDLs at http://HOST:PORT/<network>/soap/wateroneflow.wsdl"
     print "Available <network>s are 'lbr', 'swis' and 'cbi'"
     print "------------------------------------------------------------"
     
     run_simple('0.0.0.0', 8080, combined_app, use_reloader=True,
                use_debugger=True, threaded=True)
-    
     
