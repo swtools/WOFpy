@@ -5,9 +5,6 @@ import datetime
 from flask import (Flask, request, Markup, Response, render_template,
                    make_response, Module, current_app)
 
-from daos.swis.swis_dao import SwisDao
-from daos.cbi.cbi_dao import CbiDao
-
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:xlink="http://www.w3.org/1999/xlink" \
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" \
@@ -20,31 +17,12 @@ rest = Module(__name__)
 @rest.route('/')
 def index():
     
-	#TODO: Should put these default values into a config file or something
-	# so you don't have to edit the source code every time a new DAO is created.
-	# Make a [DEFAULT_REST] section in the cfg files and then read from that when
-	# creating the WOF Flask application in the factory method.
-    if isinstance(current_app.wof_inst.dao, SwisDao):
-        return render_template('index.html',
-                               p=current_app.wof_inst.network,
-                               s='BAYT', v='seawater_salinity',
-                               sd='2007-03-23T12:00:00',
-                               ed='2007-03-24T12:00:00')
-    elif isinstance(current_app.wof_inst.dao, CbiDao):
-        return render_template('index.html',
-                               p=current_app.wof_inst.network,
-                               s='014',
-                               v='water_temperature',
-                               sd='2011-05-04T17:24:00',
-                               ed='2011-05-04T17:36:00')
-    
     return render_template('index.html',
                            p=current_app.wof_inst.network,
-                           s='USU-LBR-Paradise',
-                           v='USU36',
-                           sd='2007-08-17T12:00:00',
-                           ed='2007-08-18T12:00:00')
-
+                           s=current_app.wof_inst.default_site,
+                           v=current_app.wof_inst.default_variable,
+                           sd=current_app.wof_inst.default_start_date,
+                           ed=current_app.wof_inst.default_end_date)
 
 @rest.route('/GetSites', methods=['GET'])
 def get_sites():

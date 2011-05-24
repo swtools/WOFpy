@@ -36,4 +36,10 @@ Tip: In the folder tree view in Windows Explorer, hold down the shift key and ri
 	- /GetSiteInfo?siteCode=XXX
 	- /GetVariableInfo?varCode=ABC
 	- /GetValues?siteCode=XXX&varCode=ABC&startDateTime=2010-01-01:12:00&endDateTime=2010-02-01-01:12:00
+    
+To Make a New DAO:
+1. Create a new folder in /daos to put all your dao code.
+2. Write a new DAO class based on BaseDao in base_dao.py.  The methods should return objects as defined in base_models.py
+3. Write a new config file as those found in /config
+4. Write a new runserver script (see runserver_flask.py as an example) to use the new DAO you implemented.
 

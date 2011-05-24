@@ -16,6 +16,11 @@ class WOF(object):
     
     dao = None
     
+    default_site = None
+    default_variable = None
+    default_start_date = None
+    default_end_date = None
+    
     def __init__(self, dao):
         self.dao = dao
 
@@ -30,7 +35,12 @@ class WOF(object):
         self.timezone = config.get('WOF', 'Timezone')
         self.timezone_abbr = config.get('WOF', 'TimezoneAbbreviation')
     
-
+        if config.has_section('Default_Params'):
+            self.default_site = config.get('Default_Params', 'Site')
+            self.default_variable = config.get('Default_Params', 'Variable')
+            self.default_start_date = config.get('Default_Params', 'StartDate')
+            self.default_end_date = config.get('Default_Params', 'EndDate')
+            
     def create_get_site_response(self, siteArg=None):
         
         if siteArg == None or siteArg == '':
