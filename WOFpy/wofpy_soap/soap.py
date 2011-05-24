@@ -28,6 +28,8 @@ def create_wof_service_class(wof_instance):
     
         wof_inst = wof_instance
           
+        #_out_variable_names ????
+        #TODO: suds is having trouble resolving the object responses
         @soap(Array(String), String, _returns=Any)
         def GetSites(self, site, authToken):
             

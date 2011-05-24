@@ -15,12 +15,6 @@ def get_wsdl():
         serv_loc = 'http://%s/soap/%s/WOFService' %\
             (request.environ['HTTP_HOST'], network)
         
-        print "--------------------------"
-        print network
-        serv_loc = 'http://crwr-little.austin.utexas.edu:8080/soap/%s/WOFService' % network
-        
-        print serv_loc
-        
         response = make_response(render_template('wsdl_temp.wsdl',
                                                  serv_loc=serv_loc,
                                                  network=network))
