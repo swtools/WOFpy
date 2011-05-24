@@ -17,11 +17,13 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
 
 rest = Module(__name__)
 
-
-
 @rest.route('/')
 def index():
-     
+    
+	#TODO: Should put these default values into a config file or something
+	# so you don't have to edit the source code every time a new DAO is created.
+	# Make a [DEFAULT_REST] section in the cfg files and then read from that when
+	# creating the WOF Flask application in the factory method.
     if isinstance(current_app.wof_inst.dao, SwisDao):
         return render_template('index.html',
                                p=current_app.wof_inst.network,

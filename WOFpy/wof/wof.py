@@ -370,7 +370,7 @@ class WOF(object):
             
         if (seriesResultArr != None):
             seriesCatalog.menuGroupName = self.menu_group_name
-            seriesCatalog.serviceWsdl = self.service_wsdl
+            seriesCatalog.serviceWsdl = self.service_wsdl  #TODO: Make sure this is set properly in config file
             
             for seriesResult in seriesResultArr:
                 series = self.create_series_element(seriesResult)
