@@ -63,14 +63,14 @@ class OdmDao(BaseDao):
             valueResultArr = model.DataValue.query.filter(
                 and_(model.DataValue.SiteID == siteResult.SiteID,
                      model.DataValue.VariableID == varResult.VariableID)
-                ).order_by(model.DataValue.LocalDateTime).all()
+                ).order_by(model.DataValue.DateTimeUTC).all()
         else:
             valueResultArr = model.DataValue.query.filter(
                 and_(model.DataValue.SiteID == siteResult.SiteID,
                      model.DataValue.VariableID == varResult.VariableID,
-                     model.DataValue.LocalDateTime >= begin_date_time,
-                     model.DataValue.LocalDateTime <= end_date_time)
-                ).order_by(model.DataValue.LocalDateTime).all()
+                     model.DataValue.DateTimeUTC >= begin_date_time,
+                     model.DataValue.DateTimeUTC <= end_date_time)
+                ).order_by(model.DataValue.DateTimeUTC).all()
 
         return valueResultArr
 
