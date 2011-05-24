@@ -26,9 +26,10 @@ setup(
         'flask>=0.6.1',
         'sqlalchemy>=0.6.7',
         'pyodbc>=2.1.8',
-        'lxml>=2.2',
+        'lxml>=2.3',
         'soaplib>=2.0.0',
-        'owslib>=0.3.1'
+        'suds',
+        'nose'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
