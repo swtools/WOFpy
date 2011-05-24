@@ -46,6 +46,9 @@ class SwisDao(BaseDao):
                 state = config.get('Contact', 'State'),
                 zipcode = config.get('Contact', 'ZipCode')
             )
+            
+    def __del__(self):
+        self.db_session.close()
     
     def get_all_sites(self):
         return model.Site.query.all()

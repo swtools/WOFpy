@@ -43,7 +43,10 @@ class CbiDao(BaseDao):
                 state = config.get('Contact', 'State'),
                 zipcode = config.get('Contact', 'ZipCode')
             )
-    
+            
+    def __del__(self):
+        self.db_session.close()
+        
     def get_all_sites(self):
         """
         Returns a list of all the Sites in the CBI site cache.
