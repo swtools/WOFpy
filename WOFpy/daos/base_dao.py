@@ -1,5 +1,4 @@
 
-#TODO: Remove methods that aren't really necessary
 
 class BaseDao(object):
 
