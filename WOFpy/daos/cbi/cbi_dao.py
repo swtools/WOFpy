@@ -19,8 +19,8 @@ import cbi_sos_parser
 class CbiDao(BaseDao):
     
     def __init__(self, db_connection_string, config_file_path):
-        self.engine = create_engine(db_connection_string, convert_unicode=True,
-            pool_size=100)
+        self.engine = create_engine(db_connection_string, convert_unicode=True)
+        #TODO: use pool_size for non-sqlite database
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
         cache.init_model(self.db_session)
