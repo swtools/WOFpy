@@ -25,7 +25,8 @@ class SwisDao(BaseDao):
     )
     
     def __init__(self, db_connection_string, config_file_path):
-        self.engine = create_engine(db_connection_string, convert_unicode=True)
+        self.engine = create_engine(db_connection_string, convert_unicode=True,
+            pool_size=100)
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
         model.init_model(self.db_session)
