@@ -32,36 +32,39 @@ def create_wof_service_class(wof_instance):
         #TODO: suds is having trouble resolving the object responses
         @soap(Array(String), String, _returns=Any)
         def GetSites(self, site, authToken):
-            
-            siteArg = ','.join(str(s) for s in site)
-             
-            logging.debug(site)
-            logging.debug(siteArg)
-            
-            siteResponse = self.wof_inst.create_get_site_response(siteArg)
-            outStream = StringIO.StringIO()
-            siteResponse.export(outStream, 0, name_="sitesResponse",
-                                namespacedef_= NSDEF)
-            
-            #TODO: Fault
-            
-            return outStream.getvalue()
+            try:
+                siteArg = ','.join(str(s) for s in site)
+                 
+                logging.debug(site)
+                logging.debug(siteArg)
+                
+                siteResponse = self.wof_inst.create_get_site_response(siteArg)
+                outStream = StringIO.StringIO()
+                siteResponse.export(outStream, 0, name_="sitesResponse",
+                                    namespacedef_= NSDEF)
+                
+                #TODO: Fault
+                
+                return outStream.getvalue()
+            except Exception as inst:
+                return "ERROR: %s, %s" % (type(inst), inst)
         
         @soap(Array(String), String, _returns=String)
         def GetSitesXml(self, site, authToken): #This is the one that returns WITH <![CDATA[...]]>
-            
-            siteArg = ','.join(str(s) for s in site)
-            
-            siteResponse = self.wof_inst.create_get_site_response(siteArg)
-       
-            outStream = StringIO.StringIO()
-            siteResponse.export(outStream, 0, name_="sitesResponse",
-                                namespacedef_= NSDEF)
-            
-            #TODO: Fault
-            
-            return str(outStream.getvalue()).replace('\n','')
-        
+            try:
+                siteArg = ','.join(str(s) for s in site)
+                
+                siteResponse = self.wof_inst.create_get_site_response(siteArg)
+           
+                outStream = StringIO.StringIO()
+                siteResponse.export(outStream, 0, name_="sitesResponse",
+                                    namespacedef_= NSDEF)
+                
+                #TODO: Fault
+                
+                return str(outStream.getvalue()).replace('\n','')
+            except Exception as inst:
+                return "ERROR: %s, %s" % (type(inst), inst)
         #######################################################################
         
         @soap(String, String, _returns=String)
@@ -105,61 +108,73 @@ def create_wof_service_class(wof_instance):
         @soap(String, String, _returns=String)
         def GetVariableInfo(self, variable, authToken):
             
-            variableInfoResponse = \
-                    self.wof_inst.create_get_variable_info_response(variable)
-            
-            outStream = StringIO.StringIO()
-            variableInfoResponse.export(outStream, 0,
-                                        name_="variablesResponse",
-                                        namespacedef_= NSDEF)
-            
-            #TODO: Fault
-            
-            return str(outStream.getvalue()).replace('\n','')
-        
+            try:
+                variableInfoResponse = \
+                        self.wof_inst.create_get_variable_info_response(variable)
+                
+                outStream = StringIO.StringIO()
+                variableInfoResponse.export(outStream, 0,
+                                            name_="variablesResponse",
+                                            namespacedef_= NSDEF)
+                
+                #TODO: Fault
+                
+                return str(outStream.getvalue()).replace('\n','')
+            except Exception as inst:
+                return "ERROR: %s, %s" % (type(inst), inst)
+                
         @soap(String, String, _returns=Any)
         def GetVariableInfoObject(self, variable, authToken):
             
-            variableInfoResponse = \
-                    self.wof_inst.create_get_variable_info_response(variable)
-            
-            outStream = StringIO.StringIO()
-            variableInfoResponse.export(outStream, 0,
-                                        name_="variablesResponse",
-                                        namespacedef_= NSDEF)
-            
-            #TODO: Fault
-            
-            return outStream.getvalue()
-        
+            try:
+                variableInfoResponse = \
+                        self.wof_inst.create_get_variable_info_response(variable)
+                
+                outStream = StringIO.StringIO()
+                variableInfoResponse.export(outStream, 0,
+                                            name_="variablesResponse",
+                                            namespacedef_= NSDEF)
+                
+                #TODO: Fault
+                
+                return outStream.getvalue()
+            except Exception as inst:
+                return "ERROR: %s, %s" % (type(inst), inst)
+                
         #######################################################################
     
         @soap(String, String, String, String, _returns=String)
         def GetValues(self, location, variable, startDate, endDate):
             
-            timeSeriesResponse = self.wof_inst.create_get_values_response(
-                location,variable,startDate,endDate)
-               
-            outStream = StringIO.StringIO()
-            timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
-                                      namespacedef_= NSDEF)
-            
-            #TODO: Fault
-            
-            return str(outStream.getvalue()).replace('\n','')
+            try:
+                timeSeriesResponse = self.wof_inst.create_get_values_response(
+                    location,variable,startDate,endDate)
+                   
+                outStream = StringIO.StringIO()
+                timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
+                                          namespacedef_= NSDEF)
+                
+                #TODO: Fault
+                
+                return str(outStream.getvalue()).replace('\n','')
+            except Exception as inst:
+                return "ERROR: %s, %s" % (type(inst), inst)
         
         @soap(String, String, String, String, _returns=Any)
         def GetValuesObject(self, location, variable, startDate, endDate):
             
-            timeSeriesResponse = self.wof_inst.create_get_values_response(
-                location,variable,startDate,endDate)
-               
-            outStream = StringIO.StringIO()
-            timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
-                                      namespacedef_= NSDEF)
+            try:
+                timeSeriesResponse = self.wof_inst.create_get_values_response(
+                    location,variable,startDate,endDate)
+                   
+                outStream = StringIO.StringIO()
+                timeSeriesResponse.export(outStream, 0, name_="timeSeriesResponse",
+                                          namespacedef_= NSDEF)
+                
+                #TODO: Fault
             
-            #TODO: Fault
-            
-            return outStream.getvalue()
-      
+                return outStream.getvalue()
+            except Exception as inst:
+                return "ERROR: %s, %s" % (type(inst), inst)
+                
     return WOFService  

@@ -142,6 +142,9 @@ class WOF(object):
         valueResultArr = self.dao.get_datavalues(siteCode, varCode,
                                                  startDateTime, endDateTime)
         
+        if not valueResultArr: #TODO: Exception?
+            return None
+        
         timeSeriesResponse = WaterML.TimeSeriesResponseType()
         
         queryInfo = WaterML.QueryInfoType()
@@ -159,11 +162,19 @@ class WOF(object):
         
         #sourceInfo (which is a siteInfo) element
         siteResult = self.dao.get_site_by_code(siteCode)
+        
+        if not siteResult: #TODO: Exception?
+            pass
+        
         sourceInfo = self.create_site_info_element(siteResult)
         timeSeries.sourceInfo = sourceInfo
         
         #variable element
         varResult = self.dao.get_variable_by_code(varCode)
+        
+        if not varResult: #TODO: Exception?
+            pass
+        
         variable = self.create_variable_element(varResult)
         timeSeries.variable = variable
         

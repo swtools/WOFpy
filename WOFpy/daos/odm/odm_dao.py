@@ -59,18 +59,19 @@ class OdmDao(BaseDao):
 
         valueResultArr = None
 
-        if (begin_date_time == None or end_date_time == None):
-            valueResultArr = model.DataValue.query.filter(
-                and_(model.DataValue.SiteID == siteResult.SiteID,
-                     model.DataValue.VariableID == varResult.VariableID)
-                ).order_by(model.DataValue.DateTimeUTC).all()
-        else:
-            valueResultArr = model.DataValue.query.filter(
-                and_(model.DataValue.SiteID == siteResult.SiteID,
-                     model.DataValue.VariableID == varResult.VariableID,
-                     model.DataValue.DateTimeUTC >= begin_date_time,
-                     model.DataValue.DateTimeUTC <= end_date_time)
-                ).order_by(model.DataValue.DateTimeUTC).all()
+        if siteResult and varResult:
+            if (begin_date_time == None or end_date_time == None):
+                valueResultArr = model.DataValue.query.filter(
+                    and_(model.DataValue.SiteID == siteResult.SiteID,
+                         model.DataValue.VariableID == varResult.VariableID)
+                    ).order_by(model.DataValue.DateTimeUTC).all()
+            else:
+                valueResultArr = model.DataValue.query.filter(
+                    and_(model.DataValue.SiteID == siteResult.SiteID,
+                         model.DataValue.VariableID == varResult.VariableID,
+                         model.DataValue.DateTimeUTC >= begin_date_time,
+                         model.DataValue.DateTimeUTC <= end_date_time)
+                    ).order_by(model.DataValue.DateTimeUTC).all()
 
         return valueResultArr
 

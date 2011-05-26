@@ -142,19 +142,20 @@ class SwisDao(BaseDao):
         varResult = self.get_variable_by_code(var_code)
         
         valueResultArr = None
-                
-        if (not begin_date_time or not end_date_time):
-            valueResultArr = model.DataValue.query.filter(
-                and_(model.DataValue.SiteID == siteResult.SiteID,
-                     model.DataValue.VariableID == varResult.VariableID)
-                ).order_by(model.DataValue.DateTimeUTC).all()
-        else:
-            valueResultArr = model.DataValue.query.filter(
-                and_(model.DataValue.SiteID == siteResult.SiteID,
-                     model.DataValue.VariableID == varResult.VariableID,
-                     model.DataValue.DateTimeUTC >= begin_date_time, #SWIS doesn't have localdatetime, so using UTC
-                     model.DataValue.DateTimeUTC <= end_date_time)
-                ).order_by(model.DataValue.DateTimeUTC).all()
+        
+        if siteResult and varResult:
+            if (not begin_date_time or not end_date_time):
+                valueResultArr = model.DataValue.query.filter(
+                    and_(model.DataValue.SiteID == siteResult.SiteID,
+                         model.DataValue.VariableID == varResult.VariableID)
+                    ).order_by(model.DataValue.DateTimeUTC).all()
+            else:
+                valueResultArr = model.DataValue.query.filter(
+                    and_(model.DataValue.SiteID == siteResult.SiteID,
+                         model.DataValue.VariableID == varResult.VariableID,
+                         model.DataValue.DateTimeUTC >= begin_date_time, #SWIS doesn't have localdatetime, so using UTC
+                         model.DataValue.DateTimeUTC <= end_date_time)
+                    ).order_by(model.DataValue.DateTimeUTC).all()
             
         return valueResultArr
     

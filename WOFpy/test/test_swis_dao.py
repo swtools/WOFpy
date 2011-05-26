@@ -5,6 +5,7 @@ import private_config
 
 from daos.swis.swis_dao import SwisDao
 
+#TODO: Finish this unittest
 class TestSwisDao(unittest.TestCase):
     def setUp(self):
         test_db_path = os.path.join(os.path.dirname(__file__),
@@ -15,7 +16,7 @@ class TestSwisDao(unittest.TestCase):
         
         self.dao = SwisDao('sqlite:///'+test_db_path, test_config_path)
         
-        self.known_site_codes = (
+        self.known_site_codes = [
             'ARA', 'ARROYD', 'ARROYS', 'BAFF', 'BAYT', 'BIRD', 'BLB', 'BOBH',
             'BOLI', 'BRAZOSD', 'BRAZOSS', 'BZ1U', 'BZ1UX', 'BZ2L', 'BZ2U',
             'BZ3L', 'BZ3U', 'BZ4L', 'BZ4U', 'BZ5L', 'BZ5U', 'BZ6U', 'CANEY',
@@ -29,15 +30,15 @@ class TestSwisDao(unittest.TestCase):
             'SAB2', 'SANT', 'SB1S', 'SB1W', 'SB2S', 'SB2W', 'SB3S', 'SB3W',
             'SB5S', 'SB5W', 'SB6W', 'SBBP', 'SBR1', 'SBR2', 'SBR3', 'SBR4',
             'SBR5', 'SBWS', 'SLNDCUT', 'SWBR', 'TRIN', 'UPBAFF', 'USAB'
-        )
+        ]
         
-        self.fake_codes = (
+        self.fake_codes = [
             'junk',
             'trash',
             'fake'
-        )
+        ]
         
-        self.known_var_codes = (
+        self.known_var_codes = [
            'air_pressure', 'instrument_battery_voltage',
            'water_specific_conductance', 'water_electrical_conductivity',
            'water_dissolved_oxygen_concentration',
@@ -47,7 +48,7 @@ class TestSwisDao(unittest.TestCase):
            'water_turbidity', 'water_depth_non_vented', 'water_depth_vented',
            'northward_water_velocity', 'eastward_water_velocity',
            'upward_water_velocity', 'water_x_velocity', 'water_y_velocity'
-        )
+        ]
         
         #Need more test data, only JOB and BAYT have datavalues associated with them
         self.known_series = dict(
