@@ -21,17 +21,17 @@ known_site_codes = [
 
 #print swis.service.GetSitesXml('')
 
-#print swis.service.GetSites('')
+#print swis.service.GetSites('SWIS:BAYT')
 
 
-for site_code in known_site_codes:
-    print site_code
+#for site_code in known_site_codes:
+#    print site_code
     #TODO: this will fail because swis2 doesn't have siteinfo for all the sites
-    print swis.service.GetSiteInfoObject('SWIS:'+site_code)
+#    print swis.service.GetSiteInfoObject('SWIS:'+site_code)
 
 #print swis.service.GetSiteInfo('swis:USU-swis-Confluence')
 
-#print swis.service.GetVariableInfoObject('swis:USU40')
+print swis.service.GetVariableInfoObject('SWIS:USU40')
 
 #print swis.service.GetVariableInfo('')
 

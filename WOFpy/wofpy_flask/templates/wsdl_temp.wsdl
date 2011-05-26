@@ -64,28 +64,13 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      
-      <!-- TODO: Test to make sure works in other clients -->
       <s:element name="GetSitesResponse">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" ref="s1:sitesResponse" />
           </s:sequence>
         </s:complexType>
-        <s:complexType>
-          <s:sequence>
-            <s:element name="GetSitesResult" minOccurs="0" nillable="true">
-                <s:complexType>
-                    <s:sequence>
-                        <s:element minOccurs="0" maxOccurs="1" ref="s1:sitesResponse" />
-                    </s:sequence>
-                </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
       </s:element>
-    
-      
       <s:element name="GetSiteInfoObject">
         <s:complexType>
           <s:sequence>
@@ -94,28 +79,13 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      
-      <!-- TODO: Make sure this works in other clients -->
       <s:element name="GetSiteInfoObjectResponse">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" ref="s1:sitesResponse" />
           </s:sequence>
         </s:complexType>
-        <s:complexType>
-          <s:sequence>
-            <s:element name="GetSiteInfoObjectResult" minOccurs="0" nillable="true">
-                <s:complexType>
-                    <s:sequence>
-                        <s:element minOccurs="0" maxOccurs="1" ref="s1:sitesResponse" />
-                    </s:sequence>
-                </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
       </s:element>
-      
-      
       <s:element name="GetVariableInfoObject">
         <s:complexType>
           <s:sequence>
@@ -124,29 +94,13 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      
-      <!-- TODO: Make sure this works in other clients -->
       <s:element name="GetVariableInfoObjectResponse">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" ref="s1:variablesResponse" />
           </s:sequence>
         </s:complexType>
-        <s:complexType>
-          <s:sequence>
-            <s:element name="GetVariableInfoObjectResult" minOccurs="0" nillable="true">
-                <s:complexType>
-                    <s:sequence>
-                        <s:element minOccurs="0" maxOccurs="1" ref="s1:variablesResponse" /> <!-- todo: check this -->
-                    </s:sequence>
-                </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
       </s:element>
-      
-      
-      
       <s:element name="GetValues">
         <s:complexType>
           <s:sequence>
@@ -176,29 +130,13 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      
-      <!-- TODO: Make sure this works in other clients -->
       <s:element name="GetValuesObjectResponse">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" ref="s1:timeSeriesResponse" />
           </s:sequence>
         </s:complexType>
-        <s:complexType>
-          <s:sequence>
-            <s:element name="GetValuesObjectResult" minOccurs="0" nillable="true">
-                <s:complexType>
-                    <s:sequence>
-                        <s:element minOccurs="0" maxOccurs="1" ref="s1:timeSeriesResponse" />
-                    </s:sequence>
-                </s:complexType>
-            </s:element>
-          </s:sequence>
-        </s:complexType>
-        
       </s:element>
-      
-      
     </s:schema>
     <s:schema elementFormDefault="qualified" targetNamespace="http://www.cuahsi.org/waterML/1.0/">
       <s:element name="sitesResponse" type="s1:SiteInfoResponseType" />

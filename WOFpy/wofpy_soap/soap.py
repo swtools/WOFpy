@@ -4,6 +4,7 @@ import soaplib #soaplib 2.0.0-beta
 
 import wofpy_soap
 
+from lxml import etree
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
 from soaplib.core.model.primitive import String, Any, Integer, Float
@@ -28,6 +29,33 @@ def create_wof_service_class(wof_instance):
     
         wof_inst = wof_instance
           
+        def on_method_return_xml(self, element):
+            # whatever etree element you return is the final xml
+            # response, so to prevent the extraneous ("%sResult" %
+            # method_name) result element, we just need to return an
+            # element that has that element removed and replaced with
+            # its child, which was the original response
+
+            #TODO: how do we determine which method is being returned from?
+            # Since I don't know, I am doing a dumb test for each one
+
+            result_element_name_list = ['GetSitesResult', 'GetSiteInfoObjectResult',
+                                   'GetVariableInfoObjectResult', 'GetValuesObjectResult']
+            
+            for result_element_name in result_element_name_list:
+                result_element = element.find(
+                    './/{%s}%s' % (element.nsmap['s0'], result_element_name))
+                    
+                if result_element is not None:
+                    print "FOUND RESULT------------------------------------"
+                    parent = result_element.getparent()
+                    children = result_element.getchildren()
+                    parent.replace(result_element, children[0])
+
+                    return element
+            
+            return element
+        
         #_out_variable_names ????
         #TODO: suds is having trouble resolving the object responses
         @soap(Array(String), String, _returns=Any)
