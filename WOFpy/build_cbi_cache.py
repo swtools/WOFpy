@@ -55,6 +55,9 @@ namespaces = {
 }
 
 #TODO: make this variable to units map instead of using the GCOOS whacky units
+# Should probably reference the units as they are named in the SOS:GetObservation method
+# degC, etc.
+# Then need to lookup variable name in here to get appropriate units when building variable/units cache
 ioos_variable_to_units_map = {
     
 }

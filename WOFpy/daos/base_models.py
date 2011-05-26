@@ -180,7 +180,7 @@ class BaseSeriesCatalog(object):
     GeneralCategory = None
     MethodID = None
     MethodDescription = None
-    SourceID = None #TODO
+    SourceID = None
     Organization = None
     SourceDescription = None
     QualityControlLevelID = None

@@ -23,6 +23,9 @@ logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
 
+    #This one includes the SARA service from Ernest and was used
+    # in the demonstration to Espey
+
     cbi_cache_connection_string = 'sqlite:///' + os.path.join(
         os.path.dirname(__file__), 'daos', 'cbi', 'cbi_cache.db')
 

@@ -111,13 +111,16 @@ class WOF(object):
         
         variableInfoResponse = WaterML.VariablesResponseType()
         
-        queryInfo = WaterML.QueryInfoType()
-        criteria = WaterML.criteria(variableParam=varArg)
-        queryInfo.set_criteria(criteria)
-        queryInfoNote = WaterML.NoteType()
-        queryInfo.add_note(queryInfoNote)
-        queryInfo.set_extension('')
-        variableInfoResponse.set_queryInfo(queryInfo)
+        #TODO: Should queryInfo be in thois response?  Suds doesn't like when it is.
+        #If it should be in the response, then the WSDL needs to be updated
+        
+        #queryInfo = WaterML.QueryInfoType()
+        #criteria = WaterML.criteria(variableParam=varArg)
+        #queryInfo.set_criteria(criteria)
+        #queryInfoNote = WaterML.NoteType()
+        #queryInfo.add_note(queryInfoNote)
+        #queryInfo.set_extension('')
+        #variableInfoResponse.set_queryInfo(queryInfo)
         
         variables = WaterML.variables()
             

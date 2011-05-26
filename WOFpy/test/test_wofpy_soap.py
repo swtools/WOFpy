@@ -11,27 +11,13 @@ from wofpy_soap import create_wof_service_class
 from wofpy_flask import config
 from wofpy_flask import create_app
 
+#TODO
 class TestWofpySoap(unittest.TestCase):
     
     def setUp(self):
-        self.wsdlurl = 'http://localhost:8080/soap/swis.wsdl'
-        '''
-        flask_app.config.from_object(config.DevConfig)
-        wof.config_from_file('config/lbr_config.cfg')
-        wof.dao = odm_dao.OdmDao()
-        
-        soap_app = soaplib.core.Application([WOFService],
-            'http://www.cuahsi.org/his/1.0/ws/')
-        
-        soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
-        
-        flask_app.wsgi_app = DispatcherMiddleware(flask_app.wsgi_app, {
-            '/soap': soap_wsgi_app
-        })
-        
-        flask_app.run(host='0.0.0.0', port=8080, threaded=True,
-                      debug=False)
-        '''
+        #just assume that the server is already running
+        self.wsdl_address = None
+        #setup the suds client here
         
     def tearDown(self):
         pass

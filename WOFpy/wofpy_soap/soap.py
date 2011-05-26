@@ -72,7 +72,7 @@ def create_wof_service_class(wof_instance):
                             self.wof_inst.create_get_site_info_response(site)
                 
                 outStream = StringIO.StringIO()
-                siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
+                siteInfoResponse.export(outStream, 0, name_="sitesResponse",
                                         namespacedef_= NSDEF)
                 
                 #TODO: Fault
@@ -90,7 +90,7 @@ def create_wof_service_class(wof_instance):
                             self.wof_inst.create_get_site_info_response(site)
             
                 outStream = StringIO.StringIO()
-                siteInfoResponse.export(outStream, 0, name_="siteInfoResponse",
+                siteInfoResponse.export(outStream, 0, name_="sitesResponse",
                                     namespacedef_= NSDEF)
             
                 #TODO: Fault
