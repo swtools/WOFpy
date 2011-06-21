@@ -1,7 +1,10 @@
 import unittest
 import private_config
 
+sys.path.append('../implementations/')
+
 from daos.odm.odm_dao import OdmDao
+
 
 class TestOdmDao(unittest.TestCase):
     def setUp(self):
