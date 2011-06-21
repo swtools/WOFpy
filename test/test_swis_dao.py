@@ -6,17 +6,18 @@ sys.path.append('../implementations/')
 
 from daos.swis.swis_dao import SwisDao
 
+
 #TODO: Finish this unittest
 class TestSwisDao(unittest.TestCase):
     def setUp(self):
         test_db_path = os.path.join(os.path.dirname(__file__),
                                         'test_swis2.db')
-        
+
         test_config_path = os.path.join(os.path.dirname(__file__),
                                         'test_swis_config.cfg')
-        
-        self.dao = SwisDao('sqlite:///'+test_db_path, test_config_path)
-        
+
+        self.dao = SwisDao('sqlite:///' + test_db_path, test_config_path)
+
         self.known_site_codes = [
             'ARA', 'ARROYD', 'ARROYS', 'BAFF', 'BAYT', 'BIRD', 'BLB', 'BOBH',
             'BOLI', 'BRAZOSD', 'BRAZOSS', 'BZ1U', 'BZ1UX', 'BZ2L', 'BZ2U',
@@ -32,13 +33,13 @@ class TestSwisDao(unittest.TestCase):
             'SB5S', 'SB5W', 'SB6W', 'SBBP', 'SBR1', 'SBR2', 'SBR3', 'SBR4',
             'SBR5', 'SBWS', 'SLNDCUT', 'SWBR', 'TRIN', 'UPBAFF', 'USAB'
         ]
-        
+
         self.fake_codes = [
             'junk',
             'trash',
             'fake'
         ]
-        
+
         self.known_var_codes = [
            'air_pressure', 'instrument_battery_voltage',
            'water_specific_conductance', 'water_electrical_conductivity',
@@ -50,22 +51,25 @@ class TestSwisDao(unittest.TestCase):
            'northward_water_velocity', 'eastward_water_velocity',
            'upward_water_velocity', 'water_x_velocity', 'water_y_velocity'
         ]
-        
-        #Need more test data, only JOB and BAYT have datavalues associated with them
+
+        # Need more test data, only JOB and BAYT have datavalues
+        # associated with them
         self.known_series = dict(
-            BAYT = ['instrument_battery_voltage',
+            BAYT=['instrument_battery_voltage',
                     'water_electrical_conductivity',
                     'water_dissolved_oxygen_percent_saturation',
                     'seawater_salinity',
                     'water_temperature',
                     'water_depth_non_vented'],
-            JOB = ['water_dissolved_oxygen_percent_saturation']
+            JOB=['water_dissolved_oxygen_percent_saturation']
         )
-        
-        self.known_method_ids = [1] #TODO: Need more instruments in test_swis.db
-        
-        self.known_source_id = 1 #Only have one Source in SWIS DAO, whose info is in dao.contact_info
-        
+
+        #TODO: Need more instruments in test_swis.db
+        self.known_method_ids = [1]
+
+        #Only have one Source in SWIS DAO, whose info is in dao.contact_info
+        self.known_source_id = 1
+
         self.known_source_info = {
             'Name': 'Andrew Wilson',
             'Phone': '512-555-5555',
@@ -78,68 +82,63 @@ class TestSwisDao(unittest.TestCase):
             'State': 'TX',
             'ZipCode': '78701'
         }
-        
+
         self.known_qualifier_ids = ()
-        
         self.known_quality_control_ids = ()
-        
         self.known_offsettype_ids = ()
-        
-        
+
     def test_get_all_sites(self):
         siteResultList = self.dao.get_all_sites()
         resultSiteCodes = [s.SiteCode for s in siteResultList]
-        
+
         for known_code in self.known_site_codes:
             self.assertTrue(known_code in resultSiteCodes)
-          
+
     def test_get_site_by_code(self):
         for known_code in self.known_site_codes:
             siteResult = self.dao.get_site_by_code(known_code)
             self.assertEqual(known_code, siteResult.SiteCode)
-        
+
     def test_get_sites_by_codes(self):
         siteResultList = self.dao.get_sites_by_codes(self.known_site_codes)
         resultSiteCodes = [s.SiteCode for s in siteResultList]
         for known_code in self.known_site_codes:
             self.assertTrue(known_code in resultSiteCodes)
-    
+
     def test_get_all_variables(self):
         varResultList = self.dao.get_all_variables()
         resultVarCodes = [v.VariableCode for v in varResultList]
         for known_code in self.known_var_codes:
             self.assertTrue(known_code in resultVarCodes)
-    
+
     def test_get_var_by_code(self):
         for known_code in self.known_var_codes:
             varResult = self.dao.get_variable_by_code(known_code)
             self.assertEqual(known_code, varResult.VariableCode)
-            
+
     def test_get_vars_by_codes(self):
         varResultList = self.dao.get_variables_by_codes(self.known_var_codes)
         resultVarCodes = [v.VariableCode for v in varResultList]
         for known_code in self.known_var_codes:
             self.assertTrue(known_code in resultVarCodes)
-            
-   
+
     def test_get_series_by_sitecode(self):
-        
         for site_code in self.known_series:
             seriesResultArr = self.dao.get_series_by_sitecode(site_code)
-            
+
             for series_cat in seriesResultArr:
                 self.assertTrue(series_cat.Site)
                 self.assertTrue(series_cat.Variable)
                 self.assertTrue(series_cat.Source)
                 self.assertEqual(site_code, series_cat.Site.SiteCode)
                 self.assertTrue(series_cat.ValueCount > 0)
-             
+
     def test_get_series_by_sitecode_and_varcode(self):
         for site_code in self.known_series:
             for var_code in self.known_series[site_code]:
                 seriesResultArr = self.dao.get_series_by_sitecode_and_varcode(
                     site_code, var_code)
-                
+
                 for series_cat in seriesResultArr:
                     self.assertTrue(series_cat.Site)
                     self.assertTrue(series_cat.Variable)
@@ -148,35 +147,36 @@ class TestSwisDao(unittest.TestCase):
                     self.assertTrue(series_cat.ValueCount > 0)
                     self.assertEqual(var_code,
                                      series_cat.Variable.VariableCode)
-    
+
     def test_get_datavalues(self):
         for site_code in self.known_series:
             for var_code in self.known_series[site_code]:
                 dv = self.dao.get_datavalues(site_code, var_code)
                 self.assertNotEqual(dv, None)
                 self.assertNotEqual(len(dv), 0)
-    
+
     def test_get_method_by_id(self):
         for method_id in self.known_method_ids:
             methodResult = self.dao.get_method_by_id(method_id)
             self.assertNotEqual(methodResult, None)
             self.assertTrue(methodResult.MethodID in self.known_method_ids)
-    
+
     def test_get_methods_by_ids(self):
         methodResultArr = self.dao.get_methods_by_ids(self.known_method_ids)
         self.assertNotEqual(methodResultArr, None)
         self.assertNotEqual(len(methodResultArr), 0)
         for methodResult in methodResultArr:
             self.assertTrue(methodResult.MethodID in self.known_method_ids)
-    
+
     def test_get_source_by_id(self):
-        sourceResult = self.dao.get_source_by_id(1) #Only have one source in SWIS
+        #Only have one source in SWIS
+        sourceResult = self.dao.get_source_by_id(1)
         self.assertNotEqual(sourceResult, None)
-       
+
         self.assertEqual(sourceResult.ContactName,
                          self.known_source_info['Name'])
-        self.assertEqual(sourceResult.Phone,self.known_source_info['Phone'])
-        self.assertEqual(sourceResult.Email,self.known_source_info['Email'])
+        self.assertEqual(sourceResult.Phone, self.known_source_info['Phone'])
+        self.assertEqual(sourceResult.Email, self.known_source_info['Email'])
         self.assertEqual(sourceResult.Organization,
                          self.known_source_info['Organization'])
         self.assertEqual(sourceResult.SourceLink,
@@ -185,21 +185,22 @@ class TestSwisDao(unittest.TestCase):
                          self.known_source_info['Description'])
         self.assertEqual(sourceResult.Address,
                          self.known_source_info['Address'])
-        self.assertEqual(sourceResult.City,self.known_source_info['City'])
-        self.assertEqual(sourceResult.State,self.known_source_info['State'])
+        self.assertEqual(sourceResult.City, self.known_source_info['City'])
+        self.assertEqual(sourceResult.State, self.known_source_info['State'])
         self.assertEqual(sourceResult.ZipCode,
                          self.known_source_info['ZipCode'])
-    
+
     def test_get_sources_by_ids(self):
         sourceResultArr = self.dao.get_sources_by_ids([1])
-        
-        self.assertEqual(len(sourceResultArr),1) #should only have one Source for SWIS
+
+        #should only have one Source for SWIS
+        self.assertEqual(len(sourceResultArr), 1)
         sourceResult = sourceResultArr[0]
-        
+
         self.assertEqual(sourceResult.ContactName,
                          self.known_source_info['Name'])
-        self.assertEqual(sourceResult.Phone,self.known_source_info['Phone'])
-        self.assertEqual(sourceResult.Email,self.known_source_info['Email'])
+        self.assertEqual(sourceResult.Phone, self.known_source_info['Phone'])
+        self.assertEqual(sourceResult.Email, self.known_source_info['Email'])
         self.assertEqual(sourceResult.Organization,
                          self.known_source_info['Organization'])
         self.assertEqual(sourceResult.SourceLink,
@@ -208,32 +209,31 @@ class TestSwisDao(unittest.TestCase):
                          self.known_source_info['Description'])
         self.assertEqual(sourceResult.Address,
                          self.known_source_info['Address'])
-        self.assertEqual(sourceResult.City,self.known_source_info['City'])
-        self.assertEqual(sourceResult.State,self.known_source_info['State'])
+        self.assertEqual(sourceResult.City, self.known_source_info['City'])
+        self.assertEqual(sourceResult.State, self.known_source_info['State'])
         self.assertEqual(sourceResult.ZipCode,
                          self.known_source_info['ZipCode'])
-    
+
     #TODO
     def test_get_qualifier_by_id(self):
         pass
-    
+
     #TODO
     def test_get_qualifiers_by_ids(self):
         pass
-    
+
     #TODO
     def test_get_qualcontrol_by_id(self):
         pass
-    
+
     #TODO
     def test_get_qualcontrols_by_ids(self):
         pass
-    
+
     #TODO
     def test_get_offsettype_by_id(self):
         pass
-    
+
     #TODO
     def test_get_offsettypes_by_ids(self):
         pass
-        
