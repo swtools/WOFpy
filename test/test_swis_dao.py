@@ -1,7 +1,8 @@
 import unittest
 import os
+import sys
 
-import private_config
+sys.path.append('../implementations/')
 
 from daos.swis.swis_dao import SwisDao
 
