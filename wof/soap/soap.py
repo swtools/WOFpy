@@ -2,8 +2,6 @@ import StringIO
 import logging
 import soaplib #soaplib 2.0.0-beta
 
-import wofpy_soap
-
 from lxml import etree
 from soaplib.core.model.base import Base
 from soaplib.core.service import rpc, soap, DefinitionBase
