@@ -1,4 +1,3 @@
-
 from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.sql import and_
@@ -18,7 +17,7 @@ class OdmDao(BaseDao):
 
     def __del__(self):
         self.db_session.close()
-        
+
     def get_all_sites(self):
         return model.Site.query.all()
 
