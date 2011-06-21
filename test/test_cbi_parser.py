@@ -1,7 +1,10 @@
 import unittest
 import os
+import sys
 
 from lxml import etree
+
+sys.path.append('../implementations/')
 
 from daos.cbi.cbi_sos_parser import parse_datavalues_from_get_observation
 
