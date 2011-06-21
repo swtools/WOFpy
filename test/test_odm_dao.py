@@ -1,9 +1,9 @@
 import unittest
-import private_config
+import sys
 
 sys.path.append('../implementations/')
-
 from daos.odm.odm_dao import OdmDao
+import private_config
 
 
 class TestOdmDao(unittest.TestCase):
