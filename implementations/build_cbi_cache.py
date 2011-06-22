@@ -1,66 +1,56 @@
-
-import urllib2
-import os
-import time
 import datetime
-
 from optparse import OptionParser
+import os
+import tempfile
+import time
+import urllib2
+
 from lxml import etree
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 import daos.cbi.cbi_cache_models as model
 
-cbi_cache_connection_string = 'sqlite:///' + os.path.join(
-    os.path.dirname(__file__), 'daos', 'cbi', 'cbi_cache.db')
-
-
 IOOS_SITE_FILE_URL = 'http://lighthouse.tamucc.edu/ioosobsreg.xml'
-
 CBI_SOS_CAPABILITIES_URL = 'http://lighthouse.tamucc.edu/sos'
-
 GCOOS_ONTOLOGY_FILE_URL = \
     'http://mmisw.org/ont?form=rdf&uri=http://mmisw.org/ont/gcoos/parameter'
 
-local_site_file_path = os.path.join(
-    os.path.dirname(__file__), 'daos', 'cbi', 'local_cache_files',
-    'cbi_site_file.xml'
-)
-
-local_parameter_file_path = os.path.join(
-    os.path.dirname(__file__), 'daos', 'cbi', 'local_cache_files',
-    'cbi_parameter_file.xml'
-)
-
-local_capabilities_file_path = os.path.join(
-    os.path.dirname(__file__), 'daos', 'cbi', 'local_cache_files',
-    'cbi_sos_capabilities_file.xml'
-)
+CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
+    tempfile.gettempdir(), 'cbi_dao_cache.db')
+LOCAL_SITE_FILE_PATH = os.path.join(
+    tempfile.gettempdir(), 'cbi_site_file.xml')
+LOCAL_PARAMETER_FILE_PATH = os.path.join(
+    tempfile.gettempdir(), 'cbi_parameter_file.xml')
+LOCAL_CAPABILITIES_FILE_PATH = os.path.join(
+    tempfile.gettempdir(), 'cbi_sos_capabilities_file.xml')
 
 namespaces = {
     'gml': "http://www.opengis.net/gml",
     'xlink': "http://www.w3.org/1999/xlink",
     'xsi': "http://www.w3.org/2001/XMLSchema-instance",
     'ioos': "http://www.csc.noaa.gov/ioos",
-    'omvmmi':"http://mmisw.org/ont/mmi/20081020/ontologyMetadata/",
-    'rdfs':"http://www.w3.org/2000/01/rdf-schema#",
-    'owl':"http://www.w3.org/2002/07/owl#",
-    'omv':"http://omv.ontoware.org/2005/05/ontology#",
-    'dc':"http://purl.org/dc/elements/1.1/",
-    'oost':"http://www.oostethys.org/schemas/0.1.0/oostethys",
-    'ows':"http://www.opengis.net/ows/1.1",
-    'swe':"http://www.opengis.net/swe/1.0",
-    'sos':"http://www.opengis.net/sos/1.0",
-    'par_base':"http://mmisw.org/ont/gcoos/parameter/"
+    'omvmmi': "http://mmisw.org/ont/mmi/20081020/ontologyMetadata/",
+    'rdfs': "http://www.w3.org/2000/01/rdf-schema#",
+    'owl': "http://www.w3.org/2002/07/owl#",
+    'omv': "http://omv.ontoware.org/2005/05/ontology#",
+    'dc': "http://purl.org/dc/elements/1.1/",
+    'oost': "http://www.oostethys.org/schemas/0.1.0/oostethys",
+    'ows': "http://www.opengis.net/ows/1.1",
+    'swe': "http://www.opengis.net/swe/1.0",
+    'sos': "http://www.opengis.net/sos/1.0",
+    'par_base': "http://mmisw.org/ont/gcoos/parameter/"
 }
 
-#TODO: make this variable to units map instead of using the GCOOS whacky units
-# Should probably reference the units as they are named in the SOS:GetObservation method
-# degC, etc.
-# Then need to lookup variable name in here to get appropriate units when building variable/units cache
+# TODO: make this variable to units map instead of using the GCOOS
+# whacky units Should probably reference the units as they are named
+# in the SOS:GetObservation method degC, etc.  Then need to lookup
+# variable name in here to get appropriate units when building
+# variable/units cache
 ioos_variable_to_units_map = {
-    
+
 }
+
 
 class Site(object):
     def __init__(self, code, name, latitude, longitude):
@@ -68,29 +58,31 @@ class Site(object):
         self.name = name
         self.latitude = latitude
         self.longitude = longitude
-        
+
     def __key(self):
         return (self.code, self.name, self.latitude, self.longitude)
-        
+
     def __eq__(self, other):
         return self.__key() == other.__key()
 
     def __hash__(self):
         return hash(self.__key())
+
 
 class Unit(object):
     def __init__(self, name, abbreviation):
         self.name = name
         self.abbreviation = abbreviation
-    
+
     def __key(self):
         return (self.name, self.abbreviation)
-        
+
     def __eq__(self, other):
         return self.__key() == other.__key()
-        
+
     def __hash__(self):
         return hash(self.__key())
+
 
 class Parameter(object):
     def __init__(self, code, name, description, unit):
@@ -98,16 +90,17 @@ class Parameter(object):
         self.name = name
         self.description = description
         self.unit = unit
-    
+
     def __key(self):
         return (self.code, self.name)
-        
+
     def __eq__(self, other):
         return self.__key() == other.__key()
-        
+
     def __hash__(self):
         return hash(self.__key())
-    
+
+
 class Series(object):
     def __init__(self, site_code, var_code, start_time, end_time,
                  time_interval, time_interval_unit, is_current):
@@ -324,175 +317,169 @@ def parse_parameter_file(param_names, local_parameter_file_path):
     The list of parameters returned is constrained to those in the input
     param_names list.
     """
-    
     param_set = set()
     units_set = set()
-    
+
     param_file = open(local_parameter_file_path)
-    
     tree = etree.parse(param_file)
-    
     param_file.close()
-    
-    all_params = tree.findall('.//'+ nspath('Parameters',
+
+    all_params = tree.findall('.//' + nspath('Parameters',
                                             namespaces['par_base']))
-    
+
     for p in all_params:
         name = p.findtext(nspath('name', namespaces['par_base']))
-        
-        
-        if name in param_names: #then found one we want
+
+        if name in param_names:
             description = p.findtext(nspath('description',
                                             namespaces['par_base']))
-            
+
             #units are in the description, prefaced by "Unit: " and
             # ending with a semicolon (eg Unit: celsius;)
             start_index = description.find('Unit: ')
             end_index = description.find(';', start_index)
-            unit_abbr = description[start_index+6:end_index]
-            unit = Unit(unit_abbr, unit_abbr) #TODO: Where to get unit names?
-            
+            unit_abbr = description[(start_index + 6):end_index]
+            # TODO: Where to get unit names?
+            unit = Unit(unit_abbr, unit_abbr)
+
             #TODO: Some of these units are not really that good,
             # like "Pa | bar |dbar |atm" for pressure, "ug L-1 (not kg m-3)",
             # "precent"
             # Maybe we need a units dictionary or something since the GCOOS
             # registry is not very good
-            
             units_set.add(unit)
-            
             param = Parameter(name, name, description, unit)
             param_set.add(param)
-            
     return (param_set, units_set)
+
 
 if __name__ == '__main__':
     parser = OptionParser()
-    parser.add_option("-d","--dropall", dest="dropall", default=False,
+    parser.add_option("-d", "--dropall", dest="dropall", default=False,
                   help="Drop all from site cache database before rebuilding.")
-    
+
     (options, args) = parser.parse_args()
 
     #Attempt to open local site file to see if it exists
     try:
-        f = open(local_site_file_path)
+        f = open(LOCAL_SITE_FILE_PATH)
         f.close()
-    except: #If it doesn't exist, then fetch a new one from the remote location
+    #If it doesn't exist, then fetch a new one from the remote location
+    except:
         print "Fetching IOOS site file from remote location."
-        fetch_ioos_site_file(IOOS_SITE_FILE_URL, local_site_file_path)
-    
+        fetch_ioos_site_file(IOOS_SITE_FILE_URL, LOCAL_SITE_FILE_PATH)
+
     #Attempt to open local capbilities file to see if it exists
     try:
-        f = open(local_capabilities_file_path)
+        f = open(LOCAL_CAPABILITIES_FILE_PATH)
         f.close()
     except:
         print "Fetching CBI SOS Capabilities file from remote location."
         fetch_cbi_capabilities_file(CBI_SOS_CAPABILITIES_URL,
-                                    local_capabilities_file_path)
-    
+                                    LOCAL_CAPABILITIES_FILE_PATH)
+
     #Attempt to open local parameter file to see if it exists
     try:
-        f = open(local_parameter_file_path)
+        f = open(LOCAL_PARAMETER_FILE_PATH)
         f.close()
-    except: #If it doesn't exist, then fetch a new one from the remote location
+    #If it doesn't exist, then fetch a new one from the remote location
+    except:
         print "Fetching GCOOS parameter file from remote location."
         fetch_gcoos_parameter_file(GCOOS_ONTOLOGY_FILE_URL,
-                                   local_parameter_file_path)
-    
-    
-    engine = create_engine(cbi_cache_connection_string,
+                                   LOCAL_PARAMETER_FILE_PATH)
+
+    engine = create_engine(CBI_CACHE_DATABASE_URI,
                            convert_unicode=True)
     if options.dropall:
         print "Dropping existing tables from cache."
         model.clear_model(engine)
-    
+
     model.create_model(engine)
-    
+
     db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=engine))
-    
+
     model.init_model(db_session)
 
     print "Parsing IOOS site file."
-    site_set = parse_site_file(local_site_file_path)
-    
-    
-    print "Extracting valid site codes from SOS capabilities file and removing non-matching sites from site cache."
-    
-    capabilities_site_list = extract_sites_from_capabilities_doc(
-        local_capabilities_file_path)
-    
+    site_set = parse_site_file(LOCAL_SITE_FILE_PATH)
 
-    valid_site_list = [s for s in site_set if s.code in capabilities_site_list]
-    
+    print ("Extracting valid site codes from SOS capabilities "
+           "file and removing non-matching sites from site cache.")
+
+    capabilities_site_list = extract_sites_from_capabilities_doc(
+        LOCAL_CAPABILITIES_FILE_PATH)
+
+    valid_site_list = [s for s in site_set
+                       if s.code in capabilities_site_list]
+
     cache_sites = [model.Site(s.code, s.name, s.latitude, s.longitude)
                    for s in valid_site_list]
-    
+
     print "Extracting valid parameters from SOS capabilities file."
     param_names = extract_parameters_from_capabilities_doc(
-        local_capabilities_file_path)
-    
-    
+        LOCAL_CAPABILITIES_FILE_PATH)
+
     print "Parsing GCOOS parameter file."
-     
+
     (param_set, units_set) = parse_parameter_file(
-        param_names, local_parameter_file_path)
-    
+        param_names, LOCAL_PARAMETER_FILE_PATH)
+
     cache_units = [model.Units(u.name, u.abbreviation) for u in units_set]
-    
+
     cache_variables = []
-    
+
     for p in param_set:
         v = model.Variable(p.code, p.name, p.description)
-        
+
         #Find the matching unit in the cache_units list
         for cu in cache_units:
             if p.unit.name == cu.UnitsName:
                 v.VariableUnits = cu
-        
+
         cache_variables.append(v)
-    
-    
+
     print "Parsing SOS Capabilities file for Series Catalog."
-    
-    series_set = parse_capabilities_for_series(local_capabilities_file_path)
-    
+
+    series_set = parse_capabilities_for_series(LOCAL_CAPABILITIES_FILE_PATH)
+
     print "Adding %s sites and %s variables to local cache." % (
         len(cache_sites), len(cache_variables))
-    
+
     try:
         db_session.add_all(cache_sites)
         db_session.add_all(cache_units)
         db_session.add_all(cache_variables)
         db_session.commit()
-    
+
         #Now try to add series
-        
+
         print "Adding SeriesCatalogs to local cache."
-        
+
         cache_series_cats = []
-        
+
         for series in series_set:
-            
+
             #TODO: Not all sites in the SOS Capabilities document are in the
             # IOOS Reg file.  Why?
-            
+
             #Find the site in the cache
             site = model.Site.query.filter(
-                model.Site.SiteCode==series.site_code).first()
-            
+                model.Site.SiteCode == series.site_code).first()
+
             #Find the variable in the cache
             variable = model.Variable.query.filter(
-                model.Variable.VariableCode==series.var_code).first()
-        
-            if site and variable: #Need to check because of situation mentioned above
-                
+                model.Variable.VariableCode == series.var_code).first()
+
+            #Need to check because of situation mentioned above
+            if site and variable:
                 series_cat = model.SeriesCatalog()
-                
+
                 series_cat.Site = site
                 series_cat.SiteID = site.SiteID
                 series_cat.SiteCode = site.SiteCode
                 series_cat.SiteName = site.SiteName
-                
+
                 series_cat.Variable = variable
                 series_cat.VariableID = variable.VariableID
                 series_cat.VariableCode = variable.VariableCode

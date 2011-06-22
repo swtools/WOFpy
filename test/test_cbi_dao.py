@@ -1,22 +1,21 @@
 import unittest
 import os
 import sys
+import tempfile
 
 sys.path.append('../implementations/')
-
 from daos.cbi.cbi_dao import CbiDao
+
+
+CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
+    tempfile.gettemp_dir(), 'cbi_dao_cache.db')
+TEST_CONFIG_PATH = os.path.join(os.path.dirname(__file__),
+                                'test_cbi_config.cfg')
 
 
 class TestCbiDao(unittest.TestCase):
     def setUp(self):
-
-        cbi_cache_connection_string = 'sqlite:///' + os.path.join(
-            os.path.dirname(__file__), '..', 'daos', 'cbi', 'cbi_cache.db')
-
-        test_config_path = os.path.join(os.path.dirname(__file__),
-                                        'test_cbi_config.cfg')
-
-        self.dao = CbiDao(cbi_cache_connection_string, test_config_path)
+        self.dao = CbiDao(CBI_CACHE_DATABASE_URI, TEST_CONFIG_PATH)
 
         self.known_sites = {
             '001': 'Naval Air Station (87754211)',
