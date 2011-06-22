@@ -17,8 +17,13 @@ import cbi_sos_parser
 
 
 class CbiDao(BaseDao):
-    def __init__(self, db_connection_string, config_file_path):
-        self.engine = create_engine(db_connection_string, convert_unicode=True)
+    def __init__(self, config_file_path, database_uri=None):
+        config = ConfigParser.RawConfigParser()
+        config.read(config_file_path)
+        if not database_uri:
+            database_uri = config.get('Database', 'URI')
+
+        self.engine = create_engine(database_uri, convert_unicode=True)
         #TODO: use pool_size for non-sqlite database
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
@@ -26,9 +31,6 @@ class CbiDao(BaseDao):
 
         self.cbi_sos_client = cbi_sos_client.CbiSosClient(
             'http://lighthouse.tamucc.edu/sos')
-
-        config = ConfigParser.RawConfigParser()
-        config.read(config_file_path)
 
         if config.has_section('Contact'):
             self.contact_info = dict(

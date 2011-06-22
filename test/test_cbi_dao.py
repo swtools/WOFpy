@@ -15,7 +15,7 @@ TEST_CONFIG_PATH = os.path.join(os.path.dirname(__file__),
 
 class TestCbiDao(unittest.TestCase):
     def setUp(self):
-        self.dao = CbiDao(CBI_CACHE_DATABASE_URI, TEST_CONFIG_PATH)
+        self.dao = CbiDao(TEST_CONFIG_PATH, CBI_CACHE_DATABASE_URI)
 
         self.known_sites = {
             '001': 'Naval Air Station (87754211)',

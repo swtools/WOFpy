@@ -20,8 +20,7 @@ CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
-
-    dao = CbiDao(CBI_CACHE_DATABASE_URI, 'config/cbi_config.cfg')
+    dao = CbiDao('config/cbi_config.cfg', CBI_CACHE_DATABASE_URI)
     cbi_wof = WOF(dao)
     cbi_wof.config_from_file('config/cbi_config.cfg')
 
