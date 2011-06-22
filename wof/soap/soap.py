@@ -91,13 +91,13 @@ def create_wof_service_class(wof_instance):
 
                 #TODO: Fault
 
-                return str(outStream.getvalue()).replace('\n','')
+                return str(outStream.getvalue()).replace('\n', '')
             except Exception as inst:
                 return "ERROR: %s, %s" % (type(inst), inst)
         #######################################################################
 
         @soap(String, String, _returns=String)
-        def GetSiteInfo(self,site,authToken):
+        def GetSiteInfo(self, site, authToken):
 
             try:
                 siteInfoResponse = \
@@ -109,13 +109,13 @@ def create_wof_service_class(wof_instance):
 
                 #TODO: Fault
 
-                return str(outStream.getvalue()).replace('\n','')
+                return str(outStream.getvalue()).replace('\n', '')
 
             except Exception as inst:
                 return "ERROR: %s, %s" % (type(inst), inst)
 
         @soap(String, String, _returns=Any)
-        def GetSiteInfoObject(self,site,authToken):
+        def GetSiteInfoObject(self, site, authToken):
 
             try:
                 siteInfoResponse = \
