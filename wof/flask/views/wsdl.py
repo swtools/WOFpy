@@ -1,9 +1,8 @@
-
-
 from flask import (Flask, request, Markup, Response, render_template,
                    make_response, Module, current_app)
 
 wsdl = Module(__name__)
+
 
 @wsdl.route('/soap/wateroneflow.wsdl')
 def get_wsdl():
@@ -13,11 +12,11 @@ def get_wsdl():
 
     serv_loc = 'http://%s/soap/%s/WOFService' %\
         (request.environ['HTTP_HOST'], network)
-    
+
     response = make_response(render_template('wsdl_temp.wsdl',
                                              serv_loc=serv_loc,
                                              network=network))
-    
+
     response.headers['Content-Type'] = 'text/xml'
-    
+
     return response
