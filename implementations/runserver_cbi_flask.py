@@ -1,5 +1,6 @@
-import os
 import logging
+import os
+import tempfile
 
 from werkzeug.wsgi import DispatcherMiddleware
 import soaplib
@@ -13,14 +14,14 @@ import private_config
 from daos.cbi.cbi_dao import CbiDao
 
 
+CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
+    tempfile.gettempdir(), 'cbi_dao_cache.db')
+
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == '__main__':
 
-    cbi_cache_connection_string = 'sqlite:///' + os.path.join(
-        os.path.dirname(__file__), 'daos', 'cbi', 'cbi_cache.db')
-
-    dao = CbiDao(cbi_cache_connection_string, 'config/cbi_config.cfg')
+    dao = CbiDao(CBI_CACHE_DATABASE_URI, 'config/cbi_config.cfg')
     cbi_wof = WOF(dao)
     cbi_wof.config_from_file('config/cbi_config.cfg')
 
