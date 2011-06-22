@@ -63,15 +63,9 @@ class CbiSosClient(object):
 
         if start_datetime and end_datetime:
             event_time_string = '%s/%s' % (
-                time.strftime(
-                    "%Y-%m-%dT%H:%M:%SZ",
-                    time.strptime(start_datetime, "%Y-%m-%dT%H:%M:%S")),
-                time.strftime(
-                    "%Y-%m-%dT%H:%M:%SZ",
-                    time.strptime(end_datetime, "%Y-%m-%dT%H:%M:%S")))
-
+                start_datetime + 'Z',
+                end_datetime + 'Z')
             param_dict['eventtime'] = event_time_string
-
         params = urllib.urlencode(param_dict)
 
         try:
