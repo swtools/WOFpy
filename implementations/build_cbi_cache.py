@@ -111,27 +111,26 @@ class Series(object):
         self.time_interval = time_interval
         self.time_interval_unit = time_interval_unit
         self.is_current = is_current
-    
+
     def __key(self):
         return (self.site_code, self.var_code, self.start_time, self.end_time,
                 self.time_interval, self.time_interval_unit, self.is_current)
-        
+
     def __eq__(self, other):
         return self.__key() == other.__key()
-        
+
     def __hash__(self):
         return hash(self.__key())
-    
+
+
 def nspath(path, ns):
     return '{%s}%s' % (ns, path)
 
+
 def fetch_ioos_site_file(site_file_url, local_site_file_path):
     response = urllib2.urlopen(site_file_url)
-    
     cbi_site_file = open(local_site_file_path, 'w')
-    
     cbi_site_file.write(response.read())
-    
     cbi_site_file.close()
 
 
@@ -139,51 +138,47 @@ def parse_site_file(local_site_file_path):
     '''
     Reads an IOOS XML site file and returns a set of sites.
     '''
-
     site_set = set()
-    
     site_file = open(local_site_file_path)
-    
     tree = etree.parse(site_file)
-    
     site_file.close()
-    
-    feature_member_list = tree.findall('.//'+nspath('featureMember',
-                                                   namespaces['gml']))
-    
+    feature_member_list = tree.findall('.//' + nspath(
+        'featureMember', namespaces['gml']))
+
     for feature in feature_member_list:
         point_obs = feature.find(nspath('InsituPointObs', namespaces['ioos']))
-        
+
         # ex: gml:id="CBI-TAMUCC.009.bpr"  bpr is the param code
         gml_id = point_obs.attrib[nspath('id', namespaces['gml'])]
         param_code = gml_id.split('.')[2]
-        
+
         observation_name = point_obs.findtext(
             nspath('observationName', namespaces['ioos']))
-        
+
         #Parse Site info
         #ex 009: Port Aransas (87752371)
         platform_name = point_obs.findtext(nspath('platformName',
                                               namespaces['ioos']))
-       
+
         horiz_position_node = point_obs.find(nspath('horizontalPosition',
                                                namespaces['ioos']))
         pos = horiz_position_node.findtext(
             nspath('Point', namespaces['gml'])
-            +'/'+nspath('pos', namespaces['gml']))
-        
+            + '/' + nspath('pos', namespaces['gml']))
+
         latitude = pos.split()[0]
         longitude = pos.split()[1]
-         
+
         vert_position_node = point_obs.find(nspath('verticalPosition',
                                               namespaces['ioos']))
         vert_pos_units = vert_position_node.attrib['uom']
-        
+
         vert_datum = point_obs.findtext(nspath('verticalDatum',
                                            namespaces['ioos']))
-        
+
         operator = point_obs.findtext(nspath('operator', namespaces['ioos']))
-        start_date = point_obs.findtext(nspath('startDate', namespaces['ioos']))
+        start_date = point_obs.findtext(nspath('startDate',
+                                               namespaces['ioos']))
         end_date = point_obs.findtext(nspath('endDate', namespaces['ioos']))
         operator_uri = point_obs.findtext(nspath('operatorURI',
                                              namespaces['ioos']))
@@ -191,122 +186,125 @@ def parse_site_file(local_site_file_path):
                                              namespaces['ioos']))
         data_uri = point_obs.findtext(nspath('dataURI', namespaces['ioos']))
         comments = point_obs.findtext(nspath('comments', namespaces['ioos']))
-        
-        
+
         site_code = platform_name.split(':')[0]
         site_name = platform_name.split(':')[1].strip()
-        
+
         #Create a Site object and add it to the return set
         site = Site(site_code, site_name, latitude, longitude)
         site_set.add(site)
-   
+
     return site_set
 
 
 def fetch_cbi_capabilities_file(cbi_capabilities_file_url,
                                 local_capabilities_file_path):
-    
+
     response = urllib2.urlopen(cbi_capabilities_file_url)
-    
-    local_capabilities_file = open(local_capabilities_file_path,'w')
-    
+
+    local_capabilities_file = open(local_capabilities_file_path, 'w')
+
     local_capabilities_file.write(response.read())
-    
+
     local_capabilities_file.close()
-    
+
 
 def extract_parameters_from_capabilities_doc(local_capabilities_file_path):
     capabilities_file = open(local_capabilities_file_path)
-    
+
     tree = etree.parse(capabilities_file)
-    
+
     capabilities_file.close()
-    
+
     #.//ows:Parameter[@name='observedProperty']/ows:AllowedValues/ows:Value
-    
+
     param_name_elements = tree.findall(
-        './/'+nspath("Parameter[@name='observedProperty']", namespaces['ows'])
-        +'/'+nspath("AllowedValues", namespaces['ows'])
-        +'/'+nspath("Value", namespaces['ows'])
+        './/' + nspath("Parameter[@name='observedProperty']",
+                       namespaces['ows'])
+        + '/' + nspath("AllowedValues", namespaces['ows'])
+        + '/' + nspath("Value", namespaces['ows'])
     )
-    
+
     return [p.text for p in param_name_elements]
+
 
 def extract_sites_from_capabilities_doc(local_capabilities_file_path):
     capabilities_file = open(local_capabilities_file_path)
-    
+
     tree = etree.parse(capabilities_file)
-    
+
     capabilities_file.close()
-    
+
     #.//ows:Parameter[@name='observedProperty']/ows:AllowedValues/ows:Value
-    
+
     site_code_elements = tree.findall(
-        './/'+nspath("Parameter[@name='offering']", namespaces['ows'])
-        +'/'+nspath("AllowedValues", namespaces['ows'])
-        +'/'+nspath("Value", namespaces['ows'])
+        './/' + nspath("Parameter[@name='offering']", namespaces['ows'])
+        + '/' + nspath("AllowedValues", namespaces['ows'])
+        + '/' + nspath("Value", namespaces['ows'])
     )
-    
+
     return [s.text for s in site_code_elements]
 
 
 def parse_capabilities_for_series(local_capabilities_file_path):
     capabilities_file = open(local_capabilities_file_path)
-    
+
     tree = etree.parse(capabilities_file)
-    
+
     capabilities_file.close()
-    
-    obs_offerings = tree.findall('.//'+nspath(
+
+    obs_offerings = tree.findall('.//' + nspath(
         'ObservationOffering', namespaces['sos']))
-    
+
     series_set = set()
-    
+
     for offering in obs_offerings:
         site_code = offering.findtext(nspath('name', namespaces['gml']))
-        
+
         time_period = offering.find(
             nspath('eventTime', namespaces['sos'])
-            +'/'+nspath('TimePeriod', namespaces['gml']))
-            
+            + '/' + nspath('TimePeriod', namespaces['gml']))
+
         start_time = time_period.findtext(
-            nspath('beginPosition', namespaces['gml']))    
+            nspath('beginPosition', namespaces['gml']))
 
         end_time = time_period.findtext(
             nspath('endPosition', namespaces['gml']))
-        
+
         time_interval_node = time_period.find(
             nspath('timeInterval', namespaces['gml']))
-        
+
         time_interval_unit = time_interval_node.attrib['unit']
         time_interval = time_interval_node.text
 
         properties = offering.findall(
             nspath('observedProperty', namespaces['sos']))
-        
+
         is_current = not end_time
-        
+
         for prop in properties:
-            #TODO: It would be best if the observedProperty elements had
-            # the variable names/codes as their inner text, but they don't currently
+            #TODO: It would be best if the observedProperty elements
+            # had the variable names/codes as their inner text, but
+            # they don't currently
             prop_link = prop.attrib[(nspath('href', namespaces['xlink']))]
             split_prop_link = prop_link.split('/')
-            var_code = split_prop_link[len(split_prop_link)-1]
-            
+            var_code = split_prop_link[len(split_prop_link) - 1]
+
             series = Series(site_code, var_code, start_time, end_time,
                             time_interval, time_interval_unit, is_current)
-            
+
             series_set.add(series)
-       
+
     return series_set
+
 
 def fetch_gcoos_parameter_file(parameter_file_url, local_parameter_file_path):
     response = urllib2.urlopen(parameter_file_url)
-    
+
     cbi_parameter_file = open(local_parameter_file_path, 'w')
-    
+
     cbi_parameter_file.write(response.read())
-    
+
     cbi_parameter_file.close()
 
 
@@ -488,55 +486,51 @@ if __name__ == '__main__':
                 series_cat.VariableUnitsName = variable.VariableUnits.UnitsName
                 series_cat.SampleMedium = variable.SampleMedium
                 series_cat.GeneralCategory = variable.GeneralCategory
-                
 
                 time_units = model.Units.query.filter(
-                    model.Units.UnitsName==series.time_interval_unit).first()
-                
+                    model.Units.UnitsName == series.time_interval_unit).first()
+
                 if not time_units:
                     time_units = model.Units(series.time_interval_unit,
                                              series.time_interval_unit)
                     time_units.UnitsType = "Time"
-                    
+
                     db_session.add(time_units)
                     db_session.commit()
-                    
+
                 variable.TimeUnits = time_units
                 variable.TimeUnitsID = time_units.UnitsID
-                
+
                 #TODO: WaterML1 only supports integers for time interval
                 # but the CBI service offerings have 0.5 hour intervals
                 #variable.TimeSupport = series.time_interval
                 #series_cat.TimeSupport = series.time_interval
                 series_cat.TimeUnitsID = time_units.UnitsID
                 series_cat.TimeUnitsName = time_units.UnitsName
-                
+
                 #TODO: DataType = "Raw data" ?
-                
+
                 #TODO: is this the best way to do the datetime conversion?
                 st = time.strptime(
-                    series.start_time,"%Y-%m-%dT%H:%M:%SZ")
-                
+                    series.start_time, "%Y-%m-%dT%H:%M:%SZ")
+
                 series_cat.BeginDateTimeUTC = \
                     datetime.datetime(st[0], st[1], st[2], st[3], st[4], st[5])
-                
+
                 if series.end_time:
                     et = time.strptime(
-                        series.end_time,"%Y-%m-%dT%H:%M:%SZ")
+                        series.end_time, "%Y-%m-%dT%H:%M:%SZ")
                     series_cat.EndDateTimeUTC = datetime.datetime(
                         et[0], et[1], et[2], et[3], et[4], et[5])
-                
+
                 series_cat.IsCurrent = series.is_current
-                
+
                 cache_series_cats.append(series_cat)
-        
+
         db_session.add_all(cache_series_cats)
         db_session.commit()
-        
+
         print "Finished."
-    
+
     except Exception as inst:
         print "ERROR: %s, %s" % (type(inst), inst)
-    
-    
-    
