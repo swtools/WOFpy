@@ -8,7 +8,7 @@ from daos.cbi.cbi_dao import CbiDao
 
 
 CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
-    tempfile.gettemp_dir(), 'cbi_dao_cache.db')
+    tempfile.gettempdir(), 'cbi_dao_cache.db')
 TEST_CONFIG_PATH = os.path.join(os.path.dirname(__file__),
                                 'test_cbi_config.cfg')
 
