@@ -1,4 +1,3 @@
-
 from sqlalchemy import (Column, Integer, String, ForeignKey, Float, DateTime,
                         Boolean)
 from sqlalchemy.orm import relationship
@@ -73,60 +72,64 @@ Base = declarative_base()
 def clear_model(engine):
     Base.metadata.drop_all(engine)
 
+
 def create_model(engine):
     Base.metadata.create_all(engine)
+
 
 def init_model(db_session):
     Base.query = db_session.query_property()
 
+
 class Site(Base, wof_base.BaseSite):
     __tablename__ = 'Sites'
-    
+
     def __init__(self, code, name, latitude, longitude):
         self.SiteCode = code
         self.SiteName = name
         self.Latitude = latitude
         self.Longitude = longitude
-    
+
     SiteID = Column(Integer, primary_key=True)
     SiteCode = Column(String)
     SiteName = Column(String)
     Latitude = Column(Float)
     Longitude = Column(Float)
-    
+
+
 class Units(Base, wof_base.BaseUnits):
     __tablename__ = 'Units'
-    
+
     def __init__(self, name, abbreviation):
         self.UnitsName = name
         self.UnitsAbbreviation = abbreviation
-    
+
     UnitsID = Column(Integer, primary_key=True)
     UnitsName = Column(String)
     UnitsType = Column(String)
     UnitsAbbreviation = Column(String)
 
-   
+
 class Variable(Base, wof_base.BaseVariable):
     __tablename__ = 'Variables'
-    
+
     def __init__(self, code, name, description):
         self.VariableCode = code
         self.VariableName = name
         self.VariableDescription = description
         self.NoDataValue = -9999
-        
+
         if self.VariableCode in param_to_medium_dict:
             self.SampleMedium = param_to_medium_dict[self.VariableCode]
         else:
             self.SampleMedium = wof_base.SampleMediumTypes.UNKNOWN
-            
+
         if self.VariableCode in param_to_gen_category_dict:
             self.GeneralCategory = param_to_gen_category_dict[
                 self.VariableCode]
         else:
             self.GeneralCategory = wof_base.GeneralCategoryTypes.UNKNOWN
-    
+
     VariableID = Column(Integer, primary_key=True)
     VariableCode = Column(String)
     VariableName = Column(String)
@@ -140,16 +143,16 @@ class Variable(Base, wof_base.BaseVariable):
     DataType = Column(String)
     GeneralCategory = Column(String)
     NoDataValue = Column(Integer)
-    
+
     VariableUnits = relationship("Units",
-                        primaryjoin='Variable.VariableUnitsID==Units.UnitsID') 
+                        primaryjoin='Variable.VariableUnitsID==Units.UnitsID')
     TimeUnits = relationship("Units",
                         primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
 
 
 class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     __tablename__ = 'SeriesCatalog'
-    
+
     SeriesID = Column(Integer, primary_key=True)
     SiteID = Column(Integer, ForeignKey('Sites.SiteID'))
     SiteCode = Column(String)
@@ -157,7 +160,7 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     VariableID = Column(Integer, ForeignKey('Variables.VariableID'))
     VariableCode = Column(String)
     VariableName = Column(String)
-    VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID')) 
+    VariableUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
     VariableUnitsName = Column(String)
     SampleMedium = Column(String)
     #ValueType = None
@@ -177,15 +180,16 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     #EndDateTime = None
     BeginDateTimeUTC = Column(DateTime)
     EndDateTimeUTC = Column(DateTime)
-    
+
     IsCurrent = Column(Boolean)
-    
+
     ValueCount = Column(Integer)
-    
+
     Site = relationship("Site",
                 primaryjoin="Site.SiteID==SeriesCatalog.SiteID")
     Variable = relationship("Variable",
                 primaryjoin="Variable.VariableID==SeriesCatalog.VariableID")
-    
-    Method = None #TODO
-    Source = None #TODO
+
+    # TODO...
+    Method = None
+    Source = None
