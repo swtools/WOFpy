@@ -114,8 +114,9 @@ class WOF(object):
 
         variableInfoResponse = WaterML.VariablesResponseType()
 
-        #TODO: Should queryInfo be in thois response?  Suds doesn't like when it is.
-        #If it should be in the response, then the WSDL needs to be updated
+        # TODO: Should queryInfo be in thois response?  Suds doesn't
+        # like when it is.  If it should be in the response, then the
+        # WSDL needs to be updated
 
         #queryInfo = WaterML.QueryInfoType()
         #criteria = WaterML.criteria(variableParam=varArg)
@@ -548,13 +549,10 @@ class WOF(object):
             # integer in WaterML 1.0
             timeSupport.timeInterval = str(int(variableResult.TimeSupport))
         variable.set_timeSupport(timeSupport)
-
         return variable
-
 
     def create_wml2_values_object(self, siteArg, varArg, startDateTime=None,
                                    endDateTime=None):
-
         siteCode = siteArg.replace(self.network + ':', '')
         varCode = varArg.replace(self.network + ':', '')
 
