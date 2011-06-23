@@ -8,7 +8,7 @@ from sqlalchemy.sql import join, select, func, label
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-import daos.base_models as wof_base
+import wof.models as wof_base
 
 Base = declarative_base()
 

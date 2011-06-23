@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 
-from daos.base_dao import BaseDao
+from wof.dao import BaseDao
 
 import cbi_cache_models as cache
 import cbi_models as model
@@ -143,7 +143,9 @@ class CbiDao(BaseDao):
                 end_date_time = str(end_date_time).replace(' ', 'T')
         #Call GetObservation
         response = self.cbi_sos_client.get_observation(
-            site_code, var_code, begin_date_time, end_date_time)
+            site_code, var_code,
+            begin_date_time + 'T00:00:00',
+            end_date_time + 'T23:59:59')
         if not response:
             return None
         tree = etree.parse(StringIO(response.read()))

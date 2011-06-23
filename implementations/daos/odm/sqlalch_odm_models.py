@@ -5,7 +5,7 @@ from sqlalchemy import (Column, Integer, String, ForeignKey, Float, DateTime,
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-import daos.base_models as wof_base
+import wof.models as wof_base
 
 Base = declarative_base()
 

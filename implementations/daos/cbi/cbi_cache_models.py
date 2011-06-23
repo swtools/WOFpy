@@ -3,7 +3,7 @@ from sqlalchemy import (Column, Integer, String, ForeignKey, Float, DateTime,
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-import daos.base_models as wof_base
+import wof.models as wof_base
 
 #TODO: Andy, please check
 param_to_medium_dict = dict(
