@@ -511,8 +511,8 @@ class WOF(object):
             variableDescription=variableResult.VariableDescription)
 
         variableCode = WaterML.variableCode()
-        variableCode.vocabulary = self
-        #TODO: What is this, should it always be true?.vocabulary
+        variableCode.vocabulary = self.vocabulary
+        #TODO: What is this, should it always be true?
         variableCode.default = "true"
         variableCode.variableID = variableResult.VariableID
         variableCode.valueOf_ = variableResult.VariableCode
