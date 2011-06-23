@@ -1,4 +1,4 @@
-import daos.base_models as wof_base
+import wof.models as wof_base
 
 
 class DataValue(wof_base.BaseDataValue):
