@@ -53,7 +53,7 @@ def get_site_info():
     if siteArg == None:
         return "Must enter a single site code (site)"
 
-    siteinforesponse = current_app.wof_inst.create_get_site_info_response(
+    siteInfoResponse = current_app.wof_inst.create_get_site_info_response(
         siteArg, varArg)
 
     if not siteInfoResponse:
