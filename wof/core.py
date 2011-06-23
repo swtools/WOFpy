@@ -389,7 +389,7 @@ class WOF(object):
 
         seriesCatalog = WaterML.seriesCatalogType()
         if (seriesResultArr != None):
-            seriesCatalog.menuGroupName = self.menu_group_n
+            seriesCatalog.menuGroupName = self.menu_group_name
             #TODO: Make sure this is set properly in config fileame
             seriesCatalog.serviceWsdl = self.service_wsdl
 
