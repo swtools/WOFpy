@@ -4,7 +4,7 @@ import sys
 import tempfile
 
 sys.path.append('../implementations/')
-from daos.cbi.cbi_dao import CbiDao
+from cbi.cbi_dao import CbiDao
 
 
 CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
