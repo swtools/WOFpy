@@ -27,7 +27,7 @@ setup(
         'sqlalchemy>=0.6.7',
         'pyodbc>=2.1.8',
         'lxml>=2.3',
-        'soaplib>=2.0.0',
+        'soaplib>=2.0.0b',
         'suds',
         'nose'
     ],
