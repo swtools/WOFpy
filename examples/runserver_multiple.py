@@ -1,28 +1,26 @@
-import os
-import soaplib
 import logging
+import os
 
 from werkzeug.wsgi import DispatcherMiddleware
 from werkzeug.serving import run_simple
 from werkzeug.exceptions import NotFound
+import soaplib
 from soaplib.core.server import wsgi
 
-import wofpy_soap
 import private_config
 
 from wof import WOF
-from wofpy_soap import create_wof_service_class
-from wofpy_flask import config
-from wofpy_flask import create_app
+from wof.soap import create_wof_service_class
+from wof.flask import config, create_app
 
-from daos.odm.odm_dao import OdmDao
-from daos.swis.swis_dao import SwisDao
-from daos.cbi.cbi_dao import CbiDao
+from examples.odm.odm_dao import OdmDao
+from examples.swis.swis_dao import SwisDao
+from examples.cbi.cbi_dao import CbiDao
 
 logging.basicConfig(level=logging.DEBUG)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     #This one includes the SARA service from Ernest and was used
     # in the demonstration to Espey
 
