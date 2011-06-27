@@ -21,6 +21,7 @@ setup(
     long_description=__doc__,
     keywords='cuahsi his wofpy water waterml cuahsi wateroneflow',
     packages=find_packages(),
+    zip_safe=False,
     platforms='any',
     install_requires=[
         'flask>=0.6.1',
