@@ -11,7 +11,7 @@ def create_app(wof_inst, soap_service_url=None):
 
     app.config.from_object(config.Config)
     app.wof_inst = wof_inst
-    if not 'SOAP_SERVICE_URL' in app.config:
+    if not 'SOAP_SERVICE_URL' in app.config and soap_service_url:
         app.config['SOAP_SERVICE_URL'] = soap_service_url
 
     app.register_module(rest)
