@@ -10,8 +10,9 @@ def get_wsdl():
 # Come up with a better way to do this.
     network = current_app.wof_inst.network.lower()
 
-    serv_loc = 'http://%s/soap/%s/WOFService' %\
-        (request.environ['HTTP_HOST'], network)
+    serv_loc = current_app.config.get(
+        'SOAP_SERVICE_URL',
+        '%s/wateroneflow' % request.url.rsplit('/', 1)[0])
 
     response = make_response(render_template('wsdl_temp.wsdl',
                                              serv_loc=serv_loc,
