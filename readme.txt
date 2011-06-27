@@ -15,14 +15,14 @@ Basic steps/requirements for installing on a Windows computer:
 10. Enter: easy_install nose
 11. Enter: easy_install suds
 11. If you want the package that was used to generate the code for serializing/deserializing WaterML, enter: easy_install generateds
-12. Create a "private_config.py" file in your WOFpy/WOFpy/ folder.  This file should contain the following variables:
+12. Create a "private_config.py" file in your WOFpy/examples/ folder.  This file should contain the following variables:
         lbr_connection_string = ''
         swis_connection_string = ''
         swis_test_connection_string = ''
     Each should be set to a SQLAlchemy-compatible database connection string.
 13. (OPTIONAL) Download and install pywin32 http://sourceforge.net/projects/pywin32/files/pywin32/Build%20215/  This package can be used to create a Windows service for your WOFpy application.
 
-After everything is installed, open a command window and navigate to your WOFpy/WOFpy/ folder.  Type "nosetests -v" to run the included tests.  If they all pass, the congratulations!
+After everything is installed, open a command window and navigate to your WOFpy/test/ folder.  Type "nosetests -v" to run the included tests.  If they all pass, the congratulations!
 
 Example for running the code on your local Windows machine:
 1. Populate an ODM database on an instance of SQL Server.  You can download one from the ODM page at http://his.cuahsi.org.
@@ -32,14 +32,13 @@ Example for running the code on your local Windows machine:
 Tip: In the folder tree view in Windows Explorer, hold down the shift key and right-click on a folder to see the option for opening a command window in that folder.
 4. In your command window you should see a message that says "* Running on http://127.0.0.1:5000/".  Congratulations, your development server is operational!
 5. You may now visit http://127.0.0.1:8080 with your web browser.  Other URLS to visit include:
-	- /GetSite?siteCode=XXX,YYY
-	- /GetSiteInfo?siteCode=XXX
-	- /GetVariableInfo?varCode=ABC
-	- /GetValues?siteCode=XXX&varCode=ABC&startDateTime=2010-01-01:12:00&endDateTime=2010-02-01-01:12:00
-    
+        - /GetSite?siteCode=XXX,YYY
+        - /GetSiteInfo?siteCode=XXX
+        - /GetVariableInfo?varCode=ABC
+        - /GetValues?siteCode=XXX&varCode=ABC&startDateTime=2010-01-01:12:00&endDateTime=2010-02-01-01:12:00
+
 To Make a New DAO:
 1. Create a new folder in /daos to put all your dao code.
-2. Write a new DAO class based on BaseDao in base_dao.py.  The methods should return objects as defined in base_models.py
-3. Write a new config file as those found in /config
-4. Write a new runserver script (see runserver_flask.py as an example) to use the new DAO you implemented.
-
+2. Write a new DAO class based on wof.dao.BaseDao; the methods should return objects as defined in wof.models
+3. Write a new config file as those found in the examples, they are named *_config.cfg (e.g. examples/swis/swis_config.cfg)
+4. Write a new runserver script (see the files named runserver_*.py in the examples) to use the new DAO you implemented.
