@@ -11,7 +11,11 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
-rest = Module(__name__)
+try:
+    from flask import Blueprint
+    rest = Blueprint(__name__, __name__)
+except ImportError:
+    rest = Module(__name__)
 
 
 @rest.route('/')

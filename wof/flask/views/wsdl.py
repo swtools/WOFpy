@@ -1,7 +1,11 @@
 from flask import (Flask, request, Markup, Response, render_template,
                    make_response, Module, current_app)
 
-wsdl = Module(__name__)
+try:
+    from flask import Blueprint
+    wsdl = Blueprint(__name__, __name__)
+except ImportError:
+    wsdl = Module(__name__)
 
 
 @wsdl.route('/soap/wateroneflow.wsdl')
