@@ -1,8 +1,9 @@
+from xml.sax.saxutils import escape
+
 import ConfigParser
 
 import WaterML
 
-from xml.sax.saxutils import escape
 
 
 class WOF(object):
