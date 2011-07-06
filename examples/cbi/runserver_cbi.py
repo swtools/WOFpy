@@ -14,11 +14,8 @@ from cbi_dao import CbiDao
 
 
 # change the deployment dir if you are going to deploy this in production
-CBI_DEPLOYMENT_DIR = tempfile.gettempdir()
-CBI_CACHE_DIR = os.path.join(CBI_DEPLOYMENT_DIR,
-                             'cache/')
-CBI_CONFIG_FILE = os.path.join(CBI_DEPLOYMENT_DIR,
-                               'cbi_config.cfg')
+CBI_CACHE_DIR = tempfile.gettempdir()
+CBI_CONFIG_FILE = 'cbi_config.cfg'
 CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
     CBI_CACHE_DIR, 'cbi_dao_cache.db')
 
