@@ -19,13 +19,15 @@ from examples.cbi.cbi_dao import CbiDao
 
 logging.basicConfig(level=logging.DEBUG)
 
+CBI_CACHE_DIR = tempfile.gettempdir()
+
 
 if __name__ == '__main__':
     #This one includes the SARA service from Ernest and was used
     # in the demonstration to Espey
 
-    cbi_cache_connection_string = 'sqlite:///' + os.path.join(
-        os.path.dirname(__file__), 'daos', 'cbi', 'cbi_cache.db')
+    cbi_cache_connection_string = 'sqlite:////' + os.path.join(
+        CBI_CACHE_DIR, 'cbi_cache.db')
 
     lbr_dao = OdmDao(private_config.lbr_connection_string)
     swis_dao = SwisDao(private_config.swis_connection_string,

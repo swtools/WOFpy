@@ -16,14 +16,15 @@ CBI_SOS_CAPABILITIES_URL = 'http://lighthouse.tamucc.edu/sos'
 GCOOS_ONTOLOGY_FILE_URL = \
     'http://mmisw.org/ont?form=rdf&uri=http://mmisw.org/ont/gcoos/parameter'
 
+CBI_CACHE_DIR = tempfile.gettempdir()
 CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
-    tempfile.gettempdir(), 'cbi_dao_cache.db')
+    CBI_CACHE_DIR, 'cbi_dao_cache.db')
 LOCAL_SITE_FILE_PATH = os.path.join(
-    tempfile.gettempdir(), 'cbi_site_file.xml')
+    CBI_CACHE_DIR, 'cbi_site_file.xml')
 LOCAL_PARAMETER_FILE_PATH = os.path.join(
-    tempfile.gettempdir(), 'cbi_parameter_file.xml')
+    CBI_CACHE_DIR, 'cbi_parameter_file.xml')
 LOCAL_CAPABILITIES_FILE_PATH = os.path.join(
-    tempfile.gettempdir(), 'cbi_sos_capabilities_file.xml')
+    CBI_CACHE_DIR, 'cbi_sos_capabilities_file.xml')
 
 namespaces = {
     'gml': "http://www.opengis.net/gml",
