@@ -21,8 +21,7 @@ class CbiDao(BaseDao):
         config = ConfigParser.RawConfigParser()
         config.read(config_file_path)
         if not database_uri:
-            database_uri = config.get('Database', 'URI')
-
+            database_uri = config.get('Database', 'URI')        
         self.engine = create_engine(database_uri, convert_unicode=True)
         #TODO: use pool_size for non-sqlite database
         self.db_session = scoped_session(sessionmaker(
