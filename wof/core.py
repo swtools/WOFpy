@@ -1,9 +1,14 @@
+
 from xml.sax.saxutils import escape
 
 import ConfigParser
+import soaplib.core
+import soaplib.core.server.wsgi
+import werkzeug
 
+import wof.flask
+import wof.soap
 import WaterML
-
 
 
 class WOF(object):
@@ -22,8 +27,10 @@ class WOF(object):
     default_start_date = None
     default_end_date = None
 
-    def __init__(self, dao):
+    def __init__(self, dao, config_file=None):
         self.dao = dao
+        if config_file:
+            self.config_from_file(config_file)
 
     def config_from_file(self, file_name):
         config = ConfigParser.RawConfigParser()
@@ -561,3 +568,21 @@ class WOF(object):
                                                  startDateTime, endDateTime)
 
         return valueResultArr
+
+
+def create_wof_app(dao, config_file):
+    """
+    Returns a fully instantiated WOF wsgi app (flask + soap)
+    """
+    wof_obj = WOF(dao, config_file)
+    app = wof.flask.create_app(wof_obj)
+    WOFService = wof.soap.create_wof_service_class(wof_obj)
+    soap_app = soaplib.core.Application(
+        services=[WOFService],
+        tns='http://www.cuahsi.org/his/1.0/ws/',
+        name='WaterOneFlow')
+    soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
+    app.wsgi_app = werkzeug.wsgi.DispatcherMiddleware(app.wsgi_app, {
+        '/soap/wateroneflow': soap_wsgi_app
+        })
+    return app
