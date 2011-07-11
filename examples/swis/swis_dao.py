@@ -24,8 +24,8 @@ class SwisDao(BaseDao):
         'zipcode': 'ZIP'
         }
 
-    def __init__(self, db_connection_string, config_file_path):
-        self.engine = create_engine(db_connection_string, convert_unicode=True)
+    def __init__(self, config_file_path, database_uri=None):
+        self.engine = create_engine(database_uri, convert_unicode=True)
         #TODO: Use pool_size for non-sqlite database connection
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
