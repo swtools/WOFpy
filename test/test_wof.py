@@ -67,3 +67,10 @@ class TestWOF(unittest.TestCase):
         self.compare_output_to_known_xml(get_site_response,
                                          'get_multiple_sites.xml')
 
+def suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TestWOF))
+    return suite
+
+if __name__ == '__main__':
+    unittest.main(defaultTest='suite')
