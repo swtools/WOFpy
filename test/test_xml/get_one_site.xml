@@ -1,0 +1,29 @@
+<sitesResponse xmlns:gml="http://www.opengis.net/gml"     xmlns:xlink="http://www.w3.org/1999/xlink"     xmlns:xsd="http://www.w3.org/2001/XMLSchema"     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     xmlns:wtr="http://www.cuahsi.org/waterML/"     xmlns="http://www.cuahsi.org/waterML/1.0/">
+    <queryInfo>
+        <criteria>
+            <locationParam>TEST:SITE_A</locationParam>
+        </criteria>
+        <note/>
+        <extension></extension>
+    </queryInfo>
+    <site>
+        <siteInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="SiteInfoType">
+            <siteName>Site A</siteName>
+            <siteCode siteID="1" network="TEST">SITE_A</siteCode>
+            <timeZoneInfo siteUsesDaylightSavingsTime="false">
+                <defaultTimeZone ZoneOffset="00:00" ZoneAbbreviation="GMT"/>
+            </timeZoneInfo>
+            <geoLocation>
+                <geogLocation srs="EPSG:None" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="LatLonPointType">
+                    <latitude>50</latitude>
+                    <longitude>60</longitude>
+                </geogLocation>
+            </geoLocation>
+            <note/>
+            <extension></extension>
+            <altname></altname>
+        </siteInfo>
+        <seriesCatalog/>
+        <extension></extension>
+    </site>
+</sitesResponse>

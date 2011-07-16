@@ -1,13 +1,15 @@
-from lxml import etree
-import unittest
+import itertools
 import os
 import StringIO
+import unittest
 
+from lxml import etree
 from wof import WOF
-from daos.swis.swis_dao import SwisDao
 
-import private_config
+from test_dao import TestDao
 
+TEST_CONFIG_FILE = 'test_config.cfg'
+TEST_XML_DIR = 'test_xml'
 
 NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:xlink="http://www.w3.org/1999/xlink" \
@@ -16,90 +18,52 @@ NSDEF = 'xmlns:gml="http://www.opengis.net/gml" \
     xmlns:wtr="http://www.cuahsi.org/waterML/" \
     xmlns="http://www.cuahsi.org/waterML/1.0/"'
 
-class TestWofpyCode(unittest.TestCase):
+
+class TestWOF(unittest.TestCase):
     """
     Tests wof response generation methods for validation against
     the WaterML 1.0 schema.
     """
-    
+
     def setUp(self):
-        test_db_path = os.path.join(os.path.dirname(__file__),
-                                        'test_swis2.db')
-        
-        test_config_path = os.path.join(os.path.dirname(__file__),
-                                        'test_swis_config.cfg')
-        
-        dao = SwisDao('sqlite:///'+test_db_path, test_config_path)
-        self.wof_inst = WOF(dao)
-        self.wof_inst.config_from_file(test_config_path)
-        
+        dao = TestDao()
+        self.wof_inst = WOF(dao, TEST_CONFIG_FILE)
         waterml_schema_path = os.path.join(os.path.dirname(__file__),
                                         'cuahsiTimeSeries_v1_0.xsd')
-        
         waterml_schema_doc = etree.parse(waterml_schema_path)
         self.waterml_schema = etree.XMLSchema(waterml_schema_doc)
-        
-    def test_create_get_site_response(self):
+
+    def compare_output_to_known_xml(self, response, filename):
+        """
+        Make sure response output is as expected. This tests that a
+        response contains the same text as the filename.
+        """
+        out_file_path = os.path.join(os.path.dirname(__file__),
+                                     TEST_XML_DIR, filename)
+        response_output = StringIO.StringIO()
+        response.export(response_output, 0, name_="sitesResponse",
+                        namespacedef_=NSDEF)
+        response_output.seek(0)
+        # test each line in the response text equals each line in the file
+        with open(out_file_path, 'rb') as valid_file:
+            for response_line, valid_line in itertools.izip(response_output, valid_file):
+                assert response_line == valid_line
+
+
+    def test_get_all_sites(self):
         get_site_response = self.wof_inst.create_get_site_response()
-        
-        out_file_path = os.path.join(os.path.dirname(__file__),
-                                     'GetSitesResponse.xml')
-        
-        out_file = open(out_file_path,'w')
-        
-        get_site_response.export(out_file, 0, name_="sitesResponse",
-                                 namespacedef_= NSDEF)
-         
-        out_file.close() 
-         
-        doc = etree.parse(out_file_path)
-        self.assertTrue(self.waterml_schema.validate(doc))
-    
-    def test_create_get_site_info_response(self):
-        get_site_response = self.wof_inst.create_get_site_info_response('BAYT')
-        
-        out_file_path = os.path.join(os.path.dirname(__file__),
-                                     'GetSiteInfoResponse.xml')
-        
-        out_file = open(out_file_path,'w')
-        
-        get_site_response.export(out_file, 0, name_="sitesResponse",
-                                 namespacedef_= NSDEF)
-         
-        out_file.close() 
-         
-        doc = etree.parse(out_file_path)
-        self.assertTrue(self.waterml_schema.validate(doc))
-    
-    def test_create_get_variable_info_response(self):
-        get_site_response = self.wof_inst.create_get_variable_info_response()
-        
-        out_file_path = os.path.join(os.path.dirname(__file__),
-                                     'GetVariableInfoResponse.xml')
-        
-        out_file = open(out_file_path,'w')
-        
-        get_site_response.export(out_file, 0, name_="variablesResponse",
-                                 namespacedef_= NSDEF)
-         
-        out_file.close() 
-         
-        doc = etree.parse(out_file_path)
-        self.assertTrue(self.waterml_schema.validate(doc))
-    
-    def test_create_get_values_response(self):
-        get_site_response = self.wof_inst.create_get_values_response(
-            'BAYT','seawater_salinity')
-        
-        out_file_path = os.path.join(os.path.dirname(__file__),
-                                     'GetValuesResponse.xml')
-        
-        out_file = open(out_file_path,'w')
-        
-        get_site_response.export(out_file, 0, name_="timeSeriesResponse",
-                                 namespacedef_= NSDEF)
-         
-        out_file.close() 
-         
-        doc = etree.parse(out_file_path)
-        self.assertTrue(self.waterml_schema.validate(doc))
+        self.compare_output_to_known_xml(get_site_response,
+                                         'get_all_sites.xml')
+
+    def test_get_one_site(self):
+        get_site_response = self.wof_inst.create_get_site_response(
+            'TEST:SITE_A')
+        self.compare_output_to_known_xml(get_site_response,
+                                         'get_one_site.xml')
+
+    def test_get_multiple_sites(self):
+        get_site_response = self.wof_inst.create_get_site_response(
+            'TEST:SITE_A,TEST:SITE_B')
+        self.compare_output_to_known_xml(get_site_response,
+                                         'get_multiple_sites.xml')
+
