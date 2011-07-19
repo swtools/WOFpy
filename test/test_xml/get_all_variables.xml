@@ -1,0 +1,60 @@
+<variablesResponse xmlns:gml="http://www.opengis.net/gml"     xmlns:xlink="http://www.w3.org/1999/xlink"     xmlns:xsd="http://www.w3.org/2001/XMLSchema"     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     xmlns:wtr="http://www.cuahsi.org/waterML/"     xmlns="http://www.cuahsi.org/waterML/1.0/">
+    <variables>
+        <variable>
+            <variableCode default="true" variableID="2" vocabulary="TESTVocab">Flow</variableCode>
+            <variableName>Discharge</variableName>
+            <variableDescription>Average streamflow</variableDescription>
+            <valueType>Field Observation</valueType>
+            <dataType>Average</dataType>
+            <generalCategory>Hydrology</generalCategory>
+            <sampleMedium>Surface Water</sampleMedium>
+            <units unitsAbbreviation="cfs" unitsCode="35" unitsType="Flow">cubic feet per second</units>
+            <NoDataValue>-9999</NoDataValue>
+            <timeSupport isRegular="true">
+                <unit UnitID="102">
+                    <UnitName>minute</UnitName>
+                    <UnitDescription>minute</UnitDescription>
+                    <UnitType>Time</UnitType>
+                    <UnitAbbreviation>min</UnitAbbreviation>
+                </unit>
+                <timeInterval>15</timeInterval>
+            </timeSupport>
+        </variable>
+        <variable>
+            <variableCode default="true" variableID="3" vocabulary="TESTVocab">TP</variableCode>
+            <variableName>Phosphorus, total as P</variableName>
+            <valueType>Sample</valueType>
+            <dataType>Sporadic</dataType>
+            <generalCategory>Water Quality</generalCategory>
+            <sampleMedium>Surface Water</sampleMedium>
+            <units unitsAbbreviation="mg/L" unitsCode="199" unitsType="Concentration">milligrams per liter</units>
+            <NoDataValue>-9999</NoDataValue>
+            <timeSupport isRegular="false">
+                <unit UnitID="100">
+                    <UnitName>second</UnitName>
+                    <UnitDescription>second</UnitDescription>
+                    <UnitType>Time</UnitType>
+                    <UnitAbbreviation>s</UnitAbbreviation>
+                </unit>
+            </timeSupport>
+        </variable>
+        <variable>
+            <variableCode default="true" variableID="1" vocabulary="TESTVocab">Temp</variableCode>
+            <variableName>Temperature</variableName>
+            <valueType>Field Observation</valueType>
+            <dataType>Continuous</dataType>
+            <generalCategory>Water Quality</generalCategory>
+            <sampleMedium>Surface Water</sampleMedium>
+            <units unitsAbbreviation="degC" unitsCode="96" unitsType="Temperature">degree celcius</units>
+            <NoDataValue>-9999</NoDataValue>
+            <timeSupport isRegular="true">
+                <unit UnitID="100">
+                    <UnitName>second</UnitName>
+                    <UnitDescription>second</UnitDescription>
+                    <UnitType>Time</UnitType>
+                    <UnitAbbreviation>s</UnitAbbreviation>
+                </unit>
+            </timeSupport>
+        </variable>
+    </variables>
+</variablesResponse>
