@@ -1,9 +1,8 @@
-import itertools
 import os
 import StringIO
 import unittest
 
-from lxml import etree
+from lxml import etree, objectify
 from wof import WOF
 
 from test_dao import TestDao
@@ -49,17 +48,21 @@ class TestWOF(unittest.TestCase):
                         namespacedef_=NSDEF)
         f.close()
         
-    def compare_output_to_known_xml(self, response_string, filename):
+    def compare_output_to_known_xml(self,
+                                    response_stringIO,
+                                    known_xml_filename):
         """
         Make sure response output is as expected. This tests that a
-        response contains the same text as the filename.
+        response contains the same XML as in the known XML file.
         """
-        out_file_path = os.path.join(os.path.dirname(__file__),
-                                     TEST_XML_DIR, filename)
-        # test each line in the response text equals each line in the file
-        with open(out_file_path, 'rb') as valid_file:
-            for response_line, valid_line in itertools.izip(response_string, valid_file):
-                assert response_line.rstrip() == valid_line.rstrip()
+        known_file_path = os.path.join(os.path.dirname(__file__),
+                                       TEST_XML_DIR, known_xml_filename)
+        # Use objectify and etree to remove whitespace from XML for comparison
+        response_tree = objectify.parse(response_stringIO)
+        known_tree = objectify.parse(known_file_path)
+        response_string = etree.tostring(response_tree)
+        known_string = etree.tostring(known_tree)
+        assert response_string == known_string
 
     def test_get_all_sites(self):
         response = self.wof_inst.create_get_site_response()
@@ -88,7 +91,6 @@ class TestWOF(unittest.TestCase):
         response = self.wof_inst.create_get_variable_info_response()
         response_string = self.response_to_StringIO(response,
                                                     'variablesResponse')
-        self.save_response(response, 'allvar.xml', 'variablesResponse')
         self.compare_output_to_known_xml(response_string,
                                          'get_all_variables.xml')
 
