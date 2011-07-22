@@ -87,7 +87,7 @@ class WOF(object):
         if (varArg == None or varArg == ''):
             seriesResultArr = self.dao.get_series_by_sitecode(siteCode)
         else:
-            varCode = varArg.replace(self.network + ':', '')
+            varCode = varArg.replace(self.vocabulary + ':', '')
             seriesResultArr = self.dao.get_series_by_sitecode_and_varcode(
                 siteCode, varCode)
 
@@ -562,7 +562,7 @@ class WOF(object):
     def create_wml2_values_object(self, siteArg, varArg, startDateTime=None,
                                    endDateTime=None):
         siteCode = siteArg.replace(self.network + ':', '')
-        varCode = varArg.replace(self.network + ':', '')
+        varCode = varArg.replace(self.vocabulary + ':', '')
 
         valueResultArr = self.dao.get_datavalues(siteCode, varCode,
                                                  startDateTime, endDateTime)
