@@ -110,6 +110,33 @@ class TestWOF(unittest.TestCase):
         self.compare_output_to_known_xml(response_string,
                                          'get_multiple_variables.xml')
 
+    def test_get_site_info_novar(self):
+        response = self.wof_inst.create_get_site_info_response('TEST:SITE_A')
+        response_string = self.response_to_StringIO(response,
+                                                    'sitesResponse')
+        self.compare_output_to_known_xml(response_string,
+                                         'get_siteinfo_novar.xml')
+
+    def test_get_site_info_withvar(self):
+        response = self.wof_inst.create_get_site_info_response(
+            'TEST:SITE_B',
+            'TESTVocab:TP')
+        response_string = self.response_to_StringIO(response,
+                                                    'sitesResponse')
+        self.compare_output_to_known_xml(response_string,
+                                         'get_siteinfo_withvar.xml')
+
+    def test_get_values_encloses_por(self):
+        response = self.wof_inst.create_get_values_response(
+            'TEST:SITE_A',
+            'TESTVocab:Temp',
+            startDateTime='2007-03-05 00:00',
+            endDateTime='2007-05-06 00:00')
+        response_string = self.response_to_StringIO(response,
+                                                    'timeSeriesResponse')
+        self.compare_output_to_known_xml(response_string,
+                                         'get_values_encloses_por.xml')
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TestWOF))

@@ -12,12 +12,19 @@
                 <defaultTimeZone ZoneOffset="00:00" ZoneAbbreviation="GMT"/>
             </timeZoneInfo>
             <geoLocation>
-                <geogLocation srs="EPSG:None" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="LatLonPointType">
-                    <latitude>55</latitude>
-                    <longitude>-13</longitude>
+                <geogLocation srs="EPSG:4269" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="LatLonPointType">
+                    <latitude>41.718473</latitude>
+                    <longitude>-111.946402</longitude>
                 </geogLocation>
+                <localSiteXY projectionInformation="NAD83 / UTM zone 12N">
+                    <X>421276.323</X>
+                    <Y>4618952.04</Y>
+                </localSiteXY>
             </geoLocation>
-            <note/>
+            <verticalDatum>NGVD29</verticalDatum>
+            <note title="County">Cache</note>
+            <note title="State">Utah</note>
+            <note title="Site Comments">Located in a neat place</note>
             <extension></extension>
             <altname></altname>
         </siteInfo>
