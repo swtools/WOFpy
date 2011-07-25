@@ -1,0 +1,6 @@
+VariableCode,VariableName,Units
+TN,"Nitrogen, total as N",micrograms per liter
+TP,"Phosphorus, total as P",micrograms per liter
+Temp,Temperature,degree celcius
+TSS,"Solids, total Suspended",milligrams per liter
+Chla,Chlorophyll a,micrograms per liter
