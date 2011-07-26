@@ -1,0 +1,22 @@
+<variablesResponse xmlns:gml="http://www.opengis.net/gml"     xmlns:xlink="http://www.w3.org/1999/xlink"     xmlns:xsd="http://www.w3.org/2001/XMLSchema"     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     xmlns:wtr="http://www.cuahsi.org/waterML/"     xmlns="http://www.cuahsi.org/waterML/1.0/">
+    <variables>
+        <variable>
+            <variableCode default="true" variableID="1" vocabulary="TESTVocab">Temp</variableCode>
+            <variableName>Temperature</variableName>
+            <valueType>Field Observation</valueType>
+            <dataType>Continuous</dataType>
+            <generalCategory>Water Quality</generalCategory>
+            <sampleMedium>Surface Water</sampleMedium>
+            <units unitsAbbreviation="degC" unitsCode="96" unitsType="Temperature">degree celcius</units>
+            <NoDataValue>-9999</NoDataValue>
+            <timeSupport isRegular="true">
+                <unit UnitID="100">
+                    <UnitName>second</UnitName>
+                    <UnitDescription>second</UnitDescription>
+                    <UnitType>Time</UnitType>
+                    <UnitAbbreviation>s</UnitAbbreviation>
+                </unit>
+            </timeSupport>
+        </variable>
+    </variables>
+</variablesResponse>

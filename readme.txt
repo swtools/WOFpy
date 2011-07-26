@@ -1,3 +1,5 @@
+TODO: Update for using setup.py.  (python setup.py install)
+
 The folder contains Python modules that can read data from a Data Access Object (DAO) and return the data to the client in WaterML format, using the same access methods defined by the CUAHSI-HIS WaterOneFlow web service.  DAOs can represent a variety of data sources, including an Observations Data Model (ODM)-format database, the Surface Water Information System (SWIS) database, or even a pass-through web-service, such as that by the Conrad-Blucher Institute (CBI).  The three aforementioned data sources have their associated DAO implementations included with this package.  Others may be written by following the BaseDao (see base_dao.py) class description.
 
 The code was written using Python version 2.6
