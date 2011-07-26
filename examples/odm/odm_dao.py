@@ -11,6 +11,7 @@ class OdmDao(BaseDao):
     def __init__(self, db_connection_string):
         self.engine = create_engine(db_connection_string, convert_unicode=True,
             pool_size=100)
+        # Default application pool size is 5. Use 100 to improve performance.
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
         model.init_model(self.db_session)

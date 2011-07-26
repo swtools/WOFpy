@@ -191,6 +191,7 @@ class BaseSeriesCatalog(object):
     Site = BaseSite()
     Variable = BaseVariable()
     Method = BaseMethod()
+    Source = BaseSource()
 
 
 class BaseVerticalDatum(object):
