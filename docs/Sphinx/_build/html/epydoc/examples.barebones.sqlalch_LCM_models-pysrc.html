@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>examples.barebones.sqlalch_LCM_models</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="examples-module.html">Package&nbsp;examples</a> ::
+        <a href="examples.barebones-module.html">Package&nbsp;barebones</a> ::
+        Module&nbsp;sqlalch_LCM_models
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="examples.barebones.sqlalch_LCM_models-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="examples.barebones.sqlalch_LCM_models-module.html">Module examples.barebones.sqlalch_LCM_models</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">datetime</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">sqlalchemy</tt> <tt class="py-keyword">import</tt> <tt class="py-op">(</tt><tt class="py-name">Table</tt><tt class="py-op">,</tt> <tt class="py-name">Column</tt><tt class="py-op">,</tt> <tt class="py-name">Integer</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">ForeignKey</tt><tt class="py-op">,</tt> <tt class="py-name">Float</tt><tt class="py-op">,</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line">                        <tt class="py-name">DateTime</tt><tt class="py-op">,</tt> <tt class="py-name">Boolean</tt><tt class="py-op">)</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">sqlalchemy</tt><tt class="py-op">.</tt><tt class="py-name">sql</tt> <tt class="py-keyword">import</tt> <tt class="py-name">join</tt><tt class="py-op">,</tt> <tt class="py-name">select</tt><tt class="py-op">,</tt> <tt class="py-name">func</tt><tt class="py-op">,</tt> <tt class="py-name">label</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">sqlalchemy</tt><tt class="py-op">.</tt><tt class="py-name">orm</tt> <tt class="py-keyword">import</tt> <tt class="py-name">mapper</tt><tt class="py-op">,</tt> <tt class="py-name">relationship</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">sqlalchemy</tt><tt class="py-op">.</tt><tt class="py-name">ext</tt><tt class="py-op">.</tt><tt class="py-name">declarative</tt> <tt class="py-keyword">import</tt> <tt class="py-name">declarative_base</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Package wof=wof-module.html"><a title="wof" class="py-name" href="#" onclick="return doclink('link-0', 'wof', 'link-0');">wof</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module wof.models=wof.models-module.html"><a title="wof.models" class="py-name" href="#" onclick="return doclink('link-1', 'models', 'link-1');">models</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">wof_base</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt id="link-2" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Base=examples.barebones.sqlalch_LCM_models-module.html#Base,Variable examples.cbi.cbi_cache_models.Base=examples.cbi.cbi_cache_models-module.html#Base,Variable examples.odm.sqlalch_odm_models.Base=examples.odm.sqlalch_odm_models-module.html#Base,Variable examples.swis.sqlalch_swis_models.Base=examples.swis.sqlalch_swis_models-module.html#Base"><a title="examples.barebones.sqlalch_LCM_models.Base
+examples.cbi.cbi_cache_models.Base
+examples.odm.sqlalch_odm_models.Base
+examples.swis.sqlalch_swis_models.Base" class="py-name" href="#" onclick="return doclink('link-2', 'Base', 'link-2');">Base</a></tt> <tt class="py-op">=</tt> <tt class="py-name">declarative_base</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"> </tt>
+<a name="init_model"></a><div id="init_model-def"><a name="L14"></a><tt class="py-lineno"> 14</tt> <a class="py-toggle" href="#" id="init_model-toggle" onclick="return toggle('init_model');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models-module.html#init_model">init_model</a><tt class="py-op">(</tt><tt class="py-param">db_session</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="init_model-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="init_model-expanded"><a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line">    <tt id="link-3" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Base
+examples.cbi.cbi_cache_models.Base
+examples.odm.sqlalch_odm_models.Base
+examples.swis.sqlalch_swis_models.Base" class="py-name" href="#" onclick="return doclink('link-3', 'Base', 'link-2');">Base</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt> <tt class="py-op">=</tt> <tt class="py-name">db_session</tt><tt class="py-op">.</tt><tt class="py-name">query_property</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line">     </tt>
+<a name="Variable"></a><div id="Variable-def"><a name="L17"></a><tt class="py-lineno"> 17</tt> <a class="py-toggle" href="#" id="Variable-toggle" onclick="return toggle('Variable');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models.Variable-class.html">Variable</a><tt class="py-op">(</tt><tt class="py-base-class">Base</tt><tt class="py-op">,</tt> <tt class="py-base-class">wof_base</tt><tt class="py-op">.</tt><tt class="py-base-class">BaseVariable</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Variable-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Variable-expanded"><a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line">    <tt id="link-4" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.__tablename__=examples.barebones.sqlalch_LCM_models.DataValue-class.html#__tablename__,Variable examples.barebones.sqlalch_LCM_models.Site.__tablename__=examples.barebones.sqlalch_LCM_models.Site-class.html#__tablename__,Variable examples.barebones.sqlalch_LCM_models.Variable.__tablename__=examples.barebones.sqlalch_LCM_models.Variable-class.html#__tablename__,Variable examples.cbi.cbi_cache_models.SeriesCatalog.__tablename__=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#__tablename__,Variable examples.cbi.cbi_cache_models.Site.__tablename__=examples.cbi.cbi_cache_models.Site-class.html#__tablename__,Variable examples.cbi.cbi_cache_models.Units.__tablename__=examples.cbi.cbi_cache_models.Units-class.html#__tablename__,Variable examples.cbi.cbi_cache_models.Variable.__tablename__=examples.cbi.cbi_cache_models.Variable-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.DataValue.__tablename__=examples.odm.sqlalch_odm_models.DataValue-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.Metadata.__tablename__=examples.odm.sqlalch_odm_models.Metadata-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.Method.__tablename__=examples.odm.sqlalch_odm_models.Method-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.OffsetType.__tablename__=examples.odm.sqlalch_odm_models.OffsetType-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.Qualifier.__tablename__=examples.odm.sqlalch_odm_models.Qualifier-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.QualityControlLevel.__tablename__=examples.odm.sqlalch_odm_models.QualityControlLevel-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.__tablename__=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.Site.__tablename__=examples.odm.sqlalch_odm_models.Site-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.Source.__tablename__=examples.odm.sqlalch_odm_models.Source-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.SpatialReference.__tablename__=examples.odm.sqlalch_odm_models.SpatialReference-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.Units.__tablename__=examples.odm.sqlalch_odm_models.Units-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.Variable.__tablename__=examples.odm.sqlalch_odm_models.Variable-class.html#__tablename__,Variable examples.odm.sqlalch_odm_models.VerticalDatum.__tablename__=examples.odm.sqlalch_odm_models.VerticalDatum-class.html#__tablename__,Variable examples.swis.sqlalch_swis_models.DataValue.__tablename__=examples.swis.sqlalch_swis_models.DataValue-class.html#__tablename__,Variable examples.swis.sqlalch_swis_models.InstrumentManufacturer.__tablename__=examples.swis.sqlalch_swis_models.InstrumentManufacturer-class.html#__tablename__,Variable examples.swis.sqlalch_swis_models.InstrumentModel.__tablename__=examples.swis.sqlalch_swis_models.InstrumentModel-class.html#__tablename__,Variable examples.swis.sqlalch_swis_models.Method.__tablename__=examples.swis.sqlalch_swis_models.Method-class.html#__tablename__,Variable examples.swis.sqlalch_swis_models.Site.__tablename__=examples.swis.sqlalch_swis_models.Site-class.html#__tablename__,Variable examples.swis.sqlalch_swis_models.Variable.__tablename__=examples.swis.sqlalch_swis_models.Variable-class.html#__tablename__"><a title="examples.barebones.sqlalch_LCM_models.DataValue.__tablename__
+examples.barebones.sqlalch_LCM_models.Site.__tablename__
+examples.barebones.sqlalch_LCM_models.Variable.__tablename__
+examples.cbi.cbi_cache_models.SeriesCatalog.__tablename__
+examples.cbi.cbi_cache_models.Site.__tablename__
+examples.cbi.cbi_cache_models.Units.__tablename__
+examples.cbi.cbi_cache_models.Variable.__tablename__
+examples.odm.sqlalch_odm_models.DataValue.__tablename__
+examples.odm.sqlalch_odm_models.Metadata.__tablename__
+examples.odm.sqlalch_odm_models.Method.__tablename__
+examples.odm.sqlalch_odm_models.OffsetType.__tablename__
+examples.odm.sqlalch_odm_models.Qualifier.__tablename__
+examples.odm.sqlalch_odm_models.QualityControlLevel.__tablename__
+examples.odm.sqlalch_odm_models.SeriesCatalog.__tablename__
+examples.odm.sqlalch_odm_models.Site.__tablename__
+examples.odm.sqlalch_odm_models.Source.__tablename__
+examples.odm.sqlalch_odm_models.SpatialReference.__tablename__
+examples.odm.sqlalch_odm_models.Units.__tablename__
+examples.odm.sqlalch_odm_models.Variable.__tablename__
+examples.odm.sqlalch_odm_models.VerticalDatum.__tablename__
+examples.swis.sqlalch_swis_models.DataValue.__tablename__
+examples.swis.sqlalch_swis_models.InstrumentManufacturer.__tablename__
+examples.swis.sqlalch_swis_models.InstrumentModel.__tablename__
+examples.swis.sqlalch_swis_models.Method.__tablename__
+examples.swis.sqlalch_swis_models.Site.__tablename__
+examples.swis.sqlalch_swis_models.Variable.__tablename__" class="py-name" href="#" onclick="return doclink('link-4', '__tablename__', 'link-4');">__tablename__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'variables'</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">    <tt id="link-5" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.VariableID=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableID,Variable examples.cbi.cbi_cache_models.SeriesCatalog.VariableID=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#VariableID,Variable examples.cbi.cbi_cache_models.Variable.VariableID=examples.cbi.cbi_cache_models.Variable-class.html#VariableID,Variable examples.odm.sqlalch_odm_models.DataValue.VariableID=examples.odm.sqlalch_odm_models.DataValue-class.html#VariableID,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#VariableID,Variable examples.odm.sqlalch_odm_models.Variable.VariableID=examples.odm.sqlalch_odm_models.Variable-class.html#VariableID,Variable examples.swis.sqlalch_swis_models.DataValue.VariableID=examples.swis.sqlalch_swis_models.DataValue-class.html#VariableID,Variable examples.swis.sqlalch_swis_models.Variable.VariableID=examples.swis.sqlalch_swis_models.Variable-class.html#VariableID,Variable wof.models.BaseDataValue.VariableID=wof.models.BaseDataValue-class.html#VariableID,Variable wof.models.BaseSeriesCatalog.VariableID=wof.models.BaseSeriesCatalog-class.html#VariableID,Variable wof.models.BaseVariable.VariableID=wof.models.BaseVariable-class.html#VariableID"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-5', 'VariableID', 'link-5');">VariableID</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'rowid'</tt><tt class="py-op">,</tt><tt class="py-name">Integer</tt><tt class="py-op">,</tt> <tt class="py-name">primary_key</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt>     </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line">    <tt id="link-6" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.VariableCode=examples.barebones.sqlalch_LCM_models.DataValue-class.html#VariableCode,Variable examples.barebones.sqlalch_LCM_models.Variable.VariableCode=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableCode,Variable examples.cbi.cbi_cache_models.SeriesCatalog.VariableCode=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#VariableCode,Variable examples.cbi.cbi_cache_models.Variable.VariableCode=examples.cbi.cbi_cache_models.Variable-class.html#VariableCode,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.VariableCode=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#VariableCode,Variable examples.odm.sqlalch_odm_models.Variable.VariableCode=examples.odm.sqlalch_odm_models.Variable-class.html#VariableCode,Variable examples.swis.sqlalch_swis_models.Variable.VariableCode=examples.swis.sqlalch_swis_models.Variable-class.html#VariableCode,Variable wof.models.BaseSeriesCatalog.VariableCode=wof.models.BaseSeriesCatalog-class.html#VariableCode,Variable wof.models.BaseVariable.VariableCode=wof.models.BaseVariable-class.html#VariableCode"><a title="examples.barebones.sqlalch_LCM_models.DataValue.VariableCode
+examples.barebones.sqlalch_LCM_models.Variable.VariableCode
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableCode
+examples.cbi.cbi_cache_models.Variable.VariableCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableCode
+examples.odm.sqlalch_odm_models.Variable.VariableCode
+examples.swis.sqlalch_swis_models.Variable.VariableCode
+wof.models.BaseSeriesCatalog.VariableCode
+wof.models.BaseVariable.VariableCode" class="py-name" href="#" onclick="return doclink('link-6', 'VariableCode', 'link-6');">VariableCode</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line">    <tt id="link-7" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.VariableName=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableName,Variable examples.cbi.cbi_cache_models.SeriesCatalog.VariableName=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#VariableName,Variable examples.cbi.cbi_cache_models.Variable.VariableName=examples.cbi.cbi_cache_models.Variable-class.html#VariableName,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.VariableName=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#VariableName,Variable examples.odm.sqlalch_odm_models.Variable.VariableName=examples.odm.sqlalch_odm_models.Variable-class.html#VariableName,Variable examples.swis.sqlalch_swis_models.Variable.VariableName=examples.swis.sqlalch_swis_models.Variable-class.html#VariableName,Variable wof.models.BaseSeriesCatalog.VariableName=wof.models.BaseSeriesCatalog-class.html#VariableName,Variable wof.models.BaseVariable.VariableName=wof.models.BaseVariable-class.html#VariableName"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableName
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableName
+examples.cbi.cbi_cache_models.Variable.VariableName
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableName
+examples.odm.sqlalch_odm_models.Variable.VariableName
+examples.swis.sqlalch_swis_models.Variable.VariableName
+wof.models.BaseSeriesCatalog.VariableName
+wof.models.BaseVariable.VariableName" class="py-name" href="#" onclick="return doclink('link-7', 'VariableName', 'link-7');">VariableName</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">)</tt>     </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line">     </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">    <tt id="link-8" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.SampleMedium=examples.barebones.sqlalch_LCM_models.Variable-class.html#SampleMedium,Variable examples.cbi.cbi_cache_models.SeriesCatalog.SampleMedium=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#SampleMedium,Variable examples.cbi.cbi_cache_models.Variable.SampleMedium=examples.cbi.cbi_cache_models.Variable-class.html#SampleMedium,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.SampleMedium=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#SampleMedium,Variable examples.odm.sqlalch_odm_models.Variable.SampleMedium=examples.odm.sqlalch_odm_models.Variable-class.html#SampleMedium,Method examples.swis.sqlalch_swis_models.Variable.SampleMedium()=examples.swis.sqlalch_swis_models.Variable-class.html#SampleMedium,Variable wof.models.BaseSeriesCatalog.SampleMedium=wof.models.BaseSeriesCatalog-class.html#SampleMedium,Variable wof.models.BaseVariable.SampleMedium=wof.models.BaseVariable-class.html#SampleMedium"><a title="examples.barebones.sqlalch_LCM_models.Variable.SampleMedium
+examples.cbi.cbi_cache_models.SeriesCatalog.SampleMedium
+examples.cbi.cbi_cache_models.Variable.SampleMedium
+examples.odm.sqlalch_odm_models.SeriesCatalog.SampleMedium
+examples.odm.sqlalch_odm_models.Variable.SampleMedium
+examples.swis.sqlalch_swis_models.Variable.SampleMedium
+wof.models.BaseSeriesCatalog.SampleMedium
+wof.models.BaseVariable.SampleMedium" class="py-name" href="#" onclick="return doclink('link-8', 'SampleMedium', 'link-8');">SampleMedium</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"Water"</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line">    <tt id="link-9" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.ValueType=examples.barebones.sqlalch_LCM_models.Variable-class.html#ValueType,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.ValueType=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#ValueType,Variable examples.odm.sqlalch_odm_models.Variable.ValueType=examples.odm.sqlalch_odm_models.Variable-class.html#ValueType,Variable examples.swis.sqlalch_swis_models.Variable.ValueType=examples.swis.sqlalch_swis_models.Variable-class.html#ValueType,Variable wof.models.BaseSeriesCatalog.ValueType=wof.models.BaseSeriesCatalog-class.html#ValueType,Variable wof.models.BaseVariable.ValueType=wof.models.BaseVariable-class.html#ValueType"><a title="examples.barebones.sqlalch_LCM_models.Variable.ValueType
+examples.odm.sqlalch_odm_models.SeriesCatalog.ValueType
+examples.odm.sqlalch_odm_models.Variable.ValueType
+examples.swis.sqlalch_swis_models.Variable.ValueType
+wof.models.BaseSeriesCatalog.ValueType
+wof.models.BaseVariable.ValueType" class="py-name" href="#" onclick="return doclink('link-9', 'ValueType', 'link-9');">ValueType</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"Field Observation"</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line">    <tt id="link-10" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.IsRegular=examples.barebones.sqlalch_LCM_models.Variable-class.html#IsRegular,Variable examples.odm.sqlalch_odm_models.Variable.IsRegular=examples.odm.sqlalch_odm_models.Variable-class.html#IsRegular,Variable examples.swis.sqlalch_swis_models.Variable.IsRegular=examples.swis.sqlalch_swis_models.Variable-class.html#IsRegular,Variable wof.models.BaseVariable.IsRegular=wof.models.BaseVariable-class.html#IsRegular"><a title="examples.barebones.sqlalch_LCM_models.Variable.IsRegular
+examples.odm.sqlalch_odm_models.Variable.IsRegular
+examples.swis.sqlalch_swis_models.Variable.IsRegular
+wof.models.BaseVariable.IsRegular" class="py-name" href="#" onclick="return doclink('link-10', 'IsRegular', 'link-10');">IsRegular</a></tt> <tt class="py-op">=</tt> <tt class="py-name">False</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">    <tt class="py-comment">#TimeSupport = Column(Float)</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">    <tt class="py-comment">#TimeUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">    <tt id="link-11" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.DataType=examples.barebones.sqlalch_LCM_models.Variable-class.html#DataType,Variable examples.cbi.cbi_cache_models.SeriesCatalog.DataType=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#DataType,Variable examples.cbi.cbi_cache_models.Variable.DataType=examples.cbi.cbi_cache_models.Variable-class.html#DataType,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.DataType=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#DataType,Variable examples.odm.sqlalch_odm_models.Variable.DataType=examples.odm.sqlalch_odm_models.Variable-class.html#DataType,Variable examples.swis.sqlalch_swis_models.Variable.DataType=examples.swis.sqlalch_swis_models.Variable-class.html#DataType,Variable wof.models.BaseSeriesCatalog.DataType=wof.models.BaseSeriesCatalog-class.html#DataType,Variable wof.models.BaseVariable.DataType=wof.models.BaseVariable-class.html#DataType"><a title="examples.barebones.sqlalch_LCM_models.Variable.DataType
+examples.cbi.cbi_cache_models.SeriesCatalog.DataType
+examples.cbi.cbi_cache_models.Variable.DataType
+examples.odm.sqlalch_odm_models.SeriesCatalog.DataType
+examples.odm.sqlalch_odm_models.Variable.DataType
+examples.swis.sqlalch_swis_models.Variable.DataType
+wof.models.BaseSeriesCatalog.DataType
+wof.models.BaseVariable.DataType" class="py-name" href="#" onclick="return doclink('link-11', 'DataType', 'link-11');">DataType</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"Sporadic"</tt>  </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">    <tt class="py-comment">#GeneralCategory = "Unknown"</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line">     </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">    <tt id="link-12" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.NoDataValue=examples.barebones.sqlalch_LCM_models.Variable-class.html#NoDataValue,Variable examples.cbi.cbi_cache_models.Variable.NoDataValue=examples.cbi.cbi_cache_models.Variable-class.html#NoDataValue,Variable examples.odm.sqlalch_odm_models.Variable.NoDataValue=examples.odm.sqlalch_odm_models.Variable-class.html#NoDataValue,Variable examples.swis.sqlalch_swis_models.Variable.NoDataValue=examples.swis.sqlalch_swis_models.Variable-class.html#NoDataValue,Variable wof.models.BaseVariable.NoDataValue=wof.models.BaseVariable-class.html#NoDataValue"><a title="examples.barebones.sqlalch_LCM_models.Variable.NoDataValue
+examples.cbi.cbi_cache_models.Variable.NoDataValue
+examples.odm.sqlalch_odm_models.Variable.NoDataValue
+examples.swis.sqlalch_swis_models.Variable.NoDataValue
+wof.models.BaseVariable.NoDataValue" class="py-name" href="#" onclick="return doclink('link-12', 'NoDataValue', 'link-12');">NoDataValue</a></tt> <tt class="py-op">=</tt> <tt class="py-op">-</tt><tt class="py-number">9999</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line">              </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">    <tt id="link-13" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.VariableUnitsID=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableUnitsID,Variable examples.cbi.cbi_cache_models.SeriesCatalog.VariableUnitsID=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#VariableUnitsID,Variable examples.cbi.cbi_cache_models.Variable.VariableUnitsID=examples.cbi.cbi_cache_models.Variable-class.html#VariableUnitsID,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.VariableUnitsID=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#VariableUnitsID,Variable examples.odm.sqlalch_odm_models.Variable.VariableUnitsID=examples.odm.sqlalch_odm_models.Variable-class.html#VariableUnitsID,Variable wof.models.BaseSeriesCatalog.VariableUnitsID=wof.models.BaseSeriesCatalog-class.html#VariableUnitsID,Variable wof.models.BaseVariable.VariableUnitsID=wof.models.BaseVariable-class.html#VariableUnitsID"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableUnitsID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableUnitsID
+examples.cbi.cbi_cache_models.Variable.VariableUnitsID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableUnitsID
+examples.odm.sqlalch_odm_models.Variable.VariableUnitsID
+wof.models.BaseSeriesCatalog.VariableUnitsID
+wof.models.BaseVariable.VariableUnitsID" class="py-name" href="#" onclick="return doclink('link-13', 'VariableUnitsID', 'link-13');">VariableUnitsID</a></tt> <tt class="py-op">=</tt> <tt id="link-14" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-14', 'VariableID', 'link-5');">VariableID</a></tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">         </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">    <tt id="link-15" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.VariableUnits_UnitsID=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableUnits_UnitsID"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableUnits_UnitsID" class="py-name" href="#" onclick="return doclink('link-15', 'VariableUnits_UnitsID', 'link-15');">VariableUnits_UnitsID</a></tt> <tt class="py-op">=</tt> <tt id="link-16" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableUnitsID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableUnitsID
+examples.cbi.cbi_cache_models.Variable.VariableUnitsID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableUnitsID
+examples.odm.sqlalch_odm_models.Variable.VariableUnitsID
+wof.models.BaseSeriesCatalog.VariableUnitsID
+wof.models.BaseVariable.VariableUnitsID" class="py-name" href="#" onclick="return doclink('link-16', 'VariableUnitsID', 'link-13');">VariableUnitsID</a></tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">    <tt id="link-17" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.VariableUnits_UnitsName=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableUnits_UnitsName"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableUnits_UnitsName" class="py-name" href="#" onclick="return doclink('link-17', 'VariableUnits_UnitsName', 'link-17');">VariableUnits_UnitsName</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'Units'</tt><tt class="py-op">,</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">    <tt id="link-18" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.VariableUnits_UnitsAbbreviation=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableUnits_UnitsAbbreviation"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableUnits_UnitsAbbreviation" class="py-name" href="#" onclick="return doclink('link-18', 'VariableUnits_UnitsAbbreviation', 'link-18');">VariableUnits_UnitsAbbreviation</a></tt> <tt class="py-op">=</tt> <tt id="link-19" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableUnits_UnitsName" class="py-name" href="#" onclick="return doclink('link-19', 'VariableUnits_UnitsName', 'link-17');">VariableUnits_UnitsName</a></tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">     </tt>
+<a name="Variable.__repr__"></a><div id="Variable.__repr__-def"><a name="L40"></a><tt class="py-lineno"> 40</tt> <a class="py-toggle" href="#" id="Variable.__repr__-toggle" onclick="return toggle('Variable.__repr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models.Variable-class.html#__repr__">__repr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Variable.__repr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Variable.__repr__-expanded"><a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">"&lt;Variable('%s','%s')&gt;"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.VariableCode
+examples.barebones.sqlalch_LCM_models.Variable.VariableCode
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableCode
+examples.cbi.cbi_cache_models.Variable.VariableCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableCode
+examples.odm.sqlalch_odm_models.Variable.VariableCode
+examples.swis.sqlalch_swis_models.Variable.VariableCode
+wof.models.BaseSeriesCatalog.VariableCode
+wof.models.BaseVariable.VariableCode" class="py-name" href="#" onclick="return doclink('link-20', 'VariableCode', 'link-6');">VariableCode</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableName
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableName
+examples.cbi.cbi_cache_models.Variable.VariableName
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableName
+examples.odm.sqlalch_odm_models.Variable.VariableName
+examples.swis.sqlalch_swis_models.Variable.VariableName
+wof.models.BaseSeriesCatalog.VariableName
+wof.models.BaseVariable.VariableName" class="py-name" href="#" onclick="return doclink('link-21', 'VariableName', 'link-7');">VariableName</a></tt><tt class="py-op">)</tt>         </tt>
+</div></div><a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line"> </tt>
+<a name="Site"></a><div id="Site-def"><a name="L43"></a><tt class="py-lineno"> 43</tt> <a class="py-toggle" href="#" id="Site-toggle" onclick="return toggle('Site');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models.Site-class.html">Site</a><tt class="py-op">(</tt><tt class="py-base-class">Base</tt><tt class="py-op">,</tt> <tt class="py-base-class">wof_base</tt><tt class="py-op">.</tt><tt class="py-base-class">BaseSite</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Site-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Site-expanded"><a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">    <tt id="link-22" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.__tablename__
+examples.barebones.sqlalch_LCM_models.Site.__tablename__
+examples.barebones.sqlalch_LCM_models.Variable.__tablename__
+examples.cbi.cbi_cache_models.SeriesCatalog.__tablename__
+examples.cbi.cbi_cache_models.Site.__tablename__
+examples.cbi.cbi_cache_models.Units.__tablename__
+examples.cbi.cbi_cache_models.Variable.__tablename__
+examples.odm.sqlalch_odm_models.DataValue.__tablename__
+examples.odm.sqlalch_odm_models.Metadata.__tablename__
+examples.odm.sqlalch_odm_models.Method.__tablename__
+examples.odm.sqlalch_odm_models.OffsetType.__tablename__
+examples.odm.sqlalch_odm_models.Qualifier.__tablename__
+examples.odm.sqlalch_odm_models.QualityControlLevel.__tablename__
+examples.odm.sqlalch_odm_models.SeriesCatalog.__tablename__
+examples.odm.sqlalch_odm_models.Site.__tablename__
+examples.odm.sqlalch_odm_models.Source.__tablename__
+examples.odm.sqlalch_odm_models.SpatialReference.__tablename__
+examples.odm.sqlalch_odm_models.Units.__tablename__
+examples.odm.sqlalch_odm_models.Variable.__tablename__
+examples.odm.sqlalch_odm_models.VerticalDatum.__tablename__
+examples.swis.sqlalch_swis_models.DataValue.__tablename__
+examples.swis.sqlalch_swis_models.InstrumentManufacturer.__tablename__
+examples.swis.sqlalch_swis_models.InstrumentModel.__tablename__
+examples.swis.sqlalch_swis_models.Method.__tablename__
+examples.swis.sqlalch_swis_models.Site.__tablename__
+examples.swis.sqlalch_swis_models.Variable.__tablename__" class="py-name" href="#" onclick="return doclink('link-22', '__tablename__', 'link-4');">__tablename__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'sampling_sites'</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">     </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">    <tt id="link-23" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Site.SiteID=examples.barebones.sqlalch_LCM_models.Site-class.html#SiteID,Variable examples.cbi.cbi_cache_models.SeriesCatalog.SiteID=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#SiteID,Variable examples.cbi.cbi_cache_models.Site.SiteID=examples.cbi.cbi_cache_models.Site-class.html#SiteID,Variable examples.odm.sqlalch_odm_models.DataValue.SiteID=examples.odm.sqlalch_odm_models.DataValue-class.html#SiteID,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#SiteID,Variable examples.odm.sqlalch_odm_models.Site.SiteID=examples.odm.sqlalch_odm_models.Site-class.html#SiteID,Variable examples.swis.sqlalch_swis_models.DataValue.SiteID=examples.swis.sqlalch_swis_models.DataValue-class.html#SiteID,Variable examples.swis.sqlalch_swis_models.Site.SiteID=examples.swis.sqlalch_swis_models.Site-class.html#SiteID,Variable wof.models.BaseDataValue.SiteID=wof.models.BaseDataValue-class.html#SiteID,Variable wof.models.BaseSeriesCatalog.SiteID=wof.models.BaseSeriesCatalog-class.html#SiteID,Variable wof.models.BaseSite.SiteID=wof.models.BaseSite-class.html#SiteID"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-23', 'SiteID', 'link-23');">SiteID</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'rowid'</tt><tt class="py-op">,</tt><tt class="py-name">Integer</tt><tt class="py-op">,</tt> <tt class="py-name">primary_key</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">    <tt id="link-24" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.SiteCode=examples.barebones.sqlalch_LCM_models.DataValue-class.html#SiteCode,Variable examples.barebones.sqlalch_LCM_models.Site.SiteCode=examples.barebones.sqlalch_LCM_models.Site-class.html#SiteCode,Variable examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#SiteCode,Variable examples.cbi.cbi_cache_models.Site.SiteCode=examples.cbi.cbi_cache_models.Site-class.html#SiteCode,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#SiteCode,Variable examples.odm.sqlalch_odm_models.Site.SiteCode=examples.odm.sqlalch_odm_models.Site-class.html#SiteCode,Variable examples.swis.sqlalch_swis_models.Site.SiteCode=examples.swis.sqlalch_swis_models.Site-class.html#SiteCode,Variable wof.models.BaseSeriesCatalog.SiteCode=wof.models.BaseSeriesCatalog-class.html#SiteCode,Variable wof.models.BaseSite.SiteCode=wof.models.BaseSite-class.html#SiteCode"><a title="examples.barebones.sqlalch_LCM_models.DataValue.SiteCode
+examples.barebones.sqlalch_LCM_models.Site.SiteCode
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode
+examples.cbi.cbi_cache_models.Site.SiteCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode
+examples.odm.sqlalch_odm_models.Site.SiteCode
+examples.swis.sqlalch_swis_models.Site.SiteCode
+wof.models.BaseSeriesCatalog.SiteCode
+wof.models.BaseSite.SiteCode" class="py-name" href="#" onclick="return doclink('link-24', 'SiteCode', 'link-24');">SiteCode</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'StationID'</tt><tt class="py-op">,</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">    <tt id="link-25" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Site.SiteName=examples.barebones.sqlalch_LCM_models.Site-class.html#SiteName,Variable examples.cbi.cbi_cache_models.SeriesCatalog.SiteName=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#SiteName,Variable examples.cbi.cbi_cache_models.Site.SiteName=examples.cbi.cbi_cache_models.Site-class.html#SiteName,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.SiteName=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#SiteName,Variable examples.odm.sqlalch_odm_models.Site.SiteName=examples.odm.sqlalch_odm_models.Site-class.html#SiteName,Variable examples.swis.sqlalch_swis_models.Site.SiteName=examples.swis.sqlalch_swis_models.Site-class.html#SiteName,Variable wof.models.BaseSeriesCatalog.SiteName=wof.models.BaseSeriesCatalog-class.html#SiteName,Variable wof.models.BaseSite.SiteName=wof.models.BaseSite-class.html#SiteName"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteName
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteName
+examples.cbi.cbi_cache_models.Site.SiteName
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteName
+examples.odm.sqlalch_odm_models.Site.SiteName
+examples.swis.sqlalch_swis_models.Site.SiteName
+wof.models.BaseSeriesCatalog.SiteName
+wof.models.BaseSite.SiteName" class="py-name" href="#" onclick="return doclink('link-25', 'SiteName', 'link-25');">SiteName</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'StationName'</tt><tt class="py-op">,</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">    <tt id="link-26" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Site.Latitude=examples.barebones.sqlalch_LCM_models.Site-class.html#Latitude,Variable examples.cbi.cbi_cache_models.Site.Latitude=examples.cbi.cbi_cache_models.Site-class.html#Latitude,Variable examples.odm.sqlalch_odm_models.Site.Latitude=examples.odm.sqlalch_odm_models.Site-class.html#Latitude,Method examples.swis.sqlalch_swis_models.Site.Latitude()=examples.swis.sqlalch_swis_models.Site-class.html#Latitude,Variable wof.models.BaseSite.Latitude=wof.models.BaseSite-class.html#Latitude"><a title="examples.barebones.sqlalch_LCM_models.Site.Latitude
+examples.cbi.cbi_cache_models.Site.Latitude
+examples.odm.sqlalch_odm_models.Site.Latitude
+examples.swis.sqlalch_swis_models.Site.Latitude
+wof.models.BaseSite.Latitude" class="py-name" href="#" onclick="return doclink('link-26', 'Latitude', 'link-26');">Latitude</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-name">Float</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">    <tt id="link-27" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Site.Longitude=examples.barebones.sqlalch_LCM_models.Site-class.html#Longitude,Variable examples.cbi.cbi_cache_models.Site.Longitude=examples.cbi.cbi_cache_models.Site-class.html#Longitude,Variable examples.odm.sqlalch_odm_models.Site.Longitude=examples.odm.sqlalch_odm_models.Site-class.html#Longitude,Method examples.swis.sqlalch_swis_models.Site.Longitude()=examples.swis.sqlalch_swis_models.Site-class.html#Longitude,Variable wof.models.BaseSite.Longitude=wof.models.BaseSite-class.html#Longitude"><a title="examples.barebones.sqlalch_LCM_models.Site.Longitude
+examples.cbi.cbi_cache_models.Site.Longitude
+examples.odm.sqlalch_odm_models.Site.Longitude
+examples.swis.sqlalch_swis_models.Site.Longitude
+wof.models.BaseSite.Longitude" class="py-name" href="#" onclick="return doclink('link-27', 'Longitude', 'link-27');">Longitude</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-name">Float</tt><tt class="py-op">)</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">    <tt class="py-comment">#LatLongDatumID = Column(Integer,</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">    <tt class="py-comment">#                    ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">    <tt class="py-comment">#Elevation_m = Column(Float)</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">    <tt class="py-comment">#VerticalDatum = Column(String)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">    <tt class="py-comment">#LocalX = Column(Float)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">    <tt class="py-comment">#LocalY = Column(Float)</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">    <tt class="py-comment">#LocalProjectionID = Column(Integer,</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line">    <tt class="py-comment">#                    ForeignKey('SpatialReferences.SpatialReferenceId')) #FK to SpatialReferences</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">    <tt id="link-28" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Site.State=examples.barebones.sqlalch_LCM_models.Site-class.html#State,Variable examples.odm.sqlalch_odm_models.Site.State=examples.odm.sqlalch_odm_models.Site-class.html#State,Variable examples.odm.sqlalch_odm_models.Source.State=examples.odm.sqlalch_odm_models.Source-class.html#State,Variable wof.models.BaseSite.State=wof.models.BaseSite-class.html#State,Variable wof.models.BaseSource.State=wof.models.BaseSource-class.html#State"><a title="examples.barebones.sqlalch_LCM_models.Site.State
+examples.odm.sqlalch_odm_models.Site.State
+examples.odm.sqlalch_odm_models.Source.State
+wof.models.BaseSite.State
+wof.models.BaseSource.State" class="py-name" href="#" onclick="return doclink('link-28', 'State', 'link-28');">State</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">    <tt id="link-29" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Site.County=examples.barebones.sqlalch_LCM_models.Site-class.html#County,Variable examples.odm.sqlalch_odm_models.Site.County=examples.odm.sqlalch_odm_models.Site-class.html#County,Variable wof.models.BaseSite.County=wof.models.BaseSite-class.html#County"><a title="examples.barebones.sqlalch_LCM_models.Site.County
+examples.odm.sqlalch_odm_models.Site.County
+wof.models.BaseSite.County" class="py-name" href="#" onclick="return doclink('link-29', 'County', 'link-29');">County</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">    <tt class="py-comment">#Comments = Column(String)</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">     </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">    <tt class="py-comment">#LatLongDatum = relationship("SpatialReference",</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">    <tt class="py-comment">#                                primaryjoin='Site.LatLongDatumID==\</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">    <tt class="py-comment">#                                    SpatialReference.SpatialReferenceId')</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">     </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">    <tt class="py-comment">#LocalProjection = relationship("SpatialReference",</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">    <tt class="py-comment">#                                primaryjoin='Site.LocalProjectionID==\</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">    <tt class="py-comment">#                                    SpatialReference.SpatialReferenceId')</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line">  </tt>
+<a name="Site.__repr__"></a><div id="Site.__repr__-def"><a name="L71"></a><tt class="py-lineno"> 71</tt> <a class="py-toggle" href="#" id="Site.__repr__-toggle" onclick="return toggle('Site.__repr__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models.Site-class.html#__repr__">__repr__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Site.__repr__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="Site.__repr__-expanded"><a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-string">"&lt;Site('%s','%s', ['%s' '%s'])&gt;"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-30" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.SiteCode
+examples.barebones.sqlalch_LCM_models.Site.SiteCode
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode
+examples.cbi.cbi_cache_models.Site.SiteCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode
+examples.odm.sqlalch_odm_models.Site.SiteCode
+examples.swis.sqlalch_swis_models.Site.SiteCode
+wof.models.BaseSeriesCatalog.SiteCode
+wof.models.BaseSite.SiteCode" class="py-name" href="#" onclick="return doclink('link-30', 'SiteCode', 'link-24');">SiteCode</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">                                                   <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-31" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteName
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteName
+examples.cbi.cbi_cache_models.Site.SiteName
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteName
+examples.odm.sqlalch_odm_models.Site.SiteName
+examples.swis.sqlalch_swis_models.Site.SiteName
+wof.models.BaseSeriesCatalog.SiteName
+wof.models.BaseSite.SiteName" class="py-name" href="#" onclick="return doclink('link-31', 'SiteName', 'link-25');">SiteName</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">                                                   <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.Latitude
+examples.cbi.cbi_cache_models.Site.Latitude
+examples.odm.sqlalch_odm_models.Site.Latitude
+examples.swis.sqlalch_swis_models.Site.Latitude
+wof.models.BaseSite.Latitude" class="py-name" href="#" onclick="return doclink('link-32', 'Latitude', 'link-26');">Latitude</a></tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">                                                   <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.Longitude
+examples.cbi.cbi_cache_models.Site.Longitude
+examples.odm.sqlalch_odm_models.Site.Longitude
+examples.swis.sqlalch_swis_models.Site.Longitude
+wof.models.BaseSite.Longitude" class="py-name" href="#" onclick="return doclink('link-33', 'Longitude', 'link-27');">Longitude</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"> </tt>
+<a name="DataValue"></a><div id="DataValue-def"><a name="L77"></a><tt class="py-lineno"> 77</tt> <a class="py-toggle" href="#" id="DataValue-toggle" onclick="return toggle('DataValue');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models.DataValue-class.html">DataValue</a><tt class="py-op">(</tt><tt class="py-base-class">Base</tt><tt class="py-op">,</tt> <tt class="py-base-class">wof_base</tt><tt class="py-op">.</tt><tt class="py-base-class">BaseDataValue</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="DataValue-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="DataValue-expanded"><a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line"> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">    <tt id="link-34" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.__tablename__
+examples.barebones.sqlalch_LCM_models.Site.__tablename__
+examples.barebones.sqlalch_LCM_models.Variable.__tablename__
+examples.cbi.cbi_cache_models.SeriesCatalog.__tablename__
+examples.cbi.cbi_cache_models.Site.__tablename__
+examples.cbi.cbi_cache_models.Units.__tablename__
+examples.cbi.cbi_cache_models.Variable.__tablename__
+examples.odm.sqlalch_odm_models.DataValue.__tablename__
+examples.odm.sqlalch_odm_models.Metadata.__tablename__
+examples.odm.sqlalch_odm_models.Method.__tablename__
+examples.odm.sqlalch_odm_models.OffsetType.__tablename__
+examples.odm.sqlalch_odm_models.Qualifier.__tablename__
+examples.odm.sqlalch_odm_models.QualityControlLevel.__tablename__
+examples.odm.sqlalch_odm_models.SeriesCatalog.__tablename__
+examples.odm.sqlalch_odm_models.Site.__tablename__
+examples.odm.sqlalch_odm_models.Source.__tablename__
+examples.odm.sqlalch_odm_models.SpatialReference.__tablename__
+examples.odm.sqlalch_odm_models.Units.__tablename__
+examples.odm.sqlalch_odm_models.Variable.__tablename__
+examples.odm.sqlalch_odm_models.VerticalDatum.__tablename__
+examples.swis.sqlalch_swis_models.DataValue.__tablename__
+examples.swis.sqlalch_swis_models.InstrumentManufacturer.__tablename__
+examples.swis.sqlalch_swis_models.InstrumentModel.__tablename__
+examples.swis.sqlalch_swis_models.Method.__tablename__
+examples.swis.sqlalch_swis_models.Site.__tablename__
+examples.swis.sqlalch_swis_models.Variable.__tablename__" class="py-name" href="#" onclick="return doclink('link-34', '__tablename__', 'link-4');">__tablename__</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'LCM_Data'</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">    <tt id="link-35" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.ValueID=examples.barebones.sqlalch_LCM_models.DataValue-class.html#ValueID,Variable examples.odm.sqlalch_odm_models.DataValue.ValueID=examples.odm.sqlalch_odm_models.DataValue-class.html#ValueID,Variable examples.swis.sqlalch_swis_models.DataValue.ValueID=examples.swis.sqlalch_swis_models.DataValue-class.html#ValueID,Variable wof.models.BaseDataValue.ValueID=wof.models.BaseDataValue-class.html#ValueID"><a title="examples.barebones.sqlalch_LCM_models.DataValue.ValueID
+examples.odm.sqlalch_odm_models.DataValue.ValueID
+examples.swis.sqlalch_swis_models.DataValue.ValueID
+wof.models.BaseDataValue.ValueID" class="py-name" href="#" onclick="return doclink('link-35', 'ValueID', 'link-35');">ValueID</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'rowid'</tt><tt class="py-op">,</tt><tt class="py-name">Integer</tt><tt class="py-op">,</tt> <tt class="py-name">primary_key</tt> <tt class="py-op">=</tt> <tt class="py-name">True</tt><tt class="py-op">)</tt>     </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">    <tt id="link-36" class="py-name" targets="Class examples.barebones.sqlalch_LCM_models.DataValue=examples.barebones.sqlalch_LCM_models.DataValue-class.html,Variable examples.barebones.sqlalch_LCM_models.DataValue.DataValue=examples.barebones.sqlalch_LCM_models.DataValue-class.html#DataValue,Class examples.cbi.cbi_models.DataValue=examples.cbi.cbi_models.DataValue-class.html,Class examples.odm.sqlalch_odm_models.DataValue=examples.odm.sqlalch_odm_models.DataValue-class.html,Variable examples.odm.sqlalch_odm_models.DataValue.DataValue=examples.odm.sqlalch_odm_models.DataValue-class.html#DataValue,Class examples.swis.sqlalch_swis_models.DataValue=examples.swis.sqlalch_swis_models.DataValue-class.html,Variable examples.swis.sqlalch_swis_models.DataValue.DataValue=examples.swis.sqlalch_swis_models.DataValue-class.html#DataValue,Variable wof.models.BaseDataValue.DataValue=wof.models.BaseDataValue-class.html#DataValue"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-36', 'DataValue', 'link-36');">DataValue</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'Result'</tt><tt class="py-op">,</tt><tt class="py-name">Float</tt><tt class="py-op">)</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">    <tt id="link-37" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC=examples.barebones.sqlalch_LCM_models.DataValue-class.html#DateTimeUTC,Variable examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC=examples.odm.sqlalch_odm_models.DataValue-class.html#DateTimeUTC,Variable examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC=examples.swis.sqlalch_swis_models.DataValue-class.html#DateTimeUTC,Variable wof.models.BaseDataValue.DateTimeUTC=wof.models.BaseDataValue-class.html#DateTimeUTC"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-37', 'DateTimeUTC', 'link-37');">DateTimeUTC</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-name">DateTime</tt><tt class="py-op">)</tt>     </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">    <tt id="link-38" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.DateString=examples.barebones.sqlalch_LCM_models.DataValue-class.html#DateString"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateString" class="py-name" href="#" onclick="return doclink('link-38', 'DateString', 'link-38');">DateString</a></tt><tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'Date'</tt><tt class="py-op">,</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">    <tt id="link-39" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.TimeString=examples.barebones.sqlalch_LCM_models.DataValue-class.html#TimeString"><a title="examples.barebones.sqlalch_LCM_models.DataValue.TimeString" class="py-name" href="#" onclick="return doclink('link-39', 'TimeString', 'link-39');">TimeString</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'Time'</tt><tt class="py-op">,</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">                    </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">    <tt id="link-40" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.SiteCode
+examples.barebones.sqlalch_LCM_models.Site.SiteCode
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode
+examples.cbi.cbi_cache_models.Site.SiteCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode
+examples.odm.sqlalch_odm_models.Site.SiteCode
+examples.swis.sqlalch_swis_models.Site.SiteCode
+wof.models.BaseSeriesCatalog.SiteCode
+wof.models.BaseSite.SiteCode" class="py-name" href="#" onclick="return doclink('link-40', 'SiteCode', 'link-24');">SiteCode</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'Station'</tt><tt class="py-op">,</tt><tt class="py-name">String</tt><tt class="py-op">,</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt class="py-string">'sampling_sites.StationID'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-comment">#FK to sampling_sites)</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">    <tt id="link-41" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.VariableCode
+examples.barebones.sqlalch_LCM_models.Variable.VariableCode
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableCode
+examples.cbi.cbi_cache_models.Variable.VariableCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableCode
+examples.odm.sqlalch_odm_models.Variable.VariableCode
+examples.swis.sqlalch_swis_models.Variable.VariableCode
+wof.models.BaseSeriesCatalog.VariableCode
+wof.models.BaseVariable.VariableCode" class="py-name" href="#" onclick="return doclink('link-41', 'VariableCode', 'link-6');">VariableCode</a></tt> <tt class="py-op">=</tt> <tt class="py-name">Column</tt><tt class="py-op">(</tt><tt class="py-string">'Test'</tt><tt class="py-op">,</tt><tt class="py-name">String</tt><tt class="py-op">,</tt><tt class="py-name">ForeignKey</tt><tt class="py-op">(</tt><tt class="py-string">'variables.VariableCode'</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-comment">#FK to variables)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">     </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">    <tt class="py-comment">#Assume data are non-censored </tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">    <tt id="link-42" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.CensorCode=examples.barebones.sqlalch_LCM_models.DataValue-class.html#CensorCode,Variable examples.odm.sqlalch_odm_models.DataValue.CensorCode=examples.odm.sqlalch_odm_models.DataValue-class.html#CensorCode,Variable examples.swis.sqlalch_swis_models.DataValue.CensorCode=examples.swis.sqlalch_swis_models.DataValue-class.html#CensorCode,Variable wof.models.BaseDataValue.CensorCode=wof.models.BaseDataValue-class.html#CensorCode"><a title="examples.barebones.sqlalch_LCM_models.DataValue.CensorCode
+examples.odm.sqlalch_odm_models.DataValue.CensorCode
+examples.swis.sqlalch_swis_models.DataValue.CensorCode
+wof.models.BaseDataValue.CensorCode" class="py-name" href="#" onclick="return doclink('link-42', 'CensorCode', 'link-42');">CensorCode</a></tt> <tt class="py-op">=</tt> <tt class="py-string">"nc"</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">    <tt id="link-43" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.Site=examples.barebones.sqlalch_LCM_models.DataValue-class.html#Site,Variable examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#Site,Class examples.barebones.sqlalch_LCM_models.Site=examples.barebones.sqlalch_LCM_models.Site-class.html,Class examples.cbi.build_cbi_cache.Site=examples.cbi.build_cbi_cache.Site-class.html,Variable examples.cbi.cbi_cache_models.SeriesCatalog.Site=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#Site,Class examples.cbi.cbi_cache_models.Site=examples.cbi.cbi_cache_models.Site-class.html,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Site=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Site,Class examples.odm.sqlalch_odm_models.Site=examples.odm.sqlalch_odm_models.Site-class.html,Variable examples.swis.sqlalch_swis_models.SeriesCatalog.Site=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html#Site,Class examples.swis.sqlalch_swis_models.Site=examples.swis.sqlalch_swis_models.Site-class.html,Variable wof.models.BaseSeriesCatalog.Site=wof.models.BaseSeriesCatalog-class.html#Site"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-43', 'Site', 'link-43');">Site</a></tt> <tt class="py-op">=</tt> <tt class="py-name">relationship</tt><tt class="py-op">(</tt><tt class="py-string">"Site"</tt><tt class="py-op">,</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">                        <tt class="py-name">primaryjoin</tt><tt class="py-op">=</tt><tt class="py-string">'DataValue.SiteCode==\</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-string">                             Site.SiteCode'</tt><tt class="py-op">)</tt>        </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">    <tt id="link-44" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.Variable=examples.barebones.sqlalch_LCM_models.DataValue-class.html#Variable,Variable examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#Variable,Class examples.barebones.sqlalch_LCM_models.Variable=examples.barebones.sqlalch_LCM_models.Variable-class.html,Variable examples.cbi.cbi_cache_models.SeriesCatalog.Variable=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#Variable,Class examples.cbi.cbi_cache_models.Variable=examples.cbi.cbi_cache_models.Variable-class.html,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Variable=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Variable,Class examples.odm.sqlalch_odm_models.Variable=examples.odm.sqlalch_odm_models.Variable-class.html,Variable examples.swis.sqlalch_swis_models.SeriesCatalog.Variable=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html#Variable,Class examples.swis.sqlalch_swis_models.Variable=examples.swis.sqlalch_swis_models.Variable-class.html,Variable wof.models.BaseSeriesCatalog.Variable=wof.models.BaseSeriesCatalog-class.html#Variable"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-44', 'Variable', 'link-44');">Variable</a></tt> <tt class="py-op">=</tt> <tt class="py-name">relationship</tt><tt class="py-op">(</tt><tt class="py-string">"Variable"</tt><tt class="py-op">,</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">                        <tt class="py-name">primaryjoin</tt><tt class="py-op">=</tt><tt class="py-string">'DataValue.VariableCode==\</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt class="py-string">                             Variable.VariableCode'</tt><tt class="py-op">)</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">    <tt class="py-comment">#</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">    <tt class="py-comment">#Assume all of LCM data values are "raw data"</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">    <tt id="link-45" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.QualityControlLevel=examples.barebones.sqlalch_LCM_models.DataValue-class.html#QualityControlLevel,Method examples.odm.sqlalch_odm_models.DataValue.QualityControlLevel()=examples.odm.sqlalch_odm_models.DataValue-class.html#QualityControlLevel,Class examples.odm.sqlalch_odm_models.QualityControlLevel=examples.odm.sqlalch_odm_models.QualityControlLevel-class.html,Variable examples.swis.sqlalch_swis_models.DataValue.QualityControlLevel=examples.swis.sqlalch_swis_models.DataValue-class.html#QualityControlLevel,Variable wof.models.BaseDataValue.QualityControlLevel=wof.models.BaseDataValue-class.html#QualityControlLevel"><a title="examples.barebones.sqlalch_LCM_models.DataValue.QualityControlLevel
+examples.odm.sqlalch_odm_models.DataValue.QualityControlLevel
+examples.odm.sqlalch_odm_models.QualityControlLevel
+examples.swis.sqlalch_swis_models.DataValue.QualityControlLevel
+wof.models.BaseDataValue.QualityControlLevel" class="py-name" href="#" onclick="return doclink('link-45', 'QualityControlLevel', 'link-45');">QualityControlLevel</a></tt> <tt class="py-op">=</tt> <tt class="py-name">wof_base</tt><tt class="py-op">.</tt><tt id="link-46" class="py-name" targets="Variable wof.models.QualityControlLevelTypes=wof.models-module.html#QualityControlLevelTypes"><a title="wof.models.QualityControlLevelTypes" class="py-name" href="#" onclick="return doclink('link-46', 'QualityControlLevelTypes', 'link-46');">QualityControlLevelTypes</a></tt><tt class="py-op">[</tt><tt class="py-string">'RAW_DATA'</tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">    <tt id="link-47" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.QualityControlLevelID=examples.barebones.sqlalch_LCM_models.DataValue-class.html#QualityControlLevelID,Variable examples.odm.sqlalch_odm_models.DataValue.QualityControlLevelID=examples.odm.sqlalch_odm_models.DataValue-class.html#QualityControlLevelID,Variable examples.odm.sqlalch_odm_models.QualityControlLevel.QualityControlLevelID=examples.odm.sqlalch_odm_models.QualityControlLevel-class.html#QualityControlLevelID,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.QualityControlLevelID=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#QualityControlLevelID,Variable examples.swis.sqlalch_swis_models.DataValue.QualityControlLevelID=examples.swis.sqlalch_swis_models.DataValue-class.html#QualityControlLevelID,Variable wof.models.BaseDataValue.QualityControlLevelID=wof.models.BaseDataValue-class.html#QualityControlLevelID,Variable wof.models.BaseQualityControlLevel.QualityControlLevelID=wof.models.BaseQualityControlLevel-class.html#QualityControlLevelID,Variable wof.models.BaseSeriesCatalog.QualityControlLevelID=wof.models.BaseSeriesCatalog-class.html#QualityControlLevelID"><a title="examples.barebones.sqlalch_LCM_models.DataValue.QualityControlLevelID
+examples.odm.sqlalch_odm_models.DataValue.QualityControlLevelID
+examples.odm.sqlalch_odm_models.QualityControlLevel.QualityControlLevelID
+examples.odm.sqlalch_odm_models.SeriesCatalog.QualityControlLevelID
+examples.swis.sqlalch_swis_models.DataValue.QualityControlLevelID
+wof.models.BaseDataValue.QualityControlLevelID
+wof.models.BaseQualityControlLevel.QualityControlLevelID
+wof.models.BaseSeriesCatalog.QualityControlLevelID" class="py-name" href="#" onclick="return doclink('link-47', 'QualityControlLevelID', 'link-47');">QualityControlLevelID</a></tt> <tt class="py-op">=</tt> <tt class="py-name">wof_base</tt><tt class="py-op">.</tt><tt id="link-48" class="py-name"><a title="wof.models.QualityControlLevelTypes" class="py-name" href="#" onclick="return doclink('link-48', 'QualityControlLevelTypes', 'link-46');">QualityControlLevelTypes</a></tt><tt class="py-op">[</tt><tt class="py-string">'RAW_DATA'</tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"><tt class="py-comment">#LCM is the Source/contact for all LCM data</tt> </tt>
+<a name="Source"></a><div id="Source-def"><a name="L103"></a><tt class="py-lineno">103</tt> <a class="py-toggle" href="#" id="Source-toggle" onclick="return toggle('Source');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models.Source-class.html">Source</a><tt class="py-op">(</tt><tt class="py-base-class">wof_base</tt><tt class="py-op">.</tt><tt class="py-base-class">BaseSource</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="Source-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="Source-expanded"><a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">    <tt id="link-49" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Source.SourceID=examples.barebones.sqlalch_LCM_models.Source-class.html#SourceID,Variable examples.odm.sqlalch_odm_models.DataValue.SourceID=examples.odm.sqlalch_odm_models.DataValue-class.html#SourceID,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.SourceID=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#SourceID,Variable examples.odm.sqlalch_odm_models.Source.SourceID=examples.odm.sqlalch_odm_models.Source-class.html#SourceID,Variable examples.swis.sqlalch_swis_models.DataValue.SourceID=examples.swis.sqlalch_swis_models.DataValue-class.html#SourceID,Variable examples.swis.sqlalch_swis_models.Source.SourceID=examples.swis.sqlalch_swis_models.Source-class.html#SourceID,Variable wof.models.BaseDataValue.SourceID=wof.models.BaseDataValue-class.html#SourceID,Variable wof.models.BaseSeriesCatalog.SourceID=wof.models.BaseSeriesCatalog-class.html#SourceID,Variable wof.models.BaseSource.SourceID=wof.models.BaseSource-class.html#SourceID"><a title="examples.barebones.sqlalch_LCM_models.Source.SourceID
+examples.odm.sqlalch_odm_models.DataValue.SourceID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SourceID
+examples.odm.sqlalch_odm_models.Source.SourceID
+examples.swis.sqlalch_swis_models.DataValue.SourceID
+examples.swis.sqlalch_swis_models.Source.SourceID
+wof.models.BaseDataValue.SourceID
+wof.models.BaseSeriesCatalog.SourceID
+wof.models.BaseSource.SourceID" class="py-name" href="#" onclick="return doclink('link-49', 'SourceID', 'link-49');">SourceID</a></tt> <tt class="py-op">=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">    <tt class="py-comment">#TODO: Metadata</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">    <tt id="link-50" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Source.Metadata=examples.barebones.sqlalch_LCM_models.Source-class.html#Metadata,Class examples.odm.sqlalch_odm_models.Metadata=examples.odm.sqlalch_odm_models.Metadata-class.html,Variable examples.odm.sqlalch_odm_models.Source.Metadata=examples.odm.sqlalch_odm_models.Source-class.html#Metadata,Variable examples.swis.sqlalch_swis_models.Source.Metadata=examples.swis.sqlalch_swis_models.Source-class.html#Metadata,Variable wof.models.BaseSource.Metadata=wof.models.BaseSource-class.html#Metadata"><a title="examples.barebones.sqlalch_LCM_models.Source.Metadata
+examples.odm.sqlalch_odm_models.Metadata
+examples.odm.sqlalch_odm_models.Source.Metadata
+examples.swis.sqlalch_swis_models.Source.Metadata
+wof.models.BaseSource.Metadata" class="py-name" href="#" onclick="return doclink('link-50', 'Metadata', 'link-50');">Metadata</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">     </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-comment">#   Not present in LCM database  </tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-comment">#class Qualifier(Base, wof_base.BaseQualifier):    </tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-comment">#    __tablename__ = 'Qualifiers'</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-comment">#    </tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"><tt class="py-comment">#    QualifierID = Column(Integer, primary_key=True)</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"><tt class="py-comment">#    QualifierCode = Column(String)</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line"><tt class="py-comment">#    QualifierDescription = Column(String)</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line"> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"><tt class="py-comment">#   Not present in LCM database  </tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"><tt class="py-comment">#class OffsetType(Base, wof_base.BaseOffsetType):</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"><tt class="py-comment">#    __tablename__ = 'OffsetTypes'</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"><tt class="py-comment">#    </tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line"><tt class="py-comment">#    OffsetTypeID = Column(Integer, primary_key = True)</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-comment">#    OffsetUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-comment">#    OffsetDescription = Column(String)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-comment">#    </tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-comment">#    OffsetUnits = relationship("Units",</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt class="py-comment">#                primaryjoin='OffsetType.OffsetUnitsID==Units.UnitsID')</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"><tt class="py-comment">#   Not present in LCM database  </tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line"><tt class="py-comment">#class Method(Base, wof_base.BaseMethod):</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"><tt class="py-comment">#    __tablename__ ='Methods'</tt> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"><tt class="py-comment">#    </tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"><tt class="py-comment">#    MethodID = Column(Integer, primary_key=True)</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line"><tt class="py-comment">#    MethodDescription = Column(String)</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"><tt class="py-comment">#    MethodLink = Column(String)</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-comment">#    </tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"><tt class="py-comment">#   Not present in LCM database   </tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"><tt class="py-comment">#class Metadata(Base, wof_base.BaseMetadata):</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"><tt class="py-comment">#    __tablename__='ISOMetadata'</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"><tt class="py-comment">#    </tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line"><tt class="py-comment">#    MetadataID = Column(Integer, primary_key=True)</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"><tt class="py-comment">#    TopicCategory = Column(String)</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"><tt class="py-comment">#    Title = Column(String)</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"><tt class="py-comment">#    Abstract = Column(String)</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line"><tt class="py-comment">#    ProfileVersion = Column(String)</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"><tt class="py-comment">#    MetadataLink = Column(String)    </tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"><tt class="py-comment">#   Not present in LCM database  </tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"><tt class="py-comment">#class QualityControlLevel(Base, wof_base.BaseQualityControlLevel):</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"><tt class="py-comment">#    __tablename__='QualityControlLevels'</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"><tt class="py-comment">#    </tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"><tt class="py-comment">#    QualityControlLevelID = Column(Integer, primary_key=True)</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line"><tt class="py-comment">#    QualityControlLevelCode = Column(String)</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"><tt class="py-comment">#</tt> </tt>
+<a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"> </tt>
+<a name="SeriesCatalog"></a><div id="SeriesCatalog-def"><a name="L155"></a><tt class="py-lineno">155</tt> <a class="py-toggle" href="#" id="SeriesCatalog-toggle" onclick="return toggle('SeriesCatalog');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html">SeriesCatalog</a><tt class="py-op">(</tt><tt class="py-base-class">wof_base</tt><tt class="py-op">.</tt><tt class="py-base-class">BaseSeriesCatalog</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SeriesCatalog-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="SeriesCatalog-expanded"><a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line"> </tt>
+<a name="SeriesCatalog.__init__"></a><div id="SeriesCatalog.__init__-def"><a name="L157"></a><tt class="py-lineno">157</tt> <a class="py-toggle" href="#" id="SeriesCatalog.__init__-toggle" onclick="return toggle('SeriesCatalog.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">variable</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">value_count</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">                 <tt class="py-param">begin_date_time_utc</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> <tt class="py-param">end_date_time_utc</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">                 <tt class="py-param">source</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SeriesCatalog.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SeriesCatalog.__init__-expanded"><a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-51" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-51', 'Site', 'link-43');">Site</a></tt> <tt class="py-op">=</tt> <tt id="link-52" class="py-name" targets="Class wof.WaterML.site=wof.WaterML.site-class.html"><a title="wof.WaterML.site" class="py-name" href="#" onclick="return doclink('link-52', 'site', 'link-52');">site</a></tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-53" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-53', 'Variable', 'link-44');">Variable</a></tt> <tt class="py-op">=</tt> <tt class="py-name">variable</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-54" class="py-name" targets="Variable examples.cbi.cbi_cache_models.SeriesCatalog.ValueCount=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#ValueCount,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.ValueCount=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#ValueCount,Variable wof.models.BaseSeriesCatalog.ValueCount=wof.models.BaseSeriesCatalog-class.html#ValueCount"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.ValueCount
+examples.odm.sqlalch_odm_models.SeriesCatalog.ValueCount
+wof.models.BaseSeriesCatalog.ValueCount" class="py-name" href="#" onclick="return doclink('link-54', 'ValueCount', 'link-54');">ValueCount</a></tt> <tt class="py-op">=</tt> <tt class="py-name">value_count</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-55" class="py-name" targets="Variable examples.cbi.cbi_cache_models.SeriesCatalog.BeginDateTimeUTC=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#BeginDateTimeUTC,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.BeginDateTimeUTC=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#BeginDateTimeUTC,Variable wof.models.BaseSeriesCatalog.BeginDateTimeUTC=wof.models.BaseSeriesCatalog-class.html#BeginDateTimeUTC"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.BeginDateTimeUTC
+examples.odm.sqlalch_odm_models.SeriesCatalog.BeginDateTimeUTC
+wof.models.BaseSeriesCatalog.BeginDateTimeUTC" class="py-name" href="#" onclick="return doclink('link-55', 'BeginDateTimeUTC', 'link-55');">BeginDateTimeUTC</a></tt> <tt class="py-op">=</tt> <tt class="py-name">begin_date_time_utc</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-56" class="py-name" targets="Variable examples.cbi.cbi_cache_models.SeriesCatalog.EndDateTimeUTC=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#EndDateTimeUTC,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.EndDateTimeUTC=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#EndDateTimeUTC,Variable wof.models.BaseSeriesCatalog.EndDateTimeUTC=wof.models.BaseSeriesCatalog-class.html#EndDateTimeUTC"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.EndDateTimeUTC
+examples.odm.sqlalch_odm_models.SeriesCatalog.EndDateTimeUTC
+wof.models.BaseSeriesCatalog.EndDateTimeUTC" class="py-name" href="#" onclick="return doclink('link-56', 'EndDateTimeUTC', 'link-56');">EndDateTimeUTC</a></tt> <tt class="py-op">=</tt> <tt class="py-name">end_date_time_utc</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">        <tt class="py-comment">#SWIS data are all "Raw Data"</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">        <tt class="py-comment"># though might have more than one QC level in the future</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-57" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.QualityControlLevelID
+examples.odm.sqlalch_odm_models.DataValue.QualityControlLevelID
+examples.odm.sqlalch_odm_models.QualityControlLevel.QualityControlLevelID
+examples.odm.sqlalch_odm_models.SeriesCatalog.QualityControlLevelID
+examples.swis.sqlalch_swis_models.DataValue.QualityControlLevelID
+wof.models.BaseDataValue.QualityControlLevelID
+wof.models.BaseQualityControlLevel.QualityControlLevelID
+wof.models.BaseSeriesCatalog.QualityControlLevelID" class="py-name" href="#" onclick="return doclink('link-57', 'QualityControlLevelID', 'link-47');">QualityControlLevelID</a></tt> <tt class="py-op">=</tt> \ </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">                            <tt class="py-name">wof_base</tt><tt class="py-op">.</tt><tt id="link-58" class="py-name"><a title="wof.models.QualityControlLevelTypes" class="py-name" href="#" onclick="return doclink('link-58', 'QualityControlLevelTypes', 'link-46');">QualityControlLevelTypes</a></tt><tt class="py-op">[</tt><tt class="py-string">'RAW_DATA'</tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-59" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.QualityControlLevel.QualityControlLevelCode=examples.odm.sqlalch_odm_models.QualityControlLevel-class.html#QualityControlLevelCode,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.QualityControlLevelCode=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#QualityControlLevelCode,Variable wof.models.BaseQualityControlLevel.QualityControlLevelCode=wof.models.BaseQualityControlLevel-class.html#QualityControlLevelCode,Variable wof.models.BaseSeriesCatalog.QualityControlLevelCode=wof.models.BaseSeriesCatalog-class.html#QualityControlLevelCode"><a title="examples.odm.sqlalch_odm_models.QualityControlLevel.QualityControlLevelCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.QualityControlLevelCode
+wof.models.BaseQualityControlLevel.QualityControlLevelCode
+wof.models.BaseSeriesCatalog.QualityControlLevelCode" class="py-name" href="#" onclick="return doclink('link-59', 'QualityControlLevelCode', 'link-59');">QualityControlLevelCode</a></tt> <tt class="py-op">=</tt> \ </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line">                            <tt class="py-name">wof_base</tt><tt class="py-op">.</tt><tt id="link-60" class="py-name"><a title="wof.models.QualityControlLevelTypes" class="py-name" href="#" onclick="return doclink('link-60', 'QualityControlLevelTypes', 'link-46');">QualityControlLevelTypes</a></tt><tt class="py-op">[</tt><tt class="py-string">'RAW_DATA'</tt><tt class="py-op">]</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-61" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.SeriesCatalog.Source=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#Source,Class examples.barebones.sqlalch_LCM_models.Source=examples.barebones.sqlalch_LCM_models.Source-class.html,Variable examples.cbi.cbi_cache_models.SeriesCatalog.Source=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#Source,Class examples.cbi.cbi_models.Source=examples.cbi.cbi_models.Source-class.html,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Source=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Source,Class examples.odm.sqlalch_odm_models.Source=examples.odm.sqlalch_odm_models.Source-class.html,Variable examples.swis.sqlalch_swis_models.SeriesCatalog.Source=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html#Source,Class examples.swis.sqlalch_swis_models.Source=examples.swis.sqlalch_swis_models.Source-class.html"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog.Source
+examples.barebones.sqlalch_LCM_models.Source
+examples.cbi.cbi_cache_models.SeriesCatalog.Source
+examples.cbi.cbi_models.Source
+examples.odm.sqlalch_odm_models.SeriesCatalog.Source
+examples.odm.sqlalch_odm_models.Source
+examples.swis.sqlalch_swis_models.SeriesCatalog.Source
+examples.swis.sqlalch_swis_models.Source" class="py-name" href="#" onclick="return doclink('link-61', 'Source', 'link-61');">Source</a></tt> <tt class="py-op">=</tt> <tt class="py-name">source</tt> </tt>
+</div><a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line"> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">    <tt id="link-62" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog.Source
+examples.barebones.sqlalch_LCM_models.Source
+examples.cbi.cbi_cache_models.SeriesCatalog.Source
+examples.cbi.cbi_models.Source
+examples.odm.sqlalch_odm_models.SeriesCatalog.Source
+examples.odm.sqlalch_odm_models.Source
+examples.swis.sqlalch_swis_models.SeriesCatalog.Source
+examples.swis.sqlalch_swis_models.Source" class="py-name" href="#" onclick="return doclink('link-62', 'Source', 'link-61');">Source</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">    <tt id="link-63" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-63', 'Variable', 'link-44');">Variable</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">    <tt id="link-64" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-64', 'Site', 'link-43');">Site</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">    <tt id="link-65" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.SeriesCatalog.Method=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#Method,Variable examples.cbi.cbi_cache_models.SeriesCatalog.Method=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#Method,Class examples.odm.sqlalch_odm_models.Method=examples.odm.sqlalch_odm_models.Method-class.html,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Method=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Method,Class examples.swis.sqlalch_swis_models.Method=examples.swis.sqlalch_swis_models.Method-class.html,Variable examples.swis.sqlalch_swis_models.SeriesCatalog.Method=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html#Method,Variable wof.models.BaseSeriesCatalog.Method=wof.models.BaseSeriesCatalog-class.html#Method"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog.Method
+examples.cbi.cbi_cache_models.SeriesCatalog.Method
+examples.odm.sqlalch_odm_models.Method
+examples.odm.sqlalch_odm_models.SeriesCatalog.Method
+examples.swis.sqlalch_swis_models.Method
+examples.swis.sqlalch_swis_models.SeriesCatalog.Method
+wof.models.BaseSeriesCatalog.Method" class="py-name" href="#" onclick="return doclink('link-65', 'Method', 'link-65');">Method</a></tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"><tt class="py-comment">#   Not present in LCM database  </tt> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line"><tt class="py-comment">#class Units(Base,wof_base.BaseUnits):</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-comment">#    __tablename__ = 'Units'</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-comment">#    #UnitsID = Variable.VariableID</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"><tt class="py-comment">#    UnitsID = Column('rowid',Integer, primary_key=True)</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"><tt class="py-comment">#    #UnitsName = Variable.OriginalUnits</tt> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"><tt class="py-comment">#    UnitsName = Column('Units',String)</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"><tt class="py-comment">#    #UnitsType = Column(String)</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line"><tt class="py-comment">#    #UnitsAbbreviation = Variable.OriginalUnits</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line"><tt class="py-comment">#    UnitsAbbreviation = UnitsName</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line"> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"><tt class="py-comment">#   Not present in LCM database  </tt> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line"><tt class="py-comment">#class SpatialReference(Base, wof_base.BaseSpatialReference):</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"><tt class="py-comment">#    __tablename__ = 'SpatialReferences'</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line"><tt class="py-comment">#    </tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line"><tt class="py-comment">#    SpatialReferenceId = Column(Integer, primary_key=True)</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line"><tt class="py-comment">#    SRSID = Column(Integer)</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"><tt class="py-comment">#    SRSName = Column(String)</tt> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"><tt class="py-comment">#    Notes = Column(String)</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line"> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line"><tt class="py-comment">#   Not present in LCM database  </tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"><tt class="py-comment">#class VerticalDatum(Base, wof_base.BaseVerticalDatum):</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"><tt class="py-comment">#    __tablename__ = 'VerticalDatumCV'</tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"><tt class="py-comment">#    Term = Column(String, primary_key=True)</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"><tt class="py-comment">#    Definition = Column(String)</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Jul 26 16:54:12 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

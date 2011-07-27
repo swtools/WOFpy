@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started &mdash; WOFpy v1.0-beta documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0-beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="WOFpy v1.0-beta documentation" href="index.html" />
+    <link rel="next" title="WOFpy Architecture" href="WOFpy Architecture.html" />
+    <link rel="prev" title="Welcome to WOFpy’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="WOFpy Architecture.html" title="WOFpy Architecture"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to WOFpy’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">WOFpy v1.0-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started">
+<span id="id1"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>Here is a quick guide to getting WOFpy up and running</p>
+<p>The folder contains Python modules that can read data from a Data Access Object (DAO) and return the data to the client in WaterML format, using the same access methods defined by the CUAHSI-HIS WaterOneFlow web service.  DAOs can represent a variety of data sources, including an Observations Data Model (ODM)-format database, the Surface Water Information System (SWIS) database, or even a pass-through web-service, such as that by the Conrad-Blucher Institute (CBI).  The three aforementioned data sources have their associated DAO implementations included with this package.  Others may be written by following the BaseDao (see base_dao.py) class description.</p>
+<p>The code was written using Python version 2.6</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>WOFpy require a number of python libraries in order to run.
+Please follow the following to install them.</p>
+</div>
+<div class="section" id="basic-steps-for-installing-on-a-windows-computer">
+<h2>Basic steps for installing on a Windows computer<a class="headerlink" href="#basic-steps-for-installing-on-a-windows-computer" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Install Python 2.6.  Use the 32-bit installer, not the 64-bit version. (Setuptools, which you&#8217;ll install later, can&#8217;t detect Python when the 64-bit version is installed).</li>
+<li>Add the Python folder to your Path environment variable.</li>
+<li>Install setuptools. This includes the easy_install program, which you&#8217;ll use to install Flask.</li>
+<li>Add the Pythonscripts folder to your Path environment variable.</li>
+<li>Open a command Window (run cmd) and enter this command: easy_install flask</li>
+<li>Enter: easy_install lxml</li>
+<li>Enter: easy_install pyodbc</li>
+<li>Enter: easy_install soaplib==2.0.0-beta1 (unless the 2.0 release has been finalized &#8211; then use that one instead of beta)</li>
+<li>Enter: easy_install sqlalchemy</li>
+<li>Enter: easy_install nose</li>
+<li>Enter: easy_install suds</li>
+<li>If you want the package that was used to generate the code for serializing/deserializing WaterML, enter: easy_install generateds</li>
+<li>Create a &#8220;private_config.py&#8221; file in your WOFpy/WOFpy/ folder.  This file should contain the following variables:</li>
+</ol>
+<ul class="simple">
+<li>lbr_connection_string = &#8216;&#8217;</li>
+<li>swis_connection_string = &#8216;&#8217;</li>
+<li>swis_test_connection_string = &#8216;&#8217;</li>
+</ul>
+<p>Each should be set to a SQLAlchemy-compatible database connection string.
+#. (OPTIONAL) Download and install pywin32 <a class="reference external" href="http://sourceforge.net/projects/pywin32/files/pywin32/Build%20215/">http://sourceforge.net/projects/pywin32/files/pywin32/Build%20215/</a>  This package can be used to create a Windows service for your WOFpy application.</p>
+<p>After everything is installed, open a command window and navigate to your WOFpy/WOFpy/ folder.  Type &#8220;nosetests -v&#8221; to run the included tests.  If they all pass, the congratulations!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#basic-steps-for-installing-on-a-windows-computer">Basic steps for installing on a Windows computer</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to WOFpy&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="WOFpy Architecture.html"
+                        title="next chapter">WOFpy Architecture</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Getting Started.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="WOFpy Architecture.html" title="WOFpy Architecture"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to WOFpy’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">WOFpy v1.0-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Texas Water Development Board, Espey Consultants, Inc., University of Texas at Austin.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
