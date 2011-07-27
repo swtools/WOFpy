@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>wof.soap.soap</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="wof-module.html">Package&nbsp;wof</a> ::
+        <a href="wof.soap-module.html">Package&nbsp;soap</a> ::
+        Module&nbsp;soap
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="wof.soap.soap-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="wof.soap.soap-module.html">Module wof.soap.soap</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">StringIO</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">logging</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">soaplib</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">lxml</tt> <tt class="py-keyword">import</tt> <tt class="py-name">etree</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">soaplib</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Module wof.core=wof.core-module.html"><a title="wof.core" class="py-name" href="#" onclick="return doclink('link-0', 'core', 'link-0');">core</a></tt><tt class="py-op">.</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt class="py-name">base</tt> <tt class="py-keyword">import</tt> <tt id="link-1" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Base=examples.barebones.sqlalch_LCM_models-module.html#Base,Variable examples.cbi.cbi_cache_models.Base=examples.cbi.cbi_cache_models-module.html#Base,Variable examples.odm.sqlalch_odm_models.Base=examples.odm.sqlalch_odm_models-module.html#Base,Variable examples.swis.sqlalch_swis_models.Base=examples.swis.sqlalch_swis_models-module.html#Base"><a title="examples.barebones.sqlalch_LCM_models.Base
+examples.cbi.cbi_cache_models.Base
+examples.odm.sqlalch_odm_models.Base
+examples.swis.sqlalch_swis_models.Base" class="py-name" href="#" onclick="return doclink('link-1', 'Base', 'link-1');">Base</a></tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">soaplib</tt><tt class="py-op">.</tt><tt id="link-2" class="py-name"><a title="wof.core" class="py-name" href="#" onclick="return doclink('link-2', 'core', 'link-0');">core</a></tt><tt class="py-op">.</tt><tt class="py-name">service</tt> <tt class="py-keyword">import</tt> <tt class="py-name">rpc</tt><tt class="py-op">,</tt> <tt id="link-3" class="py-name" targets="Package wof.soap=wof.soap-module.html,Module wof.soap.soap=wof.soap.soap-module.html"><a title="wof.soap
+wof.soap.soap" class="py-name" href="#" onclick="return doclink('link-3', 'soap', 'link-3');">soap</a></tt><tt class="py-op">,</tt> <tt class="py-name">DefinitionBase</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">soaplib</tt><tt class="py-op">.</tt><tt id="link-4" class="py-name"><a title="wof.core" class="py-name" href="#" onclick="return doclink('link-4', 'core', 'link-0');">core</a></tt><tt class="py-op">.</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt class="py-name">primitive</tt> <tt class="py-keyword">import</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">Any</tt><tt class="py-op">,</tt> <tt class="py-name">Integer</tt><tt class="py-op">,</tt> <tt class="py-name">Float</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">soaplib</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="wof.core" class="py-name" href="#" onclick="return doclink('link-5', 'core', 'link-0');">core</a></tt><tt class="py-op">.</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt class="py-name">exception</tt> <tt class="py-keyword">import</tt> <tt class="py-name">Fault</tt> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">soaplib</tt><tt class="py-op">.</tt><tt id="link-6" class="py-name"><a title="wof.core" class="py-name" href="#" onclick="return doclink('link-6', 'core', 'link-0');">core</a></tt><tt class="py-op">.</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt class="py-name">clazz</tt> <tt class="py-keyword">import</tt> <tt class="py-name">Array</tt><tt class="py-op">,</tt> <tt class="py-name">ClassModel</tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt id="link-7" class="py-name" targets="Variable wof.soap.soap.logger=wof.soap.soap-module.html#logger"><a title="wof.soap.soap.logger" class="py-name" href="#" onclick="return doclink('link-7', 'logger', 'link-7');">logger</a></tt> <tt class="py-op">=</tt> <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">getLogger</tt><tt class="py-op">(</tt><tt class="py-name">__name__</tt><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt id="link-8" class="py-name" targets="Variable wof.flask.views.rest.NSDEF=wof.flask.views.rest-module.html#NSDEF,Variable wof.soap.soap.NSDEF=wof.soap.soap-module.html#NSDEF"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-8', 'NSDEF', 'link-8');">NSDEF</a></tt> <tt class="py-op">=</tt> <tt class="py-string">'xmlns:gml="http://www.opengis.net/gml" \</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"><tt class="py-string">    xmlns:xlink="http://www.w3.org/1999/xlink" \</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt class="py-string">    xmlns:xsd="http://www.w3.org/2001/XMLSchema" \</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"><tt class="py-string">    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" \</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"><tt class="py-string">    xmlns:wtr="http://www.cuahsi.org/waterML/" \</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line"><tt class="py-string">    xmlns="http://www.cuahsi.org/waterML/1.0/"'</tt> </tt>
+<a name="create_wof_service_class"></a><div id="create_wof_service_class-def"><a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line"> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-comment">#TODO: Input validation, error messages, test classes (use suds)</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-comment">#TODO: For some reason, soaplib does not ignore &lt;!--comments--&gt; in the soap</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-comment"># requests so the default requests from soapUI will cause errors</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt> <a class="py-toggle" href="#" id="create_wof_service_class-toggle" onclick="return toggle('create_wof_service_class');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="wof.soap.soap-module.html#create_wof_service_class">create_wof_service_class</a><tt class="py-op">(</tt><tt class="py-param">wof_instance</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="create_wof_service_class-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="create_wof_service_class-expanded"><a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line">    <tt class="py-keyword">class</tt> <tt class="py-def-name">WOFService</tt><tt class="py-op">(</tt><tt class="py-base-class">DefinitionBase</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">        <tt class="py-name">wof_inst</tt> <tt class="py-op">=</tt> <tt class="py-name">wof_instance</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">on_method_return_xml</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">element</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">            <tt class="py-comment"># whatever etree element you return is the final xml</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line">            <tt class="py-comment"># response, so to prevent the extraneous ("%sResult" %</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">            <tt class="py-comment"># method_name) result element, we just need to return an</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">            <tt class="py-comment"># element that has that element removed and replaced with</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">            <tt class="py-comment"># its child, which was the original response</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">            <tt class="py-comment">#TODO: how do we determine which method is being returned from?</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">            <tt class="py-comment"># Since I don't know, I am doing a dumb test for each one</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line"> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">            <tt class="py-name">result_element_name_list</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">                <tt class="py-string">'GetSitesResult'</tt><tt class="py-op">,</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">                <tt class="py-string">'GetSiteInfoObjectResult'</tt><tt class="py-op">,</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">                <tt class="py-string">'GetVariableInfoObjectResult'</tt><tt class="py-op">,</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">                <tt class="py-string">'GetValuesObjectResult'</tt><tt class="py-op">]</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line"> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">result_element_name</tt> <tt class="py-keyword">in</tt> <tt class="py-name">result_element_name_list</tt><tt class="py-op">:</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">                <tt class="py-name">result_element</tt> <tt class="py-op">=</tt> <tt class="py-name">element</tt><tt class="py-op">.</tt><tt class="py-name">find</tt><tt class="py-op">(</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">                    <tt class="py-string">'.//{%s}%s'</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">element</tt><tt class="py-op">.</tt><tt class="py-name">nsmap</tt><tt class="py-op">[</tt><tt class="py-string">'s0'</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt class="py-name">result_element_name</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line"> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">                <tt class="py-keyword">if</tt> <tt class="py-name">result_element</tt> <tt class="py-keyword">is</tt> <tt class="py-keyword">not</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line">                    <tt class="py-keyword">print</tt> <tt class="py-string">"FOUND RESULT------------------------------------"</tt> </tt>
+<a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">                    <tt class="py-name">parent</tt> <tt class="py-op">=</tt> <tt class="py-name">result_element</tt><tt class="py-op">.</tt><tt class="py-name">getparent</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line">                    <tt class="py-name">children</tt> <tt class="py-op">=</tt> <tt class="py-name">result_element</tt><tt class="py-op">.</tt><tt class="py-name">getchildren</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">                    <tt class="py-name">parent</tt><tt class="py-op">.</tt><tt class="py-name">replace</tt><tt class="py-op">(</tt><tt class="py-name">result_element</tt><tt class="py-op">,</tt> <tt class="py-name">children</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">                    <tt class="py-keyword">return</tt> <tt class="py-name">element</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">element</tt> </tt>
+</div><a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line"> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">        <tt class="py-comment">#_out_variable_names ????</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">        <tt class="py-comment">#TODO: suds is having trouble resolving the object responses</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">        <tt class="py-decorator">@</tt><tt class="py-decorator">soap</tt><tt class="py-op">(</tt><tt class="py-name">Array</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">_returns</tt><tt class="py-op">=</tt><tt class="py-name">Any</tt><tt class="py-op">)</tt> </tt>
+<a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">GetSites</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site</tt><tt class="py-op">,</tt> <tt class="py-param">authToken</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt>  <tt class="py-line">                <tt class="py-name">siteArg</tt> <tt class="py-op">=</tt> <tt class="py-string">','</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">s</tt> <tt class="py-keyword">in</tt> <tt id="link-9" class="py-name" targets="Class wof.WaterML.site=wof.WaterML.site-class.html"><a title="wof.WaterML.site" class="py-name" href="#" onclick="return doclink('link-9', 'site', 'link-9');">site</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line"> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">                <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">debug</tt><tt class="py-op">(</tt><tt id="link-10" class="py-name"><a title="wof.WaterML.site" class="py-name" href="#" onclick="return doclink('link-10', 'site', 'link-9');">site</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line">                <tt class="py-name">logging</tt><tt class="py-op">.</tt><tt class="py-name">debug</tt><tt class="py-op">(</tt><tt class="py-name">siteArg</tt><tt class="py-op">)</tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">                <tt class="py-name">siteResponse</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">wof_inst</tt><tt class="py-op">.</tt><tt id="link-11" class="py-name" targets="Method wof.core.WOF.create_get_site_response()=wof.core.WOF-class.html#create_get_site_response"><a title="wof.core.WOF.create_get_site_response" class="py-name" href="#" onclick="return doclink('link-11', 'create_get_site_response', 'link-11');">create_get_site_response</a></tt><tt class="py-op">(</tt><tt class="py-name">siteArg</tt><tt class="py-op">)</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">                <tt class="py-name">outStream</tt> <tt class="py-op">=</tt> <tt class="py-name">StringIO</tt><tt class="py-op">.</tt><tt class="py-name">StringIO</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">                <tt class="py-name">siteResponse</tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Method wof.WaterML.ContactInformationType.export()=wof.WaterML.ContactInformationType-class.html#export,Method wof.WaterML.DataSetInfoType.export()=wof.WaterML.DataSetInfoType-class.html#export,Method wof.WaterML.DocumentationType.export()=wof.WaterML.DocumentationType-class.html#export,Method wof.WaterML.GeogLocationType.export()=wof.WaterML.GeogLocationType-class.html#export,Method wof.WaterML.LabMethodType.export()=wof.WaterML.LabMethodType-class.html#export,Method wof.WaterML.LatLonBoxType.export()=wof.WaterML.LatLonBoxType-class.html#export,Method wof.WaterML.LatLonPointType.export()=wof.WaterML.LatLonPointType-class.html#export,Method wof.WaterML.MetaDataType.export()=wof.WaterML.MetaDataType-class.html#export,Method wof.WaterML.MethodType.export()=wof.WaterML.MethodType-class.html#export,Method wof.WaterML.MixedContainer.export()=wof.WaterML.MixedContainer-class.html#export,Method wof.WaterML.NoteType.export()=wof.WaterML.NoteType-class.html#export,Method wof.WaterML.OffsetType.export()=wof.WaterML.OffsetType-class.html#export,Method wof.WaterML.QualifiersType.export()=wof.WaterML.QualifiersType-class.html#export,Method wof.WaterML.QualityControlLevelType.export()=wof.WaterML.QualityControlLevelType-class.html#export,Method wof.WaterML.QueryInfoType.export()=wof.WaterML.QueryInfoType-class.html#export,Method wof.WaterML.SampleType.export()=wof.WaterML.SampleType-class.html#export,Method wof.WaterML.SiteInfoResponseType.export()=wof.WaterML.SiteInfoResponseType-class.html#export,Method wof.WaterML.SiteInfoType.export()=wof.WaterML.SiteInfoType-class.html#export,Method wof.WaterML.SourceInfoType.export()=wof.WaterML.SourceInfoType-class.html#export,Method wof.WaterML.SourceType.export()=wof.WaterML.SourceType-class.html#export,Method wof.WaterML.TimeIntervalType.export()=wof.WaterML.TimeIntervalType-class.html#export,Method wof.WaterML.TimePeriodRealTimeType.export()=wof.WaterML.TimePeriodRealTimeType-class.html#export,Method wof.WaterML.TimePeriodType.export()=wof.WaterML.TimePeriodType-class.html#export,Method wof.WaterML.TimeSeriesResponseType.export()=wof.WaterML.TimeSeriesResponseType-class.html#export,Method wof.WaterML.TimeSeriesType.export()=wof.WaterML.TimeSeriesType-class.html#export,Method wof.WaterML.TimeSingleType.export()=wof.WaterML.TimeSingleType-class.html#export,Method wof.WaterML.TsValuesSingleVariableType.export()=wof.WaterML.TsValuesSingleVariableType-class.html#export,Method wof.WaterML.UnitsType.export()=wof.WaterML.UnitsType-class.html#export,Method wof.WaterML.ValueSingleVariable.export()=wof.WaterML.ValueSingleVariable-class.html#export,Method wof.WaterML.VariableInfoType.export()=wof.WaterML.VariableInfoType-class.html#export,Method wof.WaterML.VariablesResponseType.export()=wof.WaterML.VariablesResponseType-class.html#export,Method wof.WaterML.criteria.export()=wof.WaterML.criteria-class.html#export,Method wof.WaterML.daylightSavingsTimeZone.export()=wof.WaterML.daylightSavingsTimeZone-class.html#export,Method wof.WaterML.defaultTimeZone.export()=wof.WaterML.defaultTimeZone-class.html#export,Method wof.WaterML.geoLocation.export()=wof.WaterML.geoLocation-class.html#export,Method wof.WaterML.localSiteXY.export()=wof.WaterML.localSiteXY-class.html#export,Method wof.WaterML.option.export()=wof.WaterML.option-class.html#export,Method wof.WaterML.optionGroup.export()=wof.WaterML.optionGroup-class.html#export,Method wof.WaterML.options.export()=wof.WaterML.options-class.html#export,Method wof.WaterML.parentID.export()=wof.WaterML.parentID-class.html#export,Method wof.WaterML.qualifier.export()=wof.WaterML.qualifier-class.html#export,Method wof.WaterML.qualityControlLevel.export()=wof.WaterML.qualityControlLevel-class.html#export,Method wof.WaterML.related.export()=wof.WaterML.related-class.html#export,Method wof.WaterML.relatedID.export()=wof.WaterML.relatedID-class.html#export,Method wof.WaterML.series.export()=wof.WaterML.series-class.html#export,Method wof.WaterML.seriesCatalogType.export()=wof.WaterML.seriesCatalogType-class.html#export,Method wof.WaterML.site.export()=wof.WaterML.site-class.html#export,Method wof.WaterML.siteCode.export()=wof.WaterML.siteCode-class.html#export,Method wof.WaterML.timeParam.export()=wof.WaterML.timeParam-class.html#export,Method wof.WaterML.timeSupport.export()=wof.WaterML.timeSupport-class.html#export,Method wof.WaterML.timeZoneInfo.export()=wof.WaterML.timeZoneInfo-class.html#export,Method wof.WaterML.units.export()=wof.WaterML.units-class.html#export,Method wof.WaterML.valueCount.export()=wof.WaterML.valueCount-class.html#export,Method wof.WaterML.variableCode.export()=wof.WaterML.variableCode-class.html#export,Method wof.WaterML.variables.export()=wof.WaterML.variables-class.html#export"><a title="wof.WaterML.ContactInformationType.export
+wof.WaterML.DataSetInfoType.export
+wof.WaterML.DocumentationType.export
+wof.WaterML.GeogLocationType.export
+wof.WaterML.LabMethodType.export
+wof.WaterML.LatLonBoxType.export
+wof.WaterML.LatLonPointType.export
+wof.WaterML.MetaDataType.export
+wof.WaterML.MethodType.export
+wof.WaterML.MixedContainer.export
+wof.WaterML.NoteType.export
+wof.WaterML.OffsetType.export
+wof.WaterML.QualifiersType.export
+wof.WaterML.QualityControlLevelType.export
+wof.WaterML.QueryInfoType.export
+wof.WaterML.SampleType.export
+wof.WaterML.SiteInfoResponseType.export
+wof.WaterML.SiteInfoType.export
+wof.WaterML.SourceInfoType.export
+wof.WaterML.SourceType.export
+wof.WaterML.TimeIntervalType.export
+wof.WaterML.TimePeriodRealTimeType.export
+wof.WaterML.TimePeriodType.export
+wof.WaterML.TimeSeriesResponseType.export
+wof.WaterML.TimeSeriesType.export
+wof.WaterML.TimeSingleType.export
+wof.WaterML.TsValuesSingleVariableType.export
+wof.WaterML.UnitsType.export
+wof.WaterML.ValueSingleVariable.export
+wof.WaterML.VariableInfoType.export
+wof.WaterML.VariablesResponseType.export
+wof.WaterML.criteria.export
+wof.WaterML.daylightSavingsTimeZone.export
+wof.WaterML.defaultTimeZone.export
+wof.WaterML.geoLocation.export
+wof.WaterML.localSiteXY.export
+wof.WaterML.option.export
+wof.WaterML.optionGroup.export
+wof.WaterML.options.export
+wof.WaterML.parentID.export
+wof.WaterML.qualifier.export
+wof.WaterML.qualityControlLevel.export
+wof.WaterML.related.export
+wof.WaterML.relatedID.export
+wof.WaterML.series.export
+wof.WaterML.seriesCatalogType.export
+wof.WaterML.site.export
+wof.WaterML.siteCode.export
+wof.WaterML.timeParam.export
+wof.WaterML.timeSupport.export
+wof.WaterML.timeZoneInfo.export
+wof.WaterML.units.export
+wof.WaterML.valueCount.export
+wof.WaterML.variableCode.export
+wof.WaterML.variables.export" class="py-name" href="#" onclick="return doclink('link-12', 'export', 'link-12');">export</a></tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">name_</tt><tt class="py-op">=</tt><tt class="py-string">"sitesResponse"</tt><tt class="py-op">,</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">                                    <tt class="py-name">namespacedef_</tt><tt class="py-op">=</tt><tt id="link-13" class="py-name"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-13', 'NSDEF', 'link-8');">NSDEF</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">                <tt class="py-comment">#TODO: Fault</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">outStream</tt><tt class="py-op">.</tt><tt class="py-name">getvalue</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt> <tt class="py-keyword">as</tt> <tt class="py-name">inst</tt><tt class="py-op">:</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-string">"ERROR: %s, %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">inst</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">inst</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">        <tt class="py-comment"># This is the one that returns WITH &lt;![CDATA[...]]&gt;</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">        <tt class="py-decorator">@</tt><tt class="py-decorator">soap</tt><tt class="py-op">(</tt><tt class="py-name">Array</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">_returns</tt><tt class="py-op">=</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">GetSitesXml</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site</tt><tt class="py-op">,</tt> <tt class="py-param">authToken</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">                <tt class="py-name">siteArg</tt> <tt class="py-op">=</tt> <tt class="py-string">','</tt><tt class="py-op">.</tt><tt class="py-name">join</tt><tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">s</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">s</tt> <tt class="py-keyword">in</tt> <tt id="link-14" class="py-name"><a title="wof.WaterML.site" class="py-name" href="#" onclick="return doclink('link-14', 'site', 'link-9');">site</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                <tt class="py-name">siteResponse</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">wof_inst</tt><tt class="py-op">.</tt><tt id="link-15" class="py-name"><a title="wof.core.WOF.create_get_site_response" class="py-name" href="#" onclick="return doclink('link-15', 'create_get_site_response', 'link-11');">create_get_site_response</a></tt><tt class="py-op">(</tt><tt class="py-name">siteArg</tt><tt class="py-op">)</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                <tt class="py-name">outStream</tt> <tt class="py-op">=</tt> <tt class="py-name">StringIO</tt><tt class="py-op">.</tt><tt class="py-name">StringIO</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">                <tt class="py-name">siteResponse</tt><tt class="py-op">.</tt><tt id="link-16" class="py-name"><a title="wof.WaterML.ContactInformationType.export
+wof.WaterML.DataSetInfoType.export
+wof.WaterML.DocumentationType.export
+wof.WaterML.GeogLocationType.export
+wof.WaterML.LabMethodType.export
+wof.WaterML.LatLonBoxType.export
+wof.WaterML.LatLonPointType.export
+wof.WaterML.MetaDataType.export
+wof.WaterML.MethodType.export
+wof.WaterML.MixedContainer.export
+wof.WaterML.NoteType.export
+wof.WaterML.OffsetType.export
+wof.WaterML.QualifiersType.export
+wof.WaterML.QualityControlLevelType.export
+wof.WaterML.QueryInfoType.export
+wof.WaterML.SampleType.export
+wof.WaterML.SiteInfoResponseType.export
+wof.WaterML.SiteInfoType.export
+wof.WaterML.SourceInfoType.export
+wof.WaterML.SourceType.export
+wof.WaterML.TimeIntervalType.export
+wof.WaterML.TimePeriodRealTimeType.export
+wof.WaterML.TimePeriodType.export
+wof.WaterML.TimeSeriesResponseType.export
+wof.WaterML.TimeSeriesType.export
+wof.WaterML.TimeSingleType.export
+wof.WaterML.TsValuesSingleVariableType.export
+wof.WaterML.UnitsType.export
+wof.WaterML.ValueSingleVariable.export
+wof.WaterML.VariableInfoType.export
+wof.WaterML.VariablesResponseType.export
+wof.WaterML.criteria.export
+wof.WaterML.daylightSavingsTimeZone.export
+wof.WaterML.defaultTimeZone.export
+wof.WaterML.geoLocation.export
+wof.WaterML.localSiteXY.export
+wof.WaterML.option.export
+wof.WaterML.optionGroup.export
+wof.WaterML.options.export
+wof.WaterML.parentID.export
+wof.WaterML.qualifier.export
+wof.WaterML.qualityControlLevel.export
+wof.WaterML.related.export
+wof.WaterML.relatedID.export
+wof.WaterML.series.export
+wof.WaterML.seriesCatalogType.export
+wof.WaterML.site.export
+wof.WaterML.siteCode.export
+wof.WaterML.timeParam.export
+wof.WaterML.timeSupport.export
+wof.WaterML.timeZoneInfo.export
+wof.WaterML.units.export
+wof.WaterML.valueCount.export
+wof.WaterML.variableCode.export
+wof.WaterML.variables.export" class="py-name" href="#" onclick="return doclink('link-16', 'export', 'link-12');">export</a></tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">name_</tt><tt class="py-op">=</tt><tt class="py-string">"sitesResponse"</tt><tt class="py-op">,</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">                                    <tt class="py-name">namespacedef_</tt><tt class="py-op">=</tt><tt id="link-17" class="py-name"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-17', 'NSDEF', 'link-8');">NSDEF</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line"> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">                <tt class="py-comment">#TODO: Fault</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">.</tt><tt class="py-name">getvalue</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">replace</tt><tt class="py-op">(</tt><tt class="py-string">'\n'</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt> <tt class="py-keyword">as</tt> <tt class="py-name">inst</tt><tt class="py-op">:</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-string">"ERROR: %s, %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">inst</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">inst</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">        <tt class="py-comment">#######################################################################</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line"> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-decorator">@</tt><tt class="py-decorator">soap</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">_returns</tt><tt class="py-op">=</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">GetSiteInfo</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site</tt><tt class="py-op">,</tt> <tt class="py-param">authToken</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line"> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">                <tt class="py-name">siteInfoResponse</tt> <tt class="py-op">=</tt> \ </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">                            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">wof_inst</tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Method wof.core.WOF.create_get_site_info_response()=wof.core.WOF-class.html#create_get_site_info_response"><a title="wof.core.WOF.create_get_site_info_response" class="py-name" href="#" onclick="return doclink('link-18', 'create_get_site_info_response', 'link-18');">create_get_site_info_response</a></tt><tt class="py-op">(</tt><tt id="link-19" class="py-name"><a title="wof.WaterML.site" class="py-name" href="#" onclick="return doclink('link-19', 'site', 'link-9');">site</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line"> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line">                <tt class="py-name">outStream</tt> <tt class="py-op">=</tt> <tt class="py-name">StringIO</tt><tt class="py-op">.</tt><tt class="py-name">StringIO</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line">                <tt class="py-name">siteInfoResponse</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name"><a title="wof.WaterML.ContactInformationType.export
+wof.WaterML.DataSetInfoType.export
+wof.WaterML.DocumentationType.export
+wof.WaterML.GeogLocationType.export
+wof.WaterML.LabMethodType.export
+wof.WaterML.LatLonBoxType.export
+wof.WaterML.LatLonPointType.export
+wof.WaterML.MetaDataType.export
+wof.WaterML.MethodType.export
+wof.WaterML.MixedContainer.export
+wof.WaterML.NoteType.export
+wof.WaterML.OffsetType.export
+wof.WaterML.QualifiersType.export
+wof.WaterML.QualityControlLevelType.export
+wof.WaterML.QueryInfoType.export
+wof.WaterML.SampleType.export
+wof.WaterML.SiteInfoResponseType.export
+wof.WaterML.SiteInfoType.export
+wof.WaterML.SourceInfoType.export
+wof.WaterML.SourceType.export
+wof.WaterML.TimeIntervalType.export
+wof.WaterML.TimePeriodRealTimeType.export
+wof.WaterML.TimePeriodType.export
+wof.WaterML.TimeSeriesResponseType.export
+wof.WaterML.TimeSeriesType.export
+wof.WaterML.TimeSingleType.export
+wof.WaterML.TsValuesSingleVariableType.export
+wof.WaterML.UnitsType.export
+wof.WaterML.ValueSingleVariable.export
+wof.WaterML.VariableInfoType.export
+wof.WaterML.VariablesResponseType.export
+wof.WaterML.criteria.export
+wof.WaterML.daylightSavingsTimeZone.export
+wof.WaterML.defaultTimeZone.export
+wof.WaterML.geoLocation.export
+wof.WaterML.localSiteXY.export
+wof.WaterML.option.export
+wof.WaterML.optionGroup.export
+wof.WaterML.options.export
+wof.WaterML.parentID.export
+wof.WaterML.qualifier.export
+wof.WaterML.qualityControlLevel.export
+wof.WaterML.related.export
+wof.WaterML.relatedID.export
+wof.WaterML.series.export
+wof.WaterML.seriesCatalogType.export
+wof.WaterML.site.export
+wof.WaterML.siteCode.export
+wof.WaterML.timeParam.export
+wof.WaterML.timeSupport.export
+wof.WaterML.timeZoneInfo.export
+wof.WaterML.units.export
+wof.WaterML.valueCount.export
+wof.WaterML.variableCode.export
+wof.WaterML.variables.export" class="py-name" href="#" onclick="return doclink('link-20', 'export', 'link-12');">export</a></tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">name_</tt><tt class="py-op">=</tt><tt class="py-string">"sitesResponse"</tt><tt class="py-op">,</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">                                        <tt class="py-name">namespacedef_</tt><tt class="py-op">=</tt><tt id="link-21" class="py-name"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-21', 'NSDEF', 'link-8');">NSDEF</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">                <tt class="py-comment">#TODO: Fault</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">.</tt><tt class="py-name">getvalue</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">replace</tt><tt class="py-op">(</tt><tt class="py-string">'\n'</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line"> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt> <tt class="py-keyword">as</tt> <tt class="py-name">inst</tt><tt class="py-op">:</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-string">"ERROR: %s, %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">inst</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">inst</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line"> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">        <tt class="py-decorator">@</tt><tt class="py-decorator">soap</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">_returns</tt><tt class="py-op">=</tt><tt class="py-name">Any</tt><tt class="py-op">)</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">GetSiteInfoObject</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site</tt><tt class="py-op">,</tt> <tt class="py-param">authToken</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line"> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line">                <tt class="py-name">siteInfoResponse</tt> <tt class="py-op">=</tt> \ </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">                            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">wof_inst</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name"><a title="wof.core.WOF.create_get_site_info_response" class="py-name" href="#" onclick="return doclink('link-22', 'create_get_site_info_response', 'link-18');">create_get_site_info_response</a></tt><tt class="py-op">(</tt><tt id="link-23" class="py-name"><a title="wof.WaterML.site" class="py-name" href="#" onclick="return doclink('link-23', 'site', 'link-9');">site</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">                <tt class="py-name">outStream</tt> <tt class="py-op">=</tt> <tt class="py-name">StringIO</tt><tt class="py-op">.</tt><tt class="py-name">StringIO</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line">                <tt class="py-name">siteInfoResponse</tt><tt class="py-op">.</tt><tt id="link-24" class="py-name"><a title="wof.WaterML.ContactInformationType.export
+wof.WaterML.DataSetInfoType.export
+wof.WaterML.DocumentationType.export
+wof.WaterML.GeogLocationType.export
+wof.WaterML.LabMethodType.export
+wof.WaterML.LatLonBoxType.export
+wof.WaterML.LatLonPointType.export
+wof.WaterML.MetaDataType.export
+wof.WaterML.MethodType.export
+wof.WaterML.MixedContainer.export
+wof.WaterML.NoteType.export
+wof.WaterML.OffsetType.export
+wof.WaterML.QualifiersType.export
+wof.WaterML.QualityControlLevelType.export
+wof.WaterML.QueryInfoType.export
+wof.WaterML.SampleType.export
+wof.WaterML.SiteInfoResponseType.export
+wof.WaterML.SiteInfoType.export
+wof.WaterML.SourceInfoType.export
+wof.WaterML.SourceType.export
+wof.WaterML.TimeIntervalType.export
+wof.WaterML.TimePeriodRealTimeType.export
+wof.WaterML.TimePeriodType.export
+wof.WaterML.TimeSeriesResponseType.export
+wof.WaterML.TimeSeriesType.export
+wof.WaterML.TimeSingleType.export
+wof.WaterML.TsValuesSingleVariableType.export
+wof.WaterML.UnitsType.export
+wof.WaterML.ValueSingleVariable.export
+wof.WaterML.VariableInfoType.export
+wof.WaterML.VariablesResponseType.export
+wof.WaterML.criteria.export
+wof.WaterML.daylightSavingsTimeZone.export
+wof.WaterML.defaultTimeZone.export
+wof.WaterML.geoLocation.export
+wof.WaterML.localSiteXY.export
+wof.WaterML.option.export
+wof.WaterML.optionGroup.export
+wof.WaterML.options.export
+wof.WaterML.parentID.export
+wof.WaterML.qualifier.export
+wof.WaterML.qualityControlLevel.export
+wof.WaterML.related.export
+wof.WaterML.relatedID.export
+wof.WaterML.series.export
+wof.WaterML.seriesCatalogType.export
+wof.WaterML.site.export
+wof.WaterML.siteCode.export
+wof.WaterML.timeParam.export
+wof.WaterML.timeSupport.export
+wof.WaterML.timeZoneInfo.export
+wof.WaterML.units.export
+wof.WaterML.valueCount.export
+wof.WaterML.variableCode.export
+wof.WaterML.variables.export" class="py-name" href="#" onclick="return doclink('link-24', 'export', 'link-12');">export</a></tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">name_</tt><tt class="py-op">=</tt><tt class="py-string">"sitesResponse"</tt><tt class="py-op">,</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">                                    <tt class="py-name">namespacedef_</tt><tt class="py-op">=</tt><tt id="link-25" class="py-name"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-25', 'NSDEF', 'link-8');">NSDEF</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">                <tt class="py-comment">#TODO: Fault</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"> </tt>
+<a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">outStream</tt><tt class="py-op">.</tt><tt class="py-name">getvalue</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line"> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt> <tt class="py-keyword">as</tt> <tt class="py-name">inst</tt><tt class="py-op">:</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-string">"ERROR: %s, %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">inst</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">inst</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">        <tt class="py-comment">#######################################################################</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">        <tt class="py-decorator">@</tt><tt class="py-decorator">soap</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">_returns</tt><tt class="py-op">=</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">GetVariableInfo</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">variable</tt><tt class="py-op">,</tt> <tt class="py-param">authToken</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line"> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">                <tt class="py-name">variableInfoResponse</tt> <tt class="py-op">=</tt> \ </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">wof_inst</tt><tt class="py-op">.</tt><tt id="link-26" class="py-name" targets="Method wof.core.WOF.create_get_variable_info_response()=wof.core.WOF-class.html#create_get_variable_info_response"><a title="wof.core.WOF.create_get_variable_info_response" class="py-name" href="#" onclick="return doclink('link-26', 'create_get_variable_info_response', 'link-26');">create_get_variable_info_response</a></tt><tt class="py-op">(</tt><tt class="py-name">variable</tt><tt class="py-op">)</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line"> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">                <tt class="py-name">outStream</tt> <tt class="py-op">=</tt> <tt class="py-name">StringIO</tt><tt class="py-op">.</tt><tt class="py-name">StringIO</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">                <tt class="py-name">variableInfoResponse</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="wof.WaterML.ContactInformationType.export
+wof.WaterML.DataSetInfoType.export
+wof.WaterML.DocumentationType.export
+wof.WaterML.GeogLocationType.export
+wof.WaterML.LabMethodType.export
+wof.WaterML.LatLonBoxType.export
+wof.WaterML.LatLonPointType.export
+wof.WaterML.MetaDataType.export
+wof.WaterML.MethodType.export
+wof.WaterML.MixedContainer.export
+wof.WaterML.NoteType.export
+wof.WaterML.OffsetType.export
+wof.WaterML.QualifiersType.export
+wof.WaterML.QualityControlLevelType.export
+wof.WaterML.QueryInfoType.export
+wof.WaterML.SampleType.export
+wof.WaterML.SiteInfoResponseType.export
+wof.WaterML.SiteInfoType.export
+wof.WaterML.SourceInfoType.export
+wof.WaterML.SourceType.export
+wof.WaterML.TimeIntervalType.export
+wof.WaterML.TimePeriodRealTimeType.export
+wof.WaterML.TimePeriodType.export
+wof.WaterML.TimeSeriesResponseType.export
+wof.WaterML.TimeSeriesType.export
+wof.WaterML.TimeSingleType.export
+wof.WaterML.TsValuesSingleVariableType.export
+wof.WaterML.UnitsType.export
+wof.WaterML.ValueSingleVariable.export
+wof.WaterML.VariableInfoType.export
+wof.WaterML.VariablesResponseType.export
+wof.WaterML.criteria.export
+wof.WaterML.daylightSavingsTimeZone.export
+wof.WaterML.defaultTimeZone.export
+wof.WaterML.geoLocation.export
+wof.WaterML.localSiteXY.export
+wof.WaterML.option.export
+wof.WaterML.optionGroup.export
+wof.WaterML.options.export
+wof.WaterML.parentID.export
+wof.WaterML.qualifier.export
+wof.WaterML.qualityControlLevel.export
+wof.WaterML.related.export
+wof.WaterML.relatedID.export
+wof.WaterML.series.export
+wof.WaterML.seriesCatalogType.export
+wof.WaterML.site.export
+wof.WaterML.siteCode.export
+wof.WaterML.timeParam.export
+wof.WaterML.timeSupport.export
+wof.WaterML.timeZoneInfo.export
+wof.WaterML.units.export
+wof.WaterML.valueCount.export
+wof.WaterML.variableCode.export
+wof.WaterML.variables.export" class="py-name" href="#" onclick="return doclink('link-27', 'export', 'link-12');">export</a></tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">                                            <tt class="py-name">name_</tt><tt class="py-op">=</tt><tt class="py-string">"variablesResponse"</tt><tt class="py-op">,</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">                                            <tt class="py-name">namespacedef_</tt><tt class="py-op">=</tt><tt id="link-28" class="py-name"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-28', 'NSDEF', 'link-8');">NSDEF</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line">                <tt class="py-comment">#TODO: Fault</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">.</tt><tt class="py-name">getvalue</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">replace</tt><tt class="py-op">(</tt><tt class="py-string">'\n'</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt> <tt class="py-keyword">as</tt> <tt class="py-name">inst</tt><tt class="py-op">:</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-string">"ERROR: %s, %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">inst</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">inst</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"> </tt>
+<a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">        <tt class="py-decorator">@</tt><tt class="py-decorator">soap</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">_returns</tt><tt class="py-op">=</tt><tt class="py-name">Any</tt><tt class="py-op">)</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">GetVariableInfoObject</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">variable</tt><tt class="py-op">,</tt> <tt class="py-param">authToken</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">                <tt class="py-name">variableInfoResponse</tt> <tt class="py-op">=</tt> \ </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">wof_inst</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="wof.core.WOF.create_get_variable_info_response" class="py-name" href="#" onclick="return doclink('link-29', 'create_get_variable_info_response', 'link-26');">create_get_variable_info_response</a></tt><tt class="py-op">(</tt><tt class="py-name">variable</tt><tt class="py-op">)</tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line"> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">                <tt class="py-name">outStream</tt> <tt class="py-op">=</tt> <tt class="py-name">StringIO</tt><tt class="py-op">.</tt><tt class="py-name">StringIO</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">                <tt class="py-name">variableInfoResponse</tt><tt class="py-op">.</tt><tt id="link-30" class="py-name"><a title="wof.WaterML.ContactInformationType.export
+wof.WaterML.DataSetInfoType.export
+wof.WaterML.DocumentationType.export
+wof.WaterML.GeogLocationType.export
+wof.WaterML.LabMethodType.export
+wof.WaterML.LatLonBoxType.export
+wof.WaterML.LatLonPointType.export
+wof.WaterML.MetaDataType.export
+wof.WaterML.MethodType.export
+wof.WaterML.MixedContainer.export
+wof.WaterML.NoteType.export
+wof.WaterML.OffsetType.export
+wof.WaterML.QualifiersType.export
+wof.WaterML.QualityControlLevelType.export
+wof.WaterML.QueryInfoType.export
+wof.WaterML.SampleType.export
+wof.WaterML.SiteInfoResponseType.export
+wof.WaterML.SiteInfoType.export
+wof.WaterML.SourceInfoType.export
+wof.WaterML.SourceType.export
+wof.WaterML.TimeIntervalType.export
+wof.WaterML.TimePeriodRealTimeType.export
+wof.WaterML.TimePeriodType.export
+wof.WaterML.TimeSeriesResponseType.export
+wof.WaterML.TimeSeriesType.export
+wof.WaterML.TimeSingleType.export
+wof.WaterML.TsValuesSingleVariableType.export
+wof.WaterML.UnitsType.export
+wof.WaterML.ValueSingleVariable.export
+wof.WaterML.VariableInfoType.export
+wof.WaterML.VariablesResponseType.export
+wof.WaterML.criteria.export
+wof.WaterML.daylightSavingsTimeZone.export
+wof.WaterML.defaultTimeZone.export
+wof.WaterML.geoLocation.export
+wof.WaterML.localSiteXY.export
+wof.WaterML.option.export
+wof.WaterML.optionGroup.export
+wof.WaterML.options.export
+wof.WaterML.parentID.export
+wof.WaterML.qualifier.export
+wof.WaterML.qualityControlLevel.export
+wof.WaterML.related.export
+wof.WaterML.relatedID.export
+wof.WaterML.series.export
+wof.WaterML.seriesCatalogType.export
+wof.WaterML.site.export
+wof.WaterML.siteCode.export
+wof.WaterML.timeParam.export
+wof.WaterML.timeSupport.export
+wof.WaterML.timeZoneInfo.export
+wof.WaterML.units.export
+wof.WaterML.valueCount.export
+wof.WaterML.variableCode.export
+wof.WaterML.variables.export" class="py-name" href="#" onclick="return doclink('link-30', 'export', 'link-12');">export</a></tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">                                            <tt class="py-name">name_</tt><tt class="py-op">=</tt><tt class="py-string">"variablesResponse"</tt><tt class="py-op">,</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">                                            <tt class="py-name">namespacedef_</tt><tt class="py-op">=</tt><tt id="link-31" class="py-name"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-31', 'NSDEF', 'link-8');">NSDEF</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">                <tt class="py-comment">#TODO: Fault</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line"> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">outStream</tt><tt class="py-op">.</tt><tt class="py-name">getvalue</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt> <tt class="py-keyword">as</tt> <tt class="py-name">inst</tt><tt class="py-op">:</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-string">"ERROR: %s, %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">inst</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">inst</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line">        <tt class="py-comment">#######################################################################</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-decorator">@</tt><tt class="py-decorator">soap</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">_returns</tt><tt class="py-op">=</tt><tt class="py-name">String</tt><tt class="py-op">)</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">GetValues</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">location</tt><tt class="py-op">,</tt> <tt class="py-param">variable</tt><tt class="py-op">,</tt> <tt class="py-param">startDate</tt><tt class="py-op">,</tt> <tt class="py-param">endDate</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">                <tt class="py-name">timeSeriesResponse</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">wof_inst</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Method wof.core.WOF.create_get_values_response()=wof.core.WOF-class.html#create_get_values_response"><a title="wof.core.WOF.create_get_values_response" class="py-name" href="#" onclick="return doclink('link-32', 'create_get_values_response', 'link-32');">create_get_values_response</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line">                    <tt class="py-name">location</tt><tt class="py-op">,</tt> <tt class="py-name">variable</tt><tt class="py-op">,</tt> <tt class="py-name">startDate</tt><tt class="py-op">,</tt> <tt class="py-name">endDate</tt><tt class="py-op">)</tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt>  <tt class="py-line"> </tt>
+<a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line">                <tt class="py-name">outStream</tt> <tt class="py-op">=</tt> <tt class="py-name">StringIO</tt><tt class="py-op">.</tt><tt class="py-name">StringIO</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line">                <tt class="py-name">timeSeriesResponse</tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="wof.WaterML.ContactInformationType.export
+wof.WaterML.DataSetInfoType.export
+wof.WaterML.DocumentationType.export
+wof.WaterML.GeogLocationType.export
+wof.WaterML.LabMethodType.export
+wof.WaterML.LatLonBoxType.export
+wof.WaterML.LatLonPointType.export
+wof.WaterML.MetaDataType.export
+wof.WaterML.MethodType.export
+wof.WaterML.MixedContainer.export
+wof.WaterML.NoteType.export
+wof.WaterML.OffsetType.export
+wof.WaterML.QualifiersType.export
+wof.WaterML.QualityControlLevelType.export
+wof.WaterML.QueryInfoType.export
+wof.WaterML.SampleType.export
+wof.WaterML.SiteInfoResponseType.export
+wof.WaterML.SiteInfoType.export
+wof.WaterML.SourceInfoType.export
+wof.WaterML.SourceType.export
+wof.WaterML.TimeIntervalType.export
+wof.WaterML.TimePeriodRealTimeType.export
+wof.WaterML.TimePeriodType.export
+wof.WaterML.TimeSeriesResponseType.export
+wof.WaterML.TimeSeriesType.export
+wof.WaterML.TimeSingleType.export
+wof.WaterML.TsValuesSingleVariableType.export
+wof.WaterML.UnitsType.export
+wof.WaterML.ValueSingleVariable.export
+wof.WaterML.VariableInfoType.export
+wof.WaterML.VariablesResponseType.export
+wof.WaterML.criteria.export
+wof.WaterML.daylightSavingsTimeZone.export
+wof.WaterML.defaultTimeZone.export
+wof.WaterML.geoLocation.export
+wof.WaterML.localSiteXY.export
+wof.WaterML.option.export
+wof.WaterML.optionGroup.export
+wof.WaterML.options.export
+wof.WaterML.parentID.export
+wof.WaterML.qualifier.export
+wof.WaterML.qualityControlLevel.export
+wof.WaterML.related.export
+wof.WaterML.relatedID.export
+wof.WaterML.series.export
+wof.WaterML.seriesCatalogType.export
+wof.WaterML.site.export
+wof.WaterML.siteCode.export
+wof.WaterML.timeParam.export
+wof.WaterML.timeSupport.export
+wof.WaterML.timeZoneInfo.export
+wof.WaterML.units.export
+wof.WaterML.valueCount.export
+wof.WaterML.variableCode.export
+wof.WaterML.variables.export" class="py-name" href="#" onclick="return doclink('link-33', 'export', 'link-12');">export</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line">                    <tt class="py-name">outStream</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">name_</tt><tt class="py-op">=</tt><tt class="py-string">"timeSeriesResponse"</tt><tt class="py-op">,</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line">                    <tt class="py-name">namespacedef_</tt><tt class="py-op">=</tt><tt id="link-34" class="py-name"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-34', 'NSDEF', 'link-8');">NSDEF</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"> </tt>
+<a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line">                <tt class="py-comment">#TODO: Fault</tt> </tt>
+<a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">outStream</tt><tt class="py-op">.</tt><tt class="py-name">getvalue</tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">replace</tt><tt class="py-op">(</tt><tt class="py-string">'\n'</tt><tt class="py-op">,</tt> <tt class="py-string">''</tt><tt class="py-op">)</tt> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt> <tt class="py-keyword">as</tt> <tt class="py-name">inst</tt><tt class="py-op">:</tt> </tt>
+<a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-string">"ERROR: %s, %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">inst</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">inst</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line"> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line">        <tt class="py-decorator">@</tt><tt class="py-decorator">soap</tt><tt class="py-op">(</tt><tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">String</tt><tt class="py-op">,</tt> <tt class="py-name">_returns</tt><tt class="py-op">=</tt><tt class="py-name">Any</tt><tt class="py-op">)</tt> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line">        <tt class="py-keyword">def</tt> <tt class="py-def-name">GetValuesObject</tt><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">location</tt><tt class="py-op">,</tt> <tt class="py-param">variable</tt><tt class="py-op">,</tt> <tt class="py-param">startDate</tt><tt class="py-op">,</tt> <tt class="py-param">endDate</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line">            <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">                <tt class="py-name">timeSeriesResponse</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">wof_inst</tt><tt class="py-op">.</tt><tt id="link-35" class="py-name"><a title="wof.core.WOF.create_get_values_response" class="py-name" href="#" onclick="return doclink('link-35', 'create_get_values_response', 'link-32');">create_get_values_response</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">                    <tt class="py-name">location</tt><tt class="py-op">,</tt> <tt class="py-name">variable</tt><tt class="py-op">,</tt> <tt class="py-name">startDate</tt><tt class="py-op">,</tt> <tt class="py-name">endDate</tt><tt class="py-op">)</tt> </tt>
+<a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"> </tt>
+<a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line">                <tt class="py-name">outStream</tt> <tt class="py-op">=</tt> <tt class="py-name">StringIO</tt><tt class="py-op">.</tt><tt class="py-name">StringIO</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt>  <tt class="py-line">                <tt class="py-name">timeSeriesResponse</tt><tt class="py-op">.</tt><tt id="link-36" class="py-name"><a title="wof.WaterML.ContactInformationType.export
+wof.WaterML.DataSetInfoType.export
+wof.WaterML.DocumentationType.export
+wof.WaterML.GeogLocationType.export
+wof.WaterML.LabMethodType.export
+wof.WaterML.LatLonBoxType.export
+wof.WaterML.LatLonPointType.export
+wof.WaterML.MetaDataType.export
+wof.WaterML.MethodType.export
+wof.WaterML.MixedContainer.export
+wof.WaterML.NoteType.export
+wof.WaterML.OffsetType.export
+wof.WaterML.QualifiersType.export
+wof.WaterML.QualityControlLevelType.export
+wof.WaterML.QueryInfoType.export
+wof.WaterML.SampleType.export
+wof.WaterML.SiteInfoResponseType.export
+wof.WaterML.SiteInfoType.export
+wof.WaterML.SourceInfoType.export
+wof.WaterML.SourceType.export
+wof.WaterML.TimeIntervalType.export
+wof.WaterML.TimePeriodRealTimeType.export
+wof.WaterML.TimePeriodType.export
+wof.WaterML.TimeSeriesResponseType.export
+wof.WaterML.TimeSeriesType.export
+wof.WaterML.TimeSingleType.export
+wof.WaterML.TsValuesSingleVariableType.export
+wof.WaterML.UnitsType.export
+wof.WaterML.ValueSingleVariable.export
+wof.WaterML.VariableInfoType.export
+wof.WaterML.VariablesResponseType.export
+wof.WaterML.criteria.export
+wof.WaterML.daylightSavingsTimeZone.export
+wof.WaterML.defaultTimeZone.export
+wof.WaterML.geoLocation.export
+wof.WaterML.localSiteXY.export
+wof.WaterML.option.export
+wof.WaterML.optionGroup.export
+wof.WaterML.options.export
+wof.WaterML.parentID.export
+wof.WaterML.qualifier.export
+wof.WaterML.qualityControlLevel.export
+wof.WaterML.related.export
+wof.WaterML.relatedID.export
+wof.WaterML.series.export
+wof.WaterML.seriesCatalogType.export
+wof.WaterML.site.export
+wof.WaterML.siteCode.export
+wof.WaterML.timeParam.export
+wof.WaterML.timeSupport.export
+wof.WaterML.timeZoneInfo.export
+wof.WaterML.units.export
+wof.WaterML.valueCount.export
+wof.WaterML.variableCode.export
+wof.WaterML.variables.export" class="py-name" href="#" onclick="return doclink('link-36', 'export', 'link-12');">export</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line">                    <tt class="py-name">outStream</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-name">name_</tt><tt class="py-op">=</tt><tt class="py-string">"timeSeriesResponse"</tt><tt class="py-op">,</tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line">                    <tt class="py-name">namespacedef_</tt><tt class="py-op">=</tt><tt id="link-37" class="py-name"><a title="wof.flask.views.rest.NSDEF
+wof.soap.soap.NSDEF" class="py-name" href="#" onclick="return doclink('link-37', 'NSDEF', 'link-8');">NSDEF</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line">                <tt class="py-comment">#TODO: Fault</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-name">outStream</tt><tt class="py-op">.</tt><tt class="py-name">getvalue</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line">            <tt class="py-keyword">except</tt> <tt class="py-name">Exception</tt> <tt class="py-keyword">as</tt> <tt class="py-name">inst</tt><tt class="py-op">:</tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line">                <tt class="py-keyword">return</tt> <tt class="py-string">"ERROR: %s, %s"</tt> <tt class="py-op">%</tt> <tt class="py-op">(</tt><tt class="py-name">type</tt><tt class="py-op">(</tt><tt class="py-name">inst</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">inst</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line"> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">WOFService</tt> </tt>
+</div><a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Jul 26 16:54:09 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

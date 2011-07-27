@@ -1,0 +1,1059 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>examples.swis.swis_dao</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="examples-module.html">Package&nbsp;examples</a> ::
+        <a href="examples.swis-module.html">Package&nbsp;swis</a> ::
+        Module&nbsp;swis_dao
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="examples.swis.swis_dao-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="examples.swis.swis_dao-module.html">Module examples.swis.swis_dao</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">datetime</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">ConfigParser</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">sqlalchemy</tt> <tt class="py-keyword">import</tt> <tt class="py-name">create_engine</tt><tt class="py-op">,</tt> <tt class="py-name">distinct</tt><tt class="py-op">,</tt> <tt class="py-name">func</tt> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">sqlalchemy</tt><tt class="py-op">.</tt><tt class="py-name">orm</tt> <tt class="py-keyword">import</tt> <tt class="py-name">mapper</tt><tt class="py-op">,</tt> <tt class="py-name">scoped_session</tt><tt class="py-op">,</tt> <tt class="py-name">sessionmaker</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt class="py-name">sqlalchemy</tt><tt class="py-op">.</tt><tt class="py-name">sql</tt> <tt class="py-keyword">import</tt> <tt class="py-name">and_</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt id="link-0" class="py-name" targets="Module examples.swis.sqlalch_swis_models=examples.swis.sqlalch_swis_models-module.html"><a title="examples.swis.sqlalch_swis_models" class="py-name" href="#" onclick="return doclink('link-0', 'sqlalch_swis_models', 'link-0');">sqlalch_swis_models</a></tt> <tt class="py-keyword">as</tt> <tt class="py-name">model</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-1" class="py-name" targets="Package wof=wof-module.html"><a title="wof" class="py-name" href="#" onclick="return doclink('link-1', 'wof', 'link-1');">wof</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Variable examples.barebones.runserver_LCM.dao=examples.barebones.runserver_LCM-module.html#dao,Variable examples.odm.runserver_lbr.dao=examples.odm.runserver_lbr-module.html#dao,Variable examples.odm.runserver_sara.dao=examples.odm.runserver_sara-module.html#dao,Variable wof.core.WOF.dao=wof.core.WOF-class.html#dao,Module wof.dao=wof.dao-module.html"><a title="examples.barebones.runserver_LCM.dao
+examples.odm.runserver_lbr.dao
+examples.odm.runserver_sara.dao
+wof.core.WOF.dao
+wof.dao" class="py-name" href="#" onclick="return doclink('link-2', 'dao', 'link-2');">dao</a></tt> <tt class="py-keyword">import</tt> <tt id="link-3" class="py-name" targets="Class wof.dao.BaseDao=wof.dao.BaseDao-class.html"><a title="wof.dao.BaseDao" class="py-name" href="#" onclick="return doclink('link-3', 'BaseDao', 'link-3');">BaseDao</a></tt> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao"></a><div id="SwisDao-def"><a name="L13"></a><tt class="py-lineno"> 13</tt> <a class="py-toggle" href="#" id="SwisDao-toggle" onclick="return toggle('SwisDao');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html">SwisDao</a><tt class="py-op">(</tt><tt class="py-base-class">BaseDao</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="SwisDao-expanded"><a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line">    <tt id="link-4" class="py-name" targets="Variable examples.barebones.LCM_dao.LCMDao.contact_info=examples.barebones.LCM_dao.LCMDao-class.html#contact_info,Variable examples.swis.swis_dao.SwisDao.contact_info=examples.swis.swis_dao.SwisDao-class.html#contact_info"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-4', 'contact_info', 'link-4');">contact_info</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line">        <tt class="py-string">'name'</tt><tt class="py-op">:</tt> <tt class="py-string">'NAME'</tt><tt class="py-op">,</tt> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line">        <tt class="py-string">'phone'</tt><tt class="py-op">:</tt> <tt class="py-string">'PHONE'</tt><tt class="py-op">,</tt> </tt>
+<a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line">        <tt class="py-string">'email'</tt><tt class="py-op">:</tt> <tt class="py-string">'EMAIL'</tt><tt class="py-op">,</tt> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line">        <tt class="py-string">'organization'</tt><tt class="py-op">:</tt> <tt class="py-string">'ORGANIZATION'</tt><tt class="py-op">,</tt> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt>  <tt class="py-line">        <tt class="py-string">'link'</tt><tt class="py-op">:</tt> <tt class="py-string">'LINK'</tt><tt class="py-op">,</tt> </tt>
+<a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">        <tt class="py-string">'description'</tt><tt class="py-op">:</tt> <tt class="py-string">'DESCRIPTION'</tt><tt class="py-op">,</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line">        <tt class="py-string">'address'</tt><tt class="py-op">:</tt> <tt class="py-string">'ADDRESS'</tt><tt class="py-op">,</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line">        <tt class="py-string">'city'</tt><tt class="py-op">:</tt> <tt class="py-string">'CITY'</tt><tt class="py-op">,</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line">        <tt class="py-string">'state'</tt><tt class="py-op">:</tt> <tt class="py-string">'STATE'</tt><tt class="py-op">,</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line">        <tt class="py-string">'zipcode'</tt><tt class="py-op">:</tt> <tt class="py-string">'ZIP'</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line">        <tt class="py-op">}</tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.__init__"></a><div id="SwisDao.__init__-def"><a name="L27"></a><tt class="py-lineno"> 27</tt> <a class="py-toggle" href="#" id="SwisDao.__init__-toggle" onclick="return toggle('SwisDao.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#__init__">__init__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">config_file_path</tt><tt class="py-op">,</tt> <tt class="py-param">database_uri</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.__init__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.__init__-expanded"><a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">engine</tt> <tt class="py-op">=</tt> <tt class="py-name">create_engine</tt><tt class="py-op">(</tt><tt class="py-name">database_uri</tt><tt class="py-op">,</tt> <tt class="py-name">convert_unicode</tt><tt class="py-op">=</tt><tt class="py-name">True</tt><tt class="py-op">)</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line">        <tt class="py-comment">#TODO: Use pool_size for non-sqlite database connection</tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">db_session</tt> <tt class="py-op">=</tt> <tt class="py-name">scoped_session</tt><tt class="py-op">(</tt><tt class="py-name">sessionmaker</tt><tt class="py-op">(</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line">            <tt class="py-name">autocommit</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-name">autoflush</tt><tt class="py-op">=</tt><tt class="py-name">False</tt><tt class="py-op">,</tt> <tt class="py-name">bind</tt><tt class="py-op">=</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">engine</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line">        <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Function examples.barebones.sqlalch_LCM_models.init_model()=examples.barebones.sqlalch_LCM_models-module.html#init_model,Function examples.cbi.cbi_cache_models.init_model()=examples.cbi.cbi_cache_models-module.html#init_model,Function examples.odm.sqlalch_odm_models.init_model()=examples.odm.sqlalch_odm_models-module.html#init_model,Function examples.swis.sqlalch_swis_models.init_model()=examples.swis.sqlalch_swis_models-module.html#init_model"><a title="examples.barebones.sqlalch_LCM_models.init_model
+examples.cbi.cbi_cache_models.init_model
+examples.odm.sqlalch_odm_models.init_model
+examples.swis.sqlalch_swis_models.init_model" class="py-name" href="#" onclick="return doclink('link-5', 'init_model', 'link-5');">init_model</a></tt><tt class="py-op">(</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">db_session</tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line">        <tt id="link-6" class="py-name" targets="Module wof.flask.config=wof.flask.config-module.html"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-6', 'config', 'link-6');">config</a></tt> <tt class="py-op">=</tt> <tt class="py-name">ConfigParser</tt><tt class="py-op">.</tt><tt class="py-name">RawConfigParser</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line">        <tt id="link-7" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-7', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">read</tt><tt class="py-op">(</tt><tt class="py-name">config_file_path</tt><tt class="py-op">)</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt id="link-8" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-8', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">has_section</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-9" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-9', 'contact_info', 'link-4');">contact_info</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line">                <tt class="py-string">'name'</tt><tt class="py-op">:</tt> <tt id="link-10" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-10', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'Name'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line">                <tt class="py-string">'phone'</tt><tt class="py-op">:</tt> <tt id="link-11" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-11', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'Phone'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line">                <tt class="py-string">'email'</tt><tt class="py-op">:</tt> <tt id="link-12" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-12', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'Email'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">                <tt class="py-string">'organization'</tt><tt class="py-op">:</tt> <tt id="link-13" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-13', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'Organization'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">                <tt class="py-string">'link'</tt><tt class="py-op">:</tt> <tt id="link-14" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-14', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'Link'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">                <tt class="py-string">'description'</tt><tt class="py-op">:</tt> <tt id="link-15" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-15', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'Description'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">                <tt class="py-string">'address'</tt><tt class="py-op">:</tt> <tt id="link-16" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-16', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'Address'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">                <tt class="py-string">'city'</tt><tt class="py-op">:</tt> <tt id="link-17" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-17', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'City'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">                <tt class="py-string">'state'</tt><tt class="py-op">:</tt> <tt id="link-18" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-18', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'State'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">                <tt class="py-string">'zipcode'</tt><tt class="py-op">:</tt> <tt id="link-19" class="py-name"><a title="wof.flask.config" class="py-name" href="#" onclick="return doclink('link-19', 'config', 'link-6');">config</a></tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">'Contact'</tt><tt class="py-op">,</tt> <tt class="py-string">'ZipCode'</tt><tt class="py-op">)</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">                <tt class="py-op">}</tt> </tt>
+</div><a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.__del__"></a><div id="SwisDao.__del__-def"><a name="L49"></a><tt class="py-lineno"> 49</tt> <a class="py-toggle" href="#" id="SwisDao.__del__-toggle" onclick="return toggle('SwisDao.__del__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#__del__">__del__</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.__del__-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.__del__-expanded"><a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">db_session</tt><tt class="py-op">.</tt><tt class="py-name">close</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_all_sites"></a><div id="SwisDao.get_all_sites-def"><a name="L52"></a><tt class="py-lineno"> 52</tt> <a class="py-toggle" href="#" id="SwisDao.get_all_sites-toggle" onclick="return toggle('SwisDao.get_all_sites');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_all_sites">get_all_sites</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_all_sites-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_all_sites-expanded"><a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-20" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.Site=examples.barebones.sqlalch_LCM_models.DataValue-class.html#Site,Variable examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#Site,Class examples.barebones.sqlalch_LCM_models.Site=examples.barebones.sqlalch_LCM_models.Site-class.html,Class examples.cbi.build_cbi_cache.Site=examples.cbi.build_cbi_cache.Site-class.html,Variable examples.cbi.cbi_cache_models.SeriesCatalog.Site=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#Site,Class examples.cbi.cbi_cache_models.Site=examples.cbi.cbi_cache_models.Site-class.html,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Site=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Site,Class examples.odm.sqlalch_odm_models.Site=examples.odm.sqlalch_odm_models.Site-class.html,Variable examples.swis.sqlalch_swis_models.SeriesCatalog.Site=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html#Site,Class examples.swis.sqlalch_swis_models.Site=examples.swis.sqlalch_swis_models.Site-class.html,Variable wof.models.BaseSeriesCatalog.Site=wof.models.BaseSeriesCatalog-class.html#Site"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-20', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L54"></a><tt class="py-lineno"> 54</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_site_by_code"></a><div id="SwisDao.get_site_by_code-def"><a name="L55"></a><tt class="py-lineno"> 55</tt> <a class="py-toggle" href="#" id="SwisDao.get_site_by_code-toggle" onclick="return toggle('SwisDao.get_site_by_code');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_site_by_code">get_site_by_code</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site_code</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_site_by_code-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_site_by_code-expanded"><a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-21" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-21', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line">            <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-22" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-22', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt id="link-23" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.SiteCode=examples.barebones.sqlalch_LCM_models.DataValue-class.html#SiteCode,Variable examples.barebones.sqlalch_LCM_models.Site.SiteCode=examples.barebones.sqlalch_LCM_models.Site-class.html#SiteCode,Variable examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#SiteCode,Variable examples.cbi.cbi_cache_models.Site.SiteCode=examples.cbi.cbi_cache_models.Site-class.html#SiteCode,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#SiteCode,Variable examples.odm.sqlalch_odm_models.Site.SiteCode=examples.odm.sqlalch_odm_models.Site-class.html#SiteCode,Variable examples.swis.sqlalch_swis_models.Site.SiteCode=examples.swis.sqlalch_swis_models.Site-class.html#SiteCode,Variable wof.models.BaseSeriesCatalog.SiteCode=wof.models.BaseSeriesCatalog-class.html#SiteCode,Variable wof.models.BaseSite.SiteCode=wof.models.BaseSite-class.html#SiteCode"><a title="examples.barebones.sqlalch_LCM_models.DataValue.SiteCode
+examples.barebones.sqlalch_LCM_models.Site.SiteCode
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode
+examples.cbi.cbi_cache_models.Site.SiteCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode
+examples.odm.sqlalch_odm_models.Site.SiteCode
+examples.swis.sqlalch_swis_models.Site.SiteCode
+wof.models.BaseSeriesCatalog.SiteCode
+wof.models.BaseSite.SiteCode" class="py-name" href="#" onclick="return doclink('link-23', 'SiteCode', 'link-23');">SiteCode</a></tt> <tt class="py-op">==</tt> <tt class="py-name">site_code</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">first</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_sites_by_codes"></a><div id="SwisDao.get_sites_by_codes-def"><a name="L59"></a><tt class="py-lineno"> 59</tt> <a class="py-toggle" href="#" id="SwisDao.get_sites_by_codes-toggle" onclick="return toggle('SwisDao.get_sites_by_codes');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_sites_by_codes">get_sites_by_codes</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site_codes_arr</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_sites_by_codes-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_sites_by_codes-expanded"><a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-24" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-24', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">            <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-25" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-25', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt id="link-26" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.SiteCode
+examples.barebones.sqlalch_LCM_models.Site.SiteCode
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode
+examples.cbi.cbi_cache_models.Site.SiteCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode
+examples.odm.sqlalch_odm_models.Site.SiteCode
+examples.swis.sqlalch_swis_models.Site.SiteCode
+wof.models.BaseSeriesCatalog.SiteCode
+wof.models.BaseSite.SiteCode" class="py-name" href="#" onclick="return doclink('link-26', 'SiteCode', 'link-23');">SiteCode</a></tt><tt class="py-op">.</tt><tt class="py-name">in_</tt><tt class="py-op">(</tt><tt class="py-name">site_codes_arr</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_all_variables"></a><div id="SwisDao.get_all_variables-def"><a name="L63"></a><tt class="py-lineno"> 63</tt> <a class="py-toggle" href="#" id="SwisDao.get_all_variables-toggle" onclick="return toggle('SwisDao.get_all_variables');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_all_variables">get_all_variables</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_all_variables-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_all_variables-expanded"><a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-27" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.Variable=examples.barebones.sqlalch_LCM_models.DataValue-class.html#Variable,Variable examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#Variable,Class examples.barebones.sqlalch_LCM_models.Variable=examples.barebones.sqlalch_LCM_models.Variable-class.html,Variable examples.cbi.cbi_cache_models.SeriesCatalog.Variable=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#Variable,Class examples.cbi.cbi_cache_models.Variable=examples.cbi.cbi_cache_models.Variable-class.html,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Variable=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Variable,Class examples.odm.sqlalch_odm_models.Variable=examples.odm.sqlalch_odm_models.Variable-class.html,Variable examples.swis.sqlalch_swis_models.SeriesCatalog.Variable=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html#Variable,Class examples.swis.sqlalch_swis_models.Variable=examples.swis.sqlalch_swis_models.Variable-class.html,Variable wof.models.BaseSeriesCatalog.Variable=wof.models.BaseSeriesCatalog-class.html#Variable"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-27', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_variable_by_code"></a><div id="SwisDao.get_variable_by_code-def"><a name="L66"></a><tt class="py-lineno"> 66</tt> <a class="py-toggle" href="#" id="SwisDao.get_variable_by_code-toggle" onclick="return toggle('SwisDao.get_variable_by_code');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_variable_by_code">get_variable_by_code</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">var_code</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_variable_by_code-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_variable_by_code-expanded"><a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-28" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-28', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line">            <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-29" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-29', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt id="link-30" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.VariableCode=examples.barebones.sqlalch_LCM_models.DataValue-class.html#VariableCode,Variable examples.barebones.sqlalch_LCM_models.Variable.VariableCode=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableCode,Variable examples.cbi.cbi_cache_models.SeriesCatalog.VariableCode=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#VariableCode,Variable examples.cbi.cbi_cache_models.Variable.VariableCode=examples.cbi.cbi_cache_models.Variable-class.html#VariableCode,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.VariableCode=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#VariableCode,Variable examples.odm.sqlalch_odm_models.Variable.VariableCode=examples.odm.sqlalch_odm_models.Variable-class.html#VariableCode,Variable examples.swis.sqlalch_swis_models.Variable.VariableCode=examples.swis.sqlalch_swis_models.Variable-class.html#VariableCode,Variable wof.models.BaseSeriesCatalog.VariableCode=wof.models.BaseSeriesCatalog-class.html#VariableCode,Variable wof.models.BaseVariable.VariableCode=wof.models.BaseVariable-class.html#VariableCode"><a title="examples.barebones.sqlalch_LCM_models.DataValue.VariableCode
+examples.barebones.sqlalch_LCM_models.Variable.VariableCode
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableCode
+examples.cbi.cbi_cache_models.Variable.VariableCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableCode
+examples.odm.sqlalch_odm_models.Variable.VariableCode
+examples.swis.sqlalch_swis_models.Variable.VariableCode
+wof.models.BaseSeriesCatalog.VariableCode
+wof.models.BaseVariable.VariableCode" class="py-name" href="#" onclick="return doclink('link-30', 'VariableCode', 'link-30');">VariableCode</a></tt> <tt class="py-op">==</tt> <tt class="py-name">var_code</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">first</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_variables_by_codes"></a><div id="SwisDao.get_variables_by_codes-def"><a name="L70"></a><tt class="py-lineno"> 70</tt> <a class="py-toggle" href="#" id="SwisDao.get_variables_by_codes-toggle" onclick="return toggle('SwisDao.get_variables_by_codes');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_variables_by_codes">get_variables_by_codes</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">var_codes_arr</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_variables_by_codes-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_variables_by_codes-expanded"><a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-31" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-31', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-32" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-32', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt id="link-33" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.VariableCode
+examples.barebones.sqlalch_LCM_models.Variable.VariableCode
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableCode
+examples.cbi.cbi_cache_models.Variable.VariableCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableCode
+examples.odm.sqlalch_odm_models.Variable.VariableCode
+examples.swis.sqlalch_swis_models.Variable.VariableCode
+wof.models.BaseSeriesCatalog.VariableCode
+wof.models.BaseVariable.VariableCode" class="py-name" href="#" onclick="return doclink('link-33', 'VariableCode', 'link-30');">VariableCode</a></tt><tt class="py-op">.</tt><tt class="py-name">in_</tt><tt class="py-op">(</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line">            <tt class="py-name">var_codes_arr</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_series_by_sitecode"></a><div id="SwisDao.get_series_by_sitecode-def"><a name="L74"></a><tt class="py-lineno"> 74</tt> <a class="py-toggle" href="#" id="SwisDao.get_series_by_sitecode-toggle" onclick="return toggle('SwisDao.get_series_by_sitecode');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_series_by_sitecode">get_series_by_sitecode</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site_code</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_series_by_sitecode-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_series_by_sitecode-expanded"><a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line">        <tt class="py-name">siteResult</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-34" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-34', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line">            <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-35" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-35', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt id="link-36" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.SiteCode
+examples.barebones.sqlalch_LCM_models.Site.SiteCode
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode
+examples.cbi.cbi_cache_models.Site.SiteCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode
+examples.odm.sqlalch_odm_models.Site.SiteCode
+examples.swis.sqlalch_swis_models.Site.SiteCode
+wof.models.BaseSeriesCatalog.SiteCode
+wof.models.BaseSite.SiteCode" class="py-name" href="#" onclick="return doclink('link-36', 'SiteCode', 'link-23');">SiteCode</a></tt> <tt class="py-op">==</tt> <tt class="py-name">site_code</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">one</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt>  <tt class="py-line"> </tt>
+<a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">siteResult</tt><tt class="py-op">:</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line">            <tt class="py-name">resultList</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">db_session</tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">(</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line">                <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-37" class="py-name" targets="Class examples.barebones.sqlalch_LCM_models.DataValue=examples.barebones.sqlalch_LCM_models.DataValue-class.html,Variable examples.barebones.sqlalch_LCM_models.DataValue.DataValue=examples.barebones.sqlalch_LCM_models.DataValue-class.html#DataValue,Class examples.cbi.cbi_models.DataValue=examples.cbi.cbi_models.DataValue-class.html,Class examples.odm.sqlalch_odm_models.DataValue=examples.odm.sqlalch_odm_models.DataValue-class.html,Variable examples.odm.sqlalch_odm_models.DataValue.DataValue=examples.odm.sqlalch_odm_models.DataValue-class.html#DataValue,Class examples.swis.sqlalch_swis_models.DataValue=examples.swis.sqlalch_swis_models.DataValue-class.html,Variable examples.swis.sqlalch_swis_models.DataValue.DataValue=examples.swis.sqlalch_swis_models.DataValue-class.html#DataValue,Variable wof.models.BaseDataValue.DataValue=wof.models.BaseDataValue-class.html#DataValue"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-37', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-38" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Variable.VariableID=examples.barebones.sqlalch_LCM_models.Variable-class.html#VariableID,Variable examples.cbi.cbi_cache_models.SeriesCatalog.VariableID=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#VariableID,Variable examples.cbi.cbi_cache_models.Variable.VariableID=examples.cbi.cbi_cache_models.Variable-class.html#VariableID,Variable examples.odm.sqlalch_odm_models.DataValue.VariableID=examples.odm.sqlalch_odm_models.DataValue-class.html#VariableID,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#VariableID,Variable examples.odm.sqlalch_odm_models.Variable.VariableID=examples.odm.sqlalch_odm_models.Variable-class.html#VariableID,Variable examples.swis.sqlalch_swis_models.DataValue.VariableID=examples.swis.sqlalch_swis_models.DataValue-class.html#VariableID,Variable examples.swis.sqlalch_swis_models.Variable.VariableID=examples.swis.sqlalch_swis_models.Variable-class.html#VariableID,Variable wof.models.BaseDataValue.VariableID=wof.models.BaseDataValue-class.html#VariableID,Variable wof.models.BaseSeriesCatalog.VariableID=wof.models.BaseSeriesCatalog-class.html#VariableID,Variable wof.models.BaseVariable.VariableID=wof.models.BaseVariable-class.html#VariableID"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-38', 'VariableID', 'link-38');">VariableID</a></tt><tt class="py-op">.</tt><tt class="py-name">label</tt><tt class="py-op">(</tt><tt class="py-string">'VariableID'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line">                <tt class="py-name">func</tt><tt class="py-op">.</tt><tt class="py-name">count</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-39" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-39', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-40" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-40', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">label</tt><tt class="py-op">(</tt><tt class="py-string">'ValueCount'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line">                <tt class="py-name">func</tt><tt class="py-op">.</tt><tt class="py-name">min</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-41" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-41', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-42" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC=examples.barebones.sqlalch_LCM_models.DataValue-class.html#DateTimeUTC,Variable examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC=examples.odm.sqlalch_odm_models.DataValue-class.html#DateTimeUTC,Variable examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC=examples.swis.sqlalch_swis_models.DataValue-class.html#DateTimeUTC,Variable wof.models.BaseDataValue.DateTimeUTC=wof.models.BaseDataValue-class.html#DateTimeUTC"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-42', 'DateTimeUTC', 'link-42');">DateTimeUTC</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">label</tt><tt class="py-op">(</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line">                    <tt class="py-string">'BeginDateTimeUTC'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line">                <tt class="py-name">func</tt><tt class="py-op">.</tt><tt class="py-name">max</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-43" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-43', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-44" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-44', 'DateTimeUTC', 'link-42');">DateTimeUTC</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">label</tt><tt class="py-op">(</tt><tt class="py-string">'EndDateTimeUTC'</tt><tt class="py-op">)</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line">            <tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">group_by</tt><tt class="py-op">(</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line">                <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-45" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-45', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-46" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-46', 'VariableID', 'link-38');">VariableID</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">                    <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-47" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-47', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-48" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Site.SiteID=examples.barebones.sqlalch_LCM_models.Site-class.html#SiteID,Variable examples.cbi.cbi_cache_models.SeriesCatalog.SiteID=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#SiteID,Variable examples.cbi.cbi_cache_models.Site.SiteID=examples.cbi.cbi_cache_models.Site-class.html#SiteID,Variable examples.odm.sqlalch_odm_models.DataValue.SiteID=examples.odm.sqlalch_odm_models.DataValue-class.html#SiteID,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#SiteID,Variable examples.odm.sqlalch_odm_models.Site.SiteID=examples.odm.sqlalch_odm_models.Site-class.html#SiteID,Variable examples.swis.sqlalch_swis_models.DataValue.SiteID=examples.swis.sqlalch_swis_models.DataValue-class.html#SiteID,Variable examples.swis.sqlalch_swis_models.Site.SiteID=examples.swis.sqlalch_swis_models.Site-class.html#SiteID,Variable wof.models.BaseDataValue.SiteID=wof.models.BaseDataValue-class.html#SiteID,Variable wof.models.BaseSeriesCatalog.SiteID=wof.models.BaseSeriesCatalog-class.html#SiteID,Variable wof.models.BaseSite.SiteID=wof.models.BaseSite-class.html#SiteID"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-48', 'SiteID', 'link-48');">SiteID</a></tt> <tt class="py-op">==</tt> <tt class="py-name">siteResult</tt><tt class="py-op">.</tt><tt id="link-49" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-49', 'SiteID', 'link-48');">SiteID</a></tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                <tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">order_by</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-50" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-50', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-51" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-51', 'VariableID', 'link-38');">VariableID</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line">            <tt class="py-name">varIDArr</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-name">r</tt><tt class="py-op">.</tt><tt id="link-52" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-52', 'VariableID', 'link-38');">VariableID</a></tt> <tt class="py-keyword">for</tt> <tt class="py-name">r</tt> <tt class="py-keyword">in</tt> <tt class="py-name">resultList</tt><tt class="py-op">]</tt> </tt>
+<a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line">            <tt class="py-name">varResultArr</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-53" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-53', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt>  <tt class="py-line">                <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-54" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-54', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt id="link-55" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-55', 'VariableID', 'link-38');">VariableID</a></tt><tt class="py-op">.</tt><tt class="py-name">in_</tt><tt class="py-op">(</tt><tt class="py-name">varIDArr</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">order_by</tt><tt class="py-op">(</tt> </tt>
+<a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">                    <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-56" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-56', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt id="link-57" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-57', 'VariableID', 'link-38');">VariableID</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line">            <tt class="py-name">seriesCatArr</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line">            <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt class="py-name">range</tt><tt class="py-op">(</tt><tt class="py-name">len</tt><tt class="py-op">(</tt><tt class="py-name">resultList</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line">                <tt class="py-name">seriesCat</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-58" class="py-name" targets="Class examples.barebones.sqlalch_LCM_models.SeriesCatalog=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html,Class examples.cbi.cbi_cache_models.SeriesCatalog=examples.cbi.cbi_cache_models.SeriesCatalog-class.html,Class examples.odm.sqlalch_odm_models.SeriesCatalog=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html,Class examples.swis.sqlalch_swis_models.SeriesCatalog=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog
+examples.cbi.cbi_cache_models.SeriesCatalog
+examples.odm.sqlalch_odm_models.SeriesCatalog
+examples.swis.sqlalch_swis_models.SeriesCatalog" class="py-name" href="#" onclick="return doclink('link-58', 'SeriesCatalog', 'link-58');">SeriesCatalog</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line">                        <tt class="py-name">siteResult</tt><tt class="py-op">,</tt> <tt class="py-name">varResultArr</tt><tt class="py-op">[</tt><tt class="py-name">i</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line">                        <tt class="py-name">resultList</tt><tt class="py-op">[</tt><tt class="py-name">i</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt id="link-59" class="py-name" targets="Variable examples.cbi.cbi_cache_models.SeriesCatalog.ValueCount=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#ValueCount,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.ValueCount=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#ValueCount,Variable wof.models.BaseSeriesCatalog.ValueCount=wof.models.BaseSeriesCatalog-class.html#ValueCount"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.ValueCount
+examples.odm.sqlalch_odm_models.SeriesCatalog.ValueCount
+wof.models.BaseSeriesCatalog.ValueCount" class="py-name" href="#" onclick="return doclink('link-59', 'ValueCount', 'link-59');">ValueCount</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">                        <tt class="py-name">resultList</tt><tt class="py-op">[</tt><tt class="py-name">i</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt id="link-60" class="py-name" targets="Variable examples.cbi.cbi_cache_models.SeriesCatalog.BeginDateTimeUTC=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#BeginDateTimeUTC,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.BeginDateTimeUTC=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#BeginDateTimeUTC,Variable wof.models.BaseSeriesCatalog.BeginDateTimeUTC=wof.models.BaseSeriesCatalog-class.html#BeginDateTimeUTC"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.BeginDateTimeUTC
+examples.odm.sqlalch_odm_models.SeriesCatalog.BeginDateTimeUTC
+wof.models.BaseSeriesCatalog.BeginDateTimeUTC" class="py-name" href="#" onclick="return doclink('link-60', 'BeginDateTimeUTC', 'link-60');">BeginDateTimeUTC</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">                        <tt class="py-name">resultList</tt><tt class="py-op">[</tt><tt class="py-name">i</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt id="link-61" class="py-name" targets="Variable examples.cbi.cbi_cache_models.SeriesCatalog.EndDateTimeUTC=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#EndDateTimeUTC,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.EndDateTimeUTC=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#EndDateTimeUTC,Variable wof.models.BaseSeriesCatalog.EndDateTimeUTC=wof.models.BaseSeriesCatalog-class.html#EndDateTimeUTC"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.EndDateTimeUTC
+examples.odm.sqlalch_odm_models.SeriesCatalog.EndDateTimeUTC
+wof.models.BaseSeriesCatalog.EndDateTimeUTC" class="py-name" href="#" onclick="return doclink('link-61', 'EndDateTimeUTC', 'link-61');">EndDateTimeUTC</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">                        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-62" class="py-name" targets="Method examples.barebones.LCM_dao.LCMDao.get_source_by_id()=examples.barebones.LCM_dao.LCMDao-class.html#get_source_by_id,Method examples.cbi.cbi_dao.CbiDao.get_source_by_id()=examples.cbi.cbi_dao.CbiDao-class.html#get_source_by_id,Method examples.odm.odm_dao.OdmDao.get_source_by_id()=examples.odm.odm_dao.OdmDao-class.html#get_source_by_id,Method examples.swis.swis_dao.SwisDao.get_source_by_id()=examples.swis.swis_dao.SwisDao-class.html#get_source_by_id,Method wof.dao.BaseDao.get_source_by_id()=wof.dao.BaseDao-class.html#get_source_by_id"><a title="examples.barebones.LCM_dao.LCMDao.get_source_by_id
+examples.cbi.cbi_dao.CbiDao.get_source_by_id
+examples.odm.odm_dao.OdmDao.get_source_by_id
+examples.swis.swis_dao.SwisDao.get_source_by_id
+wof.dao.BaseDao.get_source_by_id" class="py-name" href="#" onclick="return doclink('link-62', 'get_source_by_id', 'link-62');">get_source_by_id</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">                    <tt class="py-op">)</tt> </tt>
+<a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"> </tt>
+<a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line">                <tt class="py-name">seriesCatArr</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">seriesCat</tt><tt class="py-op">)</tt> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt>  <tt class="py-line">            <tt class="py-keyword">return</tt> <tt class="py-name">seriesCatArr</tt> </tt>
+<a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_series_by_sitecode_and_varcode"></a><div id="SwisDao.get_series_by_sitecode_and_varcode-def"><a name="L107"></a><tt class="py-lineno">107</tt> <a class="py-toggle" href="#" id="SwisDao.get_series_by_sitecode_and_varcode-toggle" onclick="return toggle('SwisDao.get_series_by_sitecode_and_varcode');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_series_by_sitecode_and_varcode">get_series_by_sitecode_and_varcode</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site_code</tt><tt class="py-op">,</tt> <tt class="py-param">var_code</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_series_by_sitecode_and_varcode-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_series_by_sitecode_and_varcode-expanded"><a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line">        <tt class="py-name">siteResult</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-63" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-63', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line">            <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-64" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Site
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Site
+examples.barebones.sqlalch_LCM_models.Site
+examples.cbi.build_cbi_cache.Site
+examples.cbi.cbi_cache_models.SeriesCatalog.Site
+examples.cbi.cbi_cache_models.Site
+examples.odm.sqlalch_odm_models.SeriesCatalog.Site
+examples.odm.sqlalch_odm_models.Site
+examples.swis.sqlalch_swis_models.SeriesCatalog.Site
+examples.swis.sqlalch_swis_models.Site
+wof.models.BaseSeriesCatalog.Site" class="py-name" href="#" onclick="return doclink('link-64', 'Site', 'link-20');">Site</a></tt><tt class="py-op">.</tt><tt id="link-65" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.SiteCode
+examples.barebones.sqlalch_LCM_models.Site.SiteCode
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteCode
+examples.cbi.cbi_cache_models.Site.SiteCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteCode
+examples.odm.sqlalch_odm_models.Site.SiteCode
+examples.swis.sqlalch_swis_models.Site.SiteCode
+wof.models.BaseSeriesCatalog.SiteCode
+wof.models.BaseSite.SiteCode" class="py-name" href="#" onclick="return doclink('link-65', 'SiteCode', 'link-23');">SiteCode</a></tt> <tt class="py-op">==</tt> <tt class="py-name">site_code</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">one</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line">        <tt class="py-name">varResult</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-66" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-66', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line">            <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-67" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.Variable
+examples.barebones.sqlalch_LCM_models.SeriesCatalog.Variable
+examples.barebones.sqlalch_LCM_models.Variable
+examples.cbi.cbi_cache_models.SeriesCatalog.Variable
+examples.cbi.cbi_cache_models.Variable
+examples.odm.sqlalch_odm_models.SeriesCatalog.Variable
+examples.odm.sqlalch_odm_models.Variable
+examples.swis.sqlalch_swis_models.SeriesCatalog.Variable
+examples.swis.sqlalch_swis_models.Variable
+wof.models.BaseSeriesCatalog.Variable" class="py-name" href="#" onclick="return doclink('link-67', 'Variable', 'link-27');">Variable</a></tt><tt class="py-op">.</tt><tt id="link-68" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.VariableCode
+examples.barebones.sqlalch_LCM_models.Variable.VariableCode
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableCode
+examples.cbi.cbi_cache_models.Variable.VariableCode
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableCode
+examples.odm.sqlalch_odm_models.Variable.VariableCode
+examples.swis.sqlalch_swis_models.Variable.VariableCode
+wof.models.BaseSeriesCatalog.VariableCode
+wof.models.BaseVariable.VariableCode" class="py-name" href="#" onclick="return doclink('link-68', 'VariableCode', 'link-30');">VariableCode</a></tt> <tt class="py-op">==</tt> <tt class="py-name">var_code</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">one</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line"> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-name">res</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">db_session</tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">(</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">                <tt class="py-name">func</tt><tt class="py-op">.</tt><tt class="py-name">count</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-69" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-69', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-70" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-70', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">label</tt><tt class="py-op">(</tt><tt class="py-string">'ValueCount'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">                <tt class="py-name">func</tt><tt class="py-op">.</tt><tt class="py-name">min</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-71" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-71', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-72" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-72', 'DateTimeUTC', 'link-42');">DateTimeUTC</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">label</tt><tt class="py-op">(</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">                    <tt class="py-string">'BeginDateTimeUTC'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line">                <tt class="py-name">func</tt><tt class="py-op">.</tt><tt class="py-name">max</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-73" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-73', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-74" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-74', 'DateTimeUTC', 'link-42');">DateTimeUTC</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">label</tt><tt class="py-op">(</tt><tt class="py-string">'EndDateTimeUTC'</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> </tt>
+<a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line">            <tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt>  <tt class="py-line">                <tt class="py-name">and_</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-75" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-75', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-76" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-76', 'SiteID', 'link-48');">SiteID</a></tt> <tt class="py-op">==</tt> <tt class="py-name">siteResult</tt><tt class="py-op">.</tt><tt id="link-77" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-77', 'SiteID', 'link-48');">SiteID</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">                     <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-78" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-78', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-79" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-79', 'VariableID', 'link-38');">VariableID</a></tt> <tt class="py-op">==</tt> <tt class="py-name">varResult</tt><tt class="py-op">.</tt><tt id="link-80" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-80', 'VariableID', 'link-38');">VariableID</a></tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">one</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line">        <tt class="py-name">seriesCat</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-81" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog
+examples.cbi.cbi_cache_models.SeriesCatalog
+examples.odm.sqlalch_odm_models.SeriesCatalog
+examples.swis.sqlalch_swis_models.SeriesCatalog" class="py-name" href="#" onclick="return doclink('link-81', 'SeriesCatalog', 'link-58');">SeriesCatalog</a></tt><tt class="py-op">(</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line">            <tt class="py-name">siteResult</tt><tt class="py-op">,</tt> <tt class="py-name">varResult</tt><tt class="py-op">,</tt> <tt class="py-name">res</tt><tt class="py-op">.</tt><tt id="link-82" class="py-name"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.ValueCount
+examples.odm.sqlalch_odm_models.SeriesCatalog.ValueCount
+wof.models.BaseSeriesCatalog.ValueCount" class="py-name" href="#" onclick="return doclink('link-82', 'ValueCount', 'link-59');">ValueCount</a></tt><tt class="py-op">,</tt> <tt class="py-name">res</tt><tt class="py-op">.</tt><tt id="link-83" class="py-name"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.BeginDateTimeUTC
+examples.odm.sqlalch_odm_models.SeriesCatalog.BeginDateTimeUTC
+wof.models.BaseSeriesCatalog.BeginDateTimeUTC" class="py-name" href="#" onclick="return doclink('link-83', 'BeginDateTimeUTC', 'link-60');">BeginDateTimeUTC</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line">            <tt class="py-name">res</tt><tt class="py-op">.</tt><tt id="link-84" class="py-name"><a title="examples.cbi.cbi_cache_models.SeriesCatalog.EndDateTimeUTC
+examples.odm.sqlalch_odm_models.SeriesCatalog.EndDateTimeUTC
+wof.models.BaseSeriesCatalog.EndDateTimeUTC" class="py-name" href="#" onclick="return doclink('link-84', 'EndDateTimeUTC', 'link-61');">EndDateTimeUTC</a></tt><tt class="py-op">,</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-85" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.get_source_by_id
+examples.cbi.cbi_dao.CbiDao.get_source_by_id
+examples.odm.odm_dao.OdmDao.get_source_by_id
+examples.swis.swis_dao.SwisDao.get_source_by_id
+wof.dao.BaseDao.get_source_by_id" class="py-name" href="#" onclick="return doclink('link-85', 'get_source_by_id', 'link-62');">get_source_by_id</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-name">seriesCat</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_datavalues"></a><div id="SwisDao.get_datavalues-def"><a name="L128"></a><tt class="py-lineno">128</tt> <a class="py-toggle" href="#" id="SwisDao.get_datavalues-toggle" onclick="return toggle('SwisDao.get_datavalues');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_datavalues">get_datavalues</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">site_code</tt><tt class="py-op">,</tt> <tt class="py-param">var_code</tt><tt class="py-op">,</tt> <tt class="py-param">begin_date_time</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">,</tt> </tt>
+<a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line">                       <tt class="py-param">end_date_time</tt><tt class="py-op">=</tt><tt class="py-name">None</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_datavalues-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_datavalues-expanded"><a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line">        <tt class="py-comment">#first find the site and variable</tt> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt>  <tt class="py-line">        <tt class="py-name">siteResult</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-86" class="py-name" targets="Method examples.barebones.LCM_dao.LCMDao.get_site_by_code()=examples.barebones.LCM_dao.LCMDao-class.html#get_site_by_code,Method examples.cbi.cbi_dao.CbiDao.get_site_by_code()=examples.cbi.cbi_dao.CbiDao-class.html#get_site_by_code,Method examples.odm.odm_dao.OdmDao.get_site_by_code()=examples.odm.odm_dao.OdmDao-class.html#get_site_by_code,Method examples.swis.swis_dao.SwisDao.get_site_by_code()=examples.swis.swis_dao.SwisDao-class.html#get_site_by_code,Method wof.dao.BaseDao.get_site_by_code()=wof.dao.BaseDao-class.html#get_site_by_code"><a title="examples.barebones.LCM_dao.LCMDao.get_site_by_code
+examples.cbi.cbi_dao.CbiDao.get_site_by_code
+examples.odm.odm_dao.OdmDao.get_site_by_code
+examples.swis.swis_dao.SwisDao.get_site_by_code
+wof.dao.BaseDao.get_site_by_code" class="py-name" href="#" onclick="return doclink('link-86', 'get_site_by_code', 'link-86');">get_site_by_code</a></tt><tt class="py-op">(</tt><tt class="py-name">site_code</tt><tt class="py-op">)</tt> </tt>
+<a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">        <tt class="py-name">varResult</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-87" class="py-name" targets="Method examples.barebones.LCM_dao.LCMDao.get_variable_by_code()=examples.barebones.LCM_dao.LCMDao-class.html#get_variable_by_code,Method examples.cbi.cbi_dao.CbiDao.get_variable_by_code()=examples.cbi.cbi_dao.CbiDao-class.html#get_variable_by_code,Method examples.odm.odm_dao.OdmDao.get_variable_by_code()=examples.odm.odm_dao.OdmDao-class.html#get_variable_by_code,Method examples.swis.swis_dao.SwisDao.get_variable_by_code()=examples.swis.swis_dao.SwisDao-class.html#get_variable_by_code,Method wof.dao.BaseDao.get_variable_by_code()=wof.dao.BaseDao-class.html#get_variable_by_code"><a title="examples.barebones.LCM_dao.LCMDao.get_variable_by_code
+examples.cbi.cbi_dao.CbiDao.get_variable_by_code
+examples.odm.odm_dao.OdmDao.get_variable_by_code
+examples.swis.swis_dao.SwisDao.get_variable_by_code
+wof.dao.BaseDao.get_variable_by_code" class="py-name" href="#" onclick="return doclink('link-87', 'get_variable_by_code', 'link-87');">get_variable_by_code</a></tt><tt class="py-op">(</tt><tt class="py-name">var_code</tt><tt class="py-op">)</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line">        <tt class="py-name">valueResultArr</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">siteResult</tt> <tt class="py-keyword">and</tt> <tt class="py-name">varResult</tt><tt class="py-op">:</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line">            <tt class="py-keyword">if</tt> <tt class="py-op">(</tt><tt class="py-keyword">not</tt> <tt class="py-name">begin_date_time</tt> <tt class="py-keyword">or</tt> <tt class="py-keyword">not</tt> <tt class="py-name">end_date_time</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line">                <tt class="py-name">valueResultArr</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-88" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-88', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line">                    <tt class="py-name">and_</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-89" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-89', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-90" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-90', 'SiteID', 'link-48');">SiteID</a></tt> <tt class="py-op">==</tt> <tt class="py-name">siteResult</tt><tt class="py-op">.</tt><tt id="link-91" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-91', 'SiteID', 'link-48');">SiteID</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line">                         <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-92" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-92', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-93" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-93', 'VariableID', 'link-38');">VariableID</a></tt> <tt class="py-op">==</tt> <tt class="py-name">varResult</tt><tt class="py-op">.</tt><tt id="link-94" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-94', 'VariableID', 'link-38');">VariableID</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">                    <tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">order_by</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-95" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-95', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-96" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-96', 'DateTimeUTC', 'link-42');">DateTimeUTC</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">            <tt class="py-keyword">else</tt><tt class="py-op">:</tt> </tt>
+<a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line">                <tt class="py-name">valueResultArr</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-97" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-97', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line">                    <tt class="py-name">and_</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-98" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-98', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-99" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-99', 'SiteID', 'link-48');">SiteID</a></tt> <tt class="py-op">==</tt> <tt class="py-name">siteResult</tt><tt class="py-op">.</tt><tt id="link-100" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Site.SiteID
+examples.cbi.cbi_cache_models.SeriesCatalog.SiteID
+examples.cbi.cbi_cache_models.Site.SiteID
+examples.odm.sqlalch_odm_models.DataValue.SiteID
+examples.odm.sqlalch_odm_models.SeriesCatalog.SiteID
+examples.odm.sqlalch_odm_models.Site.SiteID
+examples.swis.sqlalch_swis_models.DataValue.SiteID
+examples.swis.sqlalch_swis_models.Site.SiteID
+wof.models.BaseDataValue.SiteID
+wof.models.BaseSeriesCatalog.SiteID
+wof.models.BaseSite.SiteID" class="py-name" href="#" onclick="return doclink('link-100', 'SiteID', 'link-48');">SiteID</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt>  <tt class="py-line">                         <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-101" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-101', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-102" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-102', 'VariableID', 'link-38');">VariableID</a></tt> <tt class="py-op">==</tt> <tt class="py-name">varResult</tt><tt class="py-op">.</tt><tt id="link-103" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.Variable.VariableID
+examples.cbi.cbi_cache_models.SeriesCatalog.VariableID
+examples.cbi.cbi_cache_models.Variable.VariableID
+examples.odm.sqlalch_odm_models.DataValue.VariableID
+examples.odm.sqlalch_odm_models.SeriesCatalog.VariableID
+examples.odm.sqlalch_odm_models.Variable.VariableID
+examples.swis.sqlalch_swis_models.DataValue.VariableID
+examples.swis.sqlalch_swis_models.Variable.VariableID
+wof.models.BaseDataValue.VariableID
+wof.models.BaseSeriesCatalog.VariableID
+wof.models.BaseVariable.VariableID" class="py-name" href="#" onclick="return doclink('link-103', 'VariableID', 'link-38');">VariableID</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">                         <tt class="py-comment">#SWIS doesn't have localdatetime, so using UTC</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line">                         <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-104" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-104', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-105" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-105', 'DateTimeUTC', 'link-42');">DateTimeUTC</a></tt> <tt class="py-op">&gt;=</tt> <tt class="py-name">begin_date_time</tt><tt class="py-op">,</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line">                         <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-106" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-106', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-107" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-107', 'DateTimeUTC', 'link-42');">DateTimeUTC</a></tt> <tt class="py-op">&lt;=</tt> <tt class="py-name">end_date_time</tt><tt class="py-op">)</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line">                    <tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">order_by</tt><tt class="py-op">(</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-108" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue
+examples.barebones.sqlalch_LCM_models.DataValue.DataValue
+examples.cbi.cbi_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue
+examples.odm.sqlalch_odm_models.DataValue.DataValue
+examples.swis.sqlalch_swis_models.DataValue
+examples.swis.sqlalch_swis_models.DataValue.DataValue
+wof.models.BaseDataValue.DataValue" class="py-name" href="#" onclick="return doclink('link-108', 'DataValue', 'link-37');">DataValue</a></tt><tt class="py-op">.</tt><tt id="link-109" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.DateTimeUTC
+examples.odm.sqlalch_odm_models.DataValue.DateTimeUTC
+examples.swis.sqlalch_swis_models.DataValue.DateTimeUTC
+wof.models.BaseDataValue.DateTimeUTC" class="py-name" href="#" onclick="return doclink('link-109', 'DateTimeUTC', 'link-42');">DateTimeUTC</a></tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">valueResultArr</tt> </tt>
+</div><a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_method_by_id"></a><div id="SwisDao.get_method_by_id-def"><a name="L150"></a><tt class="py-lineno">150</tt> <a class="py-toggle" href="#" id="SwisDao.get_method_by_id-toggle" onclick="return toggle('SwisDao.get_method_by_id');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_method_by_id">get_method_by_id</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">methodID</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_method_by_id-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_method_by_id-expanded"><a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-110" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.SeriesCatalog.Method=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#Method,Variable examples.cbi.cbi_cache_models.SeriesCatalog.Method=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#Method,Class examples.odm.sqlalch_odm_models.Method=examples.odm.sqlalch_odm_models.Method-class.html,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Method=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Method,Class examples.swis.sqlalch_swis_models.Method=examples.swis.sqlalch_swis_models.Method-class.html,Variable examples.swis.sqlalch_swis_models.SeriesCatalog.Method=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html#Method,Variable wof.models.BaseSeriesCatalog.Method=wof.models.BaseSeriesCatalog-class.html#Method"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog.Method
+examples.cbi.cbi_cache_models.SeriesCatalog.Method
+examples.odm.sqlalch_odm_models.Method
+examples.odm.sqlalch_odm_models.SeriesCatalog.Method
+examples.swis.sqlalch_swis_models.Method
+examples.swis.sqlalch_swis_models.SeriesCatalog.Method
+wof.models.BaseSeriesCatalog.Method" class="py-name" href="#" onclick="return doclink('link-110', 'Method', 'link-110');">Method</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">            <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-111" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog.Method
+examples.cbi.cbi_cache_models.SeriesCatalog.Method
+examples.odm.sqlalch_odm_models.Method
+examples.odm.sqlalch_odm_models.SeriesCatalog.Method
+examples.swis.sqlalch_swis_models.Method
+examples.swis.sqlalch_swis_models.SeriesCatalog.Method
+wof.models.BaseSeriesCatalog.Method" class="py-name" href="#" onclick="return doclink('link-111', 'Method', 'link-110');">Method</a></tt><tt class="py-op">.</tt><tt id="link-112" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.DataValue.MethodID=examples.odm.sqlalch_odm_models.DataValue-class.html#MethodID,Variable examples.odm.sqlalch_odm_models.Method.MethodID=examples.odm.sqlalch_odm_models.Method-class.html#MethodID,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.MethodID=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#MethodID,Variable examples.swis.sqlalch_swis_models.DataValue.MethodID=examples.swis.sqlalch_swis_models.DataValue-class.html#MethodID,Variable examples.swis.sqlalch_swis_models.Method.MethodID=examples.swis.sqlalch_swis_models.Method-class.html#MethodID,Variable wof.models.BaseDataValue.MethodID=wof.models.BaseDataValue-class.html#MethodID,Variable wof.models.BaseMethod.MethodID=wof.models.BaseMethod-class.html#MethodID,Variable wof.models.BaseSeriesCatalog.MethodID=wof.models.BaseSeriesCatalog-class.html#MethodID"><a title="examples.odm.sqlalch_odm_models.DataValue.MethodID
+examples.odm.sqlalch_odm_models.Method.MethodID
+examples.odm.sqlalch_odm_models.SeriesCatalog.MethodID
+examples.swis.sqlalch_swis_models.DataValue.MethodID
+examples.swis.sqlalch_swis_models.Method.MethodID
+wof.models.BaseDataValue.MethodID
+wof.models.BaseMethod.MethodID
+wof.models.BaseSeriesCatalog.MethodID" class="py-name" href="#" onclick="return doclink('link-112', 'MethodID', 'link-112');">MethodID</a></tt> <tt class="py-op">==</tt> <tt class="py-name">methodID</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">first</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_methods_by_ids"></a><div id="SwisDao.get_methods_by_ids-def"><a name="L154"></a><tt class="py-lineno">154</tt> <a class="py-toggle" href="#" id="SwisDao.get_methods_by_ids-toggle" onclick="return toggle('SwisDao.get_methods_by_ids');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_methods_by_ids">get_methods_by_ids</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">method_id_arr</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_methods_by_ids-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_methods_by_ids-expanded"><a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-113" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog.Method
+examples.cbi.cbi_cache_models.SeriesCatalog.Method
+examples.odm.sqlalch_odm_models.Method
+examples.odm.sqlalch_odm_models.SeriesCatalog.Method
+examples.swis.sqlalch_swis_models.Method
+examples.swis.sqlalch_swis_models.SeriesCatalog.Method
+wof.models.BaseSeriesCatalog.Method" class="py-name" href="#" onclick="return doclink('link-113', 'Method', 'link-110');">Method</a></tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">.</tt><tt class="py-name">filter</tt><tt class="py-op">(</tt> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt>  <tt class="py-line">            <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-114" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog.Method
+examples.cbi.cbi_cache_models.SeriesCatalog.Method
+examples.odm.sqlalch_odm_models.Method
+examples.odm.sqlalch_odm_models.SeriesCatalog.Method
+examples.swis.sqlalch_swis_models.Method
+examples.swis.sqlalch_swis_models.SeriesCatalog.Method
+wof.models.BaseSeriesCatalog.Method" class="py-name" href="#" onclick="return doclink('link-114', 'Method', 'link-110');">Method</a></tt><tt class="py-op">.</tt><tt id="link-115" class="py-name"><a title="examples.odm.sqlalch_odm_models.DataValue.MethodID
+examples.odm.sqlalch_odm_models.Method.MethodID
+examples.odm.sqlalch_odm_models.SeriesCatalog.MethodID
+examples.swis.sqlalch_swis_models.DataValue.MethodID
+examples.swis.sqlalch_swis_models.Method.MethodID
+wof.models.BaseDataValue.MethodID
+wof.models.BaseMethod.MethodID
+wof.models.BaseSeriesCatalog.MethodID" class="py-name" href="#" onclick="return doclink('link-115', 'MethodID', 'link-112');">MethodID</a></tt><tt class="py-op">.</tt><tt class="py-name">in_</tt><tt class="py-op">(</tt><tt class="py-name">method_id_arr</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">all</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_source_by_id"></a><div id="SwisDao.get_source_by_id-def"><a name="L158"></a><tt class="py-lineno">158</tt> <a class="py-toggle" href="#" id="SwisDao.get_source_by_id-toggle" onclick="return toggle('SwisDao.get_source_by_id');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_source_by_id">get_source_by_id</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">source_id</tt><tt class="py-op">=</tt><tt class="py-number">1</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_source_by_id-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_source_by_id-expanded"><a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line">        <tt class="py-name">source</tt> <tt class="py-op">=</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-116" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.SeriesCatalog.Source=examples.barebones.sqlalch_LCM_models.SeriesCatalog-class.html#Source,Class examples.barebones.sqlalch_LCM_models.Source=examples.barebones.sqlalch_LCM_models.Source-class.html,Variable examples.cbi.cbi_cache_models.SeriesCatalog.Source=examples.cbi.cbi_cache_models.SeriesCatalog-class.html#Source,Class examples.cbi.cbi_models.Source=examples.cbi.cbi_models.Source-class.html,Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Source=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Source,Class examples.odm.sqlalch_odm_models.Source=examples.odm.sqlalch_odm_models.Source-class.html,Variable examples.swis.sqlalch_swis_models.SeriesCatalog.Source=examples.swis.sqlalch_swis_models.SeriesCatalog-class.html#Source,Class examples.swis.sqlalch_swis_models.Source=examples.swis.sqlalch_swis_models.Source-class.html"><a title="examples.barebones.sqlalch_LCM_models.SeriesCatalog.Source
+examples.barebones.sqlalch_LCM_models.Source
+examples.cbi.cbi_cache_models.SeriesCatalog.Source
+examples.cbi.cbi_models.Source
+examples.odm.sqlalch_odm_models.SeriesCatalog.Source
+examples.odm.sqlalch_odm_models.Source
+examples.swis.sqlalch_swis_models.SeriesCatalog.Source
+examples.swis.sqlalch_swis_models.Source" class="py-name" href="#" onclick="return doclink('link-116', 'Source', 'link-116');">Source</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-117" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.Source.ContactName=examples.odm.sqlalch_odm_models.Source-class.html#ContactName,Variable wof.models.BaseSource.ContactName=wof.models.BaseSource-class.html#ContactName"><a title="examples.odm.sqlalch_odm_models.Source.ContactName
+wof.models.BaseSource.ContactName" class="py-name" href="#" onclick="return doclink('link-117', 'ContactName', 'link-117');">ContactName</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-118" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-118', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'name'</tt><tt class="py-op">]</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-119" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.Source.Phone=examples.odm.sqlalch_odm_models.Source-class.html#Phone,Variable wof.models.BaseSource.Phone=wof.models.BaseSource-class.html#Phone"><a title="examples.odm.sqlalch_odm_models.Source.Phone
+wof.models.BaseSource.Phone" class="py-name" href="#" onclick="return doclink('link-119', 'Phone', 'link-119');">Phone</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-120" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-120', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'phone'</tt><tt class="py-op">]</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-121" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.Source.Email=examples.odm.sqlalch_odm_models.Source-class.html#Email,Variable wof.models.BaseSource.Email=wof.models.BaseSource-class.html#Email"><a title="examples.odm.sqlalch_odm_models.Source.Email
+wof.models.BaseSource.Email" class="py-name" href="#" onclick="return doclink('link-121', 'Email', 'link-121');">Email</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-122" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-122', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'email'</tt><tt class="py-op">]</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-123" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.SeriesCatalog.Organization=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#Organization,Variable examples.odm.sqlalch_odm_models.Source.Organization=examples.odm.sqlalch_odm_models.Source-class.html#Organization,Variable wof.models.BaseSeriesCatalog.Organization=wof.models.BaseSeriesCatalog-class.html#Organization,Variable wof.models.BaseSource.Organization=wof.models.BaseSource-class.html#Organization"><a title="examples.odm.sqlalch_odm_models.SeriesCatalog.Organization
+examples.odm.sqlalch_odm_models.Source.Organization
+wof.models.BaseSeriesCatalog.Organization
+wof.models.BaseSource.Organization" class="py-name" href="#" onclick="return doclink('link-123', 'Organization', 'link-123');">Organization</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-124" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-124', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'organization'</tt><tt class="py-op">]</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-125" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.Source.SourceLink=examples.odm.sqlalch_odm_models.Source-class.html#SourceLink,Variable wof.models.BaseSource.SourceLink=wof.models.BaseSource-class.html#SourceLink"><a title="examples.odm.sqlalch_odm_models.Source.SourceLink
+wof.models.BaseSource.SourceLink" class="py-name" href="#" onclick="return doclink('link-125', 'SourceLink', 'link-125');">SourceLink</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-126" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-126', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'link'</tt><tt class="py-op">]</tt> </tt>
+<a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-127" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.SeriesCatalog.SourceDescription=examples.odm.sqlalch_odm_models.SeriesCatalog-class.html#SourceDescription,Variable examples.odm.sqlalch_odm_models.Source.SourceDescription=examples.odm.sqlalch_odm_models.Source-class.html#SourceDescription,Variable wof.models.BaseSeriesCatalog.SourceDescription=wof.models.BaseSeriesCatalog-class.html#SourceDescription,Variable wof.models.BaseSource.SourceDescription=wof.models.BaseSource-class.html#SourceDescription"><a title="examples.odm.sqlalch_odm_models.SeriesCatalog.SourceDescription
+examples.odm.sqlalch_odm_models.Source.SourceDescription
+wof.models.BaseSeriesCatalog.SourceDescription
+wof.models.BaseSource.SourceDescription" class="py-name" href="#" onclick="return doclink('link-127', 'SourceDescription', 'link-127');">SourceDescription</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-128" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-128', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'description'</tt><tt class="py-op">]</tt> </tt>
+<a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-129" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.Source.Address=examples.odm.sqlalch_odm_models.Source-class.html#Address,Variable wof.models.BaseSource.Address=wof.models.BaseSource-class.html#Address"><a title="examples.odm.sqlalch_odm_models.Source.Address
+wof.models.BaseSource.Address" class="py-name" href="#" onclick="return doclink('link-129', 'Address', 'link-129');">Address</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-130" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-130', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'address'</tt><tt class="py-op">]</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-131" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.Source.City=examples.odm.sqlalch_odm_models.Source-class.html#City,Variable wof.models.BaseSource.City=wof.models.BaseSource-class.html#City"><a title="examples.odm.sqlalch_odm_models.Source.City
+wof.models.BaseSource.City" class="py-name" href="#" onclick="return doclink('link-131', 'City', 'link-131');">City</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-132" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-132', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'city'</tt><tt class="py-op">]</tt> </tt>
+<a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-133" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.Site.State=examples.barebones.sqlalch_LCM_models.Site-class.html#State,Variable examples.odm.sqlalch_odm_models.Site.State=examples.odm.sqlalch_odm_models.Site-class.html#State,Variable examples.odm.sqlalch_odm_models.Source.State=examples.odm.sqlalch_odm_models.Source-class.html#State,Variable wof.models.BaseSite.State=wof.models.BaseSite-class.html#State,Variable wof.models.BaseSource.State=wof.models.BaseSource-class.html#State"><a title="examples.barebones.sqlalch_LCM_models.Site.State
+examples.odm.sqlalch_odm_models.Site.State
+examples.odm.sqlalch_odm_models.Source.State
+wof.models.BaseSite.State
+wof.models.BaseSource.State" class="py-name" href="#" onclick="return doclink('link-133', 'State', 'link-133');">State</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-134" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-134', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'state'</tt><tt class="py-op">]</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line">        <tt class="py-name">source</tt><tt class="py-op">.</tt><tt id="link-135" class="py-name" targets="Variable examples.odm.sqlalch_odm_models.Source.ZipCode=examples.odm.sqlalch_odm_models.Source-class.html#ZipCode,Variable wof.models.BaseSource.ZipCode=wof.models.BaseSource-class.html#ZipCode"><a title="examples.odm.sqlalch_odm_models.Source.ZipCode
+wof.models.BaseSource.ZipCode" class="py-name" href="#" onclick="return doclink('link-135', 'ZipCode', 'link-135');">ZipCode</a></tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-136" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.contact_info
+examples.swis.swis_dao.SwisDao.contact_info" class="py-name" href="#" onclick="return doclink('link-136', 'contact_info', 'link-4');">contact_info</a></tt><tt class="py-op">[</tt><tt class="py-string">'zipcode'</tt><tt class="py-op">]</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">source</tt> </tt>
+</div><a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_sources_by_ids"></a><div id="SwisDao.get_sources_by_ids-def"><a name="L174"></a><tt class="py-lineno">174</tt> <a class="py-toggle" href="#" id="SwisDao.get_sources_by_ids-toggle" onclick="return toggle('SwisDao.get_sources_by_ids');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_sources_by_ids">get_sources_by_ids</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">source_id_arr</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_sources_by_ids-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_sources_by_ids-expanded"><a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">        <tt class="py-comment">#There is only ever one Source for SWIS: TWDB</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-137" class="py-name"><a title="examples.barebones.LCM_dao.LCMDao.get_source_by_id
+examples.cbi.cbi_dao.CbiDao.get_source_by_id
+examples.odm.odm_dao.OdmDao.get_source_by_id
+examples.swis.swis_dao.SwisDao.get_source_by_id
+wof.dao.BaseDao.get_source_by_id" class="py-name" href="#" onclick="return doclink('link-137', 'get_source_by_id', 'link-62');">get_source_by_id</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_qualifier_by_id"></a><div id="SwisDao.get_qualifier_by_id-def"><a name="L178"></a><tt class="py-lineno">178</tt> <a class="py-toggle" href="#" id="SwisDao.get_qualifier_by_id-toggle" onclick="return toggle('SwisDao.get_qualifier_by_id');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_qualifier_by_id">get_qualifier_by_id</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">qualifier_id</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_qualifier_by_id-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_qualifier_by_id-expanded"><a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-138" class="py-name" targets="Class examples.odm.sqlalch_odm_models.Qualifier=examples.odm.sqlalch_odm_models.Qualifier-class.html,Class examples.swis.sqlalch_swis_models.Qualifier=examples.swis.sqlalch_swis_models.Qualifier-class.html"><a title="examples.odm.sqlalch_odm_models.Qualifier
+examples.swis.sqlalch_swis_models.Qualifier" class="py-name" href="#" onclick="return doclink('link-138', 'Qualifier', 'link-138');">Qualifier</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_qualifiers_by_ids"></a><div id="SwisDao.get_qualifiers_by_ids-def"><a name="L181"></a><tt class="py-lineno">181</tt> <a class="py-toggle" href="#" id="SwisDao.get_qualifiers_by_ids-toggle" onclick="return toggle('SwisDao.get_qualifiers_by_ids');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_qualifiers_by_ids">get_qualifiers_by_ids</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">qualifier_id_arr</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_qualifiers_by_ids-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_qualifiers_by_ids-expanded"><a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-139" class="py-name"><a title="examples.odm.sqlalch_odm_models.Qualifier
+examples.swis.sqlalch_swis_models.Qualifier" class="py-name" href="#" onclick="return doclink('link-139', 'Qualifier', 'link-138');">Qualifier</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_qualcontrollvl_by_id"></a><div id="SwisDao.get_qualcontrollvl_by_id-def"><a name="L184"></a><tt class="py-lineno">184</tt> <a class="py-toggle" href="#" id="SwisDao.get_qualcontrollvl_by_id-toggle" onclick="return toggle('SwisDao.get_qualcontrollvl_by_id');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_qualcontrollvl_by_id">get_qualcontrollvl_by_id</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">qual_control_lvl_id</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_qualcontrollvl_by_id-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_qualcontrollvl_by_id-expanded"><a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-140" class="py-name" targets="Variable examples.barebones.sqlalch_LCM_models.DataValue.QualityControlLevel=examples.barebones.sqlalch_LCM_models.DataValue-class.html#QualityControlLevel,Method examples.odm.sqlalch_odm_models.DataValue.QualityControlLevel()=examples.odm.sqlalch_odm_models.DataValue-class.html#QualityControlLevel,Class examples.odm.sqlalch_odm_models.QualityControlLevel=examples.odm.sqlalch_odm_models.QualityControlLevel-class.html,Variable examples.swis.sqlalch_swis_models.DataValue.QualityControlLevel=examples.swis.sqlalch_swis_models.DataValue-class.html#QualityControlLevel,Variable wof.models.BaseDataValue.QualityControlLevel=wof.models.BaseDataValue-class.html#QualityControlLevel"><a title="examples.barebones.sqlalch_LCM_models.DataValue.QualityControlLevel
+examples.odm.sqlalch_odm_models.DataValue.QualityControlLevel
+examples.odm.sqlalch_odm_models.QualityControlLevel
+examples.swis.sqlalch_swis_models.DataValue.QualityControlLevel
+wof.models.BaseDataValue.QualityControlLevel" class="py-name" href="#" onclick="return doclink('link-140', 'QualityControlLevel', 'link-140');">QualityControlLevel</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_qualcontrollvls_by_ids"></a><div id="SwisDao.get_qualcontrollvls_by_ids-def"><a name="L187"></a><tt class="py-lineno">187</tt> <a class="py-toggle" href="#" id="SwisDao.get_qualcontrollvls_by_ids-toggle" onclick="return toggle('SwisDao.get_qualcontrollvls_by_ids');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_qualcontrollvls_by_ids">get_qualcontrollvls_by_ids</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">qual_control_lvl_id_arr</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_qualcontrollvls_by_ids-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_qualcontrollvls_by_ids-expanded"><a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-name">model</tt><tt class="py-op">.</tt><tt id="link-141" class="py-name"><a title="examples.barebones.sqlalch_LCM_models.DataValue.QualityControlLevel
+examples.odm.sqlalch_odm_models.DataValue.QualityControlLevel
+examples.odm.sqlalch_odm_models.QualityControlLevel
+examples.swis.sqlalch_swis_models.DataValue.QualityControlLevel
+wof.models.BaseDataValue.QualityControlLevel" class="py-name" href="#" onclick="return doclink('link-141', 'QualityControlLevel', 'link-140');">QualityControlLevel</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L189"></a><tt class="py-lineno">189</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_offsettype_by_id"></a><div id="SwisDao.get_offsettype_by_id-def"><a name="L190"></a><tt class="py-lineno">190</tt> <a class="py-toggle" href="#" id="SwisDao.get_offsettype_by_id-toggle" onclick="return toggle('SwisDao.get_offsettype_by_id');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_offsettype_by_id">get_offsettype_by_id</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">offset_type_id</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_offsettype_by_id-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_offsettype_by_id-expanded"><a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line">        <tt class="py-comment">#TODO</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+</div><a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line"> </tt>
+<a name="SwisDao.get_offsettypes_by_ids"></a><div id="SwisDao.get_offsettypes_by_ids-def"><a name="L194"></a><tt class="py-lineno">194</tt> <a class="py-toggle" href="#" id="SwisDao.get_offsettypes_by_ids-toggle" onclick="return toggle('SwisDao.get_offsettypes_by_ids');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="examples.swis.swis_dao.SwisDao-class.html#get_offsettypes_by_ids">get_offsettypes_by_ids</a><tt class="py-op">(</tt><tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">offset_type_id_arr</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="SwisDao.get_offsettypes_by_ids-collapsed" style="display:none;" pad="+++" indent="++++++++"></div><div id="SwisDao.get_offsettypes_by_ids-expanded"><a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line">        <tt class="py-comment">#TODO</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">None</tt> </tt>
+</div></div><a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Jul 26 16:54:09 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

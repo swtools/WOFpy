@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>wof.WaterML.series</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="wof-module.html">Package&nbsp;wof</a> ::
+        <a href="wof.WaterML-module.html">Module&nbsp;WaterML</a> ::
+        Class&nbsp;series
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="wof.WaterML.series-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class series</h1><p class="nomargin-top"><span class="codelink"><a href="wof.WaterML-pysrc.html#series">source&nbsp;code</a></span></p>
+<center>
+<center>  <map id="uml_class_diagram_for_wof_wate_47" name="uml_class_diagram_for_wof_wate_47">
+<area shape="rect" id="node1_22" href="wof.WaterML.series-class.html#subclass" title="wof.WaterML.series.subclass" alt="" coords="17,201,1261,220"/>
+<area shape="rect" id="node1_23" href="wof.WaterML.series-class.html#superclass" title="wof.WaterML.series.superclass" alt="" coords="17,220,1261,239"/>
+<area shape="rect" id="node1_24" href="wof.WaterML.series-class.html#__init__" title="x.__init__(...) initializes x; see help(type(x)) for signature" alt="" coords="17,241,1261,260"/>
+<area shape="rect" id="node1_25" href="wof.WaterML.series-class.html#factory" title="wof.WaterML.series.factory" alt="" coords="17,260,1261,279"/>
+<area shape="rect" id="node1_26" href="wof.WaterML.series-class.html#get_dataType" title="wof.WaterML.series.get_dataType" alt="" coords="17,279,1261,297"/>
+<area shape="rect" id="node1_27" href="wof.WaterML.series-class.html#set_dataType" title="wof.WaterML.series.set_dataType" alt="" coords="17,297,1261,316"/>
+<area shape="rect" id="node1_28" href="wof.WaterML.series-class.html#validate_dataType" title="wof.WaterML.series.validate_dataType" alt="" coords="17,316,1261,335"/>
+<area shape="rect" id="node1_29" href="wof.WaterML.series-class.html#get_variable" title="wof.WaterML.series.get_variable" alt="" coords="17,335,1261,353"/>
+<area shape="rect" id="node1_30" href="wof.WaterML.series-class.html#set_variable" title="wof.WaterML.series.set_variable" alt="" coords="17,353,1261,372"/>
+<area shape="rect" id="node1_31" href="wof.WaterML.series-class.html#get_valueCount" title="wof.WaterML.series.get_valueCount" alt="" coords="17,372,1261,391"/>
+<area shape="rect" id="node1_32" href="wof.WaterML.series-class.html#set_valueCount" title="wof.WaterML.series.set_valueCount" alt="" coords="17,391,1261,409"/>
+<area shape="rect" id="node1_33" href="wof.WaterML.series-class.html#get_variableTimeInterval" title="wof.WaterML.series.get_variableTimeInterval" alt="" coords="17,409,1261,428"/>
+<area shape="rect" id="node1_34" href="wof.WaterML.series-class.html#set_variableTimeInterval" title="wof.WaterML.series.set_variableTimeInterval" alt="" coords="17,428,1261,447"/>
+<area shape="rect" id="node1_35" href="wof.WaterML.series-class.html#get_valueType" title="wof.WaterML.series.get_valueType" alt="" coords="17,447,1261,465"/>
+<area shape="rect" id="node1_36" href="wof.WaterML.series-class.html#set_valueType" title="wof.WaterML.series.set_valueType" alt="" coords="17,465,1261,484"/>
+<area shape="rect" id="node1_37" href="wof.WaterML.series-class.html#buildChildren" title="wof.WaterML.series.buildChildren" alt="" coords="17,503,1261,521"/>
+<area shape="rect" id="node1" href="wof.WaterML.series-class.html" title="Separate data series are for the purposes of identifying or displaying what data are available at each site." alt="" coords="5,177,1273,527"/>
+<area shape="rect" id="node2_38" href="wof.WaterML.GeneratedsSuper-class.html#gds_format_string" title="wof.WaterML.GeneratedsSuper.gds_format_string" alt="" coords="487,39,793,57"/>
+<area shape="rect" id="node2_39" href="wof.WaterML.GeneratedsSuper-class.html#gds_format_integer" title="wof.WaterML.GeneratedsSuper.gds_format_integer" alt="" coords="487,57,793,76"/>
+<area shape="rect" id="node2_40" href="wof.WaterML.GeneratedsSuper-class.html#gds_format_float" title="wof.WaterML.GeneratedsSuper.gds_format_float" alt="" coords="487,76,793,95"/>
+<area shape="rect" id="node2_41" href="wof.WaterML.GeneratedsSuper-class.html#gds_format_double" title="wof.WaterML.GeneratedsSuper.gds_format_double" alt="" coords="487,95,793,113"/>
+<area shape="rect" id="node2_42" href="wof.WaterML.GeneratedsSuper-class.html#gds_format_boolean" title="wof.WaterML.GeneratedsSuper.gds_format_boolean" alt="" coords="487,113,793,132"/>
+<area shape="rect" id="node2_43" href="wof.WaterML.GeneratedsSuper-class.html#gds_str_lower" title="wof.WaterML.GeneratedsSuper.gds_str_lower" alt="" coords="487,132,793,151"/>
+<area shape="rect" id="node2" href="wof.WaterML.GeneratedsSuper-class.html" title="wof.WaterML.GeneratedsSuper" alt="" coords="475,6,805,157"/>
+</map>
+  <img src="uml_class_diagram_for_wof_wate_47.gif" alt='' usemap="#uml_class_diagram_for_wof_wate_47" ismap="ismap" class="graph-without-title" />
+</center>
+</center>
+<hr />
+<p>Separate data series are for the purposes of identifying or displaying
+  what data are available at each site. Site information is a parent of the
+  series so that it does not need to be repeated (difference from the ODM. 
+  ). A Site contains one or more seriesCatalogs which contain one or more 
+  series. Assotiated with site, a series is a unique combination of the 
+  textual repesentation of ODM series: 
+  Variable,Method,Source,QualityControlLevel. An ODM series is a unique 
+  site/variable combinations are defined by unique combinations of SiteID, 
+  VariableID, MethodID, SourceID, and QualityControlLevelID.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="wof.WaterML.series-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dataType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">variable</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">valueCount</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">variableTimeInterval</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">valueType</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">generalCategory</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">sampleMedium</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">Method</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">Source</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">QualityControlLevel</span>=<span class="summary-sig-default">None</span>)</span><br />
+      x.__init__(...) initializes x; see help(type(x)) for signature</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_dataType"></a><span class="summary-sig-name">get_dataType</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_dataType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_dataType"></a><span class="summary-sig-name">set_dataType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">dataType</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_dataType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="validate_dataType"></a><span class="summary-sig-name">validate_dataType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.validate_dataType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_variable"></a><span class="summary-sig-name">get_variable</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_variable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_variable"></a><span class="summary-sig-name">set_variable</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">variable</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_variable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_valueCount"></a><span class="summary-sig-name">get_valueCount</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_valueCount">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_valueCount"></a><span class="summary-sig-name">set_valueCount</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">valueCount</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_valueCount">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_variableTimeInterval"></a><span class="summary-sig-name">get_variableTimeInterval</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_variableTimeInterval">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_variableTimeInterval"></a><span class="summary-sig-name">set_variableTimeInterval</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">variableTimeInterval</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_variableTimeInterval">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_valueType"></a><span class="summary-sig-name">get_valueType</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_valueType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_valueType"></a><span class="summary-sig-name">set_valueType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">valueType</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_valueType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="validate_valueType"></a><span class="summary-sig-name">validate_valueType</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.validate_valueType">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_generalCategory"></a><span class="summary-sig-name">get_generalCategory</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_generalCategory">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_generalCategory"></a><span class="summary-sig-name">set_generalCategory</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">generalCategory</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_generalCategory">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="validate_generalCategory"></a><span class="summary-sig-name">validate_generalCategory</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.validate_generalCategory">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_sampleMedium"></a><span class="summary-sig-name">get_sampleMedium</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_sampleMedium">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_sampleMedium"></a><span class="summary-sig-name">set_sampleMedium</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">sampleMedium</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_sampleMedium">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="validate_sampleMedium"></a><span class="summary-sig-name">validate_sampleMedium</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">value</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.validate_sampleMedium">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_Method"></a><span class="summary-sig-name">get_Method</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_Method">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_Method"></a><span class="summary-sig-name">set_Method</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">Method</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_Method">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_Source"></a><span class="summary-sig-name">get_Source</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_Source">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_Source"></a><span class="summary-sig-name">set_Source</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">Source</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_Source">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="get_QualityControlLevel"></a><span class="summary-sig-name">get_QualityControlLevel</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.get_QualityControlLevel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="set_QualityControlLevel"></a><span class="summary-sig-name">set_QualityControlLevel</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">QualityControlLevel</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.set_QualityControlLevel">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="export"></a><span class="summary-sig-name">export</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outfile</span>,
+        <span class="summary-sig-arg">level</span>,
+        <span class="summary-sig-arg">namespace_</span>=<span class="summary-sig-default">''</span>,
+        <span class="summary-sig-arg">name_</span>=<span class="summary-sig-default">'series'</span>,
+        <span class="summary-sig-arg">namespacedef_</span>=<span class="summary-sig-default">''</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.export">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="exportAttributes"></a><span class="summary-sig-name">exportAttributes</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outfile</span>,
+        <span class="summary-sig-arg">level</span>,
+        <span class="summary-sig-arg">already_processed</span>,
+        <span class="summary-sig-arg">namespace_</span>=<span class="summary-sig-default">''</span>,
+        <span class="summary-sig-arg">name_</span>=<span class="summary-sig-default">'series'</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.exportAttributes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="exportChildren"></a><span class="summary-sig-name">exportChildren</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outfile</span>,
+        <span class="summary-sig-arg">level</span>,
+        <span class="summary-sig-arg">namespace_</span>=<span class="summary-sig-default">''</span>,
+        <span class="summary-sig-arg">name_</span>=<span class="summary-sig-default">'series'</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.exportChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="hasContent_"></a><span class="summary-sig-name">hasContent_</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.hasContent_">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="exportLiteral"></a><span class="summary-sig-name">exportLiteral</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outfile</span>,
+        <span class="summary-sig-arg">level</span>,
+        <span class="summary-sig-arg">name_</span>=<span class="summary-sig-default">'series'</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.exportLiteral">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="exportLiteralAttributes"></a><span class="summary-sig-name">exportLiteralAttributes</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outfile</span>,
+        <span class="summary-sig-arg">level</span>,
+        <span class="summary-sig-arg">already_processed</span>,
+        <span class="summary-sig-arg">name_</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.exportLiteralAttributes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="exportLiteralChildren"></a><span class="summary-sig-name">exportLiteralChildren</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">outfile</span>,
+        <span class="summary-sig-arg">level</span>,
+        <span class="summary-sig-arg">name_</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.exportLiteralChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="build"></a><span class="summary-sig-name">build</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">node</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.build">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="buildAttributes"></a><span class="summary-sig-name">buildAttributes</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">node</span>,
+        <span class="summary-sig-arg">attrs</span>,
+        <span class="summary-sig-arg">already_processed</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.buildAttributes">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="buildChildren"></a><span class="summary-sig-name">buildChildren</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">child_</span>,
+        <span class="summary-sig-arg">nodeName_</span>,
+        <span class="summary-sig-arg">from_subclass</span>=<span class="summary-sig-default">False</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.buildChildren">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__new__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>,
+      <code>__str__</code>,
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="wof.WaterML.GeneratedsSuper-class.html" onclick="show_private();">GeneratedsSuper</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="gds_format_boolean"></a><span class="summary-sig-name">gds_format_boolean</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_data</span>,
+        <span class="summary-sig-arg">input_name</span>=<span class="summary-sig-default">''</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#GeneratedsSuper.gds_format_boolean">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="gds_format_double"></a><span class="summary-sig-name">gds_format_double</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_data</span>,
+        <span class="summary-sig-arg">input_name</span>=<span class="summary-sig-default">''</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#GeneratedsSuper.gds_format_double">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="gds_format_float"></a><span class="summary-sig-name">gds_format_float</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_data</span>,
+        <span class="summary-sig-arg">input_name</span>=<span class="summary-sig-default">''</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#GeneratedsSuper.gds_format_float">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="gds_format_integer"></a><span class="summary-sig-name">gds_format_integer</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_data</span>,
+        <span class="summary-sig-arg">input_name</span>=<span class="summary-sig-default">''</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#GeneratedsSuper.gds_format_integer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="gds_format_string"></a><span class="summary-sig-name">gds_format_string</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">input_data</span>,
+        <span class="summary-sig-arg">input_name</span>=<span class="summary-sig-default">''</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#GeneratedsSuper.gds_format_string">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="gds_str_lower"></a><span class="summary-sig-name">gds_str_lower</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">instring</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#GeneratedsSuper.gds_str_lower">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="factory"></a><span class="summary-sig-name">factory</span>(<span class="summary-sig-arg">*args_</span>,
+        <span class="summary-sig-arg">**kwargs_</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="wof.WaterML-pysrc.html#series.factory">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="subclass"></a><span class="summary-name">subclass</span> = <code title="None">None</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="superclass"></a><span class="summary-name">superclass</span> = <code title="None">None</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">dataType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">variable</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">valueCount</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">variableTimeInterval</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">valueType</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">generalCategory</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">sampleMedium</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">Method</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">Source</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">QualityControlLevel</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="wof.WaterML-pysrc.html#series.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>x.__init__(...) initializes x; see help(type(x)) for signature</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+        <dd><em class="note">(inherited documentation)</em></dd>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Jul 26 16:54:07 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
