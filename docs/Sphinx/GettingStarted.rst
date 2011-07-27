@@ -13,7 +13,9 @@ Follow the steps below to install WOFpy and its prerequisites on a Windows
 computer.
 
 #. Install **Python 2.6**.  The 32-bit installer is recommended.
-#. Add the Python folder to your **Path** environment variable.
+#. Add the **Python** folder to your **Path** environment variable.
+#. Install **setuptools**. This allows the setup script to be run.
+#. Add the **Python/scripts** folder to your **Path** environment variable.
 #. Open a command window (run cmd), navigate to the WOFpy folder (with setup.py
    in it), and enter this command: ``python setup.py install``
 
