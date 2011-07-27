@@ -50,68 +50,226 @@
             
   <div class="section" id="getting-started">
 <span id="id1"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>Here is a quick guide to getting WOFpy up and running</p>
-<p>The folder contains Python modules that can read data from a Data Access Object (DAO) and return the data to the client in WaterML format, using the same access methods defined by the CUAHSI-HIS WaterOneFlow web service.  DAOs can represent a variety of data sources, including an Observations Data Model (ODM)-format database, the Surface Water Information System (SWIS) database, or even a pass-through web-service, such as that by the Conrad-Blucher Institute (CBI).  The three aforementioned data sources have their associated DAO implementations included with this package.  Others may be written by following the BaseDao (see base_dao.py) class description.</p>
-<p>The code was written using Python version 2.6</p>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<p>WOFpy require a number of python libraries in order to run.
-Please follow the following to install them.</p>
-</div>
-<div class="section" id="installation-on-a-windows-computer">
-<h2>Installation on a Windows computer<a class="headerlink" href="#installation-on-a-windows-computer" title="Permalink to this headline">¶</a></h2>
+<p>Here is a quick guide to getting WOFpy up and running.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Follow the steps below to install WOFpy and its prerequisites on a Windows
+computer.</p>
 <ol class="arabic simple">
-<li>Install Python 2.6.  Use the 32-bit installer, not the 64-bit version. (Setuptools, which you&#8217;ll install later, can&#8217;t detect Python when the 64-bit version is installed).</li>
-<li>Add the Python folder to your Path environment variable.</li>
-<li>Install setuptools. This includes the easy_install program, which you&#8217;ll use to install Flask.</li>
-<li>Add the Pythonscripts folder to your Path environment variable.</li>
-<li>Open a command Window (run cmd) and enter this command: easy_install flask</li>
-<li>Enter: easy_install lxml</li>
-<li>Enter: easy_install pyodbc</li>
-<li>Enter: easy_install soaplib==2.0.0-beta1 (unless the 2.0 release has been finalized &#8211; then use that one instead of beta)</li>
-<li>Enter: easy_install sqlalchemy</li>
-<li>Enter: easy_install nose</li>
-<li>Enter: easy_install suds</li>
-<li>If you want the package that was used to generate the code for serializing/deserializing WaterML, enter: easy_install generateds</li>
-<li>Create a &#8220;private_config.py&#8221; file in your WOFpy/WOFpy/ folder.  This file should contain the following variables:</li>
+<li>Install <strong>Python 2.6</strong>.  The 32-bit installer is recommended.</li>
+<li>Add the <strong>Python</strong> folder to your <strong>Path</strong> environment variable.</li>
+<li>Install <strong>setuptools</strong>. This allows the setup script to be run.</li>
+<li>Add the <strong>Python/scripts</strong> folder to your <strong>Path</strong> environment variable.</li>
+<li>Open a command window (run cmd), navigate to the WOFpy folder (with setup.py
+in it), and enter this command: <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt></li>
 </ol>
-<ul class="simple">
-<li>lbr_connection_string = &#8216;&#8217;</li>
-<li>swis_connection_string = &#8216;&#8217;</li>
-<li>swis_test_connection_string = &#8216;&#8217;</li>
-</ul>
-<p>Each should be set to a SQLAlchemy-compatible database connection string.
-#. (OPTIONAL) Download and install pywin32 <a class="reference external" href="http://sourceforge.net/projects/pywin32/files/pywin32/Build%20215/">http://sourceforge.net/projects/pywin32/files/pywin32/Build%20215/</a>  This package can be used to create a Windows service for your WOFpy application.</p>
-<p>After everything is installed, open a command window and navigate to your WOFpy/WOFpy/ folder.  Type &#8220;nosetests -v&#8221; to run the included tests.  If they all pass, the congratulations!</p>
+<p>The wof package (in the subfolder named <strong>wof</strong>) is now accessible from any
+directory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you edit code in the <strong>wof</strong> folder, you may need to run setup.py again
+to apply the changes to your system.</p>
 </div>
-<div class="section" id="getting-a-web-service-up-and-running">
-<h2>Getting a web service up and running<a class="headerlink" href="#getting-a-web-service-up-and-running" title="Permalink to this headline">¶</a></h2>
-<p>Example for running the code on your local Windows machine:</p>
-<ol class="arabic">
-<li><p class="first">Populate an ODM database on an instance of SQL Server.  You can download one from the ODM page at <a class="reference external" href="http://his.cuahsi.org">http://his.cuahsi.org</a>.</p>
-</li>
-<li><p class="first">Make a private_config.py file in your local folder and add a line that says database_connection_string = &#8216;[YOUR_DB_CONNECTION_STRING]&#8217;.</p>
-</li>
-<li><p class="first">Open a Command Window in the same folder as the runserver module and enter: python runserver_[dbname].py</p>
-<p><em>Tip: In the folder tree view in Windows Explorer, hold down the shift key and right-click on a folder to see the option for opening a command window in that folder.</em></p>
-</li>
-<li><p class="first">In your command window you should see a message that says &#8220;* Running on <a class="reference external" href="http://127.0.0.1:5000/">http://127.0.0.1:5000/</a>&#8221;.  Congratulations, your development server is operational!</p>
-</li>
-<li><p class="first">You may now visit <a class="reference external" href="http://127.0.0.1:8080">http://127.0.0.1:8080</a> with your web browser.  Other URLS to visit include:</p>
-</li>
+</div>
+<div class="section" id="running-the-examples">
+<span id="examples"></span><h2>Running the Examples<a class="headerlink" href="#running-the-examples" title="Permalink to this headline">¶</a></h2>
+<p>Example services are included with WOFpy.  Each example consists of data, Data
+Access Objects (DAOs), models, and the service definition.  The examples are
+located in the <strong>examples</strong> folder.</p>
+<p>The general procedure for each example is to set up any required data
+connections, use Python to run the runserver.py script, and test the service
+using a Web browser or other client application.  The script should print
+service endpoint URIs in the window used to execute the script.</p>
+<p>When testing is complete, you should stop the service.  For example, if you
+started the service using a command window in Windows, you can stop the service
+by pressing <tt class="docutils literal"><span class="pre">CTRL+C</span></tt> in the command window.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These examples are run in debug mode for demonstration purposes.  In a
+production environment, you would use something like IIS or Apache to
+manage the service.</p>
+</div>
+<p>The examples are described in more detail below.</p>
+<div class="section" id="barebones-sqlite-example">
+<span id="barebones-example"></span><h3>Barebones SQLite Example<a class="headerlink" href="#barebones-sqlite-example" title="Permalink to this headline">¶</a></h3>
+<p>This example is located in the <strong>examples/barebones</strong> folder.</p>
+<p>This example shows how to access a very simple SQLite database located in the
+<strong>LCM_Data</strong> subfolder.  The database only has three tables in it: one for
+sites, one for variables, and one for data values.  The remaining information
+required for WaterML is read from a config file.</p>
+<p>Follow the steps below to run this example.</p>
+<ol class="arabic simple">
+<li>Open a command window in the <strong>examples/barebones</strong> folder and enter:
+<tt class="docutils literal"><span class="pre">python</span> <span class="pre">runserver_LCM.py</span></tt></li>
+<li>In your command window you should see a message indicating that the service
+is running along with instructions for accessing the service.</li>
 </ol>
-<ul class="simple">
-<li>/GetSite?siteCode=XXX,YYY</li>
-<li>/GetSiteInfo?siteCode=XXX</li>
-<li>/GetVariableInfo?varCode=ABC</li>
-<li>/GetValues?siteCode=XXX&amp;varCode=ABC&amp;startDateTime=2010-01-01:12:00&amp;endDateTime=2010-02-01-01:12:00</li>
-</ul>
+</div>
+<div class="section" id="swis-sqlite-example">
+<span id="swis-example"></span><h3>SWIS SQLite Example<a class="headerlink" href="#swis-sqlite-example" title="Permalink to this headline">¶</a></h3>
+<p>This example is located in the <strong>examples/swis</strong> folder.</p>
+<p>This example shows how to access a more complicated SQLite database based on
+early designs of the Texas Water Development Board&#8217;s Surface Water Information
+System (SWIS) database.</p>
+<p>Follow the steps below to run this example.</p>
+<ol class="arabic simple">
+<li>Open a command window in the <strong>examples/swis</strong> folder and enter:
+<tt class="docutils literal"><span class="pre">python</span> <span class="pre">runserver_swis.py</span></tt></li>
+<li>In your command window you should see a message indicating that the service
+is running along with instructions for accessing the service.</li>
+</ol>
+</div>
+<div class="section" id="odm-sql-server-example">
+<h3>ODM SQL Server Example<a class="headerlink" href="#odm-sql-server-example" title="Permalink to this headline">¶</a></h3>
+<p>This example is located in the <strong>examples/odm_sqlserver</strong> folder.</p>
+<p>This example shows how to access CUAHSI Observations Data Model (ODM) databases
+in Microsoft SQL Server.  The example uses the Little Bear River ODM 1.1
+example database from the HIS website at
+<a class="reference external" href="http://his.cuahsi.org/odmdatabases.html">http://his.cuahsi.org/odmdatabases.html</a>.</p>
+<p>Follow the steps below to run this example.</p>
+<ol class="arabic simple">
+<li>Install Microsoft SQL Server.  You can download the free version, SQL
+Express.</li>
+<li>Download the Little Bear River ODM 1.1 database from the HIS website.</li>
+<li>Attach the database to SQL Server.</li>
+<li>Grant a SQL Server account <strong>select</strong> privileges on the database.  WOFpy
+will use this account to connect to the database.</li>
+<li>In the odm_sqlserver folder, create a file named <strong>private_config.py</strong> with
+a variable named <strong>lbr_connection_string</strong> set to a SQLAlchemy-compatible
+database connection string for the Little Bear River database, e.g.,
+<tt class="docutils literal"><span class="pre">lbr_connection_string</span> <span class="pre">=</span>
+<span class="pre">'mssql+pyodbc://username:password&#64;(local)/LittleBear11'</span></tt></li>
+<li>Open a command window in the <strong>examples/odm_sqlserver</strong> folder and enter:
+<tt class="docutils literal"><span class="pre">python</span> <span class="pre">runserver_lbr.py</span></tt></li>
+<li>In your command window you should see a message indicating that the service
+is running along with instructions for accessing the service.</li>
+</ol>
+</div>
+<div class="section" id="cbi-external-service-example">
+<h3>CBI External Service Example<a class="headerlink" href="#cbi-external-service-example" title="Permalink to this headline">¶</a></h3>
+<p>This example is located in the <strong>examples/cbi</strong> folder.</p>
+<p>This example shows how to access a Web service provided by the Conrad Blucher
+Institute (CBI) for the Texas Coastal Ocean Observation Network (TCOON).
+TCOON is a live network with new values continuously pouring in from sensors
+along the Texas coast.  Data access is provided by a variant of the OGC&#8217;s
+Sensor Observation Service (SOS).  We will provide access to the data with
+a WaterOneFlow service by wrapping the TCOON SOS service with our data access
+object (DAO) and supporting modules.  Because site and variable descriptions
+do not change frequently in TCOON, we store that information in a local SQLite
+database.  The result is a Web service that uses both a SQLite database and
+another Web service to provide data to the client.  Of course, the client has
+no idea that this is happening.  All the client cares about is that we provide
+access using a standard WaterOneFlow service and send responses back in WaterML
+format!</p>
+<p>This example requires an internet connection to access the TCOON Web service.</p>
+<p>Follow the steps below to run this example.</p>
+<ol class="arabic simple">
+<li>First, we need to build and populate the SQLite database to store the site and variable
+descriptions.  Open a command window in the <strong>examples/cbi</strong> folder and enter:
+<tt class="docutils literal"><span class="pre">python</span> <span class="pre">build_cbi_cache.py</span></tt>.  WOFpy will visit the CBI web site and download
+the metadata into a new SQLite database.</li>
+<li>Next, start the web service by typing in <tt class="docutils literal"><span class="pre">python</span> <span class="pre">runserver_cbi.py</span></tt></li>
+<li>In your command window you should see a message indicating that the service
+is running along with instructions for accessing the service.</li>
+</ol>
+</div>
+<div class="section" id="multiple-services-example">
+<h3>Multiple Services Example<a class="headerlink" href="#multiple-services-example" title="Permalink to this headline">¶</a></h3>
+<p>This example is located in the <strong>examples</strong> folder.</p>
+<p>This folder contains a <strong>runserver_multiple.py</strong> script demonstrating how to
+run multiple services at once.  It uses the
+<a class="reference internal" href="#barebones-example"><em>barebones</em></a> and <a class="reference internal" href="#swis-example"><em>SWIS</em></a> examples.
+Follow the steps below to run this example.</p>
+<ol class="arabic simple">
+<li>Open a command window in the <strong>examples</strong> folder and enter:
+<tt class="docutils literal"><span class="pre">python</span> <span class="pre">runserver_multiple.py</span></tt></li>
+<li>In your command window you should see a message indicating that the service
+is running along with instructions for accessing the service.</li>
+</ol>
+</div>
 </div>
 <div class="section" id="accessing-wofpy-rest-web-services">
-<h2>Accessing WOFpy REST web services<a class="headerlink" href="#accessing-wofpy-rest-web-services" title="Permalink to this headline">¶</a></h2>
+<h2>Accessing WOFpy REST Web Services<a class="headerlink" href="#accessing-wofpy-rest-web-services" title="Permalink to this headline">¶</a></h2>
+<p>Running the examples is a great way to learn the REST syntax for accessing data
+with WOFpy.  The examples create a web page with sample URIs illustrating
+the required syntax.  You can click the URIs in your browser to see the
+results.  The syntax is also described below.</p>
+<p>All query results are provided in WaterML 1.0 unless specified otherwise.</p>
+<div class="section" id="getting-site-locations">
+<h3>Getting Site Locations<a class="headerlink" href="#getting-site-locations" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>GetSites</strong> - Returns locations of all sites</li>
+<li><strong>GetSites?site=network:site_code</strong> - Returns location of site with given
+site code in given network</li>
+</ul>
+</div>
+<div class="section" id="discovering-what-is-measured-at-a-site">
+<h3>Discovering What Is Measured at a Site<a class="headerlink" href="#discovering-what-is-measured-at-a-site" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>GetSites?site=network:site_code</strong> - Returns location of given site and
+summary of all time series available at the site</li>
+</ul>
+</div>
+<div class="section" id="getting-information-about-variables">
+<h3>Getting Information about Variables<a class="headerlink" href="#getting-information-about-variables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>GetVariableInfo</strong> - Returns descriptions of all variables</li>
+<li><strong>GetVariableInfo?variable=vocabulary:variable_code</strong> - Returns description
+of variable with given variable code within the given vocabulary</li>
+</ul>
+</div>
+<div class="section" id="downloading-time-series-values">
+<h3>Downloading Time Series Values<a class="headerlink" href="#downloading-time-series-values" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>GetValues?location=network:site_code&amp;variable=vocabulary:variable_code</strong> -
+Returns all data at the given site for the given variable</li>
+<li><strong>GetValues?location=network:site_code&amp;variable=vocabulary:variable_code&amp;startDate=YYYY-MM-DDThh:mm&amp;endDate=YYYY-MM-DDThh:mm</strong> -
+Returns data at the given site for the given variable intersecting the given
+time period</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The time format is <a class="reference external" href="http://www.iso.org/iso/date_and_time_format">ISO time</a>.  You can leave out the
+time component and just write YYYY-MM-DD.  You can specify time zone by
+appending the offset from Universal Time Coordinates (UTC) in hours to the
+end of the date string, or by appending Z to indicate UTC.  For example,
+to specify April 5, 2011, 5:00 PM in US Central Standard Time:
+<tt class="docutils literal"><span class="pre">2011-04-05T05:00-06</span></tt></p>
+<p class="last">See <a class="reference external" href="http://en.wikipedia.org/wiki/ISO_8601">Wikipedia</a> for more examples.</p>
+</div>
+<ul class="simple">
+<li><strong>GetValues?format=wml2&amp;location=network:site_code&amp;variable=vocabulary:variable_code&amp;startDate=YYYY-MM-DDThh:mm&amp;endDate=YYYY-MM-DDThh:mm</strong> -
+Returns data at the given site for the given variable intersecting the given
+time period in WaterML 2.0 format.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">WaterML 2.0 format is only available for GetValues requests.</p>
+</div>
+</div>
 </div>
 <div class="section" id="accessing-wofpy-soap-web-services">
-<h2>Accessing WOFpy SOAP web services<a class="headerlink" href="#accessing-wofpy-soap-web-services" title="Permalink to this headline">¶</a></h2>
+<h2>Accessing WOFpy SOAP Web Services<a class="headerlink" href="#accessing-wofpy-soap-web-services" title="Permalink to this headline">¶</a></h2>
+<p>The SOAP endpoint follows the WaterOneFlow standard, whose method signatures
+and WaterML responses are described on the HIS website at
+<a class="reference external" href="http://his.cuahsi.org/wofws.html">http://his.cuahsi.org/wofws.html</a>.</p>
+<p>One of the easiest ways to test the SOAP endpoint is to use the free soapUI
+program.  To test with soapUI:</p>
+<ol class="arabic simple">
+<li>Install soapUI.</li>
+<li>Run WOFpy, perhaps using one of the <a class="reference internal" href="#examples"><em>examples</em></a>.</li>
+<li>Start soapUI.</li>
+<li>In soapUI, click <strong>File</strong>, and then click <strong>New soapUI Project</strong>.</li>
+<li>Give your project any name, input the URI to your SOAP endpoint, and click
+<strong>OK</strong>.</li>
+<li>Expand the example request for <strong>GetSiteInfoObject</strong> and double-click
+<strong>Request1</strong> to open that request.</li>
+<li>Input a valid network:site_code in the <strong>site</strong> parameter.  You can use the
+default parameter provided on the Web page for the REST endpoint of your
+service.</li>
+<li>Click the play button to issue the request.  A new window should open with
+the SOAP response showing information about the site.</li>
+</ol>
 </div>
 </div>
 
@@ -124,11 +282,23 @@ Please follow the following to install them.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Getting Started</a><ul>
-<li><a class="reference internal" href="#requirements">Requirements</a></li>
-<li><a class="reference internal" href="#installation-on-a-windows-computer">Installation on a Windows computer</a></li>
-<li><a class="reference internal" href="#getting-a-web-service-up-and-running">Getting a web service up and running</a></li>
-<li><a class="reference internal" href="#accessing-wofpy-rest-web-services">Accessing WOFpy REST web services</a></li>
-<li><a class="reference internal" href="#accessing-wofpy-soap-web-services">Accessing WOFpy SOAP web services</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#running-the-examples">Running the Examples</a><ul>
+<li><a class="reference internal" href="#barebones-sqlite-example">Barebones SQLite Example</a></li>
+<li><a class="reference internal" href="#swis-sqlite-example">SWIS SQLite Example</a></li>
+<li><a class="reference internal" href="#odm-sql-server-example">ODM SQL Server Example</a></li>
+<li><a class="reference internal" href="#cbi-external-service-example">CBI External Service Example</a></li>
+<li><a class="reference internal" href="#multiple-services-example">Multiple Services Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#accessing-wofpy-rest-web-services">Accessing WOFpy REST Web Services</a><ul>
+<li><a class="reference internal" href="#getting-site-locations">Getting Site Locations</a></li>
+<li><a class="reference internal" href="#discovering-what-is-measured-at-a-site">Discovering What Is Measured at a Site</a></li>
+<li><a class="reference internal" href="#getting-information-about-variables">Getting Information about Variables</a></li>
+<li><a class="reference internal" href="#downloading-time-series-values">Downloading Time Series Values</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#accessing-wofpy-soap-web-services">Accessing WOFpy SOAP Web Services</a></li>
 </ul>
 </li>
 </ul>
