@@ -25,7 +25,7 @@ The wof package (in the subfolder named wof) is now accessible from any director
 Running the Examples
 --------------------
 
-Example data and Data Access Objects (DAOs) are included with WOFpy.  See the **examples** folder for more information.  
+Example data and Data Access Objects (DAOs) are included with WOFpy.  See the documentation for more information.  
 
 Publishing Your Data
 --------------------
