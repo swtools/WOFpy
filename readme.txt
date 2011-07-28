@@ -13,9 +13,12 @@ Installation
 
 Follow the steps below for Basic installation on a Windows computer.
 
-#. Install Python 2.6.  The 32-bit installer is recommended.
-#. Add the Python folder to your Path environment variable.
-#. Open a command Window (run cmd), navigate to the WOFpy folder (with setup.py in it), and enter this command: python setup.py install
+#. Install **Python 2.6**.  The 32-bit installer is recommended.
+#. Add the **Python** folder to your **Path** environment variable.
+#. Install **setuptools**. This allows the setup script to be run.
+#. Add the **Python/scripts** folder to your **Path** environment variable.
+#. Open a command window (run cmd), navigate to the WOFpy folder (with setup.py
+   in it), and enter this command: ``python setup.py install``
 
 The wof package (in the subfolder named wof) is now accessible from any directory.
 
@@ -25,7 +28,9 @@ The wof package (in the subfolder named wof) is now accessible from any director
 Running the Examples
 --------------------
 
-Example data and Data Access Objects (DAOs) are included with WOFpy.  See the **examples** folder for more information.  
+Example services are included with WOFpy.  Each example consists of data, Data
+Access Objects (DAOs), models, and the service definition.  The examples are
+located in the **examples** folder.  See the documentation for more information.  
 
 Publishing Your Data
 --------------------
