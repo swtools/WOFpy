@@ -144,6 +144,8 @@ class WOF(object):
     def create_get_values_response(self, siteArg, varArg, startDateTime=None,
                                    endDateTime=None):
 
+        #TODO: Tim thinks the DAO should handle network and vocab parsing,
+        #      not WOF
         siteCode = siteArg.replace(self.network + ':', '')
         varCode = varArg.replace(self.vocabulary + ':', '')
 
