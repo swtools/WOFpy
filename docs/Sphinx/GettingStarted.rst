@@ -139,11 +139,8 @@ This example requires an internet connection to access the TCOON Web service.
 
 Follow the steps below to run this example.
 
-#. First, we need to build and populate the SQLite database to store the site and variable 
-   descriptions.  Open a command window in the **examples/cbi** folder and enter:
-   ``python build_cbi_cache.py``.  WOFpy will visit the CBI web site and download
-   the metadata into a new SQLite database.
-#. Next, start the web service by typing in ``python runserver_cbi.py``
+#. Open a command window in the **examples/cbi** folder and enter:
+   ``python runserver_cbi.py``
 #. In your command window you should see a message indicating that the service
    is running along with instructions for accessing the service.  
 

@@ -1,0 +1,11 @@
+Tim was looking for a good package for handling ISO time with UTCOffsets.  He wrote timetest.py to test various packages using 25 datetime strings in various formats, two of which were expected to throw an error.  Here is his assessment ranked from best to worst:
+
+1. dateutil - 2 failures (anticipated)
+
+2. isodate - 12 failures, requires 'T' delimiter, doesn't like missing zeroes
+
+3. eGenix mxDateTime - 9 Failues.  Uses custom datetime class, not standard.  Rounds seconds to hundredths but probably non-issue. If only hours present, assumes they are minutes instead.  Ignores UTCOffset unless you use ParseDateTimeUTC, and then the result is in UTC time.
+
+4. chrono - 24 failures.  Handles dates, not times.  Uses custom datetime class, not standard.
+
+5. pyiso8601 - No downloads available

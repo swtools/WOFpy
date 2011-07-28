@@ -1,9 +1,0 @@
-.. _WOFpy Architecture:
-
-******************
-WOFpy Architecture
-******************
-
-Here is a quick and dirty description of the architecture behind WOFpy.
-
-WOFpy stands for **WaterOneFlow** for **python**.
