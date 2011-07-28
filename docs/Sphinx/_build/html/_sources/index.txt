@@ -7,24 +7,43 @@ Welcome to WOFpy!
 =================
 .. image:: /graphics/WOFpy_logo.png
 
-Description
------------
+What is WOFpy?
+--------------
 
-WOFpy stands for Water One Flow in Python.  It is designed to produce WaterML 
+**WOFpy** stands for **Water One Flow in Python**.  It is designed to produce WaterML 
 web services from a variety of back-end database formats, e.g. SQLite, 
-Microsoft SQL server, PostgreSQL, etc.  It is part of the Python services stack developed by
-the Texas Water Development Board for 'Water Data for Texas' - a unified hydrological 
+Microsoft SQL server, PostgreSQL, etc.  It is a key part of the Python services stack developed by
+the **Texas Water Development Board** for **'Water Data for Texas'** - a unified hydrological 
 information system that shares environmental data for the state of Texas.  
 
+How do I get started?
+---------------------
 
-Contents
---------
 .. toctree::
    :maxdepth: 3
    
    GettingStarted   
+
+What is inside WOFpy?
+---------------------
+
+.. toctree::
+   :maxdepth: 3
+   
    WOFpyArchitecture   
+   
+How do I use WOFpy to publish my data?
+--------------------------------------
+.. toctree::
+   :maxdepth: 3
+   
    PublishingWithWOFpy
+   
+Sphinx Cheatsheet
+--------------------------
+.. toctree::
+   :maxdepth: 3
+   
    cheatsheet   
 
 
