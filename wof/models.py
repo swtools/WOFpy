@@ -158,7 +158,7 @@ class BaseQualityControlLevel(object):
     QualityControlLevelCode = None
 
 
-class BaseSeriesCatalog(object):
+class BaseSeries(object):
     SeriesID = None
     SiteID = None
     SiteCode = None

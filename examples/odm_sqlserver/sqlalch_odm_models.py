@@ -161,7 +161,7 @@ class QualityControlLevel(Base, wof_base.BaseQualityControlLevel):
     QualityControlLevelID = Column(Integer, primary_key=True)
     QualityControlLevelCode = Column(String)
 
-class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
+class Series(Base, wof_base.BaseSeries):
     __tablename__ = 'SeriesCatalog'
     
     SeriesID = Column(Integer, primary_key = True)
@@ -194,16 +194,16 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     ValueCount = Column(Integer)
     
     Site = relationship("Site",
-                primaryjoin='SeriesCatalog.SiteID==Site.SiteID')
+                primaryjoin='Series.SiteID==Site.SiteID')
     
     Variable = relationship("Variable",
-                primaryjoin='SeriesCatalog.VariableID==Variable.VariableID')
+                primaryjoin='Series.VariableID==Variable.VariableID')
     
     Method = relationship("Method",
-                primaryjoin='SeriesCatalog.MethodID==Method.MethodID')
+                primaryjoin='Series.MethodID==Method.MethodID')
     
     Source = relationship("Source",
-                primaryjoin='SeriesCatalog.SourceID==Source.SourceID')
+                primaryjoin='Series.SourceID==Source.SourceID')
 
 
 class Units(Base, wof_base.BaseUnits):

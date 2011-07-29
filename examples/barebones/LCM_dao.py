@@ -147,7 +147,7 @@ class LCMDao(BaseDao):
                     model.Variable.VariableCode).all()
             seriesCatArr = []
             for i in range(len(resultList)):
-                seriesCat = model.SeriesCatalog(
+                seriesCat = model.Series(
                         siteResult, varResultArr[i],
                         resultList[i].ValueCount,
                         resultList[i].BeginDateTimeUTC,
@@ -174,7 +174,7 @@ class LCMDao(BaseDao):
                 and_(model.DataValue.SiteCode == siteResult.SiteCode,                     
                      model.DataValue.VariableCode == varResult.VariableCode)).one()
 
-        seriesCat = model.SeriesCatalog(
+        seriesCat = model.Series(
             siteResult, varResult, res.ValueCount, res.BeginDateTimeUTC,
             res.EndDateTimeUTC, self.get_source_by_id())
 

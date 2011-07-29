@@ -42,13 +42,13 @@ class OdmDao(BaseDao):
             var_codes_arr)).all()
 
     def get_series_by_sitecode(self, site_code):
-        return model.SeriesCatalog.query.filter(
-            model.SeriesCatalog.SiteCode == site_code).all()
+        return model.Series.query.filter(
+            model.Series.SiteCode == site_code).all()
 
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
-        return model.SeriesCatalog.query.filter(and_(
-            model.SeriesCatalog.SiteCode == site_code,
-            model.SeriesCatalog.VariableCode == var_code)).all()
+        return model.Series.query.filter(and_(
+            model.Series.SiteCode == site_code,
+            model.Series.VariableCode == var_code)).all()
 
     def get_datavalues(self, site_code, var_code, begin_date_time=None,
                        end_date_time=None):

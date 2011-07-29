@@ -90,10 +90,10 @@ class CbiDao(BaseDao):
 
     def get_series_by_sitecode(self, site_code):
         """
-        Returns a list of SeriesCatalogs for the given site code.
+        Returns a list of Series for the given site code.
         """
-        seriesResultArr = cache.SeriesCatalog.query.filter(
-            cache.SeriesCatalog.SiteCode == site_code).all()
+        seriesResultArr = cache.Series.query.filter(
+            cache.Series.SiteCode == site_code).all()
         for sr in seriesResultArr:
             #TODO: Get current time in GMT
             if sr.IsCurrent:
@@ -104,13 +104,13 @@ class CbiDao(BaseDao):
 
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
         """
-        Returns a list of SeriesCatalogs for the given site code and variable
+        Returns a list of Series for the given site code and variable
         code combination.
         """
 
-        seriesResultArr = cache.SeriesCatalog.query.filter(and_(
-             cache.SeriesCatalog.SiteCode == site_code,
-             cache.SeriesCatalog.VariableCode == var_code)).all()
+        seriesResultArr = cache.Series.query.filter(and_(
+             cache.Series.SiteCode == site_code,
+             cache.Series.VariableCode == var_code)).all()
         for sr in seriesResultArr:
             if sr.IsCurrent:
                 #Get current time in GMT

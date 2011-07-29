@@ -25,7 +25,7 @@ class TestUnits(models.BaseUnits):
             setattr(self, k, v)
 
 
-class TestSeries(models.BaseSeriesCatalog):
+class TestSeries(models.BaseSeries):
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
