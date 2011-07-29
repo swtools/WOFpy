@@ -19,17 +19,31 @@ information system that shares environmental data for the state of Texas.
 How do I get started?
 ---------------------
 
+The latest version of WOFpy is available for download via Github (https://github.com/swtools/WOFpy).  
+Once downloaded, you can follow the following steps to get **WOFpy and its dependencies installed** 
+and to start and access the **example web services** that come pre-packaged with WOFpy.
+ 
 .. toctree::
    :maxdepth: 3
    
    GettingStarted   
 
-What is inside WOFpy?
----------------------
+What goes on inside WOFpy?
+--------------------------
+
+From a conceptual point of view, WOFpy can be compared to a **restaurant** that serves data.  **Data consumers** 
+are the restaurant customers.  The **data providers** create the agricultural produce (i.e. **raw data**) and stock 
+the pantry (i.e. **provider's database**).  However before the produce can be consumed they need to be first prepared 
+into a palatable form (i.e. **WaterML**).  This requires a restaurant (i.e. **WOFpy**) with a smart catering staff 
+(i.e. **WOFpy components**) to select, cook and serve (i.e. **extract, transform and load**) the dishes.
+   
+.. image:: /graphics/ARestaurantAnalogyForWOFpy_55.png
+
+The components within WOFpy are further explained in the following links:
 
 .. toctree::
    :maxdepth: 3
-   
+
    WOFpyArchitecture   
    
 How do I use WOFpy to publish my data?
@@ -38,14 +52,6 @@ How do I use WOFpy to publish my data?
    :maxdepth: 3
    
    PublishingWithWOFpy
-   
-Sphinx Cheatsheet
---------------------------
-.. toctree::
-   :maxdepth: 3
-   
-   cheatsheet   
-
 
 Indices and tables
 ==================
