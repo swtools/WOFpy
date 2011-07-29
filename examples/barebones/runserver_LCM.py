@@ -1,8 +1,13 @@
 import soaplib
 import logging
 
-import wof
+from werkzeug.wsgi import DispatcherMiddleware
+from soaplib.core.server import wsgi
 
+from wof import WOF
+from wof.soap import create_wof_service_class
+from wof.flask import config
+from wof.flask import create_app
 from LCM_dao import LCMDao
 
 logging.basicConfig(level=logging.DEBUG)
@@ -32,14 +37,26 @@ the connection string can just be:
 swis_connection_string = 'sqlite:///swis2.db' 
 '''
 
-dao = LCMDao('sqlite:///LCM_Data/LCM.db', 'LCM_config.cfg')
-app = wof.create_wof_app(dao, 'LCM_config.cfg')
-app.config['DEBUG'] = True
+LCM_connection_string = 'sqlite:///LCM_Data\LCM.db'
+
+dao = LCMDao(LCM_connection_string,'LCM_config.cfg')
+LCM_wof = WOF(dao)
+LCM_wof.config_from_file('LCM_config.cfg')
+
+app = create_app(LCM_wof)
+app.config.from_object(config.DevConfig)
+
+ODMWOFService = create_wof_service_class(LCM_wof)
+
+soap_app = soaplib.core.Application(services=[ODMWOFService],
+                                    tns='http://www.cuahsi.org/his/1.0/ws/',
+                                    name='WaterOneFlow')
+
+soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
+
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+     '/soap/wateroneflow': soap_wsgi_app,   
+    })
 
 if __name__ == '__main__':
-    print "-----------------------------------------------------------------"
-    print "Access 'REST' endpoints at http://127.0.0.1:8080/"
-    print "Access SOAP WSDLs at http://127.0.0.1:8080/soap/wateroneflow.wsdl"
-    print "-----------------------------------------------------------------"
-
     app.run(host='0.0.0.0', port=8080, threaded=True)

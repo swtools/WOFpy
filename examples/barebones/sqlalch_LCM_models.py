@@ -86,6 +86,12 @@ class DataValue(Base, wof_base.BaseDataValue):
     SiteCode = Column('Station',String,ForeignKey('sampling_sites.StationID')) #FK to sampling_sites)
     VariableCode = Column('Test',String,ForeignKey('variables.VariableCode')) #FK to variables)
     
+    OffsetValue = Column('Depth',Float)
+    OffsetTypeID = 1
+    MethodID = ValueID
+    MethodDescription = Column('Method',String)
+    MethodLink =""
+    
     #Assume data are non-censored 
     CensorCode = "nc"
     Site = relationship("Site",
@@ -113,10 +119,8 @@ class Source(wof_base.BaseSource):
 #    QualifierCode = Column(String)
 #    QualifierDescription = Column(String)
 
-#   Not present in LCM database  
 #class OffsetType(Base, wof_base.BaseOffsetType):
 #    __tablename__ = 'OffsetTypes'
-#    
 #    OffsetTypeID = Column(Integer, primary_key = True)
 #    OffsetUnitsID = Column(Integer, ForeignKey('Units.UnitsID'))
 #    OffsetDescription = Column(String)

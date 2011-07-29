@@ -199,15 +199,25 @@ class LCMDao(BaseDao):
                          model.DataValue.DateTimeUTC >= begin_date_time,
                          model.DataValue.DateTimeUTC <= end_date_time)
                     ).order_by(model.DataValue.DateTimeUTC).all()
+                
+        for i in range(len(valueResultArr)):
+            #Replace offset values of None with offset values = 0
+            if not valueResultArr[i].OffsetValue:
+                valueResultArr[i].OffsetValue = 0
+            
         return valueResultArr
        
     def get_method_by_id(self, method_id):
-        return model.Method.query.filter(
-            model.Method.MethodID == method_id).first()
+        #return model.Method.query.filter(
+        #    model.Method.MethodID == method_id).first()
+        return model.DataValue.query.filter(
+            model.DataValue.MethodID == method_id).first()
 
     def get_methods_by_ids(self, method_id_arr):
-        return model.Method.query.filter(
-            model.Method.MethodID.in_(method_id_arr)).all()
+        #return model.Method.query.filter(
+        #    model.Method.MethodID.in_(method_id_arr)).all()
+        return model.DataValue.query.filter(
+            model.DataValue.MethodID.in_(method_id_arr)).all()
 
     def get_source_by_id(self, source_id=1):
         source = model.Source()
@@ -252,5 +262,18 @@ class LCMDao(BaseDao):
             model.OffsetType.OffsetTypeID == offset_type_id).first()
 
     def get_offsettypes_by_ids(self, offset_type_id_arr):
-        return model.OffsetType.query.filter(model.OffsetType.OffsetTypeID.in_(
-            offset_type_id_arr)).all()
+        r = wof_base.BaseOffsetType()
+        r.OffsetTypeID = 1
+        r.OffsetUnitsID = 6
+        r.OffsetDescription = 'depth below water surface'
+
+        #r.OffsetUnits = wof_base.BaseUnits()        
+        r.OffsetUnits.UnitsID = 6
+        r.OffsetUnits.UnitsName = 'meters'
+        r.OffsetUnits.UnitsType = 'depth'
+        r.OffsetUnits.UnitsAbbreviation = 'm'
+        rarr = [r]
+        return rarr
+        #return model.OffsetType.query.filter(model.OffsetType.OffsetTypeID.in_(
+        #    offset_type_id_arr)).all()
+        
