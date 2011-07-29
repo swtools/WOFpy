@@ -1,10 +1,11 @@
-
+import datetime
 from xml.sax.saxutils import escape
 
 import ConfigParser
 import soaplib.core
 import soaplib.core.server.wsgi
 import werkzeug
+from dateutil.parser import parse
 
 import wof.flask
 import wof.soap
@@ -48,6 +49,56 @@ class WOF(object):
             self.default_variable = config.get('Default_Params', 'Variable')
             self.default_start_date = config.get('Default_Params', 'StartDate')
             self.default_end_date = config.get('Default_Params', 'EndDate')
+
+    def parse_to_datetime(self, date_time):
+        if not type(date_time) is datetime.datetime:
+            try:
+                if type(date_time) is str:
+                    date_time = parse(date_time)
+                else:
+                    date_time = parse(str(date_time))
+            except:
+                raise ValueError('invalid date string: ' + str(date_time))
+
+        return date_time
+
+    def compute_utc_offset(self, local_datetime, utc_datetime):
+        local_datetime = self.parse_to_datetime(local_datetime)
+        if local_datetime.tzinfo:
+            offset = local_datetime.utcoffset()
+        else:
+            utc_datetime = self.parse_to_datetime(utc_datetime)
+            utc_datetime = utc_datetime.replace(tzinfo=None)
+            offset = local_datetime - utc_datetime
+        
+        if offset.days == -1:
+            offset = -1 * (24 - offset.seconds/3600.)
+        else:
+            offset = offset.seconds/3600.
+
+        return offset
+
+    def create_iso_utc_offset(self, utc_offset_hrs):
+        hours = int(utc_offset_hrs)
+        if hours < 0:
+            sign = ''
+        else:
+            sign = '+'
+        minutes = int((float(utc_offset_hrs) % 1) * 60)
+        
+        return sign + str(hours) + ":" + str(minutes)
+
+    def create_iso_date_string(self, date_time, utc_offset_hrs):
+        date_time = self.parse_to_datetime(date_time)
+                
+        if not date_time.tzinfo:
+            iso_utc_offset = self.create_iso_utc_offset(utc_offset_hrs)
+            try:
+                date_time = parse(date_time.isoformat() + iso_utc_offset)
+            except:
+                raise ValueError('invalid UTC offset: ' + str(iso_utc_offset))
+
+        return date_time.isoformat()
 
     def create_get_site_response(self, siteArg=None):
 
@@ -342,10 +393,11 @@ class WOF(object):
     #TODO: lots more stuff to fill out here
     def create_value_element(self, valueResult):
 
-        #TODO correct time zone?
-        isoDateTimeUTC = str(valueResult.DateTimeUTC).replace(' ', 'T')
-        if isoDateTimeUTC.find('Z') == -1:
-            isoDateTimeUTC += 'Z'
+        # TODO: Shall we require DAO to return ISO date strings, or
+        #       shall WOF handle that?  Performance hit if both do it.
+        # Build a string representing local time
+        local_date = self.create_iso_date_string(valueResult.LocalDateTime,
+                                                 valueResult.UTCOffset)
 
         value = WaterML.ValueSingleVariable(
                         qualityControlLevel=valueResult.QualityControlLevel,
@@ -356,7 +408,7 @@ class WOF(object):
                         offsetTypeID=valueResult.OffsetTypeID,
                         accuracyStdDev=valueResult.ValueAccuracy,
                         offsetValue=valueResult.OffsetValue,
-                        dateTime=isoDateTimeUTC,
+                        dateTime=local_date,
                         qualifiers=valueResult.QualifierID,
                         valueOf_=str(valueResult.DataValue))
 
@@ -477,19 +529,18 @@ class WOF(object):
             valueOf_=str(seriesResult.ValueCount))
 
         #DateTimes
-        isoBeginDateTimeUTC = str(
-            seriesResult.BeginDateTimeUTC).replace(' ', 'T')
-        if isoBeginDateTimeUTC.find('Z') == -1:
-            isoBeginDateTimeUTC += 'Z'
-
-        isoEndDateTimeUTC = str(
-            seriesResult.EndDateTimeUTC).replace(' ', 'T')
-        if isoEndDateTimeUTC.find('Z') == -1:
-            isoEndDateTimeUTC += 'Z'
+        utc_offset = self.compute_utc_offset(seriesResult.BeginDateTime,
+                                             seriesResult.BeginDateTimeUTC)
+        begin_date = self.create_iso_date_string(seriesResult.BeginDateTime,
+                                                 utc_offset)
+        utc_offset = self.compute_utc_offset(seriesResult.EndDateTime,
+                                             seriesResult.EndDateTimeUTC)
+        end_date = self.create_iso_date_string(seriesResult.EndDateTime,
+                                               utc_offset)
 
         #TimeInterval
         variableTimeInt = WaterML.TimeIntervalType(
-            beginDateTime=isoBeginDateTimeUTC, endDateTime=isoEndDateTimeUTC)
+            beginDateTime=begin_date, endDateTime=end_date)
         series.variableTimeInterval = variableTimeInt
 
         #Method

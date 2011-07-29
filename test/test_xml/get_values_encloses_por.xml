@@ -46,8 +46,8 @@
             </timeSupport>
         </variable>
         <values count="2" unitsAbbreviation="degC" unitsAreConverted="false" unitsCode="96">
-            <value qualityControlLevel="QC Definition" methodID="5" sourceID="1" censorCode="nc" offsetTypeID="1" offsetValue="2.4" dateTime="2007-04-05T06:00Z">8.4</value>
-            <value qualityControlLevel="QC Definition" methodID="5" sourceID="1" censorCode="nc" offsetTypeID="1" offsetValue="2.5" dateTime="2007-04-06T06:00Z" qualifiers="1">10.4</value>
+            <value qualityControlLevel="QC Definition" methodID="5" sourceID="1" censorCode="nc" offsetTypeID="1" offsetValue="2.4" dateTime="2007-04-05T00:00:00-06:00">8.4</value>
+            <value qualityControlLevel="QC Definition" methodID="5" sourceID="1" censorCode="nc" offsetTypeID="1" offsetValue="2.5" dateTime="2007-04-06T00:00:00-06:00" qualifiers="1">10.4</value>
             <qualifier qualifierID="1" network="TEST" vocabulary="TESTVocab">
                 <qualifierCode>USU-I</qualifierCode>
             </qualifier>
