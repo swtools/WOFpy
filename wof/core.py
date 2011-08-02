@@ -91,7 +91,7 @@ class WOF(object):
     def create_iso_date_string(self, date_time, utc_offset_hrs):
         date_time = self.parse_to_datetime(date_time)
                 
-        if not date_time.tzinfo:
+        if (not date_time.tzinfo) and (not utc_offset_hrs is None):
             iso_utc_offset = self.create_iso_utc_offset(utc_offset_hrs)
             try:
                 date_time = parse(date_time.isoformat() + iso_utc_offset)
