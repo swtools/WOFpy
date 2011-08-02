@@ -256,7 +256,7 @@ class OffsetType(wof_base.BaseOffsetType):
     OffsetUnits = None
 
 
-class SeriesCatalog(wof_base.BaseSeriesCatalog):
+class Series(wof_base.BaseSeries):
 
     def __init__(self, site=None, variable=None, value_count=None,
                  begin_date_time_utc=None, end_date_time_utc=None,

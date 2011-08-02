@@ -40,13 +40,13 @@ class BaseDao(object):
 
     def get_series_by_sitecode(self, site_code):
         """
-        Returns a list of SeriesCatalogs for the given site code.
+        Returns a list of Series for the given site code.
         """
         raise NotImplementedError("Method not implemented.")
 
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
         """
-        Returns a list of SeriesCatalogs for the given site code and variable
+        Returns a list of Series for the given site code and variable
         code combination.
         """
         raise NotImplementedError("Method not implemented.")

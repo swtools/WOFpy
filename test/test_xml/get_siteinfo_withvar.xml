@@ -53,8 +53,8 @@
                 </variable>
                 <valueCount>2</valueCount>
                 <variableTimeInterval xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TimeIntervalType">
-                    <beginDateTime>2007-04-05T06:00Z</beginDateTime>
-                    <endDateTime>2007-04-06T06:00Z</endDateTime>
+                    <beginDateTime>2007-04-05T00:00:00-06:00</beginDateTime>
+                    <endDateTime>2007-04-06T00:00:00-06:00</endDateTime>
                 </variableTimeInterval>
                 <Method methodID="25">
                     <MethodDescription>Grab sample collected by smurfs in the field.</MethodDescription>
