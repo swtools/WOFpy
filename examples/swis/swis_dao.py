@@ -92,7 +92,7 @@ class SwisDao(BaseDao):
                     model.Variable.VariableID).all()
             seriesCatArr = []
             for i in range(len(resultList)):
-                seriesCat = model.SeriesCatalog(
+                seriesCat = model.Series(
                         siteResult, varResultArr[i],
                         resultList[i].ValueCount,
                         resultList[i].BeginDateTimeUTC,
@@ -119,7 +119,7 @@ class SwisDao(BaseDao):
                 and_(model.DataValue.SiteID == siteResult.SiteID,
                      model.DataValue.VariableID == varResult.VariableID)).one()
 
-        seriesCat = model.SeriesCatalog(
+        seriesCat = model.Series(
             siteResult, varResult, res.ValueCount, res.BeginDateTimeUTC,
             res.EndDateTimeUTC, self.get_source_by_id())
 

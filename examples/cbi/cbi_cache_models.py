@@ -150,7 +150,7 @@ class Variable(Base, wof_base.BaseVariable):
                         primaryjoin='Variable.TimeUnitsID==Units.UnitsID')
 
 
-class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
+class Series(Base, wof_base.BaseSeries):
     __tablename__ = 'SeriesCatalog'
 
     SeriesID = Column(Integer, primary_key=True)
@@ -186,9 +186,9 @@ class SeriesCatalog(Base, wof_base.BaseSeriesCatalog):
     ValueCount = Column(Integer)
 
     Site = relationship("Site",
-                primaryjoin="Site.SiteID==SeriesCatalog.SiteID")
+                primaryjoin="Site.SiteID==Series.SiteID")
     Variable = relationship("Variable",
-                primaryjoin="Variable.VariableID==SeriesCatalog.VariableID")
+                primaryjoin="Variable.VariableID==Series.VariableID")
 
     # TODO...
     Method = None

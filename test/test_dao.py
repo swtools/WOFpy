@@ -1,3 +1,7 @@
+from datetime import datetime as dt, timedelta, MINYEAR, MAXYEAR
+
+from dateutil.parser import parse
+
 from wof import dao, models
 
 
@@ -25,7 +29,7 @@ class TestUnits(models.BaseUnits):
             setattr(self, k, v)
 
 
-class TestSeries(models.BaseSeriesCatalog):
+class TestSeries(models.BaseSeries):
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -267,10 +271,10 @@ test_series = {
         SourceDescription = test_sources[1].SourceDescription,
         QualityControlLevelID = 1,
         QualityControlLevelCode = "QC'd",
-        BeginDateTime = '2007-04-05 00:00',
-        EndDateTime = '2007-04-06 00:00',
-        BeginDateTimeUTC =  '2007-04-05 06:00',
-        EndDateTimeUTC =  '2007-04-06 06:00',
+        BeginDateTime = parse('2007-04-05T00:00-06'),
+        EndDateTime = parse('2007-04-06T00:00-06'),
+        BeginDateTimeUTC =  parse('2007-04-05T06:00Z'),
+        EndDateTimeUTC =  parse('2007-04-06T06:00Z'),
         ValueCount = 2),
     'Flow': TestSeries(
         SeriesID = 2,
@@ -300,10 +304,10 @@ test_series = {
         SourceDescription = test_sources[1].SourceDescription,
         QualityControlLevelID = 1,
         QualityControlLevelCode = "QC'd",
-        BeginDateTime = '2007-04-05 00:00',
-        EndDateTime = '2007-04-05 00:00',
-        BeginDateTimeUTC =  '2007-04-05 06:00',
-        EndDateTimeUTC =  '2007-04-05 06:00',
+        BeginDateTime = parse('2007-04-05T00:00-06'),
+        EndDateTime = parse('2007-04-05T00:00-06'),
+        BeginDateTimeUTC =  parse('2007-04-05T06:00Z'),
+        EndDateTimeUTC =  parse('2007-04-05T06:00Z'),
         ValueCount = 1),
     'TP': TestSeries(
         SeriesID = 3,
@@ -333,10 +337,10 @@ test_series = {
         SourceDescription = test_sources[1].SourceDescription,
         QualityControlLevelID = 1,
         QualityControlLevelCode = "QC'd",
-        BeginDateTime = '2007-04-05 00:00',
-        EndDateTime = '2007-04-06 00:00',
-        BeginDateTimeUTC =  '2007-04-05 06:00',
-        EndDateTimeUTC =  '2007-04-06 06:00',
+        BeginDateTime = parse('2007-04-05T00:00-06'),
+        EndDateTime = parse('2007-04-06T00:00-06'),
+        BeginDateTimeUTC =  parse('2007-04-05T06:00Z'),
+        EndDateTimeUTC =  parse('2007-04-06T06:00Z'),
         ValueCount = 2)
     }
 
@@ -360,9 +364,9 @@ test_datavalues = {
         ValueID = 1,
         DataValue = 8.4,
         ValueAccuracy = None,
-        LocalDateTime = '2007-04-05 00:00',
+        LocalDateTime = parse('2007-04-05T00:00-06'),
         UTCOffset = -6,
-        DateTimeUTC = '2007-04-05 06:00',
+        DateTimeUTC = parse('2007-04-05T06:00Z'),
         SiteID = 1,
         VariableID = 1,
         OffsetValue = 2.4,
@@ -378,9 +382,9 @@ test_datavalues = {
         ValueID = 2,
         DataValue = 10.4,
         ValueAccuracy = None,
-        LocalDateTime = '2007-04-06 00:00',
+        LocalDateTime = parse('2007-04-06T00:00-06'),
         UTCOffset = -6,
-        DateTimeUTC = '2007-04-06 06:00',
+        DateTimeUTC = parse('2007-04-06T06:00Z'),
         SiteID = 1,
         VariableID = 1,
         OffsetValue = 2.5,
@@ -396,9 +400,9 @@ test_datavalues = {
         ValueID = 3,
         DataValue = 110.2,
         ValueAccuracy = .8,
-        LocalDateTime = '2007-04-05 00:00',
+        LocalDateTime = parse('2007-04-05T00:00-06'),
         UTCOffset = -6,
-        DateTimeUTC = '2007-04-05 06:00',
+        DateTimeUTC = parse('2007-04-05T06:00Z'),
         SiteID = 1,
         VariableID = 2,
         OffsetValue = None,
@@ -414,9 +418,9 @@ test_datavalues = {
         ValueID = 4,
         DataValue = .02,
         ValueAccuracy = None,
-        LocalDateTime = '2007-04-05 00:00',
+        LocalDateTime = parse('2007-04-05T00:00-06'),
         UTCOffset = -6,
-        DateTimeUTC = '2007-04-05 06:00',
+        DateTimeUTC = parse('2007-04-05T06:00Z'),
         SiteID = 2,
         VariableID = 3,
         OffsetValue = None,
@@ -432,9 +436,9 @@ test_datavalues = {
         ValueID = 5,
         DataValue = .05,
         ValueAccuracy = None,
-        LocalDateTime = '2007-04-06 00:00',
+        LocalDateTime = parse('2007-04-06T00:00-06'),
         UTCOffset = -6,
-        DateTimeUTC = '2007-04-06 06:00',
+        DateTimeUTC = parse('2007-04-06T06:00Z'),
         SiteID = 2,
         VariableID = 3,
         OffsetValue = None,
@@ -476,24 +480,31 @@ class TestDao(dao.BaseDao):
         return [v for k, v in series_catalog if v.SiteCode == site_code and
                 v.VariableCode == var_code]
 
+    def get_utc_datetime(self, date_string):
+        local_date = parse(date_string)
+        utc_time_zone = parse('2001-01-01T00Z').tzinfo
+        if local_date.tzinfo:
+            return local_date.astimezone(utc_time_zone)
+        else:
+            # No time zone supplied.  Assume local time (UTC-6)
+            local_date = local_date + timedelta(hours=6)
+            return local_date.replace(tzinfo=utc_time_zone)
+
     def datavalue_in_date_range(self, datavalue, begin_date_time,
                                 end_date_time):
 
-        """ TODO: Need more sophisticated date comparison
-            * Determine UTCOffset for all dates
-            * If no offset provided in begin/end dates, assume local coords
-        """
         if not begin_date_time:
-            begin_date_time = '1492-10-12'
+            start_date = parse(dt(MINYEAR, 1, 1).isoformat() + 'Z')
+        else:
+            start_date = self.get_utc_datetime(begin_date_time)            
         if not end_date_time:
-            end_date_time = '2492-10-12'
-        if not begin_date_time.find('T'):
-            begin_date_time = begin_date_time + 'T00:00:00'
-        if not end_date_time.find('T'):
-            end_date_time = end_date_time + 'T23:59:59'
-        
-        value_time = datavalue.LocalDateTime
-        return (value_time >= begin_date_time and value_time <= end_date_time)
+            end_date = parse(dt(MAXYEAR, 12, 31).isoformat() + 'Z')
+        else:
+            end_date = self.get_utc_datetime(end_date_time)            
+            
+        value_time = datavalue.DateTimeUTC
+
+        return (value_time >= start_date and value_time <= end_date)
     
     def get_datavalues(self, site_code, var_code, begin_date_time=None,
                        end_date_time=None):
@@ -520,3 +531,4 @@ class TestDao(dao.BaseDao):
 
     def get_offsettypes_by_ids(self, offset_type_id_arr):
         return [test_offset_types[id] for id in offset_type_id_arr]
+    
