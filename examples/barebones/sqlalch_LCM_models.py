@@ -6,6 +6,7 @@ from sqlalchemy import (Table, Column, Integer, String, ForeignKey, Float,
 from sqlalchemy.sql import join, select, func, label
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy.ext.declarative import declarative_base
+from dateutil.parser import parse
 
 import wof.models as wof_base
 
@@ -79,9 +80,10 @@ class DataValue(Base, wof_base.BaseDataValue):
     __tablename__ = 'LCM_Data'
     ValueID = Column('rowid',Integer, primary_key = True)    
     DataValue = Column('Result',Float)
-    DateTimeUTC = Column(DateTime)    
-    DateString= Column('Date',String)
-    TimeString = Column('Time',String)
+    DateTimeUTC = Column(DateTime)
+    UTCOffset = -5
+    #DateString= Column('Date',String)
+    #TimeString = Column('Time',String)
                    
     SiteCode = Column('Station',String,ForeignKey('sampling_sites.StationID')) #FK to sampling_sites)
     VariableCode = Column('Test',String,ForeignKey('variables.VariableCode')) #FK to variables)
@@ -161,12 +163,20 @@ class Series(wof_base.BaseSeries):
     def __init__(self, site=None, variable=None, value_count=None,
                  begin_date_time_utc=None, end_date_time_utc=None,
                  source=None):
-
+        if not type(begin_date_time_utc) is datetime.datetime:
+            begin_date_time_utc = parse(begin_date_time_utc)
+        if not type(end_date_time_utc) is datetime.datetime:
+            end_date_time_utc = parse(end_date_time_utc)
+            
         self.Site = site
         self.Variable = variable
         self.ValueCount = value_count
         self.BeginDateTimeUTC = begin_date_time_utc
         self.EndDateTimeUTC = end_date_time_utc
+        self.BeginDateTime = \
+            begin_date_time_utc + datetime.timedelta(hours=-5)
+        self.EndDateTime = \
+            end_date_time_utc + datetime.timedelta(hours=-5)
 
         #SWIS data are all "Raw Data"
         # though might have more than one QC level in the future
