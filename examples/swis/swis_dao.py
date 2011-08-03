@@ -4,6 +4,7 @@ import ConfigParser
 from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
+from dateutil.parser import parse
 
 import sqlalch_swis_models as model
 
@@ -138,6 +139,8 @@ class SwisDao(BaseDao):
                          model.DataValue.VariableID == varResult.VariableID)
                     ).order_by(model.DataValue.DateTimeUTC).all()
             else:
+                begin_date_time = parse(begin_date_time)
+                end_date_time = parse(end_date_time)
                 valueResultArr = model.DataValue.query.filter(
                     and_(model.DataValue.SiteID == siteResult.SiteID,
                          model.DataValue.VariableID == varResult.VariableID,
@@ -145,6 +148,7 @@ class SwisDao(BaseDao):
                          model.DataValue.DateTimeUTC >= begin_date_time,
                          model.DataValue.DateTimeUTC <= end_date_time)
                     ).order_by(model.DataValue.DateTimeUTC).all()
+
         return valueResultArr
 
     def get_method_by_id(self, methodID):
