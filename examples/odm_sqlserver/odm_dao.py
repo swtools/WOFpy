@@ -44,16 +44,58 @@ class OdmDao(BaseDao):
         return model.Variable.query.filter(model.Variable.VariableCode.in_(
             var_codes_arr)).all()
 
+    def compute_utc_offset(self, local_datetime, utc_datetime):
+        """Returns UTC offset in hours."""
+        
+        # Datetimes from ODM have no tzinfo
+        offset = local_datetime - utc_datetime
+        
+        if offset.days == -1:
+            offset = -1 * (24 - offset.seconds/3600.)
+        else:
+            offset = offset.seconds/3600.
+
+        return offset
+
+    def format_series_dates(self, seriesResultArr):
+        # Format dates as ISO date strings
+        create_iso_offset = self.create_iso_utc_offset
+        compute_utc_offset = self.compute_utc_offset
+        for series in seriesResultArr:
+            utc_offset = compute_utc_offset(series.BeginDateTime,
+                                            series.BeginDateTimeUTC)
+            iso_utc_offset = create_iso_offset(utc_offset)
+            series.BeginDateTime = series.BeginDateTime.isoformat() + \
+                                   iso_utc_offset
+            series.BeginDateTimeUTC = series.BeginDateTimeUTC.isoformat() + \
+                                      'Z'
+            utc_offset = compute_utc_offset(series.EndDateTime,
+                                            series.EndDateTimeUTC)
+            iso_utc_offset = create_iso_offset(utc_offset)
+            series.EndDateTime = series.EndDateTime.isoformat() + \
+                                 iso_utc_offset
+            series.EndDateTimeUTC = series.EndDateTimeUTC.isoformat() + 'Z'
+
     def get_series_by_sitecode(self, site_code):
-        return model.Series.query.filter(
+        seriesResultArr = model.Series.query.filter(
             model.Series.SiteCode == site_code).all()
 
+        if seriesResultArr:
+            self.format_series_dates(seriesResultArr)
+        
+        return seriesResultArr
+
     def get_series_by_sitecode_and_varcode(self, site_code, var_code):
-        return model.Series.query.filter(and_(
+        seriesResultArr = model.Series.query.filter(and_(
             model.Series.SiteCode == site_code,
             model.Series.VariableCode == var_code)).all()
 
-    def parse_dates(self, begin_date_time, end_date_time):
+        if seriesResultArr:
+            self.format_series_dates(seriesResultArr)
+        
+        return seriesResultArr
+
+    def parse_date_strings(self, begin_date_time_string, end_date_time_string):
         """Returns a list with parsed datetimes.
 
         Required Arguments:
@@ -70,19 +112,20 @@ class OdmDao(BaseDao):
         
         # Convert input strings to datetime objects
         try:
-            if begin_date_time:
-                b = parse(begin_date_time)
+            if begin_date_time_string:
+                b = parse(begin_date_time_string)
             else:
                 b = None
         except:
-            raise ValueError('invalid start date: ' + str(begin_date_time))
+            raise ValueError('invalid start date: ' + \
+                             str(begin_date_time_string))
         try:
-            if end_date_time:
-                e = parse(end_date_time)
+            if end_date_time_string:
+                e = parse(end_date_time_string)
             else:
                 e = None
         except:
-            raise ValueError('invalid end date: ' + str(end_date_time))
+            raise ValueError('invalid end date: ' + str(end_date_time_string))
 
         # If we know time zone for both, convert to UTC time
         utc_time_zone = parse('2001-01-01T00Z').tzinfo # dummy time to get tz
@@ -107,6 +150,15 @@ class OdmDao(BaseDao):
 
         return [b, e, using_utc]
     
+    def create_iso_utc_offset(self, utc_offset_hrs):
+        hours = int(utc_offset_hrs)
+        minutes = int((float(utc_offset_hrs) % 1) * 60)
+        
+        if hours == 0 and minutes == 0:
+            return 'Z'
+        else:
+            return '%+.2d:%.2d' % (hours, minutes)
+
     def get_datavalues(self, site_code, var_code, begin_date_time=None,
                        end_date_time=None):
 
@@ -117,7 +169,8 @@ class OdmDao(BaseDao):
         valueResultArr = None
         
         if siteResult and varResult:
-            parse_result = self.parse_dates(begin_date_time, end_date_time)
+            parse_result = self.parse_date_strings(begin_date_time,
+                                                   end_date_time)
             begin_datetime = parse_result[0]
             end_datetime = parse_result[1]
             using_utc = parse_result[2]
@@ -126,53 +179,70 @@ class OdmDao(BaseDao):
                 if begin_datetime and end_datetime:
                     valueResultArr = model.DataValue.query.filter(
                         and_(model.DataValue.SiteID == siteResult.SiteID,
-                             model.DataValue.VariableID == varResult.VariableID,
+                             model.DataValue.VariableID == \
+                                                         varResult.VariableID,
                              model.DataValue.DateTimeUTC >= begin_datetime,
                              model.DataValue.DateTimeUTC <= end_datetime)
                         ).order_by(model.DataValue.DateTimeUTC).all()
                 elif begin_datetime:
                     valueResultArr = model.DataValue.query.filter(
                         and_(model.DataValue.SiteID == siteResult.SiteID,
-                             model.DataValue.VariableID == varResult.VariableID,
+                             model.DataValue.VariableID == \
+                                                         varResult.VariableID,
                              model.DataValue.DateTimeUTC >= begin_datetime)
                         ).order_by(model.DataValue.DateTimeUTC).all()
                 elif end_datetime:
                     valueResultArr = model.DataValue.query.filter(
                         and_(model.DataValue.SiteID == siteResult.SiteID,
-                             model.DataValue.VariableID == varResult.VariableID,
+                             model.DataValue.VariableID == \
+                                                         varResult.VariableID,
                              model.DataValue.DateTimeUTC <= end_datetime)
                         ).order_by(model.DataValue.DateTimeUTC).all()
                 else:
                     valueResultArr = model.DataValue.query.filter(
                         and_(model.DataValue.SiteID == siteResult.SiteID,
-                             model.DataValue.VariableID == varResult.VariableID)
+                             model.DataValue.VariableID == \
+                                                         varResult.VariableID)
                         ).order_by(model.DataValue.DateTimeUTC).all()
             else:
                 if begin_datetime and end_datetime:
                     valueResultArr = model.DataValue.query.filter(
                         and_(model.DataValue.SiteID == siteResult.SiteID,
-                             model.DataValue.VariableID == varResult.VariableID,
+                             model.DataValue.VariableID == \
+                                                         varResult.VariableID,
                              model.DataValue.LocalDateTime >= begin_datetime,
                              model.DataValue.LocalDateTime <= end_datetime)
                         ).order_by(model.DataValue.DateTimeUTC).all()
                 elif begin_datetime:
                     valueResultArr = model.DataValue.query.filter(
                         and_(model.DataValue.SiteID == siteResult.SiteID,
-                             model.DataValue.VariableID == varResult.VariableID,
+                             model.DataValue.VariableID == \
+                                                         varResult.VariableID,
                              model.DataValue.LocalDateTime >= begin_datetime)
                         ).order_by(model.DataValue.DateTimeUTC).all()
                 elif end_datetime:
                     valueResultArr = model.DataValue.query.filter(
                         and_(model.DataValue.SiteID == siteResult.SiteID,
-                             model.DataValue.VariableID == varResult.VariableID,
+                             model.DataValue.VariableID == \
+                                                         varResult.VariableID,
                              model.DataValue.LocalDateTime <= end_datetime)
                         ).order_by(model.DataValue.DateTimeUTC).all()
                 else:
                     valueResultArr = model.DataValue.query.filter(
                         and_(model.DataValue.SiteID == siteResult.SiteID,
-                             model.DataValue.VariableID == varResult.VariableID)
+                             model.DataValue.VariableID == \
+                                                         varResult.VariableID)
                         ).order_by(model.DataValue.DateTimeUTC).all()
 
+        # Format dates as ISO date strings
+        if valueResultArr:
+            create_iso_offset = self.create_iso_utc_offset
+            for value in valueResultArr:
+                iso_utc_offset = create_iso_offset(value.UTCOffset)
+                value.LocalDateTime = value.LocalDateTime.isoformat() + \
+                                      iso_utc_offset
+                value.DateTimeUTC = value.DateTimeUTC.isoformat() + 'Z'
+        
         return valueResultArr
 
     def get_method_by_id(self, method_id):
