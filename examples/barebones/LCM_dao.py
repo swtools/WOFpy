@@ -4,6 +4,7 @@ import ConfigParser
 from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
+from dateutil.parser import parse
 
 from wof.dao import BaseDao
 import sqlalch_LCM_models as model
@@ -182,6 +183,7 @@ class LCMDao(BaseDao):
 
     def get_datavalues(self, site_code, var_code, begin_date_time=None,
                        end_date_time=None):
+        #todo: convert inputs dates to UTC
         #first find the site and variable
         siteResult = self.get_site_by_code(site_code)
         varResult = self.get_variable_by_code(var_code)
@@ -193,6 +195,8 @@ class LCMDao(BaseDao):
                         model.DataValue.VariableCode == var_code)
                     ).order_by(model.DataValue.DateTimeUTC).all()                
             else:
+                begin_date_time = parse(begin_date_time)
+                end_date_time = parse(end_date_time)
                 valueResultArr = model.DataValue.query.filter(
                     and_(model.DataValue.SiteCode == site_code,
                          model.DataValue.VariableCode == var_code,
@@ -204,6 +208,11 @@ class LCMDao(BaseDao):
             #Replace offset values of None with offset values = 0
             if not valueResultArr[i].OffsetValue:
                 valueResultArr[i].OffsetValue = 0
+            #Compute local datetime
+            valueResultArr[i].LocalDateTime = valueResultArr[i].DateTimeUTC + \
+                datetime.timedelta(hours=valueResultArr[i].UTCOffset)
+            
+            
             
         return valueResultArr
        

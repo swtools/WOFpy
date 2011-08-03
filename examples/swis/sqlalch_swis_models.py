@@ -1,10 +1,10 @@
 import datetime
 
 from sqlalchemy import (Table, Column, Integer, String, ForeignKey, Float,
-                        DateTime, Boolean)
+                        DateTime, Boolean, )
 
 from sqlalchemy.sql import join, select, func, label
-from sqlalchemy.orm import mapper, relationship
+from sqlalchemy.orm import mapper, relationship, column_property
 from sqlalchemy.ext.declarative import declarative_base
 
 import wof.models as wof_base
@@ -138,8 +138,10 @@ class DataValue(Base, wof_base.BaseDataValue):
 
     ValueID = Column('id', Integer, primary_key=True)
     DataValue = Column('data_value', Float)
-    UTCOffset = Column('origin_utc_offset', Integer)
+    #UTCOffset = Column('origin_utc_offset', Integer)
+    UTCOffset = 0 # TODO: add offset to datetimeutc to compute localdatetime
     DateTimeUTC = Column('datetime_utc', DateTime)
+    LocalDateTime = DateTimeUTC
     SiteID = Column('site_id', Integer)
     VariableID = Column('parameter_id', Integer)
     OffsetValue = Column('vertical_offset', Float)
@@ -267,6 +269,8 @@ class Series(wof_base.BaseSeries):
         self.ValueCount = value_count
         self.BeginDateTimeUTC = begin_date_time_utc
         self.EndDateTimeUTC = end_date_time_utc
+        self.BeginDateTime = begin_date_time_utc
+        self.EndDateTime = end_date_time_utc
 
         #SWIS data are all "Raw Data"
         # though might have more than one QC level in the future

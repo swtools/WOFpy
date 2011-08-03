@@ -86,7 +86,10 @@ class WOF(object):
             sign = '+'
         minutes = int((float(utc_offset_hrs) % 1) * 60)
         
-        return sign + str(hours) + ":" + str(minutes)
+        if hours == 0 and minutes == 0:
+            return 'Z'
+        else:
+            return sign + str(hours) + ':' + str(minutes)
 
     def create_iso_date_string(self, date_time, utc_offset_hrs):
         date_time = self.parse_to_datetime(date_time)
