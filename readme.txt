@@ -1,44 +1,48 @@
-The folder contains Python modules that can read data from a Data Access Object (DAO) and return the data to the client in WaterML format, using the same access methods defined by the CUAHSI-HIS WaterOneFlow web service.  DAOs can represent a variety of data sources, including an Observations Data Model (ODM)-format database, the Surface Water Information System (SWIS) database, or even a pass-through web-service, such as that by the Conrad-Blucher Institute (CBI).  The three aforementioned data sources have their associated DAO implementations included with this package.  Others may be written by following the BaseDao (see base_dao.py) class description.
+=====
+WOFpy
+=====
 
-The code was written using Python version 2.6
+WOFpy is a Python package that implements CUAHSI's (http://his.cuahsi.org) WaterOneFlow Web service.  WaterOneFlow is a Web service with methods for querying time series of water data at point locations, and which returns data in WaterML format, providing standardized access to water data.   
 
-Basic steps/requirements for installing on a Windows computer:
-1. Install Python 2.6.  Use the 32-bit installer, not the 64-bit version.  Setuptools, which you'll install later, can't detect Python when the 64-bit version is installed.
-2. Add the Python folder to your Path environment variable.
-3. Install setuptools. This includes the easy_install program, which you'll use to install Flask.
-4. Add the Python\scripts folder to your Path environment variable.
-5. Open a command Window (run cmd) and enter this command: easy_install flask
-6. Enter: easy_install lxml
-7. Enter: easy_install pyodbc
-8. Enter: easy_install soaplib==2.0.0-beta1 (unless the 2.0 release has been finalized -- then use that one instead of beta)
-9. Enter: easy_install sqlalchemy
-10. Enter: easy_install nose
-11. Enter: easy_install suds
-11. If you want the package that was used to generate the code for serializing/deserializing WaterML, enter: easy_install generateds
-12. Create a "private_config.py" file in your WOFpy/examples/ folder.  This file should contain the following variables:
-        lbr_connection_string = ''
-        swis_connection_string = ''
-        swis_test_connection_string = ''
-    Each should be set to a SQLAlchemy-compatible database connection string.
-13. (OPTIONAL) Download and install pywin32 http://sourceforge.net/projects/pywin32/files/pywin32/Build%20215/  This package can be used to create a Windows service for your WOFpy application.
+WOFpy reads data from a Data Access Object (DAO) and translates the data into WaterML.  DAOs can represent a variety of data sources, including databases, text files, and Web sites or services.  You can view example DAOs in the examples folder, or write your own based on the BaseDao class in wof/dao.py.
 
-After everything is installed, open a command window and navigate to your WOFpy/test/ folder.  Type "nosetests -v" to run the included tests.  If they all pass, the congratulations!
+WOFpy uses Python version 2.6.
 
-Example for running the code on your local Windows machine:
-1. Populate an ODM database on an instance of SQL Server.  You can download one from the ODM page at http://his.cuahsi.org.
-2. Make a private_config.py file in your local folder and add a line that says
-    database_connection_string = '[YOUR_DB_CONNECTION_STRING]'
-3. Open a Command Window in the same folder as the runserver module and enter: python runserver_[dbname].py
-Tip: In the folder tree view in Windows Explorer, hold down the shift key and right-click on a folder to see the option for opening a command window in that folder.
-4. In your command window you should see a message that says "* Running on http://127.0.0.1:5000/".  Congratulations, your development server is operational!
-5. You may now visit http://127.0.0.1:8080 with your web browser.  Other URLS to visit include:
-        - /GetSite?siteCode=XXX,YYY
-        - /GetSiteInfo?siteCode=XXX
-        - /GetVariableInfo?varCode=ABC
-        - /GetValues?siteCode=XXX&varCode=ABC&startDateTime=2010-01-01:12:00&endDateTime=2010-02-01-01:12:00
+Installation
+------------
 
-To Make a New DAO:
-1. Create a new folder in /daos to put all your dao code.
-2. Write a new DAO class based on wof.dao.BaseDao; the methods should return objects as defined in wof.models
-3. Write a new config file as those found in the examples, they are named *_config.cfg (e.g. examples/swis/swis_config.cfg)
-4. Write a new runserver script (see the files named runserver_*.py in the examples) to use the new DAO you implemented.
+Follow the steps below for Basic installation on a Windows computer.
+
+#. Install **Python 2.6**.  The 32-bit installer is recommended.
+#. Add the **Python** folder to your **Path** environment variable.
+#. Install **setuptools**. This allows the setup script to be run.
+#. Add the **Python/scripts** folder to your **Path** environment variable.
+#. Open a command window (run cmd), navigate to the WOFpy folder (with setup.py
+   in it), and enter this command: ``python setup.py install``
+
+The wof package (in the subfolder named wof) is now accessible from any directory.
+
+.. note::
+    If you edit code in the **wof** folder, you may need to run setup.py again to apply the changes to your system.
+
+Running the Examples
+--------------------
+
+Example services are included with WOFpy.  Each example consists of data, Data
+Access Objects (DAOs), models, and the service definition.  The examples are
+located in the **examples** folder.  See the documentation for more information.  
+
+Publishing Your Data
+--------------------
+
+Follow the general steps below to publish your data with WOFpy.
+
+#. Write a new DAO class based on wof.dao.BaseDao; the methods should return objects as defined in wof.models.  This class helps WOFpy read your data. 
+#. Write a new config file like those found in the examples, e.g. examples/swis/swis_config.cfg. This file contains static descriptors of your Web service such as the name of your water observations network.
+#. Write a new runserver script to use the new DAO you implemented.  See files named runserver_*.py in the examples folder for examples.
+#. To test, open a command window, navigate where your runserver file is located, and use Python to run the script, e.g., python runserver.py.
+
+Unit Tests
+----------
+
+After everything is installed, open a command window and navigate to your WOFpy/test/ folder.  Type "nosetests -v" to run the included tests.  If they all pass, then congratulations!

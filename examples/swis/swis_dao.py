@@ -4,6 +4,7 @@ import ConfigParser
 from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
+from dateutil.parser import parse
 
 import sqlalch_swis_models as model
 
@@ -24,8 +25,8 @@ class SwisDao(BaseDao):
         'zipcode': 'ZIP'
         }
 
-    def __init__(self, db_connection_string, config_file_path):
-        self.engine = create_engine(db_connection_string, convert_unicode=True)
+    def __init__(self, config_file_path, database_uri=None):
+        self.engine = create_engine(database_uri, convert_unicode=True)
         #TODO: Use pool_size for non-sqlite database connection
         self.db_session = scoped_session(sessionmaker(
             autocommit=False, autoflush=False, bind=self.engine))
@@ -92,7 +93,7 @@ class SwisDao(BaseDao):
                     model.Variable.VariableID).all()
             seriesCatArr = []
             for i in range(len(resultList)):
-                seriesCat = model.SeriesCatalog(
+                seriesCat = model.Series(
                         siteResult, varResultArr[i],
                         resultList[i].ValueCount,
                         resultList[i].BeginDateTimeUTC,
@@ -119,7 +120,7 @@ class SwisDao(BaseDao):
                 and_(model.DataValue.SiteID == siteResult.SiteID,
                      model.DataValue.VariableID == varResult.VariableID)).one()
 
-        seriesCat = model.SeriesCatalog(
+        seriesCat = model.Series(
             siteResult, varResult, res.ValueCount, res.BeginDateTimeUTC,
             res.EndDateTimeUTC, self.get_source_by_id())
 
@@ -138,6 +139,8 @@ class SwisDao(BaseDao):
                          model.DataValue.VariableID == varResult.VariableID)
                     ).order_by(model.DataValue.DateTimeUTC).all()
             else:
+                begin_date_time = parse(begin_date_time)
+                end_date_time = parse(end_date_time)
                 valueResultArr = model.DataValue.query.filter(
                     and_(model.DataValue.SiteID == siteResult.SiteID,
                          model.DataValue.VariableID == varResult.VariableID,
@@ -145,6 +148,7 @@ class SwisDao(BaseDao):
                          model.DataValue.DateTimeUTC >= begin_date_time,
                          model.DataValue.DateTimeUTC <= end_date_time)
                     ).order_by(model.DataValue.DateTimeUTC).all()
+
         return valueResultArr
 
     def get_method_by_id(self, methodID):

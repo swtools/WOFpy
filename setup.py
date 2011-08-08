@@ -31,7 +31,8 @@ setup(
         'lxml>=2.3',
         'soaplib>=2.0.0b',
         'suds',
-        'nose'
+        'nose',
+        'python-dateutil==1.5.0'
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

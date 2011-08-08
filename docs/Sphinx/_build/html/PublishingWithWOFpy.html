@@ -1,0 +1,150 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Publishing your data with WOFpy &mdash; WOFpy v1.0-beta documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0-beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="WOFpy v1.0-beta documentation" href="index.html" />
+    <link rel="prev" title="WOFpy Architecture" href="WOFpyArchitecture.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="WOFpyArchitecture.html" title="WOFpy Architecture"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">WOFpy v1.0-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="publishing-your-data-with-wofpy">
+<span id="id1"></span><h1>Publishing your data with WOFpy<a class="headerlink" href="#publishing-your-data-with-wofpy" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="concepts">
+<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="data-access-objects-dao">
+<h3>Data Access Objects (DAO)<a class="headerlink" href="#data-access-objects-dao" title="Permalink to this headline">¶</a></h3>
+<p>(to be continued)
+* DAOs define object-relational mapping (ORM) from native schema to Model.
+* They contain methods for translating user arguments into queries to native db.
+* The python module, SQLalchemy, supports ORMs and can accommodate different db environments (e.g. MSSQL, SQLite, etc)</p>
+</div>
+</div>
+<div class="section" id="dao-tutorial">
+<h2>DAO Tutorial<a class="headerlink" href="#dao-tutorial" title="Permalink to this headline">¶</a></h2>
+<p>To Make a New DAO:</p>
+<ol class="arabic simple">
+<li>Create a new folder in /daos to put all your dao code.</li>
+<li>Write a new DAO class based on BaseDao in base_dao.py.  The methods should return objects as defined in base_models.py</li>
+<li>Write a new config file as those found in /config</li>
+<li>Write a new runserver script (see runserver_flask.py as an example) to use the new DAO you implemented.</li>
+</ol>
+<div class="section" id="example-writing-a-dao-for-a-simple-three-table-database">
+<h3>Example: Writing a DAO for a simple three-table database<a class="headerlink" href="#example-writing-a-dao-for-a-simple-three-table-database" title="Permalink to this headline">¶</a></h3>
+<p>(In progress)
+This example shows how to write a new dao for a simple three-table database.  The dao can be found under the folder,
+&#8216;examplesbarebones&#8217; in &#8216;swtoolsWOFpy&#8217;.  The database contains data from the Lake Champlain Monitoring
+Program (LCM) from the Vermont Department of Environmental Conservation.  The original data were in a
+collection of ASCII and MS Excel files.  These were imported into a sqlite database for publishing
+through WOFpy.  Please note that data is for demonstration purposes and has been modified slightly to make
+the tutorial clearer.</p>
+<p>The three tables are sampling_sites, variables and LCM_data.  Information on the source are contained
+in a .cfg file.  Despite its simplicity, the database supports all four WaterOneFlow methods.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Publishing your data with WOFpy</a><ul>
+<li><a class="reference internal" href="#concepts">Concepts</a><ul>
+<li><a class="reference internal" href="#models">Models</a></li>
+<li><a class="reference internal" href="#data-access-objects-dao">Data Access Objects (DAO)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dao-tutorial">DAO Tutorial</a><ul>
+<li><a class="reference internal" href="#example-writing-a-dao-for-a-simple-three-table-database">Example: Writing a DAO for a simple three-table database</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="WOFpyArchitecture.html"
+                        title="previous chapter">WOFpy Architecture</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/PublishingWithWOFpy.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="WOFpyArchitecture.html" title="WOFpy Architecture"
+             >previous</a> |</li>
+        <li><a href="index.html">WOFpy v1.0-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Texas Water Development Board, Espey Consultants, Inc., University of Texas at Austin.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

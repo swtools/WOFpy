@@ -26,6 +26,8 @@ LOCAL_PARAMETER_FILE_PATH = os.path.join(
 LOCAL_CAPABILITIES_FILE_PATH = os.path.join(
     CBI_CACHE_DIR, 'cbi_sos_capabilities_file.xml')
 
+print CBI_CACHE_DATABASE_URI
+
 namespaces = {
     'gml': "http://www.opengis.net/gml",
     'xlink': "http://www.w3.org/1999/xlink",
@@ -453,7 +455,7 @@ if __name__ == '__main__':
 
         #Now try to add series
 
-        print "Adding SeriesCatalogs to local cache."
+        print "Adding SeriesCatalog to local cache."
 
         cache_series_cats = []
 
@@ -472,7 +474,7 @@ if __name__ == '__main__':
 
             #Need to check because of situation mentioned above
             if site and variable:
-                series_cat = model.SeriesCatalog()
+                series_cat = model.Series()
 
                 series_cat.Site = site
                 series_cat.SiteID = site.SiteID

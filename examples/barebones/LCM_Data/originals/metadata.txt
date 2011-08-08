@@ -1,0 +1,48 @@
+============================================
+= Lake Champlain Long-Term Monitoring Program data
+= http://www.anr.state.vt.us/dec/waterq/lakes/htm/lp_longterm.htm
+============================================
+
+STUDY DESCRIPTION
+The Long-Term Water Quality and Biological Monitoring Project for Lake Champlain has been in operation since 1992. The project is conducted by the Vermont Department of Environmental Conservation (DEC) and the New York State Department of Environmental Conservation with funding provided by the Lake Champlain Basin Program and the two states. The monitoring network includes 15 lake stations representing major lake segments with distinct physical and water quality characteristics.
+
+NOTES
+15 sampling locations are used.  Latitude and longitude coordinates for sampling locations are recorded.  Coordinates use the WGS84 datum.
+
+============================================
+= Variables
+============================================
+
+VARIABLES AND UNITS OF MEASURE
+TN	Nitrogen, total as N		micrograms per liter
+TP	Phosphorus, total as P		micrograms per liter
+Temp	Temperature			degree celcius
+TSS	Solids, total Suspended		milligrams per liter
+Chla	Chlorophyll a			micrograms per liter
+
+Measurements are taken at various depths below the water surface.  Depth values are recorded in units of meters.
+
+All datetimes for measurements are recorded in Standard Time.
+
+Null or missing values are indicated by -9999.
+
+============================================
+= Source Details
+============================================
+
+ABOUT vT DEC
+VT Department of Environmental Conservation
+http://www.anr.state.vt.us/dec/dec.htm
+
+The Vermont Department of Environmental Conservation’s mission is to preserve, enhance, restore and conserve Vermont’s natural resources and protect human health for the benefit of this and future generations.
+
+For more information about the Lake Champlain Long-Term Monitoring Program data, please contact:
+Jill Data
+Phone: 555-555-5555
+Email: jill.data@champlain.com
+Address:
+Water Quality Division, 103 South Main Street, Building 10 North
+Waterbury, VT  05671-0408
+
+When referencing data from this project, please cite:
+P. Stangel, A. Shambaugh, F. Dunlap, (1992-2008), "Sixteen years of water-quality data collection on Lake Champlain, Vermont and New York, United States" 

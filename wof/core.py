@@ -1,9 +1,15 @@
+import datetime
 from xml.sax.saxutils import escape
 
 import ConfigParser
+import soaplib.core
+import soaplib.core.server.wsgi
+import werkzeug
+from dateutil.parser import parse
 
+import wof.flask
+import wof.soap
 import WaterML
-
 
 
 class WOF(object):
@@ -22,8 +28,10 @@ class WOF(object):
     default_start_date = None
     default_end_date = None
 
-    def __init__(self, dao):
+    def __init__(self, dao, config_file=None):
         self.dao = dao
+        if config_file:
+            self.config_from_file(config_file)
 
     def config_from_file(self, file_name):
         config = ConfigParser.RawConfigParser()
@@ -80,7 +88,7 @@ class WOF(object):
         if (varArg == None or varArg == ''):
             seriesResultArr = self.dao.get_series_by_sitecode(siteCode)
         else:
-            varCode = varArg.replace(self.network + ':', '')
+            varCode = varArg.replace(self.vocabulary + ':', '')
             seriesResultArr = self.dao.get_series_by_sitecode_and_varcode(
                 siteCode, varCode)
 
@@ -108,8 +116,8 @@ class WOF(object):
         if (varArg == None or varArg == ''):
             variableResultArr = self.dao.get_all_variables()
         else:
-            varCodesArr = varArg.split(', ')
-            varCodesArr = [v.replace(self.network + ':', '')
+            varCodesArr = varArg.split(',')
+            varCodesArr = [v.replace(self.vocabulary + ':', '')
                            for v in varCodesArr]
             variableResultArr = self.dao.get_variables_by_codes(varCodesArr)
 
@@ -137,8 +145,10 @@ class WOF(object):
     def create_get_values_response(self, siteArg, varArg, startDateTime=None,
                                    endDateTime=None):
 
+        #TODO: Tim thinks the DAO should handle network and vocab parsing,
+        #      not WOF
         siteCode = siteArg.replace(self.network + ':', '')
-        varCode = varArg.replace(self.network + ':', '')
+        varCode = varArg.replace(self.vocabulary + ':', '')
 
         valueResultArr = self.dao.get_datavalues(siteCode, varCode,
                                                  startDateTime, endDateTime)
@@ -333,10 +343,8 @@ class WOF(object):
     #TODO: lots more stuff to fill out here
     def create_value_element(self, valueResult):
 
-        #TODO correct time zone?
-        isoDateTimeUTC = str(valueResult.DateTimeUTC).replace(' ', 'T')
-        if isoDateTimeUTC.find('Z') == -1:
-            isoDateTimeUTC += 'Z'
+        # TODO: Shall we require DAO to return ISO date strings, or
+        #       shall WOF handle that?  Performance hit if both do it.
 
         value = WaterML.ValueSingleVariable(
                         qualityControlLevel=valueResult.QualityControlLevel,
@@ -347,7 +355,7 @@ class WOF(object):
                         offsetTypeID=valueResult.OffsetTypeID,
                         accuracyStdDev=valueResult.ValueAccuracy,
                         offsetValue=valueResult.OffsetValue,
-                        dateTime=isoDateTimeUTC,
+                        dateTime=valueResult.LocalDateTime,
                         qualifiers=valueResult.QualifierID,
                         valueOf_=str(valueResult.DataValue))
 
@@ -467,20 +475,10 @@ class WOF(object):
         series.valueCount = WaterML.valueCount(
             valueOf_=str(seriesResult.ValueCount))
 
-        #DateTimes
-        isoBeginDateTimeUTC = str(
-            seriesResult.BeginDateTimeUTC).replace(' ', 'T')
-        if isoBeginDateTimeUTC.find('Z') == -1:
-            isoBeginDateTimeUTC += 'Z'
-
-        isoEndDateTimeUTC = str(
-            seriesResult.EndDateTimeUTC).replace(' ', 'T')
-        if isoEndDateTimeUTC.find('Z') == -1:
-            isoEndDateTimeUTC += 'Z'
-
         #TimeInterval
         variableTimeInt = WaterML.TimeIntervalType(
-            beginDateTime=isoBeginDateTimeUTC, endDateTime=isoEndDateTimeUTC)
+            beginDateTime=seriesResult.BeginDateTime,
+            endDateTime=seriesResult.EndDateTime)
         series.variableTimeInterval = variableTimeInt
 
         #Method
@@ -555,9 +553,27 @@ class WOF(object):
     def create_wml2_values_object(self, siteArg, varArg, startDateTime=None,
                                    endDateTime=None):
         siteCode = siteArg.replace(self.network + ':', '')
-        varCode = varArg.replace(self.network + ':', '')
+        varCode = varArg.replace(self.vocabulary + ':', '')
 
         valueResultArr = self.dao.get_datavalues(siteCode, varCode,
                                                  startDateTime, endDateTime)
 
         return valueResultArr
+
+
+def create_wof_app(dao, config_file):
+    """
+    Returns a fully instantiated WOF wsgi app (flask + soap)
+    """
+    wof_obj = WOF(dao, config_file)
+    app = wof.flask.create_app(wof_obj)
+    WOFService = wof.soap.create_wof_service_class(wof_obj)
+    soap_app = soaplib.core.Application(
+        services=[WOFService],
+        tns='http://www.cuahsi.org/his/1.0/ws/',
+        name='WaterOneFlow')
+    soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
+    app.wsgi_app = werkzeug.wsgi.DispatcherMiddleware(app.wsgi_app, {
+        '/soap/wateroneflow': soap_wsgi_app
+        })
+    return app

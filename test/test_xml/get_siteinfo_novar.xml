@@ -1,0 +1,128 @@
+<sitesResponse xmlns:gml="http://www.opengis.net/gml"     xmlns:xlink="http://www.w3.org/1999/xlink"     xmlns:xsd="http://www.w3.org/2001/XMLSchema"     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     xmlns:wtr="http://www.cuahsi.org/waterML/"     xmlns="http://www.cuahsi.org/waterML/1.0/">
+    <queryInfo>
+        <criteria>
+            <locationParam>TEST:SITE_A</locationParam>
+        </criteria>
+        <note/>
+        <extension></extension>
+    </queryInfo>
+    <site>
+        <siteInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="SiteInfoType">
+            <siteName>Site A</siteName>
+            <siteCode siteID="1" network="TEST">SITE_A</siteCode>
+            <timeZoneInfo siteUsesDaylightSavingsTime="false">
+                <defaultTimeZone ZoneOffset="00:00" ZoneAbbreviation="GMT"/>
+            </timeZoneInfo>
+            <geoLocation>
+                <geogLocation srs="EPSG:None" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="LatLonPointType">
+                    <latitude>50</latitude>
+                    <longitude>60</longitude>
+                </geogLocation>
+            </geoLocation>
+            <note/>
+            <extension></extension>
+            <altname></altname>
+        </siteInfo>
+        <seriesCatalog menuGroupName="TEST OBSERVATIONS" serviceWsdl="http://not.a.real.url/">
+            <series>
+                <variable>
+                    <variableCode default="true" variableID="2" vocabulary="TESTVocab">Flow</variableCode>
+                    <variableName>Discharge</variableName>
+                    <variableDescription>Average streamflow</variableDescription>
+                    <valueType>Field Observation</valueType>
+                    <dataType>Average</dataType>
+                    <generalCategory>Hydrology</generalCategory>
+                    <sampleMedium>Surface Water</sampleMedium>
+                    <units unitsAbbreviation="cfs" unitsCode="35" unitsType="Flow">cubic feet per second</units>
+                    <NoDataValue>-9999</NoDataValue>
+                    <timeSupport isRegular="true">
+                        <unit UnitID="102">
+                            <UnitName>minute</UnitName>
+                            <UnitDescription>minute</UnitDescription>
+                            <UnitType>Time</UnitType>
+                            <UnitAbbreviation>min</UnitAbbreviation>
+                        </unit>
+                        <timeInterval>15</timeInterval>
+                    </timeSupport>
+                </variable>
+                <valueCount>1</valueCount>
+                <variableTimeInterval xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TimeIntervalType">
+                    <beginDateTime>2007-04-05T00:00:00-06:00</beginDateTime>
+                    <endDateTime>2007-04-05T00:00:00-06:00</endDateTime>
+                </variableTimeInterval>
+                <Method methodID="26">
+                    <MethodDescription>USGS real time streamflow gage.</MethodDescription>
+                    <MethodLink>http://waterdata.usgs.gov</MethodLink>
+                </Method>
+                <Source sourceID="1">
+                    <Organization>Thundercats</Organization>
+                    <SourceDescription>Likes defeating evil; also likes milk</SourceDescription>
+                    <Metadata>
+                        <TopicCategory>inlandWaters</TopicCategory>
+                        <Title>Good Title</Title>
+                        <Abstract>Nice Abstract</Abstract>
+                        <ProfileVersion>Unknown</ProfileVersion>
+                        <MetadataLink>http://www.unknown.edu</MetadataLink>
+                    </Metadata>
+                    <ContactInformation>
+                        <ContactName>Snarf</ContactName>
+                        <Phone>555-555-5555</Phone>
+                        <Email>snarf@gocats.outerspace</Email>
+                        <Address>Thundercats Lair, Meow City, Thundera, 23487</Address>
+                    </ContactInformation>
+                    <SourceLink>http://www.thundercats.edu</SourceLink>
+                </Source>
+                <QualityControlLevel qualityControlLevelID="1">QC'd</QualityControlLevel>
+            </series>
+            <series>
+                <variable>
+                    <variableCode default="true" variableID="1" vocabulary="TESTVocab">Temp</variableCode>
+                    <variableName>Temperature</variableName>
+                    <valueType>Field Observation</valueType>
+                    <dataType>Continuous</dataType>
+                    <generalCategory>Water Quality</generalCategory>
+                    <sampleMedium>Surface Water</sampleMedium>
+                    <units unitsAbbreviation="degC" unitsCode="96" unitsType="Temperature">degree celcius</units>
+                    <NoDataValue>-9999</NoDataValue>
+                    <timeSupport isRegular="true">
+                        <unit UnitID="100">
+                            <UnitName>second</UnitName>
+                            <UnitDescription>second</UnitDescription>
+                            <UnitType>Time</UnitType>
+                            <UnitAbbreviation>s</UnitAbbreviation>
+                        </unit>
+                    </timeSupport>
+                </variable>
+                <valueCount>2</valueCount>
+                <variableTimeInterval xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="TimeIntervalType">
+                    <beginDateTime>2007-04-05T00:00:00-06:00</beginDateTime>
+                    <endDateTime>2007-04-06T00:00:00-06:00</endDateTime>
+                </variableTimeInterval>
+                <Method methodID="5">
+                    <MethodDescription>Temperature measured using a sensor.</MethodDescription>
+                    <MethodLink>http://www.campbellsci.com/</MethodLink>
+                </Method>
+                <Source sourceID="1">
+                    <Organization>Thundercats</Organization>
+                    <SourceDescription>Likes defeating evil; also likes milk</SourceDescription>
+                    <Metadata>
+                        <TopicCategory>inlandWaters</TopicCategory>
+                        <Title>Good Title</Title>
+                        <Abstract>Nice Abstract</Abstract>
+                        <ProfileVersion>Unknown</ProfileVersion>
+                        <MetadataLink>http://www.unknown.edu</MetadataLink>
+                    </Metadata>
+                    <ContactInformation>
+                        <ContactName>Snarf</ContactName>
+                        <Phone>555-555-5555</Phone>
+                        <Email>snarf@gocats.outerspace</Email>
+                        <Address>Thundercats Lair, Meow City, Thundera, 23487</Address>
+                    </ContactInformation>
+                    <SourceLink>http://www.thundercats.edu</SourceLink>
+                </Source>
+                <QualityControlLevel qualityControlLevelID="1">QC'd</QualityControlLevel>
+            </series>
+        </seriesCatalog>
+        <extension></extension>
+    </site>
+</sitesResponse>

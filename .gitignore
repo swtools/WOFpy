@@ -1,3 +1,4 @@
 private_config.py
 *.pyc
 Get*.xml
+docs/Sphinx/_build/doctrees/

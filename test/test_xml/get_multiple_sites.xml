@@ -1,0 +1,56 @@
+<sitesResponse xmlns:gml="http://www.opengis.net/gml"     xmlns:xlink="http://www.w3.org/1999/xlink"     xmlns:xsd="http://www.w3.org/2001/XMLSchema"     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     xmlns:wtr="http://www.cuahsi.org/waterML/"     xmlns="http://www.cuahsi.org/waterML/1.0/">
+    <queryInfo>
+        <criteria>
+            <locationParam>TEST:SITE_A,TEST:SITE_B</locationParam>
+        </criteria>
+        <note/>
+        <extension></extension>
+    </queryInfo>
+    <site>
+        <siteInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="SiteInfoType">
+            <siteName>Site A</siteName>
+            <siteCode siteID="1" network="TEST">SITE_A</siteCode>
+            <timeZoneInfo siteUsesDaylightSavingsTime="false">
+                <defaultTimeZone ZoneOffset="00:00" ZoneAbbreviation="GMT"/>
+            </timeZoneInfo>
+            <geoLocation>
+                <geogLocation srs="EPSG:None" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="LatLonPointType">
+                    <latitude>50</latitude>
+                    <longitude>60</longitude>
+                </geogLocation>
+            </geoLocation>
+            <note/>
+            <extension></extension>
+            <altname></altname>
+        </siteInfo>
+        <seriesCatalog/>
+        <extension></extension>
+    </site>
+    <site>
+        <siteInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="SiteInfoType">
+            <siteName>Site B</siteName>
+            <siteCode siteID="2" network="TEST">SITE_B</siteCode>
+            <timeZoneInfo siteUsesDaylightSavingsTime="false">
+                <defaultTimeZone ZoneOffset="00:00" ZoneAbbreviation="GMT"/>
+            </timeZoneInfo>
+            <geoLocation>
+                <geogLocation srs="EPSG:4269" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="LatLonPointType">
+                    <latitude>41.718473</latitude>
+                    <longitude>-111.946402</longitude>
+                </geogLocation>
+                <localSiteXY projectionInformation="NAD83 / UTM zone 12N">
+                    <X>421276.323</X>
+                    <Y>4618952.04</Y>
+                </localSiteXY>
+            </geoLocation>
+            <verticalDatum>NGVD29</verticalDatum>
+            <note title="County">Cache</note>
+            <note title="State">Utah</note>
+            <note title="Site Comments">Located in a neat place</note>
+            <extension></extension>
+            <altname></altname>
+        </siteInfo>
+        <seriesCatalog/>
+        <extension></extension>
+    </site>
+</sitesResponse>

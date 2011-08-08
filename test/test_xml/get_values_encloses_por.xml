@@ -1,0 +1,87 @@
+<timeSeriesResponse xmlns:gml="http://www.opengis.net/gml"     xmlns:xlink="http://www.w3.org/1999/xlink"     xmlns:xsd="http://www.w3.org/2001/XMLSchema"     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"     xmlns:wtr="http://www.cuahsi.org/waterML/"     xmlns="http://www.cuahsi.org/waterML/1.0/">
+    <queryInfo>
+        <criteria>
+            <locationParam>TEST:SITE_A</locationParam>
+            <variableParam>TESTVocab:Temp</variableParam>
+            <timeParam>
+                <beginDateTime>2007-03-05 00:00</beginDateTime>
+                <endDateTime>2007-05-06 00:00</endDateTime>
+            </timeParam>
+        </criteria>
+        <note/>
+        <extension></extension>
+    </queryInfo>
+    <timeSeries name="None">
+        <sourceInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="SiteInfoType">
+            <siteName>Site A</siteName>
+            <siteCode siteID="1" network="TEST">SITE_A</siteCode>
+            <timeZoneInfo siteUsesDaylightSavingsTime="false">
+                <defaultTimeZone ZoneOffset="00:00" ZoneAbbreviation="GMT"/>
+            </timeZoneInfo>
+            <geoLocation>
+                <geogLocation srs="EPSG:None" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="LatLonPointType">
+                    <latitude>50</latitude>
+                    <longitude>60</longitude>
+                </geogLocation>
+            </geoLocation>
+            <extension></extension>
+            <altname></altname>
+        </sourceInfo>
+        <variable>
+            <variableCode default="true" variableID="1" vocabulary="TESTVocab">Temp</variableCode>
+            <variableName>Temperature</variableName>
+            <valueType>Field Observation</valueType>
+            <dataType>Continuous</dataType>
+            <generalCategory>Water Quality</generalCategory>
+            <sampleMedium>Surface Water</sampleMedium>
+            <units unitsAbbreviation="degC" unitsCode="96" unitsType="Temperature">degree celcius</units>
+            <NoDataValue>-9999</NoDataValue>
+            <timeSupport isRegular="true">
+                <unit UnitID="100">
+                    <UnitName>second</UnitName>
+                    <UnitDescription>second</UnitDescription>
+                    <UnitType>Time</UnitType>
+                    <UnitAbbreviation>s</UnitAbbreviation>
+                </unit>
+            </timeSupport>
+        </variable>
+        <values count="2" unitsAbbreviation="degC" unitsAreConverted="false" unitsCode="96">
+            <value qualityControlLevel="QC Definition" methodID="5" sourceID="1" censorCode="nc" offsetTypeID="1" offsetValue="2.4" dateTime="2007-04-05T00:00:00-06:00">8.4</value>
+            <value qualityControlLevel="QC Definition" methodID="5" sourceID="1" censorCode="nc" offsetTypeID="1" offsetValue="2.5" dateTime="2007-04-06T00:00:00-06:00" qualifiers="1">10.4</value>
+            <qualifier qualifierID="1" network="TEST" vocabulary="TESTVocab">
+                <qualifierCode>USU-I</qualifierCode>
+            </qualifier>
+            <method methodID="5">
+                <MethodDescription>Temperature measured using a sensor.</MethodDescription>
+                <MethodLink>http://www.campbellsci.com/</MethodLink>
+            </method>
+            <source sourceID="1">
+                <Organization>Thundercats</Organization>
+                <SourceDescription>Likes defeating evil; also likes milk</SourceDescription>
+                <Metadata>
+                    <TopicCategory>inlandWaters</TopicCategory>
+                    <Title>Good Title</Title>
+                    <Abstract>Nice Abstract</Abstract>
+                    <ProfileVersion>Unknown</ProfileVersion>
+                    <MetadataLink>http://www.unknown.edu</MetadataLink>
+                </Metadata>
+                <ContactInformation>
+                    <ContactName>Snarf</ContactName>
+                    <Phone>555-555-5555</Phone>
+                    <Email>snarf@gocats.outerspace</Email>
+                    <Address>Thundercats Lair, Meow City, Thundera, 23487</Address>
+                </ContactInformation>
+                <SourceLink>http://www.thundercats.edu</SourceLink>
+            </source>
+            <offset offsetTypeID="1">
+                <offsetDescription>Distance below water surface</offsetDescription>
+                <units UnitID="52">
+                    <UnitName>meter</UnitName>
+                    <UnitType>Length</UnitType>
+                    <UnitAbbreviation>m</UnitAbbreviation>
+                </units>
+                <offsetIsVertical>true</offsetIsVertical>
+            </offset>
+        </values>
+    </timeSeries>
+</timeSeriesResponse>

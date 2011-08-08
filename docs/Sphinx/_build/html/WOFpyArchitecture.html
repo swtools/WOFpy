@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>WOFpy Architecture &mdash; WOFpy v1.0-beta documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0-beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="WOFpy v1.0-beta documentation" href="index.html" />
+    <link rel="next" title="Publishing your data with WOFpy" href="PublishingWithWOFpy.html" />
+    <link rel="prev" title="Getting Started" href="GettingStarted.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="PublishingWithWOFpy.html" title="Publishing your data with WOFpy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="GettingStarted.html" title="Getting Started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">WOFpy v1.0-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="wofpy-architecture">
+<span id="id1"></span><h1>WOFpy Architecture<a class="headerlink" href="#wofpy-architecture" title="Permalink to this headline">¶</a></h1>
+<p>When you download and open WOFpy, you can find the following folders</p>
+<div class="section" id="wofpy-s-components">
+<h2>WOFpy&#8217;s components<a class="headerlink" href="#wofpy-s-components" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned earlier, WOFpy can be compared to a <strong>restaurant</strong>.  The components of WOFpy
+can be compared to the following members of the catering staff:</p>
+<img alt="_images/ARestaurantAnalogyForWOFpy_55.png" src="_images/ARestaurantAnalogyForWOFpy_55.png" />
+<div class="section" id="web-services-waiters">
+<h3>Web services (Waiters)<a class="headerlink" href="#web-services-waiters" title="Permalink to this headline">¶</a></h3>
+<p>Web services are what the data consumer interact with.  WOFpy provides both REST (REpresentational State Transfer) and
+SOAP (Simple Object Access Protocol) web services.  These web services are designed to handle the four main
+WaterOneFlow methods:  GetSites, GetVariables, GetSiteInfo and GetValues.</p>
+</div>
+<div class="section" id="wof-cook">
+<h3>WOF (Cook)<a class="headerlink" href="#wof-cook" title="Permalink to this headline">¶</a></h3>
+<p>WOF is the core package within WOFpy.
+Processes web service requests
+Uses DAOs to acquire data from native database
+Assembles WaterML objects into WaterML and returns them
+Contains SOAP and REST web service classes and URL templates</p>
+</div>
+<div class="section" id="database-pantry">
+<h3>Database (Pantry)<a class="headerlink" href="#database-pantry" title="Permalink to this headline">¶</a></h3>
+<p>Organized the way you want to organize it.</p>
+</div>
+<div class="section" id="daos-recipes">
+<h3>DAOs (Recipes)<a class="headerlink" href="#daos-recipes" title="Permalink to this headline">¶</a></h3>
+<p>DAO =  Data Access Packages
+Contains Object Relational Mapping (ORM) to map from native database schema to WaterML objects.
+Customized by data provider</p>
+</div>
+<div class="section" id="management-script-restaurant-owner-manager">
+<h3>Management Script (Restaurant Owner/Manager)<a class="headerlink" href="#management-script-restaurant-owner-manager" title="Permalink to this headline">¶</a></h3>
+<p>Determines which native database(s) to publish
+Determines which DAO(s) to use
+Starts the WOFpy web services</p>
+<p>From the viewpoint of the code, the following diagram shows the location of the different components within
+WOFpy&#8217;s file structure.</p>
+<img alt="_images/WOFpy_architecture2.png" src="_images/WOFpy_architecture2.png" />
+</div>
+</div>
+<div class="section" id="wofpy-in-action">
+<h2>WOFpy in action<a class="headerlink" href="#wofpy-in-action" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="wofpy-file-structure">
+<h2>WOFpy file structure<a class="headerlink" href="#wofpy-file-structure" title="Permalink to this headline">¶</a></h2>
+<p>When you download and open WOFpy.  You will notice that it contains the following file structure.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">(Only selected folders are expanded).</p>
+</div>
+<p>WOFPY|   readme.txt
+|   setup.py
+|
++&#8212;docs|
++&#8212;examples|   +&#8212;barebones|   +&#8212;cbi|   +&#8212;odm_sqlserver|   &#8212;swis|
++&#8212;test|
+&#8212;wof</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">core.py</div>
+<div class="line">dao.py</div>
+<div class="line">models.py</div>
+<div class="line">WaterML.py</div>
+<div class="line">__init__.py</div>
+<div class="line"><br /></div>
+</div>
+<p>+&#8212;flask|   |   config.py
+|   |   __init__.py
+|   |
+|   +&#8212;templates|   |       index.html
+|   |       wml2_values_template.xml
+|   |       wsdl_temp.wsdl
+|   |
+|   &#8212;views|           rest.py
+|           wsdl.py
+|           __init__.py
+|
+&#8212;soap</p>
+<blockquote>
+<div>soap.py
+__init__.py</div></blockquote>
+</div></blockquote>
+<p>WOFpy contains 4 main</p>
+</div>
+<div class="section" id="wofpy-modules-and-packages">
+<h2>WOFpy modules and packages<a class="headerlink" href="#wofpy-modules-and-packages" title="Permalink to this headline">¶</a></h2>
+<p>(to be linked to epydoc files in /_build/html/epydoc/)</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">WOFpy Architecture</a><ul>
+<li><a class="reference internal" href="#wofpy-s-components">WOFpy&#8217;s components</a><ul>
+<li><a class="reference internal" href="#web-services-waiters">Web services (Waiters)</a></li>
+<li><a class="reference internal" href="#wof-cook">WOF (Cook)</a></li>
+<li><a class="reference internal" href="#database-pantry">Database (Pantry)</a></li>
+<li><a class="reference internal" href="#daos-recipes">DAOs (Recipes)</a></li>
+<li><a class="reference internal" href="#management-script-restaurant-owner-manager">Management Script (Restaurant Owner/Manager)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wofpy-in-action">WOFpy in action</a></li>
+<li><a class="reference internal" href="#wofpy-file-structure">WOFpy file structure</a></li>
+<li><a class="reference internal" href="#wofpy-modules-and-packages">WOFpy modules and packages</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="GettingStarted.html"
+                        title="previous chapter">Getting Started</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="PublishingWithWOFpy.html"
+                        title="next chapter">Publishing your data with WOFpy</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/WOFpyArchitecture.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="PublishingWithWOFpy.html" title="Publishing your data with WOFpy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="GettingStarted.html" title="Getting Started"
+             >previous</a> |</li>
+        <li><a href="index.html">WOFpy v1.0-beta documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Texas Water Development Board, Espey Consultants, Inc., University of Texas at Austin.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
