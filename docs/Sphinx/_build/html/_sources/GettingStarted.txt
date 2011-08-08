@@ -136,10 +136,14 @@ access using a standard WaterOneFlow service and send responses back in WaterML
 format!
 
 This example requires an internet connection to access the TCOON Web service.
+To prepare your service, you will make a cache of sites and variables available
+from TCOON.  Then you will run the service.
 
 Follow the steps below to run this example.
 
 #. Open a command window in the **examples/cbi** folder and enter:
+   ``python build_cbi_cache.py``
+#. In the command window, enter:
    ``python runserver_cbi.py``
 #. In your command window you should see a message indicating that the service
    is running along with instructions for accessing the service.  

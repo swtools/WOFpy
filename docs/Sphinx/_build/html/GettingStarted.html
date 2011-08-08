@@ -161,10 +161,14 @@ another Web service to provide data to the client.  Of course, the client has
 no idea that this is happening.  All the client cares about is that we provide
 access using a standard WaterOneFlow service and send responses back in WaterML
 format!</p>
-<p>This example requires an internet connection to access the TCOON Web service.</p>
+<p>This example requires an internet connection to access the TCOON Web service.
+To prepare your service, you will make a cache of sites and variables available
+from TCOON.  Then you will run the service.</p>
 <p>Follow the steps below to run this example.</p>
 <ol class="arabic simple">
 <li>Open a command window in the <strong>examples/cbi</strong> folder and enter:
+<tt class="docutils literal"><span class="pre">python</span> <span class="pre">build_cbi_cache.py</span></tt></li>
+<li>In the command window, enter:
 <tt class="docutils literal"><span class="pre">python</span> <span class="pre">runserver_cbi.py</span></tt></li>
 <li>In your command window you should see a message indicating that the service
 is running along with instructions for accessing the service.</li>
