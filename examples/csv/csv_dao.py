@@ -1,5 +1,4 @@
 from datetime import timedelta
-import ConfigParser
 import csv
 
 from dateutil.parser import parse
@@ -14,35 +13,26 @@ class CsvDao(BaseDao):
         self.sites_file_path = sites_file_path
         self.values_file_path = values_file_path
         
-        config = ConfigParser.RawConfigParser()
-        config.read(config_file_path)
-
         # Build a dictionary of variables indexed by code
         variable_dict = {}
 
         stage = csv_model.Variable()
-        stage.VariableCode = config.get('Stage_ft', 'VariableCode')
-        stage.VariableName = config.get('Stage_ft', 'VariableName')
-        stage.VariableUnitsID = config.get('Stage_ft', 'UnitsID')
+        stage.VariableCode = 'Stage_ft'
+        stage.VariableName = 'Stage'
         stage_units = wof_base.BaseUnits()
-        stage_units.UnitsID = config.get('Stage_ft', 'UnitsID')
-        stage_units.UnitsName = config.get('Stage_ft', 'UnitsName')
-        stage_units.UnitsType = config.get('Stage_ft', 'UnitsType')
-        stage_units.UnitsAbbreviation = config.get('Stage_ft',
-                                                   'UnitsAbbreviation')
+        stage_units.UnitsName = 'international foot'
+        stage_units.UnitsType = 'Length'
+        stage_units.UnitsAbbreviation = 'ft'
         stage.VariableUnits = stage_units
         variable_dict['Stage_ft'] = stage
         
         flow = csv_model.Variable()
-        flow.VariableCode = config.get('Discharge_cfs', 'VariableCode')
-        flow.VariableName = config.get('Discharge_cfs', 'VariableName')
-        flow.VariableUnitsID = config.get('Discharge_cfs', 'UnitsID')
+        flow.VariableCode = 'Discharge_cfs'
+        flow.VariableName = 'Discharge'
         flow_units = wof_base.BaseUnits()
-        flow_units.UnitsID = config.get('Discharge_cfs', 'UnitsID')
-        flow_units.UnitsName = config.get('Discharge_cfs', 'UnitsName')
-        flow_units.UnitsType = config.get('Discharge_cfs', 'UnitsType')
-        flow_units.UnitsAbbreviation = config.get('Discharge_cfs',
-                                                   'UnitsAbbreviation')
+        flow_units.UnitsName = 'cubic feet per second'
+        flow_units.UnitsType = 'Flow'
+        flow_units.UnitsAbbreviation = 'cfs'
         flow.VariableUnits = flow_units
         variable_dict['Discharge_cfs'] = flow
         
