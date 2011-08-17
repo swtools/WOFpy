@@ -9,7 +9,7 @@ import wof.models as wof_base
 import csv_model
 
 class CsvDao(BaseDao):
-    def __init__(self, config_file_path, sites_file_path, values_file_path):
+    def __init__(self, sites_file_path, values_file_path):
         self.sites_file_path = sites_file_path
         self.values_file_path = values_file_path
         
@@ -250,11 +250,6 @@ class CsvDao(BaseDao):
             
         return valueResultArr
 
-    def get_method_by_id(self, methodID):
-        method = csv_model.Method()
-        if methodID == method.MethodID:
-            return method
-
     def get_methods_by_ids(self, method_id_arr):
         method = csv_model.Method()
         methods = []
@@ -262,36 +257,14 @@ class CsvDao(BaseDao):
             methods.append(method)
         return methods
 
-    def get_source_by_id(self, source_id=1):
-        if source_id == 1:
-            return csv_model.Source()
-
     def get_sources_by_ids(self, source_id_arr):
         sources = []
         if 1 in source_id_arr:
             sources.append(csv_model.Source())
         return sources
 
-    def get_qualcontrollvl_by_id(self, qual_control_lvl_id):
-        qc_level = csv_model.QualityControlLevel()
-        if qual_control_lvl_id == qc_level.QualityControlLevelID:
-            return qc_level
-
-    def get_qualcontrollvls_by_ids(self, qual_control_lvl_id_arr):
-        qc_levels = []
-        qc_level = csv_model.QualityControlLevel()
-        if qc_level.QualityControlLevelID in qual_control_lvl_id_arr:
-            qc_levels.append(qc_level)
-        return qc_levels
-
-    def get_qualifier_by_id(self, qualifier_id):
-        return None
-
     def get_qualifiers_by_ids(self, qualifier_id_arr):
         return []
-
-    def get_offsettype_by_id(self, offset_type_id):
-        return None
 
     def get_offsettypes_by_ids(self, offset_type_id_arr):
         return []
