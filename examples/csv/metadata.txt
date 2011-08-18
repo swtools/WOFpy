@@ -1,0 +1,5 @@
+These fictitious sample data illustrate how to create a WOFpy DAO to work with CSV files.  The data are for illustration purposes only.
+
+data.csv contains average daily stage and discharge values for three monitoring stations along the Colorado River in Texas.  The stations were operated by a fictitious organization called Texas River Monitoring, whose monitoring program ran from January 1, 2008, to April 30, 2008.  The data are quality controlled and ready for publication.  
+
+sites.csv contains a listing of site locations.  The coordinates use the NAD83 datum.
