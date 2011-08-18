@@ -67,7 +67,6 @@ class CsvDao(BaseDao):
         with open(self.sites_file_path, 'rb') as f:
             reader = csv.reader(f)
             at_header = True
-            sites = []
             for row in reader:
                 if at_header:
                     at_header = False
