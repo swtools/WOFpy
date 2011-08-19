@@ -475,10 +475,23 @@ class WOF(object):
         series.valueCount = WaterML.valueCount(
             valueOf_=str(seriesResult.ValueCount))
 
+        # do we want to make UTC the default?
+        try:
+            beginDateTime = seriesResult.BeginDateTimeUTC
+            endDateTime = seriesResult.EndDateTimeUTC
+        except AttributeError:
+            beginDateTime = seriesResult.BeginDateTime
+            endDateTime = seriesResult.EndDateTime
+
+        if type(beginDateTime) == datetime.datetime:
+            beginDateTime = beginDateTime.isoformat()
+        if type(endDateTime) == datetime.datetime:
+            endDateTime = endDateTime.isoformat()
+
         #TimeInterval
         variableTimeInt = WaterML.TimeIntervalType(
-            beginDateTime=seriesResult.BeginDateTime,
-            endDateTime=seriesResult.EndDateTime)
+            beginDateTime=beginDateTime,
+            endDateTime=endDateTime)
         series.variableTimeInterval = variableTimeInt
 
         #Method
