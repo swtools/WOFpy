@@ -2,10 +2,10 @@ import datetime
 from xml.sax.saxutils import escape
 
 import ConfigParser
+import dateutil.tz
 import soaplib.core
 import soaplib.core.server.wsgi
 import werkzeug
-from dateutil.parser import parse
 
 import wof.flask
 import wof.soap
@@ -479,14 +479,26 @@ class WOF(object):
         try:
             beginDateTime = seriesResult.BeginDateTimeUTC
             endDateTime = seriesResult.EndDateTimeUTC
+            if type(beginDateTime) == datetime.datetime:
+                beginDateTime.tzinfo = dateutil.tz.tzutc()
+                beginDateTime = beginDateTime.isoformat().replace('+00:00',
+                                                                  'Z')
+            if type(endDateTime) == datetime.datetime:
+                endDateTime.tzinfo = dateutil.tz.tzutc()
+                endDateTime = endDateTime.isoformat().replace('+00:00', 'Z')
+
         except AttributeError:
             beginDateTime = seriesResult.BeginDateTime
             endDateTime = seriesResult.EndDateTime
 
-        if type(beginDateTime) == datetime.datetime:
-            beginDateTime = beginDateTime.isoformat()
-        if type(endDateTime) == datetime.datetime:
-            endDateTime = endDateTime.isoformat()
+            if type(beginDateTime) == datetime.datetime:
+                if not beginDateTime.tzinfo:
+                    raise ValueError("local times must be timezone-aware")
+                beginDateTime = beginDateTime.isoformat()
+            if type(endDateTime) == datetime.datetime:
+                if not endDateTime.tzinfo:
+                    raise ValueError("local times must be timezone-aware")
+                endDateTime = endDateTime.isoformat()
 
         #TimeInterval
         variableTimeInt = WaterML.TimeIntervalType(
