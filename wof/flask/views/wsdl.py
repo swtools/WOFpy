@@ -15,10 +15,10 @@ def get_wsdl():
     network = current_app.wof_inst.network.lower()
 
     try:
-       serv_loc = current_app.config['SOAP_SERVICE_URL']            
+       serv_loc = current_app.config['SOAP_SERVICE_URL']
     except KeyError:
         serv_loc = current_app.config.get(
-            'SOAP_SERVICE_URL',           
+            'SOAP_SERVICE_URL',
             '%s/wateroneflow/' % request.url.rsplit('/', 1)[0])
 
     response = make_response(render_template('wsdl_temp.wsdl',
