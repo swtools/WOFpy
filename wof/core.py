@@ -340,9 +340,8 @@ class WOF(object):
 
     #TODO: lots more stuff to fill out here
     def create_value_element(self, valueResult):
-
-        # TODO: Shall we require DAO to return ISO date strings, or
-        #       shall WOF handle that?  Performance hit if both do it.
+        datetime_string = _get_iso8061_datetime_string(
+            valueResult, "LocalDateTime", "DateTimeUTC")
 
         value = WaterML.ValueSingleVariable(
                         qualityControlLevel=valueResult.QualityControlLevel,
@@ -353,7 +352,7 @@ class WOF(object):
                         offsetTypeID=valueResult.OffsetTypeID,
                         accuracyStdDev=valueResult.ValueAccuracy,
                         offsetValue=valueResult.OffsetValue,
-                        dateTime=valueResult.LocalDateTime,
+                        dateTime=datetime_string,
                         qualifiers=valueResult.QualifierID,
                         valueOf_=str(valueResult.DataValue))
 
@@ -473,29 +472,10 @@ class WOF(object):
         series.valueCount = WaterML.valueCount(
             valueOf_=str(seriesResult.ValueCount))
 
-        # do we want to make UTC the default?
-        try:
-            beginDateTime = seriesResult.BeginDateTime
-            endDateTime = seriesResult.EndDateTime
-
-            if type(beginDateTime) == datetime.datetime:
-                if not beginDateTime.tzinfo:
-                    raise ValueError("local times must be timezone-aware")
-                beginDateTime = beginDateTime.isoformat()
-            if type(endDateTime) == datetime.datetime:
-                if not endDateTime.tzinfo:
-                    raise ValueError("local times must be timezone-aware")
-                endDateTime = endDateTime.isoformat()
-        except AttributeError:
-            beginDateTime = seriesResult.BeginDateTimeUTC
-            endDateTime = seriesResult.EndDateTimeUTC
-            if type(beginDateTime) == datetime.datetime:
-                beginDateTime.tzinfo = None
-                beginDateTime = beginDateTime.isoformat() + 'Z'
-
-            if type(endDateTime) == datetime.datetime:
-                endDateTime.tzinfo = None
-                endDateTime = endDateTime.isoformat() + 'Z'
+        beginDateTime = _get_iso8061_datetime_string(
+            seriesResult, "BeginDateTime", "BeginDateTimeUTC")
+        endDateTime = _get_iso8061_datetime_string(
+            seriesResult, "EndDateTime", "EndDateTimeUTC")
 
         #TimeInterval
         variableTimeInt = WaterML.TimeIntervalType(
@@ -597,3 +577,25 @@ def create_wof_app(dao, config_file):
         '/soap/wateroneflow': soap_wsgi_app
         })
     return app
+
+
+def _get_iso8061_datetime_string(object, local_datetime_attr,
+                                 utc_datetime_attr):
+    """
+    Returns a datetime string given an object and the names of the
+    attributes for local time and utc date time
+    """
+    local_datetime = getattr(object, local_datetime_attr, None)
+    if local_datetime:
+        if type(local_datetime) == datetime.datetime:
+            if not local_datetime.tzinfo:
+                raise ValueError("local times must be timezone-aware")
+            return local_datetime.isoformat()
+        else:
+            return local_datetime
+    else:
+        utc_datetime = getattr(object, utc_datetime_attr)
+        if type(utc_datetime) == datetime.datetime:
+            return utc_datetime.replace(tzinfo=None).isoformat() + 'Z'
+        else:
+            return utc_datetime
