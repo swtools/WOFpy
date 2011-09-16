@@ -84,7 +84,7 @@ def create_wof_service_class(wof_instance):
                 outStream = StringIO.StringIO()
                 siteResponse.export(outStream, 0, name_="sitesResponse",
                                     namespacedef_=NSDEF)
-                return str(outStream.getvalue()).replace('\n', '')
+                return (outStream.getvalue()).replace('\n', '')
 
             except Exception as inst:
                 if type(inst) == Fault:
@@ -101,7 +101,7 @@ def create_wof_service_class(wof_instance):
                 outStream = StringIO.StringIO()
                 siteInfoResponse.export(outStream, 0, name_="sitesResponse",
                                         namespacedef_=NSDEF)
-                return str(outStream.getvalue()).replace('\n', '')
+                return (outStream.getvalue()).replace('\n', '')
 
             except Exception as inst:
                 if type(inst) == Fault:
@@ -135,7 +135,7 @@ def create_wof_service_class(wof_instance):
                 variableInfoResponse.export(outStream, 0,
                                             name_="variablesResponse",
                                             namespacedef_=NSDEF)
-                return str(outStream.getvalue()).replace('\n', '')
+                return (outStream.getvalue()).replace('\n', '')
 
             except Exception as inst:
                 if type(inst) == Fault:
@@ -169,7 +169,7 @@ def create_wof_service_class(wof_instance):
                 timeSeriesResponse.export(
                     outStream, 0, name_="timeSeriesResponse",
                     namespacedef_=NSDEF)
-                return str(outStream.getvalue()).replace('\n', '')
+                return (outStream.getvalue()).replace('\n', '')
 
             except Exception as inst:
                 if type(inst) == Fault:
