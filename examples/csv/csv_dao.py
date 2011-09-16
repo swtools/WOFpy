@@ -2,6 +2,7 @@ from datetime import timedelta
 import csv
 
 from dateutil.parser import parse
+from dateutil.tz import tzoffset as tz
 
 from wof.dao import BaseDao
 import wof.models as wof_base
@@ -166,7 +167,8 @@ class CsvDao(BaseDao):
             if begin_date_time_string:
                 b = parse(begin_date_time_string)
             else:
-                b = parse('2008-01-01T00:00-6')
+                # Provide default start date at beginning of period of record
+                b = parse('2008-01-01T00:00-06')
         except:
             raise ValueError('invalid start date: ' + \
                              str(begin_date_time_string))
@@ -174,16 +176,16 @@ class CsvDao(BaseDao):
             if end_date_time_string:
                 e = parse(end_date_time_string)
             else:
-                e = parse('2008-04-30T00:00-6')
+                # Provide default end date at end of period of record
+                e = parse('2008-04-30T00:00-06')
         except:
             raise ValueError('invalid end date: ' + str(end_date_time_string))
 
         # If we know time zone, convert to local time.  Otherwise, assume
         # local time.
-        # Use dummy time to get tzinfo.
         # Remove tzinfo in the end since datetimes from data file do not have
         # tzinfo either.  This enables date comparisons.
-        local_time_zone = parse('2001-01-01T00-6').tzinfo 
+        local_time_zone = tz(None, -21600) # Six hours behind UTC, in seconds
         if b.tzinfo:
             b = b.astimezone(local_time_zone)
             b = b.replace(tzinfo=None)
