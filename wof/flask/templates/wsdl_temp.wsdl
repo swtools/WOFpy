@@ -224,6 +224,13 @@
                       </s:complexType>
                     </s:element>
                   </s:sequence>
+                  <s:attribute default="false" name="siteUsesDaylightSavingsTime" type="s:boolean" use="optional">
+                    <s:annotation>
+                      <s:documentation>
+                        If the location shifts it's data sources to Daylight Savings Time, this flag should be true.
+                      </s:documentation>
+                    </s:annotation>
+                  </s:attribute>
                 </s:complexType>
               </s:element>
               <s:element minOccurs="0" maxOccurs="1" name="geoLocation">
@@ -299,6 +306,13 @@
                       </s:complexType>
                     </s:element>
                   </s:sequence>
+                  <s:attribute default="false" name="siteUsesDaylightSavingsTime" type="s:boolean" use="optional">
+                    <s:annotation>
+                      <s:documentation>
+                        If the location shifts it's data sources to Daylight Savings Time, this flag should be true.
+                      </s:documentation>
+                    </s:annotation>
+                  </s:attribute>
                 </s:complexType>
               </s:element>
               <s:element minOccurs="0" maxOccurs="1" name="dataSetDescription" type="s:string" />
