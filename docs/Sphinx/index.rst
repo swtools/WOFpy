@@ -52,6 +52,7 @@ How do I use WOFpy to publish my data?
    :maxdepth: 3
    
    PublishingWithWOFpy
+   CsvDaoTutorial
 
 Indices and tables
 ==================
