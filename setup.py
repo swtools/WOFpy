@@ -13,7 +13,7 @@ from setuptools import Command, setup, find_packages
 
 setup(
     name='WOFpy',
-    version='0.1-alpha',
+    version='0.1.1-alpha',
     license='BSD',
     author='James Seppi',
     author_email='james.seppi@gmail.com',
