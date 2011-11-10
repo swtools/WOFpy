@@ -17,6 +17,10 @@ setup(
     license='BSD',
     author='James Seppi',
     author_email='james.seppi@gmail.com',
+    # note: maintainer gets listed as author in PKG-INFO, so leaving
+    # this commented out for now
+    # maintainer='Andy Wilson',
+    # maintainer_email='wilson.andrew.j@gmail.com',
     description='a python library for serving WaterOneFlow web services',
     long_description=__doc__,
     keywords='cuahsi his wofpy water waterml cuahsi wateroneflow',
