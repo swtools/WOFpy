@@ -30,11 +30,8 @@ setup(
     platforms='any',
     install_requires=[
         'flask>=0.6.1',
-        'sqlalchemy>=0.6.7',
-        'pyodbc>=2.1.8',
         'lxml>=2.3',
         'soaplib>=2.0.0b',
-        'suds',
         'nose',
         'python-dateutil==1.5.0'
     ],
