@@ -17,7 +17,7 @@ GCOOS_ONTOLOGY_FILE_URL = \
     'http://mmisw.org/ont?form=rdf&uri=http://mmisw.org/ont/gcoos/parameter'
 
 CBI_CACHE_DIR = tempfile.gettempdir()
-CBI_CACHE_DATABASE_URI = 'sqlite:////' + os.path.join(
+CBI_CACHE_DATABASE_URI = 'sqlite:///' + os.path.join(
     CBI_CACHE_DIR, 'cbi_dao_cache.db')
 LOCAL_SITE_FILE_PATH = os.path.join(
     CBI_CACHE_DIR, 'cbi_site_file.xml')

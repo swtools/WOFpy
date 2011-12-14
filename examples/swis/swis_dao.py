@@ -5,6 +5,10 @@ from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 from dateutil.parser import parse
+from dateutil.tz import tzutc
+
+# Instantiate zome useful time zones
+utc = tzutc()
 
 import sqlalch_swis_models as model
 
@@ -148,6 +152,13 @@ class SwisDao(BaseDao):
                          model.DataValue.DateTimeUTC >= begin_date_time,
                          model.DataValue.DateTimeUTC <= end_date_time)
                     ).order_by(model.DataValue.DateTimeUTC).all()
+
+            for i in range(len(valueResultArr)):
+                # Assign time zones
+                d = valueResultArr[i].DateTimeUTC.replace(tzinfo=utc)
+                valueResultArr[i].DateTimeUTC = d
+                #TODO: Use local time
+                valueResultArr[i].LocalDateTime = d
 
         return valueResultArr
 

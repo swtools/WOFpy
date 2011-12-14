@@ -7,10 +7,15 @@ from sqlalchemy.sql import join, select, func, label
 from sqlalchemy.orm import mapper, relationship
 from sqlalchemy.ext.declarative import declarative_base
 from dateutil.parser import parse
+from dateutil.tz import tzutc, tzoffset
 
 import wof.models as wof_base
 
 Base = declarative_base()
+
+# Instantiate zome useful time zones
+utc = tzutc()
+local_tz = tzoffset("EST", -18000)
 
 def init_model(db_session):
     Base.query = db_session.query_property()
@@ -82,6 +87,7 @@ class DataValue(Base, wof_base.BaseDataValue):
     DataValue = Column('Result',Float)
     DateTimeUTC = Column(DateTime)
     UTCOffset = -5
+    
     #DateString= Column('Date',String)
     #TimeString = Column('Time',String)
                    
@@ -90,6 +96,8 @@ class DataValue(Base, wof_base.BaseDataValue):
     
     OffsetValue = Column('Depth',Float)
     OffsetTypeID = 1
+    #TODO: compile unique method descriptions into separate methods table.
+    #Currently, we get one method per data value, which makes for a bulky file.
     MethodID = ValueID
     MethodDescription = Column('Method',String)
     MethodLink =""
@@ -167,6 +175,11 @@ class Series(wof_base.BaseSeries):
             begin_date_time_utc = parse(begin_date_time_utc)
         if not type(end_date_time_utc) is datetime.datetime:
             end_date_time_utc = parse(end_date_time_utc)
+        
+        if begin_date_time_utc.tzinfo is None:
+            begin_date_time_utc = begin_date_time_utc.replace(tzinfo=utc)
+        if end_date_time_utc.tzinfo is None:
+            end_date_time_utc = end_date_time_utc.replace(tzinfo=utc)
             
         self.Site = site
         self.Variable = variable
@@ -174,9 +187,9 @@ class Series(wof_base.BaseSeries):
         self.BeginDateTimeUTC = begin_date_time_utc
         self.EndDateTimeUTC = end_date_time_utc
         self.BeginDateTime = \
-            begin_date_time_utc + datetime.timedelta(hours=-5)
+                        begin_date_time_utc.astimezone(local_tz)
         self.EndDateTime = \
-            end_date_time_utc + datetime.timedelta(hours=-5)
+                        end_date_time_utc.astimezone(local_tz)
 
         #SWIS data are all "Raw Data"
         # though might have more than one QC level in the future
