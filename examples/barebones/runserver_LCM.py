@@ -13,6 +13,8 @@ from LCM_dao import LCMDao
 logging.basicConfig(level=logging.DEBUG)
 
 '''
+Be sure to assign an available port to the openPort variable below!
+
 The standard syntax for connection string is a URL in the form:
 dialect://user:password@host/dbname[?key=value..],
 where dialect is a name such as mysql, oracle, sqlite postgres,etc. 
@@ -29,7 +31,7 @@ database_connection_string = 'mssql+pyodbc://odm_user2:water123@JAMTAY-PC\SQLEXP
 
 2.  Example for SQLite
 
-swis_connection_string = 'sqlite:///C:\PythonSandbox\WOFpy_Sandbox\WOFpy\examples\swis\swis2.db'
+swis_connection_string = 'sqlite:///C:/PythonSandbox/WOFpy_Sandbox/WOFpy/examples/swis/swis2.db'
 
 You can use relative paths too, e.g. if you are calling the above database from the same directory, 
 the connection string can just be:
@@ -37,7 +39,7 @@ the connection string can just be:
 swis_connection_string = 'sqlite:///swis2.db' 
 '''
 
-LCM_connection_string = 'sqlite:///LCM_Data\LCM.db'
+LCM_connection_string = 'sqlite:///LCM_Data/LCM.db'
 
 dao = LCMDao(LCM_connection_string,'LCM_config.cfg')
 LCM_wof = WOF(dao)
@@ -59,4 +61,16 @@ app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, threaded=True)
+    # This must be an available port on your computer.  
+    # For example, if 8080 is already being used, try another port such as
+    # 5000 or 8081.
+    openPort = 8080 
+
+    url = "http://127.0.0.1:" + str(openPort) + "/"
+
+    print "----------------------------------------------------------------"
+    print "Access 'REST' endpoints at " + url
+    print "Access SOAP WSDL at " + url + "soap/wateroneflow.wsdl"
+    print "----------------------------------------------------------------"
+
+    app.run(host='0.0.0.0', port=openPort, threaded=True)

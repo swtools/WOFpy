@@ -54,19 +54,28 @@ are further described in metadata.txt
 
 Now let's view the data in WaterML by running our own WOFpy service application.
 
-4. Open a command window to the **solution** folder.
+4. In the **solution** folder, open **runserver_csv.py**.
 
-5. Enter this command: ``python runserver_csv.py``
+5. If necessary, change the value of the **openPort** variable to an available
+   port on your computer. (Hint: Try the next few steps. If you get an error
+   about the port already being used, try another port.)
+
+6. Save and close **runserver_csv.py**.
+
+7. Open a command window to the **solution** folder.
+
+8. Enter this command: ``python runserver_csv.py``
 
 The **runserver_csv.py** file has a few lines of code to start the WOFpy
 service application using the CSV DAO for data access. You've now got a live
 WaterOneFlow service running on your computer!
 
-6. Open a Web browser and navigate to http://127.0.0.1:5000.  
+9. Open a Web browser and navigate to http://127.0.0.1:8080.  If you used a
+   different port, substitute it in place of 8080 in the URL.
 
 This page has links to WaterML outputs for some example queries.  
 
-7. Click on the first link that begins with **GetValues**.  
+10. Click on the first link that begins with **GetValues**.  
 
 The XML response is WaterML with information about the queried site and
 variable, followed by the time series values of the variable.  The data values
@@ -75,7 +84,7 @@ returned in the WaterML beyond what is provided in the CSV files.  Since others
 don't know the unique qualities of your data, this metadata is required for
 others to properly interpret your data.  
 
-8. In the command window, press **CTRL+C** to stop the service. 
+11. In the command window, press **CTRL+C** to stop the service. 
 
 Now that you've seen the result of WOFpy serving the data from CSV files, let's
 look into the magic in the middle that enabled this result.
@@ -434,25 +443,30 @@ you can find the code in :ref:`completed-csv-dao-tutorial-code`.
 Your console should now show you the site name and other properties of the
 site.  Hooray!  Now let's make sure WOFpy likes your DAO.
 
-16. Open a command window to the **tutorial** folder.
+16. In the **tutorial** folder, edit the **openPort** value in
+    **runserver_csv.py** like you did earlier in the version in the
+    **solution** folder if necessary.  Save and close the file.
 
-17. Enter this command: ``python runserver_csv.py``
+17. Open a command window to the **tutorial** folder.
 
-18. Open a Web browser and navigate to http://127.0.0.1:5000.  
+18. Enter this command: ``python runserver_csv.py``
 
-19. Click on the second link, the one that reads
+19. Open a Web browser and navigate to http://127.0.0.1:8080.  If you used a
+    different port, substitute it in place of 8080 in the URL.
+
+20. Click on the second link, the one that reads
     **GetSites?site=TxRivers:Austin**.  
 
 You should now be looking at WaterML representing the Austin site.  Yay!
 
-20. Click **Back** in your browser.
+21. Click **Back** in your browser.
 
-21. Click any of the other links.
+22. Click any of the other links.
 
 You should see **NotImplementedError** for the other links since you haven't
 programmed those parts of your DAO.  
 
-22. In the command window, press **CTRL+C** to stop the service. 
+23. In the command window, press **CTRL+C** to stop the service. 
 
 Congratulations!  You have completed the tutorial and have learned the basics
 of how to create a DAO for WOFpy.  Please reference the files in the solution

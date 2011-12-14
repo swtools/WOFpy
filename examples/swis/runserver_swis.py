@@ -15,9 +15,16 @@ app = wof.create_wof_app(swis_dao, SWIS_CONFIG_FILE)
 app.config['DEBUG'] = True
 
 if __name__ == '__main__':
-    print "-----------------------------------------------------------------"
-    print "Access 'REST' endpoints at http://127.0.0.1:8080/"
-    print "Access SOAP WSDLs at http://127.0.0.1:8080/soap/wateroneflow.wsdl"
-    print "-----------------------------------------------------------------"
+    # This must be an available port on your computer.  
+    # For example, if 8080 is already being used, try another port such as
+    # 5000 or 8081.
+    openPort = 8080 
 
-    app.run(host='0.0.0.0', port=8080, threaded=True)
+    url = "http://127.0.0.1:" + str(openPort) + "/"
+
+    print "----------------------------------------------------------------"
+    print "Access 'REST' endpoints at " + url
+    print "Access SOAP WSDL at " + url + "soap/wateroneflow.wsdl"
+    print "----------------------------------------------------------------"
+
+    app.run(host='0.0.0.0', port=openPort, threaded=True)

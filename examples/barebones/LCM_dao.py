@@ -5,10 +5,15 @@ from sqlalchemy import create_engine, distinct, func
 from sqlalchemy.orm import mapper, scoped_session, sessionmaker
 from sqlalchemy.sql import and_
 from dateutil.parser import parse
+from dateutil.tz import tzutc, tzoffset
 
 from wof.dao import BaseDao
 import sqlalch_LCM_models as model
 import wof.models as wof_base
+
+# Instantiate zome useful time zones
+utc = tzutc()
+local_tz = tzoffset("EST", -18000)
 
 class LCMDao(BaseDao):
     contact_info = {
@@ -157,6 +162,7 @@ class LCMDao(BaseDao):
                     )
 
                 seriesCatArr.append(seriesCat)
+
             return seriesCatArr
         return None
 
@@ -205,14 +211,13 @@ class LCMDao(BaseDao):
                     ).order_by(model.DataValue.DateTimeUTC).all()
                 
         for i in range(len(valueResultArr)):
-            #Replace offset values of None with offset values = 0
+            # Replace offset values of None with offset values = 0
             if not valueResultArr[i].OffsetValue:
                 valueResultArr[i].OffsetValue = 0
-            #Compute local datetime
-            valueResultArr[i].LocalDateTime = valueResultArr[i].DateTimeUTC + \
-                datetime.timedelta(hours=valueResultArr[i].UTCOffset)
-            
-            
+            # Compute local datetimes and assign time zones
+            d = valueResultArr[i].DateTimeUTC.replace(tzinfo=utc)
+            valueResultArr[i].DateTimeUTC = d
+            valueResultArr[i].LocalDateTime = d.astimezone(local_tz)
             
         return valueResultArr
        

@@ -56,11 +56,18 @@ combined_app = DispatcherMiddleware(NotFound, {
 })
 
 if __name__ == '__main__':
-    print "------------------------------------------------------------"
-    print "Access 'REST' endpoints at http://HOST:8080/<network>"
-    print "Access SOAP WSDLs at http://HOST:8080/<network>/soap/wateroneflow.wsdl"
+    # This must be an available port on your computer.  
+    # For example, if 8080 is already being used, try another port such as
+    # 5000 or 8081.
+    openPort = 8080 
+
+    url = "http://127.0.0.1:" + str(openPort) + "/<network>/"
+
+    print "----------------------------------------------------------------"
+    print "Access 'REST' endpoints at " + url
+    print "Access SOAP WSDL at " + url + "soap/wateroneflow.wsdl"
     print "Available <network>s are 'swis' and 'lcm'"
-    print "------------------------------------------------------------"
-   
-    run_simple('0.0.0.0', 8080, combined_app, use_reloader=True,
+    print "----------------------------------------------------------------"
+
+    run_simple('0.0.0.0', openPort, combined_app, use_reloader=True,
                use_debugger=True, threaded=True)

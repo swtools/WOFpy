@@ -65,8 +65,30 @@ required for WaterML is read from a config file.
 
 Follow the steps below to run this example.
 
+#. In the **examples/barebones** folder, edit the value of the **openPort**
+   variable in **runserver_LCM.py** to match an open port on your computer,
+   if necessary.  Then save and close the file. 
 #. Open a command window in the **examples/barebones** folder and enter:
    ``python runserver_LCM.py``
+#. In your command window you should see a message indicating that the service
+   is running along with instructions for accessing the service.  
+
+Comma Delimited File Example
+----------------------------
+
+This example is located in the **examples/csv** folder.
+
+This example shows how to access data from comma delimited (CSV) files in the 
+**csv** subfolder.  One CSV file contains the time series values, while
+another contains descriptions of observations sites.  
+
+Follow the steps below to run this example.
+
+#. In the **examples/csv** folder, edit the value of the **openPort**
+   variable in **runserver_csv.py** to match an open port on your computer,
+   if necessary.  Then save and close the file. 
+#. Open a command window in the **examples/csv** folder and enter:
+   ``python runserver_csv.py``
 #. In your command window you should see a message indicating that the service
    is running along with instructions for accessing the service.  
 
@@ -83,6 +105,9 @@ System (SWIS) database.
 
 Follow the steps below to run this example.
 
+#. In the **examples/swis** folder, edit the value of the **openPort**
+   variable in **runserver_swis.py** to match an open port on your computer,
+   if necessary.  Then save and close the file. 
 #. Open a command window in the **examples/swis** folder and enter:
    ``python runserver_swis.py``
 #. In your command window you should see a message indicating that the service
@@ -111,6 +136,9 @@ Follow the steps below to run this example.
    database connection string for the Little Bear River database, e.g.,
    ``lbr_connection_string =
    'mssql+pyodbc://username:password@(local)/LittleBear11'``
+#. In the **examples/odm_sqlserver** folder, edit the value of the **openPort**
+   variable in **runserver_lbr.py** to match an open port on your computer,
+   if necessary.  Then save and close the file. 
 #. Open a command window in the **examples/odm_sqlserver** folder and enter:
    ``python runserver_lbr.py``
 #. In your command window you should see a message indicating that the service
@@ -143,6 +171,9 @@ Follow the steps below to run this example.
 
 #. Open a command window in the **examples/cbi** folder and enter:
    ``python build_cbi_cache.py``
+#. In the **examples/cbi** folder, edit the value of the **openPort**
+   variable in **runserver_cbi.py** to match an open port on your computer,
+   if necessary.  Then save and close the file. 
 #. In the command window, enter:
    ``python runserver_cbi.py``
 #. In your command window you should see a message indicating that the service
@@ -158,6 +189,9 @@ run multiple services at once.  It uses the
 :ref:`barebones <barebones-example>` and :ref:`SWIS <swis-example>` examples.
 Follow the steps below to run this example.
 
+#. In the **examples** folder, edit the value of the **openPort**
+   variable in **runserver_multiple.py** to match an open port on your computer,
+   if necessary.  Then save and close the file. 
 #. Open a command window in the **examples** folder and enter:
    ``python runserver_multiple.py``
 #. In your command window you should see a message indicating that the service

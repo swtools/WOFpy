@@ -95,10 +95,9 @@ class CbiDao(BaseDao):
         seriesResultArr = cache.Series.query.filter(
             cache.Series.SiteCode == site_code).all()
         for sr in seriesResultArr:
-            #TODO: Get current time in GMT
             if sr.IsCurrent:
                 et = time.gmtime(time.time())
-                sr.EndDateTimeUTC = time.strftime("%Y-%m-%d %H:%M:%S", et)
+                sr.EndDateTimeUTC = time.strftime("%Y-%m-%dT%H:%M:%SZ", et)
             sr.Source = self.get_source_by_id()
         return seriesResultArr
 
@@ -113,9 +112,8 @@ class CbiDao(BaseDao):
              cache.Series.VariableCode == var_code)).all()
         for sr in seriesResultArr:
             if sr.IsCurrent:
-                #Get current time in GMT
                 et = time.gmtime(time.time())
-                sr.EndDateTimeUTC = time.strftime("%Y-%m-%d %H:%M:%S", et)
+                sr.EndDateTimeUTC = time.strftime("%Y-%m-%dT%H:%M:%SZ", et)
             sr.Source = self.get_source_by_id()
         return seriesResultArr
 
