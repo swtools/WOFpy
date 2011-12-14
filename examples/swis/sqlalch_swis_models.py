@@ -6,11 +6,15 @@ from sqlalchemy import (Table, Column, Integer, String, ForeignKey, Float,
 from sqlalchemy.sql import join, select, func, label
 from sqlalchemy.orm import mapper, relationship, column_property
 from sqlalchemy.ext.declarative import declarative_base
+from dateutil.parser import parse
+from dateutil.tz import tzutc
 
 import wof.models as wof_base
 
 Base = declarative_base()
 
+# Instantiate zome useful time zones
+utc = tzutc()
 
 def init_model(db_session):
     Base.query = db_session.query_property()
@@ -263,6 +267,16 @@ class Series(wof_base.BaseSeries):
     def __init__(self, site=None, variable=None, value_count=None,
                  begin_date_time_utc=None, end_date_time_utc=None,
                  source=None):
+
+        if not type(begin_date_time_utc) is datetime.datetime:
+            begin_date_time_utc = parse(begin_date_time_utc)
+        if not type(end_date_time_utc) is datetime.datetime:
+            end_date_time_utc = parse(end_date_time_utc)
+        
+        if begin_date_time_utc.tzinfo is None:
+            begin_date_time_utc = begin_date_time_utc.replace(tzinfo=utc)
+        if end_date_time_utc.tzinfo is None:
+            end_date_time_utc = end_date_time_utc.replace(tzinfo=utc)
 
         self.Site = site
         self.Variable = variable
