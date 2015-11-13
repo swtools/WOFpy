@@ -3,50 +3,34 @@
 	<title>WaterOneFlow in Python</title>
 </head>
 <body>
-	<p>Visit one of these pages to obtain {{p}} observations data and metadata from the REST API for WOF written in Python:</p>
+	<p>Visit one of these pages to obtain {{p}} observations data and metadata from the REST/SOAP APIs for WOF written in Python:</p>
 	
 	<ul>
 		<li>
-                    <a href="{{request.script_root|safe}}/GetSites">
-                        GetSites
+                    <a href="{{request.script_root|safe}}/{{ rest10 }}">
+                        REST Service -- WaterML 1.0
+                    </a>
+                </li>
+ 		<li>
+                    <a href="{{request.script_root|safe}}/{{ soap10 }}">
+                        SOAP service -- WaterML 1.0
                     </a>
                 </li>
 		<li>
-                    <a href="{{request.script_root|safe}}/GetSites?site={{p}}:{{s}}">
-                        GetSites?site={{p}}:{{s}}
+                    <a href="{{request.script_root|safe}}/{{ rest11 }}">
+                        REST service -- WaterML 1.1
                     </a>
                 </li>
 		<li>
-                    <a href="{{request.script_root|safe}}/GetSiteInfo?site={{p}}:{{s}}">
-                        GetSiteInfo?site={{p}}:{{s}}
+                    <a href="{{request.script_root|safe}}/{{ soap11 }}">
+                        SOAP service -- WaterML 1.1
                     </a>
                 </li>
-		<li>
-                    <a href="{{request.script_root|safe}}/GetVariableInfo">
-                        GetVariableInfo
+        		<li>
+                    <a href="{{request.script_root|safe}}/{{ rest2 }}">
+                        WaterML 2
                     </a>
                 </li>
-		<li>
-                    <a href="{{request.script_root|safe}}/GetVariableInfo?variable={{p}}:{{v}}">
-                        GetVariableInfo?variable={{p}}:{{v}}
-                    </a>
-                </li>
-		<li>
-                    <a href="{{request.script_root|safe}}/GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}">
-                        GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}
-                    </a> Note: May crash browser for large values sets.
-                </li>
-		<li>
-			<a href="{{request.script_root|safe}}/GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}">
-				GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}
-			</a>
-		</li>
-                
-                <li>
-			WaterML2 Example: <a href="{{request.script_root|safe}}/GetValues?format=wml2&location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}">
-				GetValues?format=wml2&location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}
-			</a>
-		</li>
 	</ul>
 
 </body>

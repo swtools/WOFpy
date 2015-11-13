@@ -13,7 +13,7 @@ Installation
 
 Follow the steps below for Basic installation on a Windows computer.
 
-#. Install **Python 2.6**.  The 32-bit installer is recommended.
+#. Install **Python 2.7**.  The 32-bit installer is recommended.
 #. Add the **Python** folder to your **Path** environment variable.
 #. Install **setuptools**. This allows the setup script to be run.
 #. Add the **Python/scripts** folder to your **Path** environment variable.

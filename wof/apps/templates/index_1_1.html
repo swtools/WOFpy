@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>WaterOneFlow 1.1 in Python</title>
+</head>
+<body>
+	<p>Visit one of these pages to obtain {{p}} observations data and metadata from the REST API for WOF written in Python:</p>
+	
+	<ul>
+		<li>
+                    <a href="{{request.script_root|safe}}/{{ path }}GetSites">
+                        GetSites
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/{{ path }}GetSites?site={{p}}:{{s}}">
+                        GetSites?site={{p}}:{{s}}
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/{{ path }}GetSitesByBox?west={{w}}&south={{ so }}&east={{ e }}&north={{ n }}&IncludeSeries=false">
+                        GetSitesByBox?west={{w}}&south={{ so }}&east={{ e }}&north={{ n }}&IncludeSeries=false
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/{{ path }}GetSiteInfo?site={{p}}:{{s}}">
+                        GetSiteInfo?site={{p}}:{{s}}
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/{{ path }}GetSiteInfoMultple?site={{p}}:{{s}}">
+                        GetSiteInfoMultple?site={{p}}:{{s}}
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/{{ path }}GetVariableInfo">
+                        GetVariableInfo
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/{{ path }}GetVariableInfo?variable={{p}}:{{v}}">
+                        GetVariableInfo?variable={{p}}:{{v}}
+                    </a>
+                </li>
+		<li>
+                    <a href="{{request.script_root|safe}}/{{ path }}GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}">
+                        GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}
+                    </a> Note: May crash browser for large values sets.
+                </li>
+		<li>
+			<a href="{{request.script_root|safe}}/{{ path }}GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}">
+				GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}&startDate={{sd}}&endDate={{ed}}
+			</a>
+		</li>
+        <li>
+			<a href="{{request.script_root|safe}}/{{ path }}GetValuesForASite?site={{p}}:{{s}}&startDate={{sd}}&endDate={{ed}}">
+				GetValuesForASite?site={{p}}:{{s}}&startDate={{sd}}&endDate={{ed}}
+			</a>
+		</li>
+
+
+	</ul>
+
+</body>
+
+</html>

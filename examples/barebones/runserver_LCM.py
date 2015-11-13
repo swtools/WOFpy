@@ -1,11 +1,10 @@
-import soaplib
+
 import logging
 
 from werkzeug.wsgi import DispatcherMiddleware
-from soaplib.core.server import wsgi
 
-from wof import WOF
-from wof.soap import create_wof_service_class
+import wof
+
 from wof.flask import config
 from wof.flask import create_app
 from LCM_dao import LCMDao
@@ -40,37 +39,55 @@ swis_connection_string = 'sqlite:///swis2.db'
 '''
 
 LCM_connection_string = 'sqlite:///LCM_Data/LCM.db'
+CONFIG='LCM_config.cfg'
+#
+# dao = LCMDao(LCM_connection_string,'LCM_config.cfg')
+# LCM_wof = WOF(dao)
+# LCM_wof.config_from_file('LCM_config.cfg')
+#
+# app = create_app(LCM_wof)
+# app.config.from_object(config.DevConfig)
+#
+# ODMWOFService = wof.create_wof_service_class(LCM_wof)
+#
+# soap_app = soaplib.core.Application(services=[ODMWOFService],
+#                                     tns='http://www.cuahsi.org/his/1.0/ws/',
+#                                     name='WaterOneFlow')
+#
+# soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
+#
+# app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+#      '/soap/wateroneflow': soap_wsgi_app,
+#     })
 
-dao = LCMDao(LCM_connection_string,'LCM_config.cfg')
-LCM_wof = WOF(dao)
-LCM_wof.config_from_file('LCM_config.cfg')
+def startServer(config='LCM_config.cfg',connection='sqlite:///LCM_Data/LCM.db', openPort=8080):
 
-app = create_app(LCM_wof)
-app.config.from_object(config.DevConfig)
+    dao = LCMDao(connection,config)
+    app = wof.create_wof_flask_app(dao, config)
+    app.config['DEBUG'] = True
 
-ODMWOFService = create_wof_service_class(LCM_wof)
 
-soap_app = soaplib.core.Application(services=[ODMWOFService],
-                                    tns='http://www.cuahsi.org/his/1.0/ws/',
-                                    name='WaterOneFlow')
-
-soap_wsgi_app = soaplib.core.server.wsgi.Application(soap_app)
-
-app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
-     '/soap/wateroneflow': soap_wsgi_app,   
-    })
-
-if __name__ == '__main__':
-    # This must be an available port on your computer.  
-    # For example, if 8080 is already being used, try another port such as
-    # 5000 or 8081.
-    openPort = 8080 
-
-    url = "http://127.0.0.1:" + str(openPort) + "/"
-
+    url = "http://127.0.0.1:" + str(openPort)
     print "----------------------------------------------------------------"
-    print "Access 'REST' endpoints at " + url
-    print "Access SOAP WSDL at " + url + "soap/wateroneflow.wsdl"
+    print "Acess Service endpoints at "
+    for path in wof.site_map(app):
+        print "%s%s" % (url,path)
+
     print "----------------------------------------------------------------"
 
     app.run(host='0.0.0.0', port=openPort, threaded=True)
+
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser(description='start WOF for an LCM Example.')
+    parser.add_argument('--config',
+                       help='Configuration file', default=CONFIG)
+    parser.add_argument('--connection',
+                       help='Connection String eg: "sqlite:///LCM_Data/LCM.db"', default=LCM_connection_string)
+    parser.add_argument('--port',
+                       help='Open port for server."', default=8080)
+    args = parser.parse_args()
+    print(args)
+
+    startServer(config=args.config,connection=args.connection, openPort=args.port)

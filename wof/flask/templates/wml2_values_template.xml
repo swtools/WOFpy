@@ -1,52 +1,261 @@
 <?xml version="1.0" ?>
 {# TODO: Make this better once we know how #}
-<wml2:WaterCollection xmlns:wml2="http://www.opengis.net/waterml/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:om="http://www.opengis.net/om/2.0" xmlns:sf="http://www.opengis.net/sampling/2.0" xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/waterml/2.0">
+<wml2:Collection xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:wml1_0="http://www.cuahsi.org/waterML/1.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:om="http://www.opengis.net/om/2.0"
+	xmlns:gmd="http://www.isotc211.org/2005/gmd"
+	xmlns:wml2="http://www.opengis.net/waterml/2.0"
+	xmlns:swe="http://www.opengis.net/swe/2.0"
+	xmlns:gco="http://www.isotc211.org/2005/gco"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:op="http://schemas.opengis.net/op"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:gss="http://www.isotc211.org/2005/gss"
+	xmlns:sam="http://www.opengis.net/sampling/2.0"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:sf="http://www.opengis.net/sampling/2.0"
+	xmlns:wml="http://www.cuahsi.org/waterML/1.1/"
+	xmlns:sams="http://www.opengis.net/samplingSpatial/2.0"
+	xmlns:fn="http://www.w3.org/2005/xpath-functions"
+	gml:id="generated_collection_doc">
 	<wml2:metadata>
 		<wml2:DocumentMetadata gml:id="doc_md">
 			<wml2:generationDate>{{ current_date }}</wml2:generationDate>
+			<wml2:version xlink:href="http://www.opengis.net/waterml/2.0" xlink:title="WaterML 2.0 RFC"/>
 			<wml2:generationSystem>WOFpy Experimental/Demo WaterML2 Method</wml2:generationSystem>
 		</wml2:DocumentMetadata>
 	</wml2:metadata>
-	<wml2:observationMember>
-		<wml2:WaterMonitoringObservation gml:id="wml2test">
-			<gml:name codeSpace="http://www.opengis.net/waterml/2.0/examples">WML2fromWOFpy</gml:name>
+	<wml2:localDictionary>
+		<gml:Dictionary gml:id="phenomena">
+			<gml:identifier codeSpace="http://hiscentral.cuahsi.org/waterml2/dictionaries/">phenomena</gml:identifier>
+			<gml:dictionaryEntry>
+				<gml:Definition gml:id="{{ variable_result.VariableCode   }}">
+					<gml:description xlink:href="{{ variable_result.VariableCode   }}" xlink:title="{{ variable_result.VariableName    }}"/>
+					<gml:identifier codeSpace="http://hiscentral.cuahsi.org/wml/variable">{{ variable_result.VariableCode   }}</gml:identifier>
+				<!--	<gml:name codeSpace="http://hiscentral.cuahsi.org/ontology/">{{ variable_result.VariableName    }}</gml:name> --> {# if we known that this is an ontology term #}
+					<gml:name codeSpace="http://hiscentral.cuahsi.org/wml/vocabulary/localSite">{{ variable_result.VariableName    }}</gml:name>
+				</gml:Definition>
+			</gml:dictionaryEntry>
+		</gml:Dictionary>
+	</wml2:localDictionary>
+
+<!--	<wml2:localDictionary>
+		<gml:Dictionary gml:id="quality">
+			<gml:identifier codeSpace="http://www.cuahsi.org/waterml2/dictionaries/">quality</gml:identifier>
+			<gml:dictionaryEntry>
+				<gml:Definition gml:id="qclevel-0">
+					<gml:identifier codeSpace="http://hiscentral.cuahsi.org/wml/qualityControlLevelCode">0</gml:identifier>
+					<gml:name codeSpace="http://hiscentral.cuahsi.org/wml/qualityControlLevelCode">Raw Data</gml:name>
+					<gml:remarks/>
+				</gml:Definition>
+			</gml:dictionaryEntry>
+			<gml:dictionaryEntry>
+				<gml:Definition gml:id="qclevel-1">
+					<gml:identifier codeSpace="http://hiscentral.cuahsi.org/wml/qualityControlLevelCode">1</gml:identifier>
+					<gml:name codeSpace="http://hiscentral.cuahsi.org/wml/qualityControlLevelCode">Quality controlled data</gml:name>
+					<gml:remarks>Quality controlled data that have passed quality assurance procedures such as routine estimation of timing and sensor calibration or visual inspection and removal of obvious errors. An example is USGS published streamflow records following parsing through USGS quality control procedures.</gml:remarks>
+				</gml:Definition>
+			</gml:dictionaryEntry>
+		</gml:Dictionary>
+	</wml2:localDictionary>
+--> 
+<!--		<wml2:localDictionary>
+		<gml:Dictionary gml:id="censorCode"><gml:identifier codeSpace="http://www.cuahsi.org/waterml2/dictionaries/">censorCode</gml:identifier>
+			<gml:dictionaryEntry>
+				<gml:Definition gml:id="censorCode-nc">
+					<gml:identifier codeSpace="http://hiscentral.cuahsi.org/wml/censored">nc</gml:identifier>
+					<gml:name codeSpace="http://hiscentral.cuahsi.org/wml/censored">not censored</gml:name>
+				</gml:Definition>
+			</gml:dictionaryEntry>
+		</gml:Dictionary>
+	</wml2:localDictionary>
+	--> 
+		<wml2:localDictionary>
+		<gml:Dictionary gml:id="method">
+			<gml:identifier codeSpace="http://www.cuahsi.org/waterml2/dictionaries/">method</gml:identifier>
+			<gml:dictionaryEntry>
+				<gml:Definition gml:id="methodCode-{{ method_result.MethodID  }}">
+					<gml:identifier codeSpace="http://hiscentral.cuahsi.org/wml/method">{{ method_result.MethodID  }}</gml:identifier>
+					<gml:name codeSpace="http://hiscentral.cuahsi.org/wml/method">{{ method_result.MethodDescription   }}</gml:name>
+				</gml:Definition>
+			</gml:dictionaryEntry>
+		</gml:Dictionary>
+	</wml2:localDictionary>
+ 
+		<wml2:observationMember>
+		<om:OM_Observation  gml:id="wml2test">
+			<om:metadata>
+				<wml2:ObservationMetadata>
+					<gmd:contact gco:nilReason="inapplicable"/>
+					<gmd:dateStamp gco:nilReason="inapplicable"/>
+					<gmd:locale>
+						<gmd:PT_Locale>
+							<gmd:languageCode>
+								<gmd:LanguageCode codeList="LanguageCode" codeListValue="EN-US">English-United States</gmd:LanguageCode>
+							</gmd:languageCode>
+							<gmd:characterEncoding>
+								<gmd:MD_CharacterSetCode codeList="MD_CharacterSetCode" codeListValue="utf8">UTF 8</gmd:MD_CharacterSetCode>
+							</gmd:characterEncoding>
+						</gmd:PT_Locale>
+					</gmd:locale>
+					<gmd:identificationInfo gco:nilReason="inapplicable" />
+
+					<!--wml2:intendedSamplingInterval--><!--  wml2:status should be a mapping based on QC level... but there is no fixed qcvocab-->
+					<wml2:sampledMedium xlink:href="http://www.opengis.net/def/waterml/2.0/medium/SurfaceWater"
+						xlink:title="Surface Water"/>
+					<!--wml2:maximumGap-->
+				</wml2:ObservationMetadata>
+			</om:metadata>
+
 			<om:phenomenonTime>
                             <gml:TimePeriod gml:id="phen_time">
                                     <gml:beginPosition>{{ data_values[0].DateTimeUTC }}</gml:beginPosition>
                                     <gml:endPosition>{{ data_values[data_values|length-1].DateTimeUTC }}</gml:endPosition>
                             </gml:TimePeriod>
 			</om:phenomenonTime>
-			<om:resultTime>
-				<gml:TimeInstant>
+	<!--		<om:resultTime>
+				<gml:TimeInstant gml:id="result_time">
 					<gml:timePosition></gml:timePosition> {# TODO: Figure out what this is #}
 				</gml:TimeInstant>
 			</om:resultTime>
-			<om:procedure xlink:href="" xlink:title=""/>
+			-->
+			<om:procedure> {# TODO: Figure out what this is. Method. #}
+				<wml2:ObservationProcess gml:id="process-1">
+					<gml:description>Water chemistry grab sample collected by technicians in the field.</gml:description>
+					<gml:identifier codeSpace="http://hiscentral.cuahsi.org/wml/method">25</gml:identifier>
+					<wml2:processType xlink:href="http://www.opengis.net/def/waterml/2.0/processType/Unknown"
+						xlink:title="Unknown"/> 
+				<!--	<wml2:processReference xlink:href="http://hiscentral.cuahsi.org/methods/LittleBearRiver-25"
+						xlink:title="Water chemistry grab sample collected by technicians in the field."/>
+						-->
+					<wml2:parameter>
+						<om:NamedValue>
+							<om:name xlink:title="valueType" xlink:href="http://hiscentral.cuahsi.org/wml/valueType"/>
+							<om:value xsi:type="xsd:string">{{ variable_result.ValueType }}</om:value>
+						</om:NamedValue>
+					</wml2:parameter>
+					<wml2:parameter>
+						<om:NamedValue>
+							<om:name xlink:title="dataType" xlink:href="http://hiscentral.cuahsi.org/wml/dataType"/>
+							<om:value xsi:type="xsd:string">{{ variable_result.DataType }}</om:value>
+						</om:NamedValue>
+					</wml2:parameter>
+					<wml2:parameter>
+						<om:NamedValue>
+							<om:name xlink:title="noDataValue"
+								xlink:href="http://hiscentral.cuahsi.org/wml/noDataValue"/>
+							<om:value xsi:type="xsd:string">{{ variable_result.NoDataValue  }}</om:value>
+						</om:NamedValue>
+					</wml2:parameter>
+					<wml2:parameter>
+						<om:NamedValue>
+							<om:name xlink:title="http://hiscentral.cuahsi.org/wml/sampleMedium" xlink:href=""/>
+							<om:value xsi:type="xsd:string">{{ variable_result.SampleMedium }}</om:value>
+						</om:NamedValue>
+					</wml2:parameter>
+				<!--	<wml2:parameter>
+						<om:NamedValue>
+							<om:name xlink:title="speciation"
+								xlink:href="http://hiscentral.cuahsi.org/wml/speciation"/>
+							<om:value xsi:type="xsd:string">{ variable_result.Speciation }}</om:value>
+						</om:NamedValue>
+					</wml2:parameter> 
+					-->
+				</wml2:ObservationProcess>
+			</om:procedure>
 			<om:observedProperty xlink:href="{{ variable_result.VariableCode}}" xlink:title="{{ variable_result.VariableName }}"/>
-			<om:featureOfInterest xlink:href="{{ site_result.SiteCode }}" xlink:title="{{ site_result.SiteName }}"/>
+		<!--	<om:featureOfInterest xlink:href="{{ site_result.SiteCode }}" xlink:title="{{ site_result.SiteName }}"/> -->
+			<om:featureOfInterest>
+				<wml2:MonitoringPoint gml:id="LittleBearRiver-USU-LBR-Wellsville">
+				<gml:identifier codeSpace="http://hiscentral.cuahsi.org/network/LittleBearRiver">USU-LBR-Wellsville</gml:identifier>
+				<gml:name>Little Bear River near Wellsville, Utah</gml:name>
+				<!--We know the sampling point, but do not the actual physical "sampled feature"; eg which river,  stream, lake. --><!--as per https://www.seegrid.csiro.au/wiki/AppSchemas/ObservationsAndSampling#Unknown_features
+       --><sam:sampledFeature xlink:title="Unsepecified Sampled Feature"
+					xlink:role="http://hiscentral.cuahsi.org/wml/site"
+					xlink:href="urn:ogc:def:nil:OGC:unknown"/>
+				<sam:parameter>
+					<om:NamedValue>
+						<om:name xlink:href="http://hiscentral.cuahsi.org/wml/siteProperty/elevation_m/"
+							xlink:title="elevation in meters"/>
+						<om:value xsi:type="xsd:string">1365m</om:value>
+					</om:NamedValue>
+				</sam:parameter>
+				<sam:parameter>
+					<om:NamedValue>
+						<om:name xlink:href="http://hiscentral.cuahsi.org/wml/siteProperty/County"
+							xlink:title="County"/>
+						<om:value xsi:type="xsd:string">Cache</om:value>
+					</om:NamedValue>
+				</sam:parameter>
+				<sam:parameter>
+					<om:NamedValue>
+						<om:name xlink:href="http://hiscentral.cuahsi.org/wml/siteProperty/State"
+							xlink:title="State"/>
+						<om:value xsi:type="xsd:string">Utah</om:value>
+					</om:NamedValue>
+				</sam:parameter>
+				<sam:parameter>
+					<om:NamedValue>
+						<om:name xlink:href="http://hiscentral.cuahsi.org/wml/siteProperty/Site_Comments"
+							xlink:title="Site Comments"/>
+						<om:value xsi:type="xsd:string">Located on the upstream side of State Highway 101 bridge.</om:value>
+					</om:NamedValue>
+				</sam:parameter>
+				<sams:shape>
+					<gml:Point gml:id="LittleBearRiver-USU-LBR-Wellsville_pos">
+						<gml:pos srsName="EPSG:4269">41.643457 -111.917649</gml:pos>
+					</gml:Point>
+				</sams:shape>
+				<wml2:monitoringType xlink:href="http://www.cuahsi.org/waterml2/siteType/surfaceWater"
+					xlink:title="Surface Water"/>
+				<!-- wml2 descriptionReference pointer to a web page -->
+					<wml2:verticalDatum xlink:href="http://www.opengis.net/def/datum/EPSG/0/5102" xlink:title="NGVD29"/>
+					<wml2:timeZone ></wml2:timeZone>
+					<wml2:daylightSavingTimeZone></wml2:daylightSavingTimeZone>
+			</wml2:MonitoringPoint>
+			</om:featureOfInterest>	
 			<om:result>
-				<wml2:Timeseries>
-					<wml2:domainExtent xlink:href="#phen_time"/>
-                                            
-                                        <wml2:defaultTimeValuePair>
-                                            <wml2:TimeValuePair>
-                                                    <wml2:unitOfMeasure xlink:href="{{variable_result.VariableUnits.UnitsAbbreviation}}" xlink:title="{{variable_result.VariableUnits.UnitsName}}"/>
-                                                    <wml2:dataType xlink:href="" xlink:title="{{variable_result.DataType}}"/>
-                                                    <wml2:quality xlink:href="Raw_data" xlink:title="Raw data"/> {# TODO: Figure out default and set if different for individual values #}
-                                            </wml2:TimeValuePair>
-                                        </wml2:defaultTimeValuePair>
-                                        
+				<wml2:MeasurementTimeseries gml:id="MTS">
+					
+					<wml2:metadata>
+						<wml2:MeasurementTimeseriesMetadata><!--9.11.4 (TimeSeriesMetadata) + 9.14.1 (MeasurementTimeSeriesMetadata)
+	            basetime
+	                                            spacing commentblock startAnchorPoint endAnchorPoint
+	                                            cumulative accumulationAnchorTime
+	                                            accumulationIntervalLength aggregationDuration -->
+							<wml2:temporalExtent xlink:href="#phen_time"/>
+							<wml2:cumulative>false</wml2:cumulative>
+						</wml2:MeasurementTimeseriesMetadata>
+					</wml2:metadata>
+					<wml2:defaultPointMetadata>
+						<wml2:DefaultTVPMeasurementMetadata>
+							<wml2:quality xlink:href="http://def.seegrid.csiro.au/sissvoc/ogc-def/resource?uri=http://www.opengis.net/def/waterml/2.0/quality/unchecked"
+								xlink:title="not censored"/>
+
+							<wml2:processing xlink:href="#qclevel-0" xlink:title="Raw Data"/>
+							<!--8.6.3 unitOfMeasure. Mapping. only one or two
+                                            are done presently. The unit of measure is specified
+                                            using the ISO19103 UnitOfMeasure type. -->
+							<wml2:uom code="{{variable_result.VariableUnits.UnitsAbbreviation}}"/>
+							<!--8.6.5 Data type mapping to
+                                            InterpolationType-->
+							<wml2:interpolationType xlink:href="http://www.opengis.net/def/timeseriesType/WaterML/2.0/Discontinuous"
+								xlink:title="{{variable_result.DataType}}"/>
+						</wml2:DefaultTVPMeasurementMetadata>
+					</wml2:defaultPointMetadata>
 					{% for dv in data_values %}
-                                        <wml2:point>
-                                                <wml2:TimeValuePair>
-                                                        <wml2:time>{{ dv.DateTimeUTC }}</wml2:time>
-                                                        <wml2:value>{{ dv.DataValue }}</wml2:value>
-                                                        <wml2:processing>{{ dv.QualityControlLevel }}</wml2:processing> {# TODO: necessary? #}
-                                                </wml2:TimeValuePair>
-                                        </wml2:point>
-                                        {% endfor %}
-				</wml2:Timeseries>
+					<wml2:point>
+						<wml2:MeasurementTVP>
+							<wml2:time>{{ dv.DateTimeUTC }}</wml2:time>
+							<wml2:value>{{ dv.DataValue }}</wml2:value>
+
+						</wml2:MeasurementTVP>
+					</wml2:point>
+					{% endfor %}
+
+				</wml2:MeasurementTimeseries>
 			</om:result>
-		</wml2:WaterMonitoringObservation>
+			</om:OM_Observation >
 	</wml2:observationMember>
-</wml2:WaterCollection>
+</wml2:Collection>

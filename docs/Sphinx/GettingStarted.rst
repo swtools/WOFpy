@@ -12,19 +12,36 @@ Installation
 Follow the steps below to install WOFpy and its prerequisites on a Windows
 computer.
 
-#. Install **Python 2.6**.  The 32-bit installer is recommended.
+#. Install **Python 2.7**.  The 32-bit installer is recommended.
 #. Add the **Python** folder to your **Path** environment variable.
 #. Install **setuptools**. This allows the setup script to be run.
 #. Add the **Python/scripts** folder to your **Path** environment variable.
 #. Open a command window (run cmd), navigate to the WOFpy folder (with setup.py
    in it), and enter this command: ``python setup.py install``
 
+
 The wof package (in the subfolder named **wof**) is now accessible from any
 directory.
 
-.. note::
     If you edit code in the **wof** folder, you may need to run setup.py again
     to apply the changes to your system.
+
+Database Support
+================
+You may need to install additional components to connect to your database.
+* sqlalhchemy
+* pydobc (for ODM1, sqlserverand ODM2)
+* ODM2API (for ODM2 example)
+* other database drivers: postgres, sqllite, mysql.
+
+
+PIP Installs
+============
+TBD: ONCE a Package is created and packaged.
+
+If you are using ODM, or ODM2, then you need to run the extras (ODM1, or ODM2)
+``pip install -e .[ODM2]``
+
 
 .. _examples:
 
@@ -76,7 +93,7 @@ Follow the steps below to run this example.
 Comma Delimited File Example
 ----------------------------
 
-This example is located in the **examples/csv** folder.
+This example is located in the **examples/csv_server** folder.
 
 This example shows how to access data from comma delimited (CSV) files in the 
 **csv** subfolder.  One CSV file contains the time series values, while
@@ -84,10 +101,10 @@ another contains descriptions of observations sites.
 
 Follow the steps below to run this example.
 
-#. In the **examples/csv** folder, edit the value of the **openPort**
+#. In the **examples/csv_server** folder, edit the value of the **openPort**
    variable in **runserver_csv.py** to match an open port on your computer,
    if necessary.  Then save and close the file. 
-#. Open a command window in the **examples/csv** folder and enter:
+#. Open a command window in the **examples/csv_server** folder and enter:
    ``python runserver_csv.py``
 #. In your command window you should see a message indicating that the service
    is running along with instructions for accessing the service.  
@@ -131,18 +148,19 @@ Follow the steps below to run this example.
 #. Attach the database to SQL Server.
 #. Grant a SQL Server account **select** privileges on the database.  WOFpy
    will use this account to connect to the database.
-#. In the odm_sqlserver folder, create a file named **private_config.py** with
-   a variable named **lbr_connection_string** set to a SQLAlchemy-compatible
+#. Determine the database connection string. **lbr_connection_string** set to a SQLAlchemy-compatible
    database connection string for the Little Bear River database, e.g.,
-   ``lbr_connection_string =
-   'mssql+pyodbc://username:password@(local)/LittleBear11'``
+   'mssql+pyodbc://webservice:webservice@localhost/LittleBear11?driver=SQL+Server+Native+Client+10.0'``
 #. In the **examples/odm_sqlserver** folder, edit the value of the **openPort**
    variable in **runserver_lbr.py** to match an open port on your computer,
-   if necessary.  Then save and close the file. 
+   if necessary.  Then save and close the file.
 #. Open a command window in the **examples/odm_sqlserver** folder and enter:
-   ``python runserver_lbr.py``
+   ``python runserver_odm11.py
+    --config=lbr_config.cfg
+    --connection=mssql+pyodbc://{user}:{password}@{host}/{db}?driver=SQL+Server+Native+Client+10.0y``
 #. In your command window you should see a message indicating that the service
-   is running along with instructions for accessing the service.  
+   is running along with instructions for accessing the service.
+
 
 CBI External Service Example
 ----------------------------
@@ -195,85 +213,7 @@ Follow the steps below to run this example.
 #. Open a command window in the **examples** folder and enter:
    ``python runserver_multiple.py``
 #. In your command window you should see a message indicating that the service
-   is running along with instructions for accessing the service.  
+   is running along with instructions for accessing the service.
 
-Accessing WOFpy REST Web Services
-=================================
+.. include:: AccessingService.rst
 
-Running the examples is a great way to learn the REST syntax for accessing data
-with WOFpy.  The examples create a web page with sample URIs illustrating
-the required syntax.  You can click the URIs in your browser to see the
-results.  The syntax is also described below.
-
-All query results are provided in WaterML 1.0 unless specified otherwise.
-
-Getting Site Locations
-----------------------
-
-* **GetSites** - Returns locations of all sites
-* **GetSites?site=network:site_code** - Returns location of site with given
-  site code in given network
-
-Discovering What Is Measured at a Site
---------------------------------------
-
-* **GetSites?site=network:site_code** - Returns location of given site and 
-  summary of all time series available at the site
-
-Getting Information about Variables
------------------------------------
-
-* **GetVariableInfo** - Returns descriptions of all variables
-* **GetVariableInfo?variable=vocabulary:variable_code** - Returns description
-  of variable with given variable code within the given vocabulary
-
-Downloading Time Series Values
-------------------------------
-
-* **GetValues?location=network:site_code&variable=vocabulary:variable_code** -
-  Returns all data at the given site for the given variable
-* **GetValues?location=network:site_code&variable=vocabulary:variable_code&startDate=YYYY-MM-DDThh:mm&endDate=YYYY-MM-DDThh:mm** -
-  Returns data at the given site for the given variable intersecting the given
-  time period
-
-.. note::
-    The time format is `ISO time
-    <http://www.iso.org/iso/date_and_time_format>`_.  You can leave out the
-    time component and just write YYYY-MM-DD.  You can specify time zone by
-    appending the offset from Universal Time Coordinates (UTC) in hours to the
-    end of the date string, or by appending Z to indicate UTC.  For example,
-    to specify April 5, 2011, 5:00 PM in US Central Standard Time:
-    ``2011-04-05T05:00-06``
-    
-    See `Wikipedia <http://en.wikipedia.org/wiki/ISO_8601>`_ for more examples.
-
-* **GetValues?format=wml2&location=network:site_code&variable=vocabulary:variable_code&startDate=YYYY-MM-DDThh:mm&endDate=YYYY-MM-DDThh:mm** -
-  Returns data at the given site for the given variable intersecting the given
-  time period in WaterML 2.0 format.
-
-.. note::
-    WaterML 2.0 format is only available for GetValues requests.    
-
-Accessing WOFpy SOAP Web Services
-=================================
-
-The SOAP endpoint follows the WaterOneFlow standard, whose method signatures
-and WaterML responses are described on the HIS website at
-http://his.cuahsi.org/wofws.html.
-
-One of the easiest ways to test the SOAP endpoint is to use the free soapUI
-program.  To test with soapUI:
-
-#. Install soapUI.
-#. Run WOFpy, perhaps using one of the :ref:`examples <examples>`.
-#. Start soapUI.
-#. In soapUI, click **File**, and then click **New soapUI Project**.
-#. Give your project any name, input the URI to your SOAP endpoint, and click
-   **OK**.
-#. Expand the example request for **GetSiteInfoObject** and double-click
-   **Request1** to open that request.
-#. Input a valid network:site_code in the **site** parameter.  You can use the
-   default parameter provided on the Web page for the REST endpoint of your
-   service.
-#. Click the play button to issue the request.  A new window should open with
-   the SOAP response showing information about the site.
