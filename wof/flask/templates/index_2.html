@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>WaterML 2 GetVaules Rest</title>
+</head>
+<body>
+	<p>Visit one of these pages to obtain {{p}} observations data and metadata from the REST API for WOF written in Python:</p>
+			<p>The WaterML2 is valid, but is not fully imlemented. Known issues:</p>
+    <ul>
+        <li>Fixed Metadata: QC Level: Raw Data</li>
+        <li>Fixed Metadata: Censor Code: Not Censored</li>
+         <li>No Value Metadata (Method Code, etc)</li>
+        <li>Unit of Measure may not be fully to best practice (using what is in ODM/dao model)</li>
+        <li>interpolationType title is from ODM/dao model, but referenece is fixed to xlink:href="http://www.opengis.net/def/timeseriesType/WaterML/2.0/Discontinuous"</li>
+    </ul>
+	<ul>
+        <li>
+            <a href="{{request.script_root|safe}}/{{ path }}GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}{% if u %}::{{ u }}{% endif %}{% if sm %}-{{ sm }}{% endif %}">
+                        GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}{% if u %}::{{ u }}{% endif %}{% if sm %}-{{ sm }}{% endif %}
+            </a> Note: May crash browser for large values sets.
+        </li>
+		<li>
+			<a href="{{request.script_root|safe}}/{{ path }}GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}{% if u %}::{{ u }}{% endif %}{% if sm %}-{{ sm }}{% endif %}&startDate={{sd}}&endDate={{ed}}">
+				GetValues?location={{p}}:{{s}}&variable={{p}}:{{v}}{% if u %}::{{ u }}{% endif %}{% if sm %}-{{ sm }}{% endif %}&startDate={{sd}}&endDate={{ed}}
+			</a>
+		</li>
+	</ul>
+
+</body>
+</html>

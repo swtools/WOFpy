@@ -1,5 +1,5 @@
 import wof.models as wof_base
-
+import dateutil.parser as dateparser
 
 class Variable(wof_base.BaseVariable):
     # Properties common to all variables in this example
@@ -71,10 +71,10 @@ class DataValue(wof_base.BaseDataValue):
 
 class Series(wof_base.BaseSeries):
     # Properties common to all series in this example
-    BeginDateTime = '2008-01-01T00:00-06'
-    EndDateTime = '2008-04-30T00:00-06'
-    BeginDateTimeUTC = '2008-01-01T06:00Z'
-    EndDateTimeUTC = '2008-04-30T06:00Z'
+    BeginDateTime = dateparser.parse( '2008-01-01T00:00:00-06:00')
+    EndDateTime =  dateparser.parse('2008-04-30T00:00:00-06:00')
+    BeginDateTimeUTC =  dateparser.parse('2008-01-01T06:00Z')
+    EndDateTimeUTC =  dateparser.parse('2008-04-30T06:00Z')
     ValueCount = 121
 
     qc_level = QualityControlLevel()

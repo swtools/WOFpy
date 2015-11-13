@@ -6,14 +6,14 @@ WOFpy is a Python package that implements CUAHSI's (http://his.cuahsi.org) Water
 
 WOFpy reads data from a Data Access Object (DAO) and translates the data into WaterML.  DAOs can represent a variety of data sources, including databases, text files, and Web sites or services.  You can view example DAOs in the examples folder, or write your own based on the BaseDao class in wof/dao.py.
 
-WOFpy uses Python version 2.6.
+WOFpy uses Python version 2.7.
 
 Installation
 ------------
 
 Follow the steps below for Basic installation on a Windows computer.
 
-#. Install **Python 2.6**.  The 32-bit installer is recommended.
+#. Install **Python 2.7**.  The 32-bit installer is recommended.
 #. Add the **Python** folder to your **Path** environment variable.
 #. Install **setuptools**. This allows the setup script to be run.
 #. Add the **Python/scripts** folder to your **Path** environment variable.

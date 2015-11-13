@@ -1,0 +1,1720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="e40b06d8-5c9f-48db-8d66-0e236106a603" activeEnvironment="Default" name="wofpy_1_1" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="e24a3cd8-8d3e-4076-b778-cd3cc356b467" wsaVersion="NONE" name="WaterOneFlow" type="wsdl" bindingName="{http://www.cuahsi.org/his/1.1/ws/}WaterOneFlow" soapVersion="1_1" anonymous="optional" definition="http://water.sdsc.edu/lbrsdsc/cuahsi_1_1.asmx?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1.wsdl"><con:part><con:url>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.cuahsi.org/his/1.1/ws/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.cuahsi.org/his/1.1/ws/" xmlns:s1="http://www.cuahsi.org/waterML/1.1/" xmlns:s2="http://www.cuahsi.org/his/1.1/ws/AbstractTypes" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>Developmental Python implementation of WaterOneFlow 1.1 for odm2wofpy</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.cuahsi.org/his/1.1/ws/">
+      <s:import namespace="http://www.cuahsi.org/waterML/1.1/"/>
+      <s:element name="GetSites">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="site" type="tns:ArrayOfString"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetSitesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSitesResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSiteInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="site" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSiteInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSiteInfoResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVariableInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="variable" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVariableInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetVariableInfoResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSitesObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="site" type="tns:ArrayOfString"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSitesObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" ref="s1:sitesResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSiteInfoObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="site" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSiteInfoObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" ref="s1:sitesResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVariableInfoObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="variable" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetValues">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="variable" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetValuesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetValuesResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetValuesObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="location" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="variable" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSiteInfoMultpleObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="site" type="tns:ArrayOfString"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSiteInfoMultpleObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" ref="s1:sitesResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSitesByBoxObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="west" type="s:float"/>
+            <s:element minOccurs="1" maxOccurs="1" name="south" type="s:float"/>
+            <s:element minOccurs="1" maxOccurs="1" name="east" type="s:float"/>
+            <s:element minOccurs="1" maxOccurs="1" name="north" type="s:float"/>
+            <s:element minOccurs="1" maxOccurs="1" name="IncludeSeries" type="s:boolean"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSitesByBoxObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" ref="s1:sitesResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetValuesForASiteObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="site" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="startDate" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="endDate" type="s:string"/>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetValuesForASiteObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" ref="s1:timeSeriesResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVariables">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVariablesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetVariablesResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVariablesObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="authToken" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetVariablesObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" ref="s1:variablesResponse"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string"/>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.cuahsi.org/waterML/1.1/">
+      <s:element name="sitesResponse" type="s1:SiteInfoResponseType"/>
+      <s:complexType name="SiteInfoResponseType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="queryInfo" type="s1:QueryInfoType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="site">
+            <s:complexType>
+              <s:sequence>
+                <s:element minOccurs="0" maxOccurs="1" name="siteInfo" type="s1:SiteInfoType"/>
+                <s:element minOccurs="0" maxOccurs="unbounded" name="seriesCatalog" type="s1:seriesCatalogType"/>
+                <s:element minOccurs="0" maxOccurs="unbounded" name="extension"/>
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="QueryInfoType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="creationTime" type="s:dateTime"/>
+          <s:element minOccurs="0" maxOccurs="1" name="queryURL" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="criteria">
+            <s:complexType>
+              <s:sequence>
+                <s:element minOccurs="0" maxOccurs="1" name="locationParam" type="s:string"/>
+                <s:element minOccurs="0" maxOccurs="1" name="variableParam" type="s:string"/>
+                <s:element minOccurs="0" maxOccurs="1" name="timeParam">
+                  <s:complexType>
+                    <s:sequence>
+                      <s:element minOccurs="0" maxOccurs="1" name="beginDateTime" type="s:string"/>
+                      <s:element minOccurs="0" maxOccurs="1" name="endDateTime" type="s:string"/>
+                    </s:sequence>
+                  </s:complexType>
+                </s:element>
+                <s:element minOccurs="0" maxOccurs="unbounded" name="parameter">
+                  <s:complexType>
+                    <s:attribute name="name" type="s:token"/>
+                    <s:attribute name="value" type="s:string"/>
+                  </s:complexType>
+                </s:element>
+              </s:sequence>
+              <s:attribute name="MethodCalled" type="s:normalizedString"/>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="note" type="s1:NoteType"/>
+          <s:element minOccurs="0" maxOccurs="1" name="extension"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="NoteType">
+        <s:simpleContent>
+          <s:extension base="s:string">
+            <s:attribute name="type" type="s:token"/>
+            <s:attribute name="href" type="s:string"/>
+            <s:attribute name="title" type="s:string"/>
+            <s:attribute name="show" type="s:string"/>
+          </s:extension>
+        </s:simpleContent>
+      </s:complexType>
+      <s:complexType name="SiteInfoType">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:SourceInfoType">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="siteName" type="s:string"/>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="siteCode">
+                <s:complexType>
+                  <s:simpleContent>
+                    <s:extension base="s:token">
+                      <s:attribute name="default" type="s:boolean"/>
+                      <s:attribute name="network" type="s:token"/>
+                      <s:attribute name="siteID" type="s:int"/>
+                      <s:attribute name="agencyCode" type="s:normalizedString"/>
+                      <s:attribute name="agencyName" type="s:normalizedString"/>
+                    </s:extension>
+                  </s:simpleContent>
+                </s:complexType>
+              </s:element>
+              <s:element minOccurs="0" maxOccurs="1" name="timeZoneInfo">
+                <s:complexType>
+                  <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="defaultTimeZone">
+                      <s:complexType>
+                        <s:complexContent mixed="false">
+                          <s:extension base="s1:TimeZoneType"/>
+                        </s:complexContent>
+                      </s:complexType>
+                    </s:element>
+                    <s:element minOccurs="0" maxOccurs="1" name="daylightSavingsTimeZone">
+                      <s:complexType>
+                        <s:complexContent mixed="false">
+                          <s:extension base="s1:TimeZoneType"/>
+                        </s:complexContent>
+                      </s:complexType>
+                    </s:element>
+                  </s:sequence>
+                  <s:attribute name="siteUsesDaylightSavingsTime" type="s:boolean"/>
+                </s:complexType>
+              </s:element>
+              <s:element minOccurs="0" maxOccurs="1" name="geoLocation">
+                <s:complexType>
+                  <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="geogLocation" type="s1:GeogLocationType"/>
+                    <s:element minOccurs="0" maxOccurs="unbounded" name="localSiteXY">
+                      <s:complexType>
+                        <s:sequence>
+                          <s:element minOccurs="1" maxOccurs="1" name="X" type="s:double"/>
+                          <s:element minOccurs="1" maxOccurs="1" name="Y" type="s:double"/>
+                          <s:element minOccurs="0" maxOccurs="1" name="Z" type="s:double"/>
+                          <s:element minOccurs="0" maxOccurs="unbounded" name="note" type="s1:NoteType"/>
+                        </s:sequence>
+                        <s:attribute name="projectionInformation" type="s:string"/>
+                      </s:complexType>
+                    </s:element>
+                  </s:sequence>
+                </s:complexType>
+              </s:element>
+              <s:element minOccurs="0" maxOccurs="1" name="elevation_m" type="s:double"/>
+              <s:element minOccurs="0" maxOccurs="1" name="verticalDatum" type="s:string"/>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="note" type="s1:NoteType"/>
+              <s:element minOccurs="0" maxOccurs="1" name="extension"/>
+              <s:element minOccurs="0" maxOccurs="1" name="altname" type="s:string"/>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="siteType" type="s:string"/>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="siteProperty" type="s1:PropertyType"/>
+            </s:sequence>
+            <s:attribute form="qualified" name="oid" type="s:normalizedString"/>
+            <s:attribute form="qualified" name="metadataTime" type="s:dateTime"/>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SourceInfoType"/>
+      <s:complexType name="DataSetInfoType">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:SourceInfoType">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="dataSetIdentifier" type="s:string"/>
+              <s:element minOccurs="0" maxOccurs="1" name="timeZoneInfo">
+                <s:complexType>
+                  <s:sequence>
+                    <s:element minOccurs="0" maxOccurs="1" name="defaultTimeZone">
+                      <s:complexType>
+                        <s:complexContent mixed="false">
+                          <s:extension base="s1:TimeZoneType"/>
+                        </s:complexContent>
+                      </s:complexType>
+                    </s:element>
+                    <s:element minOccurs="0" maxOccurs="1" name="daylightSavingsTimeZone">
+                      <s:complexType>
+                        <s:complexContent mixed="false">
+                          <s:extension base="s1:TimeZoneType"/>
+                        </s:complexContent>
+                      </s:complexType>
+                    </s:element>
+                  </s:sequence>
+                  <s:attribute name="siteUsesDaylightSavingsTime" type="s:boolean"/>
+                </s:complexType>
+              </s:element>
+              <s:element minOccurs="0" maxOccurs="1" name="dataSetDescription" type="s:string"/>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="note" type="s1:NoteType"/>
+              <s:element minOccurs="0" maxOccurs="1" name="dataSetLocation" type="s1:GeogLocationType"/>
+              <s:element minOccurs="0" maxOccurs="1" name="extension"/>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="dataSetProperty" type="s1:PropertyType"/>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TimeZoneType">
+        <s:attribute name="zoneOffset" type="s:normalizedString"/>
+        <s:attribute name="zoneAbbreviation" type="s:token"/>
+      </s:complexType>
+      <s:complexType name="GeogLocationType" abstract="true">
+        <s:attribute default="EPSG:4326" name="srs" type="s:string"/>
+      </s:complexType>
+      <s:complexType name="LatLonPointType">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:GeogLocationType">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="latitude" type="s:double"/>
+              <s:element minOccurs="1" maxOccurs="1" name="longitude" type="s:double"/>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="latLonLineString">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:GeogLocationType">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="coordLatLong" type="s1:CoordType"/>
+            </s:sequence>
+            <s:attribute name="zDirection" type="s:string"/>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CoordType">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="latitude" type="s:double"/>
+          <s:element minOccurs="1" maxOccurs="1" name="longitude" type="s:double"/>
+          <s:element minOccurs="0" maxOccurs="1" name="Z" type="s:decimal"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="LatLonBoxType">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:GeogLocationType">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="south" type="s:double"/>
+              <s:element minOccurs="1" maxOccurs="1" name="west" type="s:double"/>
+              <s:element minOccurs="1" maxOccurs="1" name="north" type="s:double"/>
+              <s:element minOccurs="1" maxOccurs="1" name="east" type="s:double"/>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="PropertyType">
+        <s:simpleContent>
+          <s:extension base="s:string">
+            <s:attribute name="type" type="s:token"/>
+            <s:attribute name="name" type="s:normalizedString"/>
+            <s:attribute name="uri" type="s:anyURI"/>
+          </s:extension>
+        </s:simpleContent>
+      </s:complexType>
+      <s:complexType name="seriesCatalogType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="note" type="s1:NoteType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="series">
+            <s:complexType>
+              <s:sequence>
+                <s:element minOccurs="0" maxOccurs="1" name="dataType" type="s:string"/>
+                <s:element minOccurs="0" maxOccurs="1" name="variable" type="s1:VariableInfoType"/>
+                <s:element minOccurs="0" maxOccurs="1" name="valueCount">
+                  <s:complexType>
+                    <s:simpleContent>
+                      <s:extension base="s:int">
+                        <s:attribute name="countIsEstimated" type="s:boolean"/>
+                      </s:extension>
+                    </s:simpleContent>
+                  </s:complexType>
+                </s:element>
+                <s:element minOccurs="0" maxOccurs="1" name="variableTimeInterval" type="s1:TimePeriodType"/>
+                <s:element minOccurs="0" maxOccurs="1" name="valueType" type="s:string"/>
+                <s:element minOccurs="0" maxOccurs="1" name="generalCategory" type="s:string"/>
+                <s:element minOccurs="0" maxOccurs="1" name="sampleMedium" type="s:string"/>
+                <s:element minOccurs="0" maxOccurs="1" name="method" type="s1:MethodType"/>
+                <s:element minOccurs="0" maxOccurs="1" name="source" type="s1:SourceType"/>
+                <s:element minOccurs="0" maxOccurs="1" name="qualityControlLevel" type="s1:QualityControlLevelType"/>
+                <s:element minOccurs="0" maxOccurs="unbounded" name="seriesProperty" type="s1:PropertyType"/>
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="seriesCatalogProperty" type="s1:PropertyType"/>
+          <s:element minOccurs="0" maxOccurs="1" name="extension"/>
+        </s:sequence>
+        <s:attribute name="menuGroupName" type="s:normalizedString"/>
+        <s:attribute name="serviceWsdl" type="s:anyURI"/>
+      </s:complexType>
+      <s:complexType name="VariableInfoType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="variableCode">
+            <s:complexType>
+              <s:simpleContent>
+                <s:extension base="s:token">
+                  <s:attribute name="network" type="s:token"/>
+                  <s:attribute name="vocabulary" type="s:token"/>
+                  <s:attribute name="default" type="s:boolean"/>
+                  <s:attribute name="variableID" type="s:int"/>
+                </s:extension>
+              </s:simpleContent>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="variableName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="variableDescription" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="valueType" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="dataType" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="generalCategory" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="sampleMedium" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="unit" type="s1:UnitsType"/>
+          <s:element minOccurs="0" maxOccurs="1" name="options" type="s1:ArrayOfOption"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="note" type="s1:NoteType"/>
+          <s:element minOccurs="0" maxOccurs="1" name="related">
+            <s:complexType>
+              <s:sequence>
+                <s:element minOccurs="0" maxOccurs="unbounded" name="parentCode">
+                  <s:complexType>
+                    <s:simpleContent>
+                      <s:extension base="s:string">
+                        <s:attribute name="network" type="s:token"/>
+                        <s:attribute name="vocabulary" type="s:token"/>
+                        <s:attribute name="default" type="s:boolean"/>
+                      </s:extension>
+                    </s:simpleContent>
+                  </s:complexType>
+                </s:element>
+                <s:element minOccurs="0" maxOccurs="unbounded" name="relatedCode">
+                  <s:complexType>
+                    <s:simpleContent>
+                      <s:extension base="s:string">
+                        <s:attribute name="network" type="s:token"/>
+                        <s:attribute name="vocabulary" type="s:token"/>
+                        <s:attribute name="default" type="s:boolean"/>
+                      </s:extension>
+                    </s:simpleContent>
+                  </s:complexType>
+                </s:element>
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="extension"/>
+          <s:element minOccurs="0" maxOccurs="1" name="noDataValue" type="s:double"/>
+          <s:element minOccurs="1" maxOccurs="1" name="timeScale" nillable="true">
+            <s:complexType>
+              <s:sequence>
+                <s:element minOccurs="0" maxOccurs="1" name="unit" type="s1:UnitsType"/>
+                <s:element minOccurs="0" maxOccurs="1" name="timeSpacing" type="s:float"/>
+                <s:element minOccurs="0" maxOccurs="1" name="timeSupport" type="s:float"/>
+              </s:sequence>
+              <s:attribute default="false" name="isRegular" type="s:boolean"/>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="speciation" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="categories" type="s1:ArrayOfVariableInfoTypeCategory"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="variableProperty" type="s1:PropertyType"/>
+        </s:sequence>
+        <s:attribute form="qualified" name="oid" type="s:normalizedString"/>
+        <s:attribute form="qualified" name="metadataTime" type="s:dateTime"/>
+      </s:complexType>
+      <s:complexType name="UnitsType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="unitName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="unitDescription" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="unitType" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="unitAbbreviation" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="unitCode" type="s:token"/>
+        </s:sequence>
+        <s:attribute name="unitID" type="s:int"/>
+      </s:complexType>
+      <s:complexType name="ArrayOfOption">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="option">
+            <s:complexType>
+              <s:simpleContent>
+                <s:extension base="s:string">
+                  <s:attribute name="name" type="s:normalizedString"/>
+                  <s:attribute name="optionID" type="s:integer"/>
+                  <s:attribute name="optionCode" type="s:token"/>
+                </s:extension>
+              </s:simpleContent>
+            </s:complexType>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfVariableInfoTypeCategory">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="category">
+            <s:complexType>
+              <s:sequence>
+                <s:element minOccurs="1" maxOccurs="1" name="dataValue" type="s:decimal"/>
+                <s:element minOccurs="0" maxOccurs="1" name="description" type="s:string"/>
+              </s:sequence>
+              <s:attribute name="categoryID" type="s:int"/>
+            </s:complexType>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TimePeriodType">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="beginDateTime" type="s:dateTime"/>
+          <s:element minOccurs="1" maxOccurs="1" name="endDateTime" type="s:dateTime"/>
+          <s:element minOccurs="0" maxOccurs="1" name="beginDateTimeUTC" type="s:dateTime"/>
+          <s:element minOccurs="0" maxOccurs="1" name="endDateTimeUTC" type="s:dateTime"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TimePeriodRealTimeType">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:TimePeriodType">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="realTimeDataPeriod" type="s:duration"/>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TimeSingleType">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:TimePeriodType">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="timeSingle" type="s:dateTime"/>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TimeIntervalType">
+        <s:complexContent mixed="false">
+          <s:extension base="s1:TimePeriodType"/>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MethodType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="methodCode" type="s:token"/>
+          <s:element minOccurs="0" maxOccurs="1" name="methodDescription" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="methodLink" type="s:string"/>
+        </s:sequence>
+        <s:attribute name="methodID" type="s:int"/>
+      </s:complexType>
+      <s:complexType name="SourceType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sourceCode" type="s:token"/>
+          <s:element minOccurs="0" maxOccurs="1" name="organization" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="sourceDescription" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="metadata" type="s1:MetaDataType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="contactInformation" type="s1:ContactInformationType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="sourceLink" type="s:anyURI"/>
+          <s:element minOccurs="0" maxOccurs="1" name="citation" type="s:string"/>
+        </s:sequence>
+        <s:attribute name="sourceID" type="s:int"/>
+      </s:complexType>
+      <s:complexType name="MetaDataType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="topicCategory" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="abstract" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="profileVersion" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="metadataLink" type="s:anyURI"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ContactInformationType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="contactName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="typeOfContact" type="s:normalizedString"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="email" type="s:normalizedString"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="phone" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="address"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="QualityControlLevelType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="qualityControlLevelCode" type="s:token"/>
+          <s:element minOccurs="0" maxOccurs="1" name="definition" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="explanation" type="s:string"/>
+        </s:sequence>
+        <s:attribute name="qualityControlLevelID" type="s:int"/>
+      </s:complexType>
+      <s:complexType name="VariablesResponseType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="queryInfo" type="s1:QueryInfoType"/>
+          <s:element minOccurs="0" maxOccurs="1" name="variables" type="s1:ArrayOfVariableInfoType"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfVariableInfoType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="variable" type="s1:VariableInfoType"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="VariablesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="variablesResponse" type="s1:VariablesResponseType"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TimeSeriesResponseType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="queryInfo" type="s1:QueryInfoType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="timeSeries" type="s1:TimeSeriesType"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TimeSeriesType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="sourceInfo" type="s1:SourceInfoType"/>
+          <s:element minOccurs="0" maxOccurs="1" name="variable" type="s1:VariableInfoType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="values" type="s1:TsValuesSingleVariableType"/>
+        </s:sequence>
+        <s:attribute name="name" type="s:normalizedString"/>
+      </s:complexType>
+      <s:complexType name="TsValuesSingleVariableType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="value" type="s1:ValueSingleVariable"/>
+          <s:element minOccurs="0" maxOccurs="1" name="units" type="s1:UnitsType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="qualifier" type="s1:QualifierType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="qualityControlLevel" type="s1:QualityControlLevelType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="method" type="s1:MethodType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="source" type="s1:SourceType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="offset" type="s1:OffsetType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="sample" type="s1:SampleType"/>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="censorCode" type="s1:CensorCodeType"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ValueSingleVariable">
+        <s:simpleContent>
+          <s:extension base="s:decimal">
+            <s:attribute name="qualifiers" type="s:NMTOKENS"/>
+            <s:attribute name="censorCode" type="s:string"/>
+            <s:attribute name="dateTime" type="s:dateTime" use="required"/>
+            <s:attribute name="timeOffset" type="s:normalizedString"/>
+            <s:attribute name="dateTimeUTC" type="s:dateTime"/>
+            <s:attribute name="methodID" type="s:nonNegativeInteger"/>
+            <s:attribute name="sourceID" type="s:nonNegativeInteger"/>
+            <s:attribute name="accuracyStdDev" type="s:double"/>
+            <s:attribute name="sampleID" type="s:nonNegativeInteger"/>
+            <s:attribute name="methodCode" type="s:token"/>
+            <s:attribute name="sourceCode" type="s:token"/>
+            <s:attribute name="labSampleCode" type="s:token"/>
+            <s:attribute name="offsetValue" type="s:double"/>
+            <s:attribute name="offsetTypeID" type="s:nonNegativeInteger"/>
+            <s:attribute name="offsetTypeCode" type="s:token"/>
+            <s:attribute name="codedVocabulary" type="s:boolean"/>
+            <s:attribute name="codedVocabularyTerm" type="s:normalizedString"/>
+            <s:attribute name="qualityControlLevelCode" type="s:token"/>
+            <s:attribute form="qualified" name="metadataTime" type="s:dateTime"/>
+            <s:attribute form="qualified" name="oid" type="s:normalizedString"/>
+          </s:extension>
+        </s:simpleContent>
+      </s:complexType>
+      <s:complexType name="QualifierType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="qualifierCode" type="s:token"/>
+          <s:element minOccurs="0" maxOccurs="1" name="qualifierDescription" type="s:string"/>
+        </s:sequence>
+        <s:attribute name="qualifierID" type="s:int"/>
+        <s:attribute form="qualified" name="network" type="s:NMTOKEN"/>
+        <s:attribute form="qualified" name="vocabulary" type="s:NMTOKEN"/>
+        <s:attribute form="qualified" name="default" type="s:boolean"/>
+      </s:complexType>
+      <s:complexType name="OffsetType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="offsetTypeCode" type="s:token"/>
+          <s:element minOccurs="0" maxOccurs="1" name="offsetValue" type="s:float"/>
+          <s:element minOccurs="0" maxOccurs="1" name="offsetDescription" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="unit" type="s1:UnitsType"/>
+          <s:element minOccurs="1" maxOccurs="1" name="offsetIsVertical" type="s:boolean"/>
+          <s:element minOccurs="0" maxOccurs="1" name="offsetAzimuthDegrees" type="s:int"/>
+        </s:sequence>
+        <s:attribute name="offsetTypeID" type="s:int"/>
+      </s:complexType>
+      <s:complexType name="SampleType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="labSampleCode" type="s:normalizedString"/>
+          <s:element minOccurs="0" maxOccurs="1" name="sampleType" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="labMethod" type="s1:LabMethodType"/>
+        </s:sequence>
+        <s:attribute name="sampleID" type="s:int"/>
+      </s:complexType>
+      <s:complexType name="LabMethodType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="labCode" type="s:token"/>
+          <s:element minOccurs="0" maxOccurs="1" name="labName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="labOrganization" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="labMethodName" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="labMethodDescription" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="labMethodLink" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="labSourceDetails" type="s1:SourceType"/>
+        </s:sequence>
+        <s:attribute name="labMethodID" type="s:int"/>
+      </s:complexType>
+      <s:complexType name="CensorCodeType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="censorCode" type="s:string"/>
+          <s:element minOccurs="0" maxOccurs="1" name="censorCodeDescription" type="s:string"/>
+        </s:sequence>
+        <s:attribute name="censorCodeID" type="s:int"/>
+      </s:complexType>
+      <s:element name="TimeSeriesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="timeSeriesResponse" type="s1:TimeSeriesResponseType"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="timeSeriesResponse" type="s1:TimeSeriesResponseType"/>
+      <s:element name="variablesResponse" type="s1:VariablesResponseType"/>
+    </s:schema>
+    <s:schema targetNamespace="http://www.cuahsi.org/his/1.1/ws/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string"/>
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetSitesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSites"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSiteInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSiteInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVariableInfo"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVariableInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSitesObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSitesObjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSiteInfoObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSiteInfoObjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVariableInfoObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoObjectSoapOut">
+    <wsdl:part name="parameters" element="s1:VariablesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetValues"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetValuesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetValuesObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesObjectSoapOut">
+    <wsdl:part name="parameters" element="s1:TimeSeriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoMultpleObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSiteInfoMultpleObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoMultpleObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSiteInfoMultpleObjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesByBoxObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSitesByBoxObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesByBoxObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSitesByBoxObjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesForASiteObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetValuesForASiteObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesForASiteObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetValuesForASiteObjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVariables"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVariablesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:GetVariablesObject"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:GetVariablesObjectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesHttpGetIn">
+    <wsdl:part name="site" type="s2:StringArray"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoHttpGetIn">
+    <wsdl:part name="site" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoHttpGetIn">
+    <wsdl:part name="variable" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesObjectHttpGetIn">
+    <wsdl:part name="site" type="s2:StringArray"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesObjectHttpGetOut">
+    <wsdl:part name="Body" element="s1:sitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoObjectHttpGetIn">
+    <wsdl:part name="site" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoObjectHttpGetOut">
+    <wsdl:part name="Body" element="s1:sitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoObjectHttpGetIn">
+    <wsdl:part name="variable" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoObjectHttpGetOut">
+    <wsdl:part name="Body" element="s1:variablesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesHttpGetIn">
+    <wsdl:part name="location" type="s:string"/>
+    <wsdl:part name="variable" type="s:string"/>
+    <wsdl:part name="startDate" type="s:string"/>
+    <wsdl:part name="endDate" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesObjectHttpGetIn">
+    <wsdl:part name="location" type="s:string"/>
+    <wsdl:part name="variable" type="s:string"/>
+    <wsdl:part name="startDate" type="s:string"/>
+    <wsdl:part name="endDate" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesObjectHttpGetOut">
+    <wsdl:part name="Body" element="s1:timeSeriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoMultpleObjectHttpGetIn">
+    <wsdl:part name="site" type="s2:StringArray"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoMultpleObjectHttpGetOut">
+    <wsdl:part name="Body" element="s1:sitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesByBoxObjectHttpGetIn">
+    <wsdl:part name="west" type="s:string"/>
+    <wsdl:part name="south" type="s:string"/>
+    <wsdl:part name="east" type="s:string"/>
+    <wsdl:part name="north" type="s:string"/>
+    <wsdl:part name="IncludeSeries" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesByBoxObjectHttpGetOut">
+    <wsdl:part name="Body" element="s1:sitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesForASiteObjectHttpGetIn">
+    <wsdl:part name="site" type="s:string"/>
+    <wsdl:part name="startDate" type="s:string"/>
+    <wsdl:part name="endDate" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesForASiteObjectHttpGetOut">
+    <wsdl:part name="Body" element="s1:timeSeriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesHttpGetIn">
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesHttpGetOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesObjectHttpGetIn">
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesObjectHttpGetOut">
+    <wsdl:part name="Body" element="s1:variablesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesHttpPostIn">
+    <wsdl:part name="site" type="s2:StringArray"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoHttpPostIn">
+    <wsdl:part name="site" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoHttpPostIn">
+    <wsdl:part name="variable" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesObjectHttpPostIn">
+    <wsdl:part name="site" type="s2:StringArray"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesObjectHttpPostOut">
+    <wsdl:part name="Body" element="s1:sitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoObjectHttpPostIn">
+    <wsdl:part name="site" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoObjectHttpPostOut">
+    <wsdl:part name="Body" element="s1:sitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoObjectHttpPostIn">
+    <wsdl:part name="variable" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariableInfoObjectHttpPostOut">
+    <wsdl:part name="Body" element="s1:variablesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesHttpPostIn">
+    <wsdl:part name="location" type="s:string"/>
+    <wsdl:part name="variable" type="s:string"/>
+    <wsdl:part name="startDate" type="s:string"/>
+    <wsdl:part name="endDate" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesObjectHttpPostIn">
+    <wsdl:part name="location" type="s:string"/>
+    <wsdl:part name="variable" type="s:string"/>
+    <wsdl:part name="startDate" type="s:string"/>
+    <wsdl:part name="endDate" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesObjectHttpPostOut">
+    <wsdl:part name="Body" element="s1:timeSeriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoMultpleObjectHttpPostIn">
+    <wsdl:part name="site" type="s2:StringArray"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSiteInfoMultpleObjectHttpPostOut">
+    <wsdl:part name="Body" element="s1:sitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesByBoxObjectHttpPostIn">
+    <wsdl:part name="west" type="s:string"/>
+    <wsdl:part name="south" type="s:string"/>
+    <wsdl:part name="east" type="s:string"/>
+    <wsdl:part name="north" type="s:string"/>
+    <wsdl:part name="IncludeSeries" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetSitesByBoxObjectHttpPostOut">
+    <wsdl:part name="Body" element="s1:sitesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesForASiteObjectHttpPostIn">
+    <wsdl:part name="site" type="s:string"/>
+    <wsdl:part name="startDate" type="s:string"/>
+    <wsdl:part name="endDate" type="s:string"/>
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetValuesForASiteObjectHttpPostOut">
+    <wsdl:part name="Body" element="s1:timeSeriesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesHttpPostIn">
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesHttpPostOut">
+    <wsdl:part name="Body" element="tns:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesObjectHttpPostIn">
+    <wsdl:part name="authToken" type="s:string"/>
+  </wsdl:message>
+  <wsdl:message name="GetVariablesObjectHttpPostOut">
+    <wsdl:part name="Body" element="s1:variablesResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="WaterOneFlow">
+    <wsdl:operation name="GetSites">
+      <wsdl:documentation>Given an array of site numbers, this method returns the site metadata for each one. Send the array of site codes in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesSoapIn"/>
+      <wsdl:output message="tns:GetSitesSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfo">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoSoapIn"/>
+      <wsdl:output message="tns:GetSiteInfoSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariableInfo">
+      <wsdl:documentation>Given a variable code, this method returns the variable's name. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariableInfoSoapIn"/>
+      <wsdl:output message="tns:GetVariableInfoSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSitesObject">
+      <wsdl:documentation>Given an array of site numbers, this method returns the site metadata for each one. Send the array of site codes in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesObjectSoapIn"/>
+      <wsdl:output message="tns:GetSitesObjectSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfoObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoObjectSoapIn"/>
+      <wsdl:output message="tns:GetSiteInfoObjectSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariableInfoObject">
+      <wsdl:documentation>Given a variable code, this method returns the variable's siteName. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariableInfoObjectSoapIn"/>
+      <wsdl:output message="tns:GetVariableInfoObjectSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValues">
+      <wsdl:documentation>Given a site number, a variable, a start date, and an end date, this method returns a time series. Pass in the sitecode and variable in this format: 'NetworkName:SiteCode' and 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesSoapIn"/>
+      <wsdl:output message="tns:GetValuesSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesObject">
+      <wsdl:documentation>Given a site number, a variable, a start date, and an end date, this method returns a time series. Pass in the sitecode and variable in this format: 'NetworkName:SiteCode' and 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesObjectSoapIn"/>
+      <wsdl:output message="tns:GetValuesObjectSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfoMultpleObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoMultpleObjectSoapIn"/>
+      <wsdl:output message="tns:GetSiteInfoMultpleObjectSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSitesByBoxObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesByBoxObjectSoapIn"/>
+      <wsdl:output message="tns:GetSitesByBoxObjectSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesForASiteObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesForASiteObjectSoapIn"/>
+      <wsdl:output message="tns:GetValuesForASiteObjectSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariables">
+      <wsdl:documentation>Given a variable code, this method returns the variable's name. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariablesSoapIn"/>
+      <wsdl:output message="tns:GetVariablesSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariablesObject">
+      <wsdl:documentation>Given a variable code, this method returns the variable's siteName. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariablesObjectSoapIn"/>
+      <wsdl:output message="tns:GetVariablesObjectSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="WaterOneFlow2">
+    <wsdl:operation name="GetSites">
+      <wsdl:documentation>Given an array of site numbers, this method returns the site metadata for each one. Send the array of site codes in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesHttpGetIn"/>
+      <wsdl:output message="tns:GetSitesHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfo">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoHttpGetIn"/>
+      <wsdl:output message="tns:GetSiteInfoHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariableInfo">
+      <wsdl:documentation>Given a variable code, this method returns the variable's name. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariableInfoHttpGetIn"/>
+      <wsdl:output message="tns:GetVariableInfoHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSitesObject">
+      <wsdl:documentation>Given an array of site numbers, this method returns the site metadata for each one. Send the array of site codes in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesObjectHttpGetIn"/>
+      <wsdl:output message="tns:GetSitesObjectHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfoObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoObjectHttpGetIn"/>
+      <wsdl:output message="tns:GetSiteInfoObjectHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariableInfoObject">
+      <wsdl:documentation>Given a variable code, this method returns the variable's siteName. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariableInfoObjectHttpGetIn"/>
+      <wsdl:output message="tns:GetVariableInfoObjectHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValues">
+      <wsdl:documentation>Given a site number, a variable, a start date, and an end date, this method returns a time series. Pass in the sitecode and variable in this format: 'NetworkName:SiteCode' and 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesHttpGetIn"/>
+      <wsdl:output message="tns:GetValuesHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesObject">
+      <wsdl:documentation>Given a site number, a variable, a start date, and an end date, this method returns a time series. Pass in the sitecode and variable in this format: 'NetworkName:SiteCode' and 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesObjectHttpGetIn"/>
+      <wsdl:output message="tns:GetValuesObjectHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfoMultpleObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoMultpleObjectHttpGetIn"/>
+      <wsdl:output message="tns:GetSiteInfoMultpleObjectHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSitesByBoxObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesByBoxObjectHttpGetIn"/>
+      <wsdl:output message="tns:GetSitesByBoxObjectHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesForASiteObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesForASiteObjectHttpGetIn"/>
+      <wsdl:output message="tns:GetValuesForASiteObjectHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariables">
+      <wsdl:documentation>Given a variable code, this method returns the variable's name. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariablesHttpGetIn"/>
+      <wsdl:output message="tns:GetVariablesHttpGetOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariablesObject">
+      <wsdl:documentation>Given a variable code, this method returns the variable's siteName. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariablesObjectHttpGetIn"/>
+      <wsdl:output message="tns:GetVariablesObjectHttpGetOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="WaterOneFlow3">
+    <wsdl:operation name="GetSites">
+      <wsdl:documentation>Given an array of site numbers, this method returns the site metadata for each one. Send the array of site codes in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesHttpPostIn"/>
+      <wsdl:output message="tns:GetSitesHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfo">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoHttpPostIn"/>
+      <wsdl:output message="tns:GetSiteInfoHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariableInfo">
+      <wsdl:documentation>Given a variable code, this method returns the variable's name. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariableInfoHttpPostIn"/>
+      <wsdl:output message="tns:GetVariableInfoHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSitesObject">
+      <wsdl:documentation>Given an array of site numbers, this method returns the site metadata for each one. Send the array of site codes in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesObjectHttpPostIn"/>
+      <wsdl:output message="tns:GetSitesObjectHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfoObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoObjectHttpPostIn"/>
+      <wsdl:output message="tns:GetSiteInfoObjectHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariableInfoObject">
+      <wsdl:documentation>Given a variable code, this method returns the variable's siteName. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariableInfoObjectHttpPostIn"/>
+      <wsdl:output message="tns:GetVariableInfoObjectHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValues">
+      <wsdl:documentation>Given a site number, a variable, a start date, and an end date, this method returns a time series. Pass in the sitecode and variable in this format: 'NetworkName:SiteCode' and 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesHttpPostIn"/>
+      <wsdl:output message="tns:GetValuesHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesObject">
+      <wsdl:documentation>Given a site number, a variable, a start date, and an end date, this method returns a time series. Pass in the sitecode and variable in this format: 'NetworkName:SiteCode' and 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesObjectHttpPostIn"/>
+      <wsdl:output message="tns:GetValuesObjectHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfoMultpleObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSiteInfoMultpleObjectHttpPostIn"/>
+      <wsdl:output message="tns:GetSiteInfoMultpleObjectHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetSitesByBoxObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetSitesByBoxObjectHttpPostIn"/>
+      <wsdl:output message="tns:GetSitesByBoxObjectHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesForASiteObject">
+      <wsdl:documentation>Given a site number, this method returns the site's metadata. Send the site code in this format: 'NetworkName:SiteCode'</wsdl:documentation>
+      <wsdl:input message="tns:GetValuesForASiteObjectHttpPostIn"/>
+      <wsdl:output message="tns:GetValuesForASiteObjectHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariables">
+      <wsdl:documentation>Given a variable code, this method returns the variable's name. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariablesHttpPostIn"/>
+      <wsdl:output message="tns:GetVariablesHttpPostOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariablesObject">
+      <wsdl:documentation>Given a variable code, this method returns the variable's siteName. Pass in the variable in this format: 'NetworkName:Variable'</wsdl:documentation>
+      <wsdl:input message="tns:GetVariablesObjectHttpPostIn"/>
+      <wsdl:output message="tns:GetVariablesObjectHttpPostOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WaterOneFlow" type="tns:WaterOneFlow">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetSites">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetSites" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfo">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetSiteInfo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariableInfo">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetVariableInfo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSitesObject">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetSitesObject" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfoObject">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoObject" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariableInfoObject">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetVariableInfoObject" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetValues">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetValues" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesObject">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetValuesObject" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSiteInfoMultpleObject">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoMultpleObject" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSitesByBoxObject">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetSitesByBoxObject" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetValuesForASiteObject">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetValuesForASiteObject" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariables">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetVariables" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetVariablesObject">
+      <soap:operation soapAction="http://www.cuahsi.org/his/1.1/ws/GetVariablesObject" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WaterOneFlow">
+    <wsdl:documentation>&lt;div>&lt;strong>Developmental service. This service is internal CUAHSI use, and evaluation.&lt;/strong>&lt;/div></wsdl:documentation>
+    <wsdl:port name="WaterOneFlow" binding="tns:WaterOneFlow">
+      <soap:address location="http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://127.0.0.1:8080/LBR/soap/wateroneflow_1_1/</con:endpoint><con:endpoint>http://127.0.0.1:8080/LCM/soap/wateroneflow_1_1/</con:endpoint><con:endpoint>http://127.0.0.1:8080/SWIS/soap/wateroneflow_1_1/</con:endpoint><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:endpoint>http://sis-devel.cloudapp.net:7070/soap/wateroneflow_1_1/</con:endpoint><con:endpoint>http://sis-devel.cloudapp.net:8080/ODM2Measurement/soap/wateroneflow_1_1</con:endpoint><con:endpoint>http://sis-devel.cloudapp.net:8080/ODM2Timeseries/soap/wateroneflow_1_1</con:endpoint><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint></con:endpoints><con:operation id="f8628086-7478-4676-a502-e99b46e0fd73" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfo" name="GetSiteInfo" bindingOperationName="GetSiteInfo" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a93b4cd1-88aa-40bc-b8f0-12adaf7cbb8f" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSiteInfo>\r
+         <!--Optional:-->\r
+         <ws:site>ODM2WofPy:march</ws:site>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSiteInfo>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfo"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="3df20d39-13fa-4bc4-9ead-eeba1237a835" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoMultpleObject" name="GetSiteInfoMultpleObject" bindingOperationName="GetSiteInfoMultpleObject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e4c2a2aa-5ce1-484a-8ae6-03cbddfc3c7c" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSiteInfoMultpleObject>\r
+         <!--Optional:-->\r
+         <ws:site>\r
+            <!--Zero or more repetitions:-->\r
+            <ws:string>?</ws:string>\r
+         </ws:site>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSiteInfoMultpleObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoMultpleObject"/><con:wsrmConfig version="1.2"/></con:call><con:call id="0f726faa-3cbe-49ed-8f25-7785d6236cef" name="Request 2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/ODM2Measurement/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:GetSiteInfoMultpleObject>
+         <!--Optional:-->
+         <ws:site>
+            <!--Zero or more repetitions:-->
+            <ws:string>ODM2Measurement:march</ws:string>
+         </ws:site>
+         <!--Optional:-->
+         <ws:authToken>?</ws:authToken>
+      </ws:GetSiteInfoMultpleObject>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoMultpleObject"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="8afbd9f8-a04a-46fc-aada-1689e4052b46" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoObject" name="GetSiteInfoObject" bindingOperationName="GetSiteInfoObject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9d403155-61b0-4752-a4a9-17eb9fc79efd" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSiteInfoObject>\r
+         <!--Optional:-->\r
+         <ws:site>ODM2WofPy:march</ws:site>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSiteInfoObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoObject"/><con:wsrmConfig version="1.2"/></con:call><con:call id="c1effa0f-d5a0-46f1-989f-ccd7e8d65858" name="lbr"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/LBR/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSiteInfoObject>\r
+         <!--Optional:-->\r
+         <ws:site>LBR:USU-LBR-Mendon</ws:site>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSiteInfoObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoObject"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="1d2f25fd-da7c-4bdc-9268-446f9d95672c" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetSites" name="GetSites" bindingOperationName="GetSites" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="f159e020-db76-4d86-8c09-ee5e13d30b88" name="GetAllSites"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/SWIS/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSites>\r
+        
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSites>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSites"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="b0d52ddf-deb8-40aa-afd7-b85834130264" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetSitesByBoxObject" name="GetSitesByBoxObject" bindingOperationName="GetSitesByBoxObject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8a546a20-fce2-4c89-8a17-f4769b0db732" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSitesByBoxObject>\r
+         <ws:west>?</ws:west>\r
+         <ws:south>?</ws:south>\r
+         <ws:east>?</ws:east>\r
+         <ws:north>?</ws:north>\r
+         <ws:IncludeSeries>?</ws:IncludeSeries>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSitesByBoxObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSitesByBoxObject"/></con:call></con:operation><con:operation id="02f78bff-4726-40df-ab65-321794f65cd1" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetSitesObject" name="GetSitesObject" bindingOperationName="GetSitesObject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bbc98bff-e8e8-458e-820e-f025029e75a3" name="AllSitesObject"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/ODM2Timeseries/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSitesObject>\r
+ 
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSitesObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSitesObject"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="ebbfba81-1667-4722-a2e2-112fc9da233a" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetValues" name="GetValues" bindingOperationName="GetValues" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="7d4131f5-09be-4704-b4c1-82cdaa36a2d4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetValues>\r
+         <!--Optional:-->\r
+         <ws:location>?</ws:location>\r
+         <!--Optional:-->\r
+         <ws:variable>?</ws:variable>\r
+         <!--Optional:-->\r
+         <ws:startDate>?</ws:startDate>\r
+         <!--Optional:-->\r
+         <ws:endDate>?</ws:endDate>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetValues>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetValues"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="524c5b25-609b-4314-992b-81ed40860ebc" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetValuesForASiteObject" name="GetValuesForASiteObject" bindingOperationName="GetValuesForASiteObject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="98b64c27-a27c-4db5-a790-711268d782db" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetValuesForASiteObject>\r
+         <!--Optional:-->\r
+         <ws:site>ODM2WofPy:march</ws:site>\r
+         <!--Optional:-->\r
+         <ws:startDate>1983-01-17T00:00:00</ws:startDate>\r
+         <!--Optional:-->\r
+         <ws:endDate>1983-02-21T00:00:00</ws:endDate>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetValuesForASiteObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetValuesForASiteObject"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="b259782f-fc8b-4cac-8afa-3ee5773ac3a3" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetValuesObject" name="GetValuesObject" bindingOperationName="GetValuesObject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e21d9fce-6b14-436e-943d-ba2a30c34433" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:7070/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetValuesObject>\r
+         <!--Optional:-->\r
+         <ws:location>ODM2WofPy:march</ws:location>\r
+         <!--Optional:-->\r
+         <ws:variable>ODM2WofPy:FPOC</ws:variable>\r
+         <!--Optional:-->\r
+         <ws:startDate>1983-01-17T00:00:00</ws:startDate>\r
+         <!--Optional:-->\r
+         <ws:endDate>1983-02-28T00:00:00</ws:endDate>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetValuesObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetValuesObject"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="ce4ab636-4576-476c-874e-c5eed919808a" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetVariableInfo" name="GetVariableInfo" bindingOperationName="GetVariableInfo" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="89df6d7b-01c0-4152-be96-16e22d7c1fe6" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetVariableInfo>\r
+         <!--Optional:-->\r
+         <ws:variable>?</ws:variable>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetVariableInfo>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetVariableInfo"/></con:call></con:operation><con:operation id="49640d06-161c-4aee-b417-51cf58ef3891" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetVariableInfoObject" name="GetVariableInfoObject" bindingOperationName="GetVariableInfoObject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d4f4ae85-ddb5-4479-a6a8-a71eaa988722" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetVariableInfoObject>\r
+         <!--Optional:-->\r
+         <ws:variable>?</ws:variable>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetVariableInfoObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetVariableInfoObject"/></con:call></con:operation><con:operation id="f782f7c2-3217-418e-ba16-73b0c2493890" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetVariables" name="GetVariables" bindingOperationName="GetVariables" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="e94a6534-9d33-4d53-af6c-0ddeb958d1c3" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://sis-devel.cloudapp.net:8080/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetVariables>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetVariables>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetVariables"/></con:call></con:operation><con:operation id="ab8a851d-fc39-4768-bcc6-dcd644eb9b3f" isOneWay="false" action="http://www.cuahsi.org/his/1.1/ws/GetVariablesObject" name="GetVariablesObject" bindingOperationName="GetVariablesObject" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="43c23117-7bcd-4410-86f4-ed562667c40d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/LCM/soap/wateroneflow_1_1/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetVariablesObject>\r
+         <!--Optional:-->\r
+         <ws:authToken></ws:authToken>\r
+      </ws:GetVariablesObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetVariablesObject"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="943a2ac1-dc7e-4710-a6a1-84f04ca10edf" name="WOF11 Soap TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="e34a2ac7-f81e-4c0f-a66d-2b96da6a8a67" failOnError="false" failTestCaseOnErrors="false" keepSession="false" maxResults="0" name="Run TestCase" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" discardOkResults="true"><con:settings/><con:testStep type="properties" name="Series" id="ab146ec7-5657-4b63-9200-3a6f44558c88"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>vocabulary</con:name><con:value>TxRivers</con:value></con:property><con:property><con:name>varcode</con:name><con:value>Stage_ft</con:value></con:property><con:property><con:name>startdate</con:name><con:value>2008-01-01T00:00:00-06:00</con:value></con:property><con:property><con:name>enddate</con:name><con:value>2008-04-30T00:00:00-06:00</con:value></con:property><con:property><con:name>twodays</con:name><con:value>2008-01-03</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="properties" name="SiteCode" id="1fc03c69-7de9-4ce2-b0c2-a4878f72c110"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>network</con:name><con:value>TxRivers</con:value></con:property><con:property><con:name>sitecode</con:name><con:value>SanSaba</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="request" id="13ee5685-9a51-43bc-8c07-69427329df13" name="GetSitesObject"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetSitesObject</con:operation><con:request name="GetSitesObject" id="686788ff-404c-4e62-971b-bde705f238dd"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSitesObject>\r
+         <!--Optional:-->\r
+         <ws:site>\r
+            <!--Zero or more repetitions:-->\r
+            <ws:string></ws:string>\r
+         </ws:site>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSitesObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="9005e583-2fd1-414e-8c77-584c4236ea7c" name="Not SOAP Fault"/><con:assertion type="Schema Compliance" id="ee66f275-383e-4b60-a99f-5a1a13b641fa" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.cuahsi.org/his/1.1/ws/GetSitesObject" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="siteCode transfer" id="92bef542-06ae-4bc5-bd7c-94ace15549bc"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="false"><con:name>siteCode</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>GetSitesObject</con:sourceStep><con:sourcePath>declare namespace wml="http://www.cuahsi.org/waterML/1.1/";
+//wml:sitesResponse[1]/wml:site[1]/wml:siteInfo[1]/wml:siteCode</con:sourcePath><con:targetType>sitecode</con:targetType><con:targetStep>SiteCode</con:targetStep><con:targetPath/><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>network</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>GetSitesObject</con:sourceStep><con:sourcePath>declare namespace wml="http://www.cuahsi.org/waterML/1.1/";
+//wml:sitesResponse[1]/wml:site[1]/wml:siteInfo[1]/wml:siteCode/@network</con:sourcePath><con:targetType>network</con:targetType><con:targetStep>SiteCode</con:targetStep><con:targetPath/><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" id="e5de56f1-07e1-4c54-85e3-f055cb8466e8" name="GetSiteInfoObject"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetSiteInfoObject</con:operation><con:request name="GetSiteInfoObject" id="321dff95-edce-464f-adc0-1a7d0fd39e2c"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSiteInfoObject>\r
+
+         <ws:site>${SiteCode#network}:${SiteCode#sitecode}</ws:site>\r
+
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSiteInfoObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="5afcb994-6517-4488-8908-193d0d6b9d0f" name="Not SOAP Fault"/><con:assertion type="Schema Compliance" id="de1b0a6b-dca8-4e0f-adb0-2b8726456913" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoObject" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="seriesTransfer" id="cbcfd434-8096-4013-892d-6e2aa02f1808"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>varcode</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>GetSiteInfoObject</con:sourceStep><con:sourcePath>declare namespace wml="http://www.cuahsi.org/waterML/1.1/";
+//wml:series[1]/wml:variable[1]/wml:variableCode[1]</con:sourcePath><con:targetType>varcode</con:targetType><con:targetStep>Series</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>vocabulary</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>GetSiteInfoObject</con:sourceStep><con:sourcePath>declare namespace wml="http://www.cuahsi.org/waterML/1.1/";
+//wml:series[1]/wml:variable[1]/wml:variableCode[1]/@vocabulary</con:sourcePath><con:targetType>vocabulary</con:targetType><con:targetStep>Series</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>startdate</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>GetSiteInfoObject</con:sourceStep><con:sourcePath>declare namespace wml="http://www.cuahsi.org/waterML/1.1/";
+//wml:series[1]/wml:variableTimeInterval[1]/wml:beginDateTime</con:sourcePath><con:targetType>startdate</con:targetType><con:targetStep>Series</con:targetStep><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>enddate</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>GetSiteInfoObject</con:sourceStep><con:sourcePath>declare namespace wml="http://www.cuahsi.org/waterML/1.1/";
+//wml:series[1]/wml:variableTimeInterval[1]/wml:endDateTime</con:sourcePath><con:targetType>enddate</con:targetType><con:targetStep>Series</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" id="cb0dd3aa-ce86-48ab-9b69-ec6ac71b0273" name="GetSiteInfoMultpleObject"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetSiteInfoMultpleObject</con:operation><con:request name="GetSiteInfoMultpleObject" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="dc9684ad-e0d9-4daa-8d60-829687305665"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSiteInfoMultpleObject>\r
+
+         <ws:site>\r
+            <ws:string>${SiteCode#network}:${SiteCode#sitecode}</ws:string>\r
+         </ws:site>\r
+       </ws:GetSiteInfoMultpleObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e3296029-955a-42eb-901b-0b6ae247c24d" name="SOAP Response"/><con:assertion type="Schema Compliance" id="2728dce5-b3c8-46d5-96ad-abe40e8c5c3b" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="515d8829-2aca-40e4-ad56-e12d51622c36" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfoMultpleObject"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="AddDay" id="0255521f-59c2-4763-a959-0ac17f8fb1e9"><con:settings/><con:config><script>def groovyUtils = new com.eviware.soapui.support.GroovyUtils( context );
+
+def beginDate =   testRunner.testCase.testSteps["Series"].getPropertyValue( "startdate" )
+
+log.info("beginDate" + beginDate);
+//log.info("other date" + testSuiteProperty);
+Calendar cal = Calendar.getInstance();
+sdf = new java.text.SimpleDateFormat('yyyy-MM-dd');
+
+//log.info("substring"+beginDate.substring(0,10));
+def begin = sdf.parse(beginDate.substring(0,10));
+//log.info("day" + begin.getDate());
+//log.info("month" + begin.getMonth());
+//log.info("year" + begin.getYear());
+cal.set(begin.getYear()+1900,begin.getMonth(),begin.getDate());
+//log.info("Begining Date" + sdf.format(cal.getTime()));
+//cal.set(begin);
+cal.add(Calendar.DAY_OF_YEAR, 2);
+log.info("Calendar Date" + sdf.format(cal.getTime()));
+//
+testRunner.testCase.testSteps["Series"].setPropertyValue( "twodays", sdf.format(cal.getTime())); 
+
+</script></con:config></con:testStep><con:testStep type="request" id="bd1b3bb2-9c7e-46c9-9586-ed329dd428f6" name="GetValuesObject"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetValuesObject</con:operation><con:request name="GetValuesObject" id="433efc51-e28f-4f9e-957d-9098b23c7866"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetValuesObject>\r
+         <!--Optional:-->\r
+         <ws:location>${SiteCode#network}:${SiteCode#sitecode}</ws:location>\r
+         <!--Optional:-->\r
+         <ws:variable>${Series#vocabulary}:${Series#varcode}</ws:variable>\r
+         <!--Optional:-->\r
+         <ws:startDate>${Series#startdate}</ws:startDate>\r
+         <!--Optional:-->\r
+         <ws:endDate>${Series#twodays}</ws:endDate>\r
+
+      </ws:GetValuesObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="72251ebe-8d1a-4406-a046-be8790c2e31d" name="Not SOAP Fault"/><con:assertion type="Schema Compliance" id="e61f1537-1bb1-4160-af44-8291538f2781" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.cuahsi.org/his/1.1/ws/GetValuesObject" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="da6cd1ed-c968-4dc5-bfa9-7ce2d0f7a11c" name="GetValuesForASiteObject"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetValuesForASiteObject</con:operation><con:request name="GetValuesForASiteObject" id="71e222d5-d320-4959-bc8c-fe5d6bb2f75e"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetValuesForASiteObject>\r
+         <!--Optional:-->\r
+         <ws:site>${SiteCode#network}:${SiteCode#sitecode}</ws:site>\r
+         <!--Optional:-->\r
+         <ws:startDate>${Series#startdate}</ws:startDate>\r
+         <!--Optional:-->\r
+         <ws:endDate>${Series#twodays}</ws:endDate>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetValuesForASiteObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="7ad0a6b4-433c-481f-8f33-8bb16a8fb06c" name="Not SOAP Fault"/><con:assertion type="Schema Compliance" id="241b9db7-8a28-4bcb-b13c-81ca8dfcb589" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.cuahsi.org/his/1.1/ws/GetValuesForASiteObject" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="e5374e8e-6b23-42fd-af06-de0bcd29a095" name="GetVariableInfoObject"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetVariableInfoObject</con:operation><con:request name="GetVariableInfoObject" id="ead5e46f-f34c-4d92-9545-bc9147dd20af"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetVariableInfoObject>\r
+         <!--Optional:-->\r
+         <ws:variable></ws:variable>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetVariableInfoObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Fault Assertion" id="14442e3c-e698-4fba-ace6-c4153dd1413f" name="Not SOAP Fault"/><con:assertion type="Schema Compliance" id="a7a173d1-3aa8-4a77-a7eb-1c5d904feee0" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.cuahsi.org/his/1.1/ws/GetVariableInfoObject" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="83d2e939-7363-443e-9821-5cc65ede7851" name="GetVariablesObject"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetVariablesObject</con:operation><con:request name="GetVariablesObject" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="ef4f85ca-67c7-41fe-968f-46dfbe518373"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetVariablesObject>\r
+         <!--Optional:-->\r
+         <ws:authToken></ws:authToken>\r
+      </ws:GetVariablesObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="866ead8b-e828-45f2-9b0f-9b5e113f61c4" name="SOAP Response"/><con:assertion type="Schema Compliance" id="d941be2b-409f-443c-876a-d3dd3f171871" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="f900a842-be25-4300-a45d-34007a9699c3" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetVariablesObject"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="0cf1fbfd-5ad6-4c9f-b76d-00fc48970ba3" name="GetSiteInfo"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetSiteInfo</con:operation><con:request name="GetSiteInfo" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="0522dca8-6160-4aa6-b718-158c014f9449"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSiteInfo>\r
+         <!--Optional:-->\r
+         <ws:site>${SiteCode#network}:${SiteCode#sitecode}</ws:site>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSiteInfo>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c169012c-2e82-4778-a63a-a170c8c248b1" name="SOAP Response"/><con:assertion type="Schema Compliance" id="8d14d188-c24d-468a-8207-3e340d09cff6" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="7c8dd27b-ef48-4afc-af7a-efb64cc96ea9" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSiteInfo"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="835a2f91-cc22-4feb-97cd-7848fb80853f" name="GetSites"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetSites</con:operation><con:request name="GetSites" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="73572c0e-8e17-4b0b-892e-54825c720f3d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSites>\r
+        
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSites>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f33f1304-3e5e-47e4-b752-5f4886b29970" name="SOAP Response"/><con:assertion type="Schema Compliance" id="5be42a53-1bac-42ca-8dcd-164746213dc6" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="7805711b-48e5-4b41-b061-c645e54df636" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSites"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="a55f05f0-9b8b-4021-aaa7-dc07784d1ad7" name="GetVariables"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetVariables</con:operation><con:request name="GetVariables" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="00f32486-5e13-48e1-9182-e64f87f32d34"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetVariables>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetVariables>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="df078b03-fd6f-4686-970b-efe2518f40ef" name="SOAP Response"/><con:assertion type="Schema Compliance" id="e742c2db-cd41-43c4-bd7b-a8b9c5f48580" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="2187280a-1db2-40a0-9391-fdea29dda169" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetVariables"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="547d7afa-849e-4b1d-971a-4b9c62389a34" name="GetValues"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetValues</con:operation><con:request name="GetValues" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="178bfa4f-2f1e-4a8e-bee7-a099a13c884a"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetValues>\r
+        <ws:location>${SiteCode#network}:${SiteCode#sitecode}</ws:location>
+         <!--Optional:-->
+         <ws:variable>${Series#vocabulary}:${Series#varcode}</ws:variable>
+         <!--Optional:-->
+         <ws:startDate>${Series#startdate}</ws:startDate>
+         <!--Optional:-->
+         <ws:endDate>${Series#twodays}</ws:endDate>
+
+      </ws:GetValues>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="c5fdb3ff-b091-4449-871d-a9c3cc5efc25" name="SOAP Response"/><con:assertion type="Schema Compliance" id="5247cb5a-2b6e-4088-8355-620170621bf8" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="bcbf6f92-f763-45b4-96b3-af158d53f10b" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetValues"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="99ed8c56-c4e7-420f-91ca-899fcf779839" name="GetSitesByBoxObject"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WaterOneFlow</con:interface><con:operation>GetSitesByBoxObject</con:operation><con:request name="GetSitesByBoxObject" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="18aada94-73d9-4e98-8304-afda3e734116"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://127.0.0.1:8080/TxRivers/soap/wateroneflow_1_1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://www.cuahsi.org/his/1.1/ws/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ws:GetSitesByBoxObject>\r
+         <ws:west>-180</ws:west>\r
+         <ws:south>-90</ws:south>\r
+         <ws:east>180</ws:east>\r
+         <ws:north>90</ws:north>\r
+         <ws:IncludeSeries>false</ws:IncludeSeries>\r
+         <!--Optional:-->\r
+         <ws:authToken>?</ws:authToken>\r
+      </ws:GetSitesByBoxObject>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="d656cecf-e28b-41fa-a0e7-9d707d7c322c" name="SOAP Response"/><con:assertion type="Schema Compliance" id="0553371a-8e8b-446d-a18d-ab4a75265284" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="f56c30df-eace-4d44-a8f4-ac9e7f4901b9" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.cuahsi.org/his/1.1/ws/GetSitesByBoxObject"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
