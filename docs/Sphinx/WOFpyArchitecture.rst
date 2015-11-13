@@ -74,9 +74,13 @@ When you download and open WOFpy.  You will notice that it contains the followin
 |           
 \---wof\
     |   core.py
+    |   core_1_1.py
+    |   core_1_0.py
     |   dao.py
     |   models.py
     |   WaterML.py
+    |   WaterML_1_1.py
+    |   WofWsdls.py
     |   __init__.py
     |   
     +---flask\
@@ -87,15 +91,22 @@ When you download and open WOFpy.  You will notice that it contains the followin
     |   |       index.html
     |   |       wml2_values_template.xml
     |   |       wsdl_temp.wsdl
-    |   |       
-    |   \---views\
-    |           rest.py
-    |           wsdl.py
-    |           __init__.py
     |           
-    \---soap\
-            soap.py
-            __init__.py
+    \---apps\
+        |   __init__.py
+        |   wof/apps/spyned_1_0.py
+        |   spyned_1_1.py
+        |   waterml2.py
+        |   wsdl.py
+        |
+        |+---templates\
+
+        |   |       wml2_values_template.xml
+        |   |       wsdl_1_1_template.wsdl
+        |   |       index.html
+        |   |       index_1_0.html
+        |   |       index_1_1.html
+        |   |       index_2.html
 
 WOFpy contains 4 main 
 

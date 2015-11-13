@@ -6,14 +6,26 @@ from dateutil.tz import tzoffset as tz
 
 from wof.dao import BaseDao
 import wof.models as wof_base
+import os
+
+from pytz import timezone
+import pytz
 
 import csv_model
 
 class CsvDao(BaseDao):
+    #local_time_zone = tz(None, -21600)
+    local_time_zone = timezone('US/Central')
+    #utc_time_zone = tz(None,0)
+    utc_time_zone=pytz.utc
+
     def __init__(self, sites_file_path, values_file_path):
-        self.sites_file_path = sites_file_path
-        self.values_file_path = values_file_path
-        
+        #self.sites_file_path = sites_file_path
+        #self.values_file_path = values_file_path
+
+        self.sites_file_path = os.path.abspath(sites_file_path)
+        self.values_file_path = os.path.abspath(values_file_path)
+
         # Build a dictionary of variables indexed by code
         variable_dict = {}
 
@@ -168,7 +180,7 @@ class CsvDao(BaseDao):
                 b = parse(begin_date_time_string)
             else:
                 # Provide default start date at beginning of period of record
-                b = parse('2008-01-01T00:00-06')
+                b = parse('20080101T00:00:00-0600')
         except:
             raise ValueError('invalid start date: ' + \
                              str(begin_date_time_string))
@@ -177,7 +189,7 @@ class CsvDao(BaseDao):
                 e = parse(end_date_time_string)
             else:
                 # Provide default end date at end of period of record
-                e = parse('2008-04-30T00:00-06')
+                e = parse('20080430T00:00:00-0600')
         except:
             raise ValueError('invalid end date: ' + str(end_date_time_string))
 
@@ -185,12 +197,12 @@ class CsvDao(BaseDao):
         # local time.
         # Remove tzinfo in the end since datetimes from data file do not have
         # tzinfo either.  This enables date comparisons.
-        local_time_zone = tz(None, -21600) # Six hours behind UTC, in seconds
+       # local_time_zone = tz(None, -21600) # Six hours behind UTC, in seconds
         if b.tzinfo:
-            b = b.astimezone(local_time_zone)
+            b = b.astimezone(self.local_time_zone)
             b = b.replace(tzinfo=None)
         if e.tzinfo:
-            e = e.astimezone(local_time_zone)
+            e = e.astimezone(self.local_time_zone)
             e = e.replace(tzinfo=None)
 
         return [b, e]
@@ -203,11 +215,16 @@ class CsvDao(BaseDao):
         # All values are in local time. For this example, local time is always
         # six hours behind UTC time.
         value_date = parse(row[1])
-        datavalue.LocalDateTime = value_date.isoformat() + '-06'
 
-        value_date = value_date + timedelta(hours=6)
-        datavalue.DateTimeUTC = value_date.isoformat() + 'Z'
-        
+        value_date = value_date.replace(tzinfo=self.local_time_zone)
+        #datavalue.LocalDateTime = value_date.isoformat()
+        datavalue.LocalDateTime = value_date # Use the object
+        #value_date = value_date + timedelta(hours=6)
+        delta = self.local_time_zone._utcoffset
+        value_date_utc = value_date - delta
+        value_date_utc = value_date_utc.replace (tzinfo=self.utc_time_zone)
+        #datavalue.DateTimeUTC = value_date_utc.isoformat() + 'Z'
+        datavalue.DateTimeUTC = value_date_utc    # Use the object
         return datavalue
 
     def get_datavalues(self, site_code, var_code, begin_date_time=None,
@@ -257,6 +274,11 @@ class CsvDao(BaseDao):
         if method.MethodID in method_id_arr:
             methods.append(method)
         return methods
+
+    def get_method_by_id(self, method_id):
+        method = csv_model.Method()
+        methods = self.get_methods_by_ids({method_id})
+        return methods[0]
 
     def get_sources_by_ids(self, source_id_arr):
         sources = []

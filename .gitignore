@@ -5,3 +5,4 @@ docs/Sphinx/_build/
 build/
 WOFpy.egg-info/
 dist/
+.idea/
