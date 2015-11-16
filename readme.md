@@ -1,5 +1,4 @@
-=====
-WOFpy
-=====
+WOFpy has moved
+===============
 
-WOFpy has moved to [ODM2/WOFpy](http://github.com/ODM2/WOFpy)! Go there for to find current development and updates!
+Find current development and updates at [ODM2/WOFpy](http://github.com/ODM2/WOFpy)!
